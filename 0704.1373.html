@@ -1,0 +1,2179 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[0704.1373] Contents</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Contents">
+<meta name="twitter:image:src" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta name="twitter:image:alt" content="ar5iv logo">
+<meta property="og:title" content="Contents">
+<meta property="og:site_name" content="ar5iv">
+<meta property="og:image" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ar5iv.labs.arxiv.org/html/0704.1373">
+
+<!--Generated on Fri Mar 15 22:44:25 2024 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script>
+  function detectColorScheme(){
+    var theme="light";
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if(current_theme){
+      if(current_theme == "dark"){
+        theme = "dark";
+      } }
+    else if(!window.matchMedia) { return false; }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      theme = "dark"; }
+    if (theme=="dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light"); } }
+
+  detectColorScheme();
+
+  function toggleColorScheme(){
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+      if (current_theme == "light") {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+      else {
+        localStorage.setItem("ar5iv_theme", "light"); } }
+    else {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+    detectColorScheme(); }
+</script>
+<link media="all" rel="stylesheet" href="/assets/ar5iv-fonts.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv-site.0.2.2.css">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document">
+<div id="p1" class="ltx_para">
+<p id="p1.1" class="ltx_p"><span id="p1.1.1" class="ltx_text"></span></p>
+</div>
+<div id="p2" class="ltx_para ltx_noindent">
+<p id="p2.1" class="ltx_p"><span id="p2.1.1" class="ltx_text ltx_inline-block" style="width:0.0pt;">INSTITUT NATIONAL DE RECHERCHE
+EN INFORMATIQUE ET EN AUTOMATIQUE </span></p>
+</div>
+<div id="p3" class="ltx_para ltx_noindent">
+<p id="p3.1" class="ltx_p"><span id="p3.1.1" class="ltx_text ltx_inline-block" style="width:0.0pt;">
+<span id="p3.1.1.1" class="ltx_inline-block ltx_align_bottom">
+<span id="p3.1.1.1.1" class="ltx_p ltx_align_center"><span id="p3.1.1.1.1.1" class="ltx_text ltx_font_bold ltx_font_italic">A Language-Based Approach for Improving the Robustness of Network Application Protocol Implementations
+<br class="ltx_break">
+</span>Laurent Burgy
+ — Laurent Réveillère
+ — Julia Lawall
+ — Gilles Muller
+<span id="p3.1.1.1.1.2" class="ltx_text ltx_font_bold">N° ????
+<br class="ltx_break"></span>Février 2007</span>
+</span></span></p>
+</div>
+<div class="ltx_pagination ltx_role_newpage"></div>
+<div id="p4" class="ltx_para">
+<p id="p4.1" class="ltx_p"><span id="p4.1.1" class="ltx_text"></span></p>
+</div>
+<div class="ltx_pagination ltx_role_newpage"></div>
+<div id="p5" class="ltx_para">
+<p id="p5.1" class="ltx_p"><span id="p5.1.1" class="ltx_text"></span></p>
+</div>
+<div id="id1a" class="ltx_logical-block">
+<div id="p1" class="ltx_para">
+<p id="p1.1" class="ltx_p ltx_align_center"><span id="p1.1.1" class="ltx_text ltx_font_bold" style="font-size:144%;">A Language-Based Approach for Improving the Robustness of Network Application Protocol Implementations</span></p>
+<br class="ltx_break ltx_centering">
+<p id="p1.2" class="ltx_p ltx_align_center"><span id="p1.2.1" class="ltx_text" style="font-size:120%;">Laurent Burgy
+, Laurent Réveillère
+, Julia Lawall
+, Gilles Muller</span></p>
+<p id="p1.3" class="ltx_p ltx_align_center">Thème COM — Systèmes communicants</p>
+<p id="p1.4" class="ltx_p ltx_align_center">Projets Phoenix et Obasco</p>
+<p id="p1.5" class="ltx_p ltx_align_center">Rapport de recherche  n° ????
+— Février 2007 —
+?? pages</p>
+</div>
+</div>
+<div id="p6" class="ltx_para ltx_noindent">
+<p id="p6.1" class="ltx_p"><span id="p6.1.1" class="ltx_text ltx_font_bold">Abstract: </span> The secure and robust functioning of a network relies on the
+defect-free implementation of network applications. As network
+protocols have become increasingly complex, however, hand-writing
+network message processing code has become increasingly error-prone.</p>
+</div>
+<div id="p7" class="ltx_para">
+<p id="p7.1" class="ltx_p">In this paper, we present a domain-specific language, Zebu, for
+describing protocol message formats and related processing
+constraints. From a Zebu specification, a compiler automatically
+generates stubs to be used by an application to parse network
+messages. Zebu is easy to use, as it builds on notations used in RFCs to
+describe protocol grammars. Zebu is also efficient, as the memory usage
+is tailored to application needs and message fragments can be specified
+to be processed on demand. Finally, Zebu-based applications are robust,
+as the Zebu compiler automatically checks specification consistency and
+generates parsing stubs that include validation of the message structure.
+Using a mutation analysis in the context of SIP and RTSP, we show that
+Zebu significantly improves application robustness.</p>
+</div>
+<div id="p8" class="ltx_para ltx_noindent">
+<p id="p8.1" class="ltx_p"><span id="p8.1.1" class="ltx_text ltx_font_bold">Key-words: </span> Langage métier, protocoles réseau, analyze de mutation</p>
+</div>
+<div class="ltx_pagination ltx_role_newpage"></div>
+<div id="p9" class="ltx_para">
+<p id="p9.1" class="ltx_p ltx_align_center"><span id="p9.1.1" class="ltx_text ltx_font_bold" style="font-size:144%;">Une approche langage pour améliorer la robustesse de l’implémentation de protocoles réseaux applicatifs</span></p>
+</div>
+<div id="p10" class="ltx_para ltx_noindent">
+<p id="p10.1" class="ltx_p"><span id="p10.1.1" class="ltx_text ltx_font_bold">Résumé : </span>
+Pour être sûr et robuste, le fonctionnement d’un réseau doit reposer sur des implémentations d’applications sans faille. Les protocoles réseau étant de plus en plus complexes, écrire manuellement le code qui prend en charge leurs messages devient de plus en plus difficile et sujet à erreurs.
+</p>
+</div>
+<div id="p11" class="ltx_para">
+<p id="p11.1" class="ltx_p">Dans ce papier, nous présent un langage métier, Zebu, pour décrire le format des messages d’un protocole réseau et les contraintes de traitement associées. D’une spécification Zebu, un compilateur génère automatiquement des talons à utiliser par une application pour l’analyze grammaticale de messages réseau. Zebu is simple d’usage, utilisant les mêmes notations que celles utilisées dans les RFCs pour décrire les grammaires de protocoles. Zebu est efficace, l’implantation mémoire étant calquée sur les besoins de l’application et les fragments du message pouvant être traités à la demande. Enfin, les applications basées sur Zebu sont robustes, le compilateur vérifiant la consistence de la spécification et les talons générés étant incluant la validation de la structure du message. En utilisant une analyze de mutation dans le contexte de SIP et RTSP, nous montrons que Zebu améliore de manière significative la robustesse des applications.</p>
+</div>
+<div id="p12" class="ltx_para ltx_noindent">
+<p id="p12.1" class="ltx_p"><span id="p12.1.1" class="ltx_text ltx_font_bold">Mots-clés : </span> DSL, network protocols, mutation analysis</p>
+</div>
+<div id="p13" class="ltx_para">
+<p id="p13.1" class="ltx_p"><span id="p13.1.1" class="ltx_text"></span></p>
+</div>
+<div class="ltx_pagination ltx_role_newpage"></div>
+<nav class="ltx_TOC ltx_list_toc ltx_toc_toc"><h6 class="ltx_title ltx_title_contents">Contents</h6>
+<ol class="ltx_toclist">
+<li class="ltx_tocentry ltx_tocentry_section"><a href="#S1" title="" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">1 </span>Introduction</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a href="#S2" title="" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2 </span>Issues in developing network protocol <span class="ltx_text"> </span>parsers</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S2.SS1" title="In 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.1 </span>ABNF formalism</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S2.SS2" title="In 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.2 </span>Hand-writing parsers</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S2.SS3" title="In 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.3 </span>Using parser generators</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S2.SS4" title="In 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2.4 </span>Integrating a parser with an <span class="ltx_text"> </span>application</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a href="#S3" title="" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3 </span>Robust Parser Development with Zebu</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S3.SS1" title="In 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.1 </span>Issues</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S3.SS2" title="In 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.2 </span>Annotating an ABNF specification</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S3.SS3" title="In 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.3 </span>The Zebu compiler</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S3.SS4" title="In 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.4 </span>Developing an application with Zebu</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a href="#S4" title="" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4 </span>Experiments</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S4.SS1" title="In 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.1 </span>Robustness evaluation</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_subsection"><a href="#S4.SS2" title="In 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.2 </span>Performance Evaluation</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section"><a href="#S5" title="" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5 </span>Related Work</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_section"><a href="#S6" title="" class="ltx_ref"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">6 </span>Conclusion</span></a></li>
+</ol></nav>
+<section id="S1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">1 </span>Introduction</h2>
+
+<div id="S1.p1" class="ltx_para">
+<p id="S1.p1.1" class="ltx_p">In the Internet era, many applications, ranging from instant messaging
+clients and multimedia players to HTTP servers and proxies, involve
+processing network protocol messages. A key part of this processing is to
+parse messages as they are received from the network. As message parsing
+represents the front line of interaction between the application and the
+outside world, the correctness of the parser is critical; any bugs can
+leave the application open to attack <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib24" title="" class="ltx_ref">24</a>]</cite>. In the context of
+in-network application such as proxies, where achieving high throughput is
+essential, parsing must also be efficient.</p>
+</div>
+<div id="S1.p2" class="ltx_para">
+<p id="S1.p2.1" class="ltx_p">Implementing a correct and efficient network protocol message parser,
+however, is a difficult task. The syntax of network protocol messages is
+typically specified in a RFC (<span id="S1.p2.1.1" class="ltx_text ltx_font_italic">Request for Comments</span>) using a
+variant of BNF known as ABNF (<span id="S1.p2.1.2" class="ltx_text ltx_font_italic">Augmented BNF</span>) <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib6" title="" class="ltx_ref">6</a>]</cite>. Such
+a specification amounts to a state machine, which for efficiency is often
+implemented in an unstructured way using gotos. The resulting code is thus
+error-prone and difficult to maintain. Furthermore, some kinds of message
+processing may not use all fragments of the message. For example, a router
+normally only uses the header fields that describe the message destination,
+and ignores the header fields that describe properties of the message
+body <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib23" title="" class="ltx_ref">23</a>]</cite>. It is thus desirable, for efficiency, to defer
+the parsing of certain message fragments to when their values are actually
+used. In this case, complex parsing code may end up scattered throughout
+the application.</p>
+</div>
+<div id="S1.p3" class="ltx_para">
+<p id="S1.p3.1" class="ltx_p">In the programming languages community, parsers have long been constructed
+using automated parser generators such as <span id="S1.p3.1.1" class="ltx_text ltx_font_typewriter">yacc</span> <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib15" title="" class="ltx_ref">15</a>]</cite>.
+Nevertheless, such tools are not suitable for generating parsers for
+network protocol messages, as the grammars provided in RFCs are often not
+context free, and such tools provide no support for deferring the parsing
+of some message fragments. Thus, parsers for network protocol messages
+have traditionally been implemented by hand. This situation, however, is
+becoming increasingly impractical, given the variety and complexity of
+protocols that are continually being developed. For example, the Gaim
+instant messaging client parses more than 10 different instant messaging
+protocols <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="" class="ltx_ref">10</a>]</cite>. The message grammar in the IMAP RFC is about 500
+lines of ABNF, and includes external references to others RFCs. SIP (<span id="S1.p3.1.2" class="ltx_text ltx_font_italic">Session Initiation Protocol</span>) <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib26" title="" class="ltx_ref">26</a>]</cite>, which is mainly used in
+telephony over IP, has a multitude of variants and extensions, implying
+that SIP parsers must be tolerant of minor variations in the message
+structure and be extensible. Incorrect or inefficient parsing makes the
+application vulnerable to denial of service attacks, as illustrated by the
+“leading slash” vulnerability found in the Flash HTTP Web server
+<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib24" title="" class="ltx_ref">24</a>]</cite>. In our experiments (Section
+<a href="#S4" title="4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>), we have crashed the widely used SER
+parser <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib23" title="" class="ltx_ref">23</a>]</cite> for SIP via a stream of 2416 incorrect
+messages, sent within 17 seconds.</p>
+</div>
+<div id="S1.p4" class="ltx_para">
+<p id="S1.p4.1" class="ltx_p">To address the growing complexity of network protocol messages and the
+inadequacy of standard tools, some parser generators have recently been
+developed that specifically target the kinds of complex data layouts found
+in network protocol messages. These tools include
+DATASCRIPT <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="" class="ltx_ref">3</a>]</cite> and
+PacketTypes <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib18" title="" class="ltx_ref">18</a>]</cite> for binary protocols, and
+PADS <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib9" title="" class="ltx_ref">9</a>]</cite>, GAPA <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib5" title="" class="ltx_ref">5</a>]</cite> and
+binpac <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib22" title="" class="ltx_ref">22</a>]</cite> for both binary and text-based protocols. However,
+none of these approaches accepts ABNF as the input language, and thus, the
+RFC specification must be translated to another formalism, which is tedious
+and error prone. Furthermore, such approaches have mainly targeted
+application protocol analyzers, which parse a fixed portion of the message
+and then proceed to some analysis phase. Thus, they do not provide
+fine-grained control over the time when parsing occurs. While these
+approaches relieve some of the burden of implementing a network protocol
+message parser, there still remains a gap between these tools and the needs of
+applications.</p>
+</div>
+<div id="S1.p5" class="ltx_para">
+<p id="S1.p5.1" class="ltx_p">We propose to directly address the issues of correctness and efficiency at
+the parser generator level. To this end, we present a domain-specific
+language, Zebu, for describing HTTP-like text-based protocol message
+formats and related processing constraints. Zebu is an extension of ABNF,
+implying that the programmer can simply copy a network protocol message
+grammar from an RFC to begin developing a parser. Zebu extends ABNF with
+annotations indicating which message fields should be stored in data
+structures, and other semantic information, such as the type of the value
+expressed by a field, constraints on the range of its value, and whether
+certain fields are mandatory or optional. Fields can additionally be
+declared as <span id="S1.p5.1.1" class="ltx_text ltx_font_typewriter">lazy</span>, which gives control over the time when the parsing
+of a field occurs. A Zebu specification is then processed by a compiler
+that generates stubs to be used by an application to process network
+messages. Based on the annotations, the Zebu compiler implements
+domain-specific optimizations to reduce the memory usage of a Zebu based
+application. Besides efficiency, Zebu also addresses robustness, as the
+compiler performs many consistency checks, and generates parsing stubs that
+validate the message structure.</p>
+</div>
+<section id="S1.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">This paper</h4>
+
+<div id="S1.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="S1.SS0.SSS0.Px1.p1.1" class="ltx_p">In this paper, we present the Zebu language and an assessment of its
+performance and robustness in the context of the SIP and RTSP (Real Time
+Streaming Protocol <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib27" title="" class="ltx_ref">27</a>]</cite>) network protocols. Our contributions are
+as follows:</p>
+<ul id="S1.I1" class="ltx_itemize">
+<li id="S1.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i1.p1" class="ltx_para">
+<p id="S1.I1.i1.p1.1" class="ltx_p">We introduce a declarative language, named Zebu, for describing
+protocol message formats and related processing constraints. Zebu builds
+on the ABNF notation typically used in RFCs to describe protocol grammars.</p>
+</div>
+</li>
+<li id="S1.I1.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i2.p1" class="ltx_para">
+<p id="S1.I1.i2.p1.1" class="ltx_p">We have defined a test methodology based on a mutation analysis for
+evaluating the robustness improvement induced by Zebu.</p>
+</div>
+</li>
+<li id="S1.I1.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i3.p1" class="ltx_para">
+<p id="S1.I1.i3.p1.1" class="ltx_p">We have applied our test methodology existing and Zebu-based SIP and
+RTSP parsers. While the Zebu-based parsers reject 100% of the invalid
+mutated messages, none of the existing parsers that we have tested
+detects more than about 25% of the injected mutants.</p>
+</div>
+</li>
+<li id="S1.I1.i4" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i4.p1" class="ltx_para">
+<p id="S1.I1.i4.p1.1" class="ltx_p">Finally, we show that the added safety and robustness provided by
+Zebu does not significantly impact performance. Indeed, our performance
+evaluation shows that a Zebu-based parser can be as efficient on average as a
+hand-crafted one.</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="S1.SS0.SSS0.Px1.p2" class="ltx_para">
+<p id="S1.SS0.SSS0.Px1.p2.1" class="ltx_p">The rest of this paper is organized as follows. Section <a href="#S2" title="2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>
+discusses specific characteristics of network protocol message parsing
+code, illustrating its inherent complexity. Section <a href="#S3" title="3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>
+introduces the Zebu language, and describes the verification of
+specifications and the generation of parsing stub functions.
+Section <a href="#S4" title="4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a> assesses the robustness and performance of
+Zebu-based parsers. Section <a href="#S5" title="5 Related Work" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a> described related work and
+Section <a href="#S6" title="6 Conclusion" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a> concludes.</p>
+</div>
+</section>
+</section>
+<section id="S2" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">2 </span>Issues in developing network protocol 
+<br class="ltx_break">parsers</h2>
+
+<div id="S2.p1" class="ltx_para">
+<p id="S2.p1.1" class="ltx_p">To illustrate the growing complexity of network protocol messages and the
+inadequacy of existing approaches to creating the associated parsers, we
+consider the SIP protocol <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib26" title="" class="ltx_ref">26</a>]</cite>. The SIP message syntax is
+similar to that of other recent text-based protocols such as HTTP and RTSP.
+A SIP message begins with a line indicating whether the message is a
+request (including a protocol method name) or a response (including a
+return code). A sequence of required and optional headers then follows.
+Finally, a SIP message can include a body containing the payload. Widely
+used SIP parsers include that of the SIP Express Router
+(SER) <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib23" title="" class="ltx_ref">23</a>]</cite> and the oSIP library <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib20" title="" class="ltx_ref">20</a>]</cite> used <span id="S2.p1.1.1" class="ltx_text ltx_font_italic">e.g.</span>, in the open PBX Asterisk <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib29" title="" class="ltx_ref">29</a>]</cite>. Both parsers are
+hand-written.</p>
+</div>
+<div id="S2.p2" class="ltx_para">
+<p id="S2.p2.1" class="ltx_p">We first present an extract of the ABNF specification of the SIP message
+grammar, and then describe the difficulty of hand-writing the corresponding
+parser. We next consider to what extent these difficulties are
+addressed by existing parser generation tools, and describe the issues
+involved in integrating a parser with a network application.</p>
+</div>
+<section id="S2.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.1 </span>ABNF formalism</h3>
+
+<div id="S2.SS1.p1" class="ltx_para">
+<p id="S2.SS1.p1.1" class="ltx_p">An extract of the ABNF specification of the SIP message grammar is shown in
+Figure <a href="#S2.F1" title="Figure 1 ‣ 2.1 ABNF formalism ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>. Lines 1 to 8 define the structure of a request
+line, which appears at the beginning of a message, and lines 10 to 13
+define the structure of the CSeq header field, which is used to identify
+the collection of messages making up a single transaction.</p>
+</div>
+<figure id="S2.F1" class="ltx_figure"><pre id="S2.F1.1" class="ltx_verbatim ltx_centering ltx_font_typewriter" style="font-size:70%;">
+ Request-Line = Method SP Request-URI SP SIP-Version CRLF  1
+ Method       = INVITEm / ACKm / OPTIONSm / BYEm           2
+                / CANCELm / REGISTERm                      3
+                / extension-method                         4
+ INVITEm      = %x49.4E.56.49.54.45 ; INVITE in caps       5
+ Request-URI  = SIP-URI / SIPS-URI / absoluteURI           6
+ SIP-Version    =  "SIP" "/" 1*DIGIT "." 1*DIGIT           7
+ extension-method = token                                  8
+ <span id="S2.F1.1.1" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>
+ CSeq = "CSeq" HCOLON 1*DIGIT LWS Method                  10
+ LWS  =  [*WSP CRLF] 1*WSP <span id="S2.F1.1.2" class="ltx_text ltx_font_serif ltx_font_italic">; linear whitespace</span>            11
+ SWS  =  [LWS] <span id="S2.F1.1.3" class="ltx_text ltx_font_serif ltx_font_italic">; sep whitespace</span>                           12
+ HCOLON  =  *( SP / HTAB ) ":" SWS                        13
+  </pre>
+<figcaption class="ltx_caption ltx_centering" style="font-size:70%;"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>Extract of the ABNF of the message syntax from the
+SIP RFC 3261</figcaption>
+</figure>
+<div id="S2.SS1.p2" class="ltx_para">
+<p id="S2.SS1.p2.12" class="ltx_p">An ABNF specification consists of a set of derivation rules, each defining
+a set of alternatives, separated by <span id="S2.SS1.p2.12.1" class="ltx_text ltx_font_typewriter">/</span>. An alternative is a
+sequence of terminals and nonterminals. Among the terminals, a quoted
+string is case insensitive. Case sensitive strings must be specified as an
+explicit sequence of character codes, as in the <span id="S2.SS1.p2.12.2" class="ltx_text ltx_font_typewriter">INVITEm</span> rule
+(line 5). ABNF includes a general form of repetition, <math id="S2.SS1.p2.1.m1.1" class="ltx_Math" alttext="n\mbox{{{*}}}m" display="inline"><semantics id="S2.SS1.p2.1.m1.1a"><mrow id="S2.SS1.p2.1.m1.1.1" xref="S2.SS1.p2.1.m1.1.1.cmml"><mi id="S2.SS1.p2.1.m1.1.1.2" xref="S2.SS1.p2.1.m1.1.1.2.cmml">n</mi><mo lspace="0em" rspace="0em" id="S2.SS1.p2.1.m1.1.1.1" xref="S2.SS1.p2.1.m1.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.1.m1.1.1.3" xref="S2.SS1.p2.1.m1.1.1.3a.cmml">*</mtext><mo lspace="0em" rspace="0em" id="S2.SS1.p2.1.m1.1.1.1a" xref="S2.SS1.p2.1.m1.1.1.1.cmml">​</mo><mi id="S2.SS1.p2.1.m1.1.1.4" xref="S2.SS1.p2.1.m1.1.1.4.cmml">m</mi></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.1.m1.1b"><apply id="S2.SS1.p2.1.m1.1.1.cmml" xref="S2.SS1.p2.1.m1.1.1"><times id="S2.SS1.p2.1.m1.1.1.1.cmml" xref="S2.SS1.p2.1.m1.1.1.1"></times><ci id="S2.SS1.p2.1.m1.1.1.2.cmml" xref="S2.SS1.p2.1.m1.1.1.2">𝑛</ci><ci id="S2.SS1.p2.1.m1.1.1.3a.cmml" xref="S2.SS1.p2.1.m1.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.1.m1.1.1.3.cmml" xref="S2.SS1.p2.1.m1.1.1.3">*</mtext></ci><ci id="S2.SS1.p2.1.m1.1.1.4.cmml" xref="S2.SS1.p2.1.m1.1.1.4">𝑚</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.1.m1.1c">n\mbox{{{*}}}m</annotation></semantics></math>
+<span id="S2.SS1.p2.12.3" class="ltx_text ltx_font_typewriter">X</span>, that indicates that at least <math id="S2.SS1.p2.2.m2.1" class="ltx_Math" alttext="n" display="inline"><semantics id="S2.SS1.p2.2.m2.1a"><mi id="S2.SS1.p2.2.m2.1.1" xref="S2.SS1.p2.2.m2.1.1.cmml">n</mi><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.2.m2.1b"><ci id="S2.SS1.p2.2.m2.1.1.cmml" xref="S2.SS1.p2.2.m2.1.1">𝑛</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.2.m2.1c">n</annotation></semantics></math> and at most <math id="S2.SS1.p2.3.m3.1" class="ltx_Math" alttext="m" display="inline"><semantics id="S2.SS1.p2.3.m3.1a"><mi id="S2.SS1.p2.3.m3.1.1" xref="S2.SS1.p2.3.m3.1.1.cmml">m</mi><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.3.m3.1b"><ci id="S2.SS1.p2.3.m3.1.1.cmml" xref="S2.SS1.p2.3.m3.1.1">𝑚</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.3.m3.1c">m</annotation></semantics></math> occurrences of
+the terminal or nonterminal <span id="S2.SS1.p2.12.4" class="ltx_text ltx_font_typewriter">X</span> must be present. ABNF also defines
+shorthands such as <math id="S2.SS1.p2.4.m4.1" class="ltx_Math" alttext="n\mbox{{{*}}}" display="inline"><semantics id="S2.SS1.p2.4.m4.1a"><mrow id="S2.SS1.p2.4.m4.1.1" xref="S2.SS1.p2.4.m4.1.1.cmml"><mi id="S2.SS1.p2.4.m4.1.1.2" xref="S2.SS1.p2.4.m4.1.1.2.cmml">n</mi><mo lspace="0em" rspace="0em" id="S2.SS1.p2.4.m4.1.1.1" xref="S2.SS1.p2.4.m4.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.4.m4.1.1.3" xref="S2.SS1.p2.4.m4.1.1.3a.cmml">*</mtext></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.4.m4.1b"><apply id="S2.SS1.p2.4.m4.1.1.cmml" xref="S2.SS1.p2.4.m4.1.1"><times id="S2.SS1.p2.4.m4.1.1.1.cmml" xref="S2.SS1.p2.4.m4.1.1.1"></times><ci id="S2.SS1.p2.4.m4.1.1.2.cmml" xref="S2.SS1.p2.4.m4.1.1.2">𝑛</ci><ci id="S2.SS1.p2.4.m4.1.1.3a.cmml" xref="S2.SS1.p2.4.m4.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.4.m4.1.1.3.cmml" xref="S2.SS1.p2.4.m4.1.1.3">*</mtext></ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.4.m4.1c">n\mbox{{{*}}}</annotation></semantics></math> for <math id="S2.SS1.p2.5.m5.1" class="ltx_Math" alttext="n\mbox{{{*}}}\infty" display="inline"><semantics id="S2.SS1.p2.5.m5.1a"><mrow id="S2.SS1.p2.5.m5.1.1" xref="S2.SS1.p2.5.m5.1.1.cmml"><mi id="S2.SS1.p2.5.m5.1.1.2" xref="S2.SS1.p2.5.m5.1.1.2.cmml">n</mi><mo lspace="0em" rspace="0em" id="S2.SS1.p2.5.m5.1.1.1" xref="S2.SS1.p2.5.m5.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.5.m5.1.1.3" xref="S2.SS1.p2.5.m5.1.1.3a.cmml">*</mtext><mo lspace="0em" rspace="0em" id="S2.SS1.p2.5.m5.1.1.1a" xref="S2.SS1.p2.5.m5.1.1.1.cmml">​</mo><mi mathvariant="normal" id="S2.SS1.p2.5.m5.1.1.4" xref="S2.SS1.p2.5.m5.1.1.4.cmml">∞</mi></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.5.m5.1b"><apply id="S2.SS1.p2.5.m5.1.1.cmml" xref="S2.SS1.p2.5.m5.1.1"><times id="S2.SS1.p2.5.m5.1.1.1.cmml" xref="S2.SS1.p2.5.m5.1.1.1"></times><ci id="S2.SS1.p2.5.m5.1.1.2.cmml" xref="S2.SS1.p2.5.m5.1.1.2">𝑛</ci><ci id="S2.SS1.p2.5.m5.1.1.3a.cmml" xref="S2.SS1.p2.5.m5.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.5.m5.1.1.3.cmml" xref="S2.SS1.p2.5.m5.1.1.3">*</mtext></ci><infinity id="S2.SS1.p2.5.m5.1.1.4.cmml" xref="S2.SS1.p2.5.m5.1.1.4"></infinity></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.5.m5.1c">n\mbox{{{*}}}\infty</annotation></semantics></math>, <math id="S2.SS1.p2.6.m6.1" class="ltx_Math" alttext="\mbox{{{*}}}n" display="inline"><semantics id="S2.SS1.p2.6.m6.1a"><mrow id="S2.SS1.p2.6.m6.1.1" xref="S2.SS1.p2.6.m6.1.1.cmml"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.6.m6.1.1.2" xref="S2.SS1.p2.6.m6.1.1.2a.cmml">*</mtext><mo lspace="0em" rspace="0em" id="S2.SS1.p2.6.m6.1.1.1" xref="S2.SS1.p2.6.m6.1.1.1.cmml">​</mo><mi id="S2.SS1.p2.6.m6.1.1.3" xref="S2.SS1.p2.6.m6.1.1.3.cmml">n</mi></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.6.m6.1b"><apply id="S2.SS1.p2.6.m6.1.1.cmml" xref="S2.SS1.p2.6.m6.1.1"><times id="S2.SS1.p2.6.m6.1.1.1.cmml" xref="S2.SS1.p2.6.m6.1.1.1"></times><ci id="S2.SS1.p2.6.m6.1.1.2a.cmml" xref="S2.SS1.p2.6.m6.1.1.2"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.6.m6.1.1.2.cmml" xref="S2.SS1.p2.6.m6.1.1.2">*</mtext></ci><ci id="S2.SS1.p2.6.m6.1.1.3.cmml" xref="S2.SS1.p2.6.m6.1.1.3">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.6.m6.1c">\mbox{{{*}}}n</annotation></semantics></math> for
+<math id="S2.SS1.p2.7.m7.1" class="ltx_Math" alttext="0\mbox{{{*}}}n" display="inline"><semantics id="S2.SS1.p2.7.m7.1a"><mrow id="S2.SS1.p2.7.m7.1.1" xref="S2.SS1.p2.7.m7.1.1.cmml"><mn id="S2.SS1.p2.7.m7.1.1.2" xref="S2.SS1.p2.7.m7.1.1.2.cmml">0</mn><mo lspace="0em" rspace="0em" id="S2.SS1.p2.7.m7.1.1.1" xref="S2.SS1.p2.7.m7.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.7.m7.1.1.3" xref="S2.SS1.p2.7.m7.1.1.3a.cmml">*</mtext><mo lspace="0em" rspace="0em" id="S2.SS1.p2.7.m7.1.1.1a" xref="S2.SS1.p2.7.m7.1.1.1.cmml">​</mo><mi id="S2.SS1.p2.7.m7.1.1.4" xref="S2.SS1.p2.7.m7.1.1.4.cmml">n</mi></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.7.m7.1b"><apply id="S2.SS1.p2.7.m7.1.1.cmml" xref="S2.SS1.p2.7.m7.1.1"><times id="S2.SS1.p2.7.m7.1.1.1.cmml" xref="S2.SS1.p2.7.m7.1.1.1"></times><cn type="integer" id="S2.SS1.p2.7.m7.1.1.2.cmml" xref="S2.SS1.p2.7.m7.1.1.2">0</cn><ci id="S2.SS1.p2.7.m7.1.1.3a.cmml" xref="S2.SS1.p2.7.m7.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.7.m7.1.1.3.cmml" xref="S2.SS1.p2.7.m7.1.1.3">*</mtext></ci><ci id="S2.SS1.p2.7.m7.1.1.4.cmml" xref="S2.SS1.p2.7.m7.1.1.4">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.7.m7.1c">0\mbox{{{*}}}n</annotation></semantics></math>, <span id="S2.SS1.p2.12.5" class="ltx_text ltx_markedasmath ltx_font_typewriter">*</span> for <math id="S2.SS1.p2.9.m9.1" class="ltx_Math" alttext="0\mbox{{{*}}}\infty" display="inline"><semantics id="S2.SS1.p2.9.m9.1a"><mrow id="S2.SS1.p2.9.m9.1.1" xref="S2.SS1.p2.9.m9.1.1.cmml"><mn id="S2.SS1.p2.9.m9.1.1.2" xref="S2.SS1.p2.9.m9.1.1.2.cmml">0</mn><mo lspace="0em" rspace="0em" id="S2.SS1.p2.9.m9.1.1.1" xref="S2.SS1.p2.9.m9.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.9.m9.1.1.3" xref="S2.SS1.p2.9.m9.1.1.3a.cmml">*</mtext><mo lspace="0em" rspace="0em" id="S2.SS1.p2.9.m9.1.1.1a" xref="S2.SS1.p2.9.m9.1.1.1.cmml">​</mo><mi mathvariant="normal" id="S2.SS1.p2.9.m9.1.1.4" xref="S2.SS1.p2.9.m9.1.1.4.cmml">∞</mi></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.9.m9.1b"><apply id="S2.SS1.p2.9.m9.1.1.cmml" xref="S2.SS1.p2.9.m9.1.1"><times id="S2.SS1.p2.9.m9.1.1.1.cmml" xref="S2.SS1.p2.9.m9.1.1.1"></times><cn type="integer" id="S2.SS1.p2.9.m9.1.1.2.cmml" xref="S2.SS1.p2.9.m9.1.1.2">0</cn><ci id="S2.SS1.p2.9.m9.1.1.3a.cmml" xref="S2.SS1.p2.9.m9.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.9.m9.1.1.3.cmml" xref="S2.SS1.p2.9.m9.1.1.3">*</mtext></ci><infinity id="S2.SS1.p2.9.m9.1.1.4.cmml" xref="S2.SS1.p2.9.m9.1.1.4"></infinity></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.9.m9.1c">0\mbox{{{*}}}\infty</annotation></semantics></math> and <math id="S2.SS1.p2.10.m10.1" class="ltx_Math" alttext="n" display="inline"><semantics id="S2.SS1.p2.10.m10.1a"><mi id="S2.SS1.p2.10.m10.1.1" xref="S2.SS1.p2.10.m10.1.1.cmml">n</mi><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.10.m10.1b"><ci id="S2.SS1.p2.10.m10.1.1.cmml" xref="S2.SS1.p2.10.m10.1.1">𝑛</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.10.m10.1c">n</annotation></semantics></math> for
+<math id="S2.SS1.p2.11.m11.1" class="ltx_Math" alttext="n\mbox{{{*}}}n" display="inline"><semantics id="S2.SS1.p2.11.m11.1a"><mrow id="S2.SS1.p2.11.m11.1.1" xref="S2.SS1.p2.11.m11.1.1.cmml"><mi id="S2.SS1.p2.11.m11.1.1.2" xref="S2.SS1.p2.11.m11.1.1.2.cmml">n</mi><mo lspace="0em" rspace="0em" id="S2.SS1.p2.11.m11.1.1.1" xref="S2.SS1.p2.11.m11.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.11.m11.1.1.3" xref="S2.SS1.p2.11.m11.1.1.3a.cmml">*</mtext><mo lspace="0em" rspace="0em" id="S2.SS1.p2.11.m11.1.1.1a" xref="S2.SS1.p2.11.m11.1.1.1.cmml">​</mo><mi id="S2.SS1.p2.11.m11.1.1.4" xref="S2.SS1.p2.11.m11.1.1.4.cmml">n</mi></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.11.m11.1b"><apply id="S2.SS1.p2.11.m11.1.1.cmml" xref="S2.SS1.p2.11.m11.1.1"><times id="S2.SS1.p2.11.m11.1.1.1.cmml" xref="S2.SS1.p2.11.m11.1.1.1"></times><ci id="S2.SS1.p2.11.m11.1.1.2.cmml" xref="S2.SS1.p2.11.m11.1.1.2">𝑛</ci><ci id="S2.SS1.p2.11.m11.1.1.3a.cmml" xref="S2.SS1.p2.11.m11.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.11.m11.1.1.3.cmml" xref="S2.SS1.p2.11.m11.1.1.3">*</mtext></ci><ci id="S2.SS1.p2.11.m11.1.1.4.cmml" xref="S2.SS1.p2.11.m11.1.1.4">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.11.m11.1c">n\mbox{{{*}}}n</annotation></semantics></math>. Therefore, <math id="S2.SS1.p2.12.m12.1" class="ltx_Math" alttext="1\mbox{{{*}}}" display="inline"><semantics id="S2.SS1.p2.12.m12.1a"><mrow id="S2.SS1.p2.12.m12.1.1" xref="S2.SS1.p2.12.m12.1.1.cmml"><mn id="S2.SS1.p2.12.m12.1.1.2" xref="S2.SS1.p2.12.m12.1.1.2.cmml">1</mn><mo lspace="0em" rspace="0em" id="S2.SS1.p2.12.m12.1.1.1" xref="S2.SS1.p2.12.m12.1.1.1.cmml">​</mo><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.12.m12.1.1.3" xref="S2.SS1.p2.12.m12.1.1.3a.cmml">*</mtext></mrow><annotation-xml encoding="MathML-Content" id="S2.SS1.p2.12.m12.1b"><apply id="S2.SS1.p2.12.m12.1.1.cmml" xref="S2.SS1.p2.12.m12.1.1"><times id="S2.SS1.p2.12.m12.1.1.1.cmml" xref="S2.SS1.p2.12.m12.1.1.1"></times><cn type="integer" id="S2.SS1.p2.12.m12.1.1.2.cmml" xref="S2.SS1.p2.12.m12.1.1.2">1</cn><ci id="S2.SS1.p2.12.m12.1.1.3a.cmml" xref="S2.SS1.p2.12.m12.1.1.3"><mtext class="ltx_mathvariant_monospace" id="S2.SS1.p2.12.m12.1.1.3.cmml" xref="S2.SS1.p2.12.m12.1.1.3">*</mtext></ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS1.p2.12.m12.1c">1\mbox{{{*}}}</annotation></semantics></math><span id="S2.SS1.p2.12.6" class="ltx_text ltx_font_typewriter">DIGIT</span> in the <span id="S2.SS1.p2.12.7" class="ltx_text ltx_font_typewriter">CSeq</span> rule
+(line 10) represents a sequence of digits of length at least 1. Brackets
+are used as a shorthand for <span id="S2.SS1.p2.12.8" class="ltx_text ltx_font_typewriter">0*1</span>.</p>
+</div>
+</section>
+<section id="S2.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.2 </span>Hand-writing parsers</h3>
+
+<div id="S2.SS2.p1" class="ltx_para">
+<p id="S2.SS2.p1.1" class="ltx_p">The specification of the <span id="S2.SS2.p1.1.1" class="ltx_text ltx_font_typewriter">CSeq</span> header in Figure <a href="#S2.F1" title="Figure 1 ‣ 2.1 ABNF formalism ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>
+amounts to only four lines of ABNF. However, implementing parsing based on
+such an ABNF specification efficiently in a general-purpose language such
+as C or C++ often requires many lines of code. For example, SER and oSIP
+contain about 200 and 340 lines of C and C++ code, respectively,
+specifically for parsing the <span id="S2.SS2.p1.1.2" class="ltx_text ltx_font_typewriter">CSeq</span> header. This
+<span id="S2.SS2.p1.1.3" class="ltx_text ltx_font_typewriter">CSeq</span>-specific code includes operations for reading individual
+characters from the message, operations for transitioning in a state
+machine according to the characters that are read, calls to various generic
+header parsing operations, and error checking code. Among the complexities
+encountered is the fact that, as shown in Figure <a href="#S2.F1" title="Figure 1 ‣ 2.1 ABNF formalism ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>, a
+<span id="S2.SS2.p1.1.4" class="ltx_text ltx_font_typewriter">CSeq</span> header value can stretch over multiple lines if the
+continuation line begins with a space or horizontal tab (<span id="S2.SS2.p1.1.5" class="ltx_text ltx_font_typewriter">WSP</span>).</p>
+</div>
+<div id="S2.SS2.p2" class="ltx_para">
+<p id="S2.SS2.p2.1" class="ltx_p">In addition to the constraints described by the ABNF specification, the
+parser developer has to take into account constraints on the message
+structure that are informally specified in the text of the RFC. For
+example, the <span id="S2.SS2.p2.1.1" class="ltx_text ltx_font_typewriter">CSeq</span> header includes a <span id="S2.SS2.p2.1.2" class="ltx_text ltx_font_italic">CSeq number</span> expressed
+as any sequence of at least one digit (<span id="S2.SS2.p2.1.3" class="ltx_text ltx_font_typewriter">1*DIGIT</span>) and a <span id="S2.SS2.p2.1.4" class="ltx_text ltx_font_italic">CSeq
+method</span> (<span id="S2.SS2.p2.1.5" class="ltx_text ltx_font_typewriter">Method</span>). The SIP RFC states that the CSeq number must be
+an unsigned integer that is less than <math id="S2.SS2.p2.1.m1.1" class="ltx_Math" alttext="2^{31}" display="inline"><semantics id="S2.SS2.p2.1.m1.1a"><msup id="S2.SS2.p2.1.m1.1.1" xref="S2.SS2.p2.1.m1.1.1.cmml"><mn id="S2.SS2.p2.1.m1.1.1.2" xref="S2.SS2.p2.1.m1.1.1.2.cmml">2</mn><mn id="S2.SS2.p2.1.m1.1.1.3" xref="S2.SS2.p2.1.m1.1.1.3.cmml">31</mn></msup><annotation-xml encoding="MathML-Content" id="S2.SS2.p2.1.m1.1b"><apply id="S2.SS2.p2.1.m1.1.1.cmml" xref="S2.SS2.p2.1.m1.1.1"><csymbol cd="ambiguous" id="S2.SS2.p2.1.m1.1.1.1.cmml" xref="S2.SS2.p2.1.m1.1.1">superscript</csymbol><cn type="integer" id="S2.SS2.p2.1.m1.1.1.2.cmml" xref="S2.SS2.p2.1.m1.1.1.2">2</cn><cn type="integer" id="S2.SS2.p2.1.m1.1.1.3.cmml" xref="S2.SS2.p2.1.m1.1.1.3">31</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.SS2.p2.1.m1.1c">2^{31}</annotation></semantics></math> and that the CSeq method
+must be the same as the method specified in the request line. However,
+existing hand-written implementations do not always check all these
+requirements. For example, oSIP converts the CSeq number to an integer
+without performing any verification. If the CSeq number contains any
+non-numeric characters, the result is a meaningless value.</p>
+</div>
+</section>
+<section id="S2.SS3" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.3 </span>Using parser generators</h3>
+
+<div id="S2.SS3.p1" class="ltx_para">
+<p id="S2.SS3.p1.1" class="ltx_p">PADS and binpac use a type-declaration like format for specifying message
+grammars, while GAPA uses a BNF-like format. Both of these formats require
+reorganizing the information in the ABNF specification. We take PADS as a
+concrete example. Figure <a href="#S2.F2" title="Figure 2 ‣ 2.3 Using parser generators ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> shows a PADS specification
+corresponding to the four lines of ABNF describing the CSeq header. This
+specification is in the spirit of the HTTP specification provided by the
+PADS developers <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib21" title="" class="ltx_ref">21</a>]</cite>.</p>
+</div>
+<figure id="S2.F2" class="ltx_figure"><pre id="S2.F2.16" class="ltx_verbatim ltx_centering ltx_font_typewriter" style="font-size:70%;">
+  bool chkCseqMethod (request_line_t r, Cseq_t c) {    1
+     return ( r.method == c.method );                   2
+  }                                                    3
+
+  Ptypedef Puint16_FW(:3:) Cseq_number_t :              5
+     CSeq_t x =&gt; { 100 &lt;= x &amp;&amp; x &lt; 699 };           6
+
+  Pstruct wsp_crlf_t {                                 8
+     PString_ME(:"(<math id="S2.F2.1.m1.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.1.m1.1a"><mo id="S2.F2.1.m1.1.1" xref="S2.F2.1.m1.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.1.m1.1b"><ci id="S2.F2.1.m1.1.1.cmml" xref="S2.F2.1.m1.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.1.m1.1c">\backslash</annotation></semantics></math><math id="S2.F2.2.m2.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.2.m2.1a"><mo id="S2.F2.2.m2.1.1" xref="S2.F2.2.m2.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.2.m2.1b"><ci id="S2.F2.2.m2.1.1.cmml" xref="S2.F2.2.m2.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.2.m2.1c">\backslash</annotation></semantics></math>s|<math id="S2.F2.3.m3.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.3.m3.1a"><mo id="S2.F2.3.m3.1.1" xref="S2.F2.3.m3.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.3.m3.1b"><ci id="S2.F2.3.m3.1.1.cmml" xref="S2.F2.3.m3.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.3.m3.1c">\backslash</annotation></semantics></math><math id="S2.F2.4.m4.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.4.m4.1a"><mo id="S2.F2.4.m4.1.1" xref="S2.F2.4.m4.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.4.m4.1b"><ci id="S2.F2.4.m4.1.1.cmml" xref="S2.F2.4.m4.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.4.m4.1c">\backslash</annotation></semantics></math>t)* <math id="S2.F2.5.m5.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.5.m5.1a"><mo id="S2.F2.5.m5.1.1" xref="S2.F2.5.m5.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.5.m5.1b"><ci id="S2.F2.5.m5.1.1.cmml" xref="S2.F2.5.m5.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.5.m5.1c">\backslash</annotation></semantics></math><math id="S2.F2.6.m6.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.6.m6.1a"><mo id="S2.F2.6.m6.1.1" xref="S2.F2.6.m6.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.6.m6.1b"><ci id="S2.F2.6.m6.1.1.cmml" xref="S2.F2.6.m6.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.6.m6.1c">\backslash</annotation></semantics></math>r<math id="S2.F2.7.m7.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.7.m7.1a"><mo id="S2.F2.7.m7.1.1" xref="S2.F2.7.m7.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.7.m7.1b"><ci id="S2.F2.7.m7.1.1.cmml" xref="S2.F2.7.m7.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.7.m7.1c">\backslash</annotation></semantics></math><math id="S2.F2.8.m8.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.8.m8.1a"><mo id="S2.F2.8.m8.1.1" xref="S2.F2.8.m8.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.8.m8.1b"><ci id="S2.F2.8.m8.1.1.cmml" xref="S2.F2.8.m8.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.8.m8.1c">\backslash</annotation></semantics></math>n":) wsp;             9
+  };                                                   10
+
+  POpt wsp_crlf_t o_wsp_crlf_t;           12
+
+  Pstruct lws_t {                        14
+     o_wsp_crlf_t wsp_crlf;               15
+     PString_ME(:"(<math id="S2.F2.9.m9.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.9.m9.1a"><mo id="S2.F2.9.m9.1.1" xref="S2.F2.9.m9.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.9.m9.1b"><ci id="S2.F2.9.m9.1.1.cmml" xref="S2.F2.9.m9.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.9.m9.1c">\backslash</annotation></semantics></math><math id="S2.F2.10.m10.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.10.m10.1a"><mo id="S2.F2.10.m10.1.1" xref="S2.F2.10.m10.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.10.m10.1b"><ci id="S2.F2.10.m10.1.1.cmml" xref="S2.F2.10.m10.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.10.m10.1c">\backslash</annotation></semantics></math>s|<math id="S2.F2.11.m11.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.11.m11.1a"><mo id="S2.F2.11.m11.1.1" xref="S2.F2.11.m11.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.11.m11.1b"><ci id="S2.F2.11.m11.1.1.cmml" xref="S2.F2.11.m11.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.11.m11.1c">\backslash</annotation></semantics></math><math id="S2.F2.12.m12.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.12.m12.1a"><mo id="S2.F2.12.m12.1.1" xref="S2.F2.12.m12.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.12.m12.1b"><ci id="S2.F2.12.m12.1.1.cmml" xref="S2.F2.12.m12.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.12.m12.1c">\backslash</annotation></semantics></math>t)+":) wsp;        16
+  };                                     17
+
+  POpt lws_t sws_t;                     19
+
+  Pstruct hcolon_t {                     21
+     PString_ME(:"(<math id="S2.F2.13.m13.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.13.m13.1a"><mo id="S2.F2.13.m13.1.1" xref="S2.F2.13.m13.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.13.m13.1b"><ci id="S2.F2.13.m13.1.1.cmml" xref="S2.F2.13.m13.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.13.m13.1c">\backslash</annotation></semantics></math><math id="S2.F2.14.m14.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.14.m14.1a"><mo id="S2.F2.14.m14.1.1" xref="S2.F2.14.m14.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.14.m14.1b"><ci id="S2.F2.14.m14.1.1.cmml" xref="S2.F2.14.m14.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.14.m14.1c">\backslash</annotation></semantics></math>s|<math id="S2.F2.15.m15.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.15.m15.1a"><mo id="S2.F2.15.m15.1.1" xref="S2.F2.15.m15.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.15.m15.1b"><ci id="S2.F2.15.m15.1.1.cmml" xref="S2.F2.15.m15.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.15.m15.1c">\backslash</annotation></semantics></math><math id="S2.F2.16.m16.1" class="ltx_Math" alttext="\backslash" display="inline"><semantics id="S2.F2.16.m16.1a"><mo id="S2.F2.16.m16.1.1" xref="S2.F2.16.m16.1.1.cmml">\</mo><annotation-xml encoding="MathML-Content" id="S2.F2.16.m16.1b"><ci id="S2.F2.16.m16.1.1.cmml" xref="S2.F2.16.m16.1.1">\</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F2.16.m16.1c">\backslash</annotation></semantics></math>t)*":) sp_or_htab;      22
+     ’:’;   sws_t   sws;                23
+  };                                     24
+
+  Pstruct CSeq_t {                       26
+     PString_ME(:"[Cc][Ss][Ee][Qq]":) name;   27
+     hcolon_t hcolon;                     28
+     CSeq_number_t number;                29
+     lws_t lws;                           30
+     method_t method;                     31
+  };                                     32
+
+  Precord Pstruct SIP_msg {              34
+     request_line_t request_line;         35
+     <span id="S2.F2.16.1" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>
+     CSeq_t cseq: checkCSeqMethod(request_line,cseq);  37
+     <span id="S2.F2.16.2" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>
+  };                                     39
+  </pre>
+<figcaption class="ltx_caption ltx_centering" style="font-size:70%;"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>PADS specification of the SIP RFC 3261</figcaption>
+</figure>
+<div id="S2.SS3.p2" class="ltx_para">
+<p id="S2.SS3.p2.1" class="ltx_p">A PADS specification describes both the grammar and the data structures
+that will contain the result of parsing the message. Thus, the rules of
+the ABNF specification are translated into what amount to structure
+declarations in PADS. As a PADS structure must be declared before it is
+used, the rule ordering is often forced to be different than that of the
+ABNF specification. For example, in the ABNF specification, the
+<span id="S2.SS3.p2.1.1" class="ltx_text ltx_font_typewriter">CSeq</span> nonterminal is defined before the <span id="S2.SS3.p2.1.2" class="ltx_text ltx_font_typewriter">LWS</span>, <span id="S2.SS3.p2.1.3" class="ltx_text ltx_font_typewriter">SWS</span>,
+and <span id="S2.SS3.p2.1.4" class="ltx_text ltx_font_typewriter">HCOLON</span> nonterminals, while in the PADS specification, the
+structure corresponding to the <span id="S2.SS3.p2.1.5" class="ltx_text ltx_font_typewriter">CSeq</span> nonterminal is defined
+afterwards (line 26). PADS also does not implement the same default
+parsing strategies as ABNF, and thus <span id="S2.SS3.p2.1.6" class="ltx_text ltx_font_italic">e.g.</span>, case insensitive strings
+must be specified explicitly using regular expressions (line 27).
+Similarly, translating SIP whitespace into PADS requires writing many lines
+of specifications (lines 8-19), including regular expressions. Finally,
+the PADS specification must express the various constraints contained in
+the RFC text. Although PADS allows the developer to define constrained
+types (lines 5 to 6), which are used here in the case of the CSeq number
+(line 29), non-type constraints such as the relationship between the method
+mentioned in the request line and the method mentioned in the CSeq header
+must be implemented by arbitrary C code (lines 1 to 2 and line 37).</p>
+</div>
+<div id="S2.SS3.p3" class="ltx_para">
+<p id="S2.SS3.p3.1" class="ltx_p">Of these issues, probably the most difficult for the programmer is to
+convert ABNF specifications to regular expressions. Regular expressions
+for even simple ABNF specifications are often complex and voluminous. For
+example, a regular expression for a URI has been published that is 45 lines
+of code <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib1" title="" class="ltx_ref">1</a>]</cite>. While a tool has been developed to convert
+an ABNF specification to a regular expression <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib1" title="" class="ltx_ref">1</a>]</cite>, in the
+PADS, GAPA, and binpac specifications that we have seen, the regular
+expressions appear to have been written by hand, and sometimes do not
+capture all of the constraints specified by the RFC.</p>
+</div>
+</section>
+<section id="S2.SS4" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.4 </span>Integrating a parser with an 
+<br class="ltx_break">application</h3>
+
+<div id="S2.SS4.p1" class="ltx_para">
+<p id="S2.SS4.p1.1" class="ltx_p">The ease of integrating a parser with an application depends on whether the
+parser parses the fields needed by the application, and whether the result
+of this parsing is stored in appropriate data structures. We consider the
+issues that arise when using the handwritten oSIP and SER parsers,
+and when using a parser generated by a tool such as PADS.</p>
+</div>
+<div id="S2.SS4.p2" class="ltx_para">
+<p id="S2.SS4.p2.1" class="ltx_p">oSIP parses the fixed set of required SIP header fields, and separates the
+rest of the message into pairs of a header field name and the corresponding
+raw unparsed data. Applications that do not use all of the information in
+the required header fields incur the time cost of parsing this information
+and the space cost of storing the result (see Section <a href="#S4" title="4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>).
+Applications that use the many SIP extensions must parse these header
+fields themselves. The former increases the application time and space
+requirements, which can be critical in the case of in-network applications
+such as proxies, while the latter leaves the application developer on his
+own to develop complex parsing code.</p>
+</div>
+<div id="S2.SS4.p3" class="ltx_para">
+<p id="S2.SS4.p3.1" class="ltx_p">SER provides more fine-grained parsing than oSIP, as it parses only those
+header fields that are requested by the application. By default, however,
+SER only gives direct access to the top-level subfields of a header, such
+as the complete URI. To extract, <span id="S2.SS4.p3.1.1" class="ltx_text ltx_font_italic">e.g.</span>, only the host portion of a
+URI, the programmer must intervene. One approach is for an application
+built using SER to reparse the subfield, to obtain the desired
+information. SER applications are written using a domain-specific language
+targeted towards routing, which does not provide string-matching
+facilities. Nevertheless, SER provides an escape from this language,
+allowing a SER application to invoke an arbitrary shell script. A SER
+application can thus invoke a script written in a language such as Perl to
+extract the desired information. This approach, however, incurs a high
+performance penalty for forking a new process, as we show in Section
+<a href="#S4" title="4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>, and compromises the safety benefits of using the SER
+language. Another approach is to use the SER extension framework, which,
+<span id="S2.SS4.p3.1.2" class="ltx_text ltx_font_italic">à la</span> Apache <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib2" title="" class="ltx_ref">2</a>]</cite>, allows integrating new modules into the
+parsing process. Although efficient, this approach requires the
+programmer to write low level C code that conforms to rather contorted
+requirements. Again, incorrect behavior inside a module may compromise the
+robustness of the whole application.</p>
+</div>
+<div id="S2.SS4.p4" class="ltx_para">
+<p id="S2.SS4.p4.1" class="ltx_p">Finally, parser generators such as PADS allow the developer to construct
+the parser such that it parses only as much of the message as is needed.
+However, the generated data structures directly follow the specified
+parsing rules, implying that accessing message fields often requires long
+chains of structure field references. Furthermore, all of the parsed data
+is stored, which increases the memory footprint.</p>
+</div>
+</section>
+</section>
+<section id="S3" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">3 </span>Robust Parser Development with Zebu</h2>
+
+<div id="S3.p1" class="ltx_para">
+<p id="S3.p1.1" class="ltx_p">We now present the Zebu language for describing HTTP-like text-based
+protocol message formats and related processing constraints. Zebu is based
+on ABNF, as found in RFCs, and extends it with annotations indicating which
+message fields should be stored in data structures and other semantic
+attributes. These annotations express both constraints derived from the
+protocol RFC and constraints that are specific to the target application.
+From a Zebu specification, a compiler automatically generates stubs to be
+used by the application to process network messages.</p>
+</div>
+<div id="S3.p2" class="ltx_para">
+<p id="S3.p2.1" class="ltx_p">The features of Zebu are driven by the kinds of information that an
+application may want to extract from a network protocol message. We first
+consider the features that are needed to do this processing robustly and
+efficiently, and then present the corresponding annotations that the
+programmer must add to the ABNF specification so that the Zebu compiler can
+generate the appropriate stub functions. Finally, we describe the Zebu
+compiler, which performs both verification and code generation, and the
+process of constructing an application with Zebu.</p>
+</div>
+<section id="S3.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.1 </span>Issues</h3>
+
+<div id="S3.SS1.p1" class="ltx_para">
+<p id="S3.SS1.p1.1" class="ltx_p">A HTTP-like text-based network message consists of a command line, a
+collection of header fields, and a message body. The command line
+indicates whether the message is a request or a response, and identifies
+basic information such as the version of the protocol and the method of a
+request message. A header field specifies a protocol-specific key and an
+associated value, which may be composed of a number of subfields. Finally,
+the message body consists of free text whose structure is typically not
+specified by the protocol. Thus, decomposing it further falls out of the
+scope of Zebu.</p>
+</div>
+<div id="S3.SS1.p2" class="ltx_para">
+<p id="S3.SS1.p2.1" class="ltx_p">From the contents of a message, an application may need to determine
+whether the message is a request or a response, to detect the presence of a
+particular header field, or to extract command line or header field
+subfields. Each of these operations involves retrieving a command line or
+header field, and potentially accessing its contents. In a HTTP-like
+text-based protocol, each command line or header field normally occupies
+one or more complete lines, where each line after the first begins with a
+special continuation character. Thus, as exemplified by the very efficient
+SIP parser SER, a parser can be constructed in two levels: a top-level
+parser that simply scans each line of the message until it reaches the
+desired command line or header field, and a collection of dedicated parsers
+that process each type of command line or header field. The dedicated
+parsers must respect both the ABNF specification and any constraints
+specified informally in the RFC. To avoid reparsing already parsed message
+elements for each requested parsing operation, the parser should save all
+parsed data in data structures for later use, ideally in the format desired
+by the application.</p>
+</div>
+<div id="S3.SS1.p3" class="ltx_para">
+<p id="S3.SS1.p3.1" class="ltx_p">This analysis suggests that to enable the Zebu compiler to generate a
+useful and efficient parser, the programmer must annotate the ABNF
+specification obtained from an RFC with the following information: (1) An
+indication of the nonterminal representing the entry point for parsing each
+possible command line and header field. (2) A specification of any
+constraints on the message structure that are informally described by the
+RFC. (3) An indication of the message subfields that will be used by the
+application. The first two kinds of annotations are generic to the
+protocol, and can thus be reused in generating parsers for multiple
+applications. The third kind of annotation is application-specific. This
+kind of annotation can be viewed as a simplified form of the action that
+can be specified when using <span id="S3.SS1.p3.1.1" class="ltx_text ltx_font_typewriter">yacc</span> and other similar parser
+generators, in that it allows the programmer to customize the memory layout
+used by the parser to the specific needs of the application.</p>
+</div>
+</section>
+<section id="S3.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.2 </span>Annotating an ABNF specification</h3>
+
+<div id="S3.SS2.p1" class="ltx_para">
+<p id="S3.SS2.p1.1" class="ltx_p">We present the three kinds of annotations required by Zebu, using as an
+example an extract of the Zebu specification of a SIP parser, as shown in
+Figure <a href="#S3.F3" title="Figure 3 ‣ 3.2 Annotating an ABNF specification ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>.</p>
+</div>
+<figure id="S3.F3" class="ltx_figure">
+<ul id="S3.I1" class="ltx_itemize ltx_centering">
+<li id="S3.I1.ix1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item"></span>
+<div id="S3.I1.ix1.p1" class="ltx_para ltx_minipage ltx_align_middle" style="width:433.6pt;">
+<pre id="S3.I1.ix1.p1.1" class="ltx_verbatim ltx_font_typewriter" style="font-size:70%;">
+<span id="S3.I1.ix1.p1.1.1" class="ltx_text ltx_font_serif ltx_font_bold">message</span> sip3261 <span id="S3.I1.ix1.p1.1.2" class="ltx_text ltx_font_serif ltx_font_bold">–</span>                                 1
+    <span id="S3.I1.ix1.p1.1.3" class="ltx_text ltx_font_serif ltx_font_bold">request –</span>                                2
+        ; <span id="S3.I1.ix1.p1.1.4" class="ltx_text ltx_font_serif ltx_font_italic">Request only</span>        3
+        <span id="S3.I1.ix1.p1.1.5" class="ltx_text ltx_font_serif ltx_font_bold">requestLine</span> <span id="S3.I1.ix1.p1.1.6" class="ltx_text ltx_font_serif ltx_font_bold">=</span> Method<span id="S3.I1.ix1.p1.1.7" class="ltx_text ltx_font_sansserif">:method</span> SP  Request-URI<span id="S3.I1.ix1.p1.1.8" class="ltx_text ltx_font_sansserif">:uri</span>  SP SIP-Version         4
+
+        ; <span id="S3.I1.ix1.p1.1.9" class="ltx_text ltx_font_serif ltx_font_italic">Constraints that apply only for the CSeq of a request</span>  6
+        <span id="S3.I1.ix1.p1.1.10" class="ltx_text ltx_font_serif ltx_font_bold">header</span> CSeq <span id="S3.I1.ix1.p1.1.11" class="ltx_text ltx_font_serif ltx_font_bold">–</span> CSeq.method == requestLine.method <span id="S3.I1.ix1.p1.1.12" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>        7
+
+        ; <span id="S3.I1.ix1.p1.1.13" class="ltx_text ltx_font_serif ltx_font_italic">Constraints that apply only for the Max-Forwards of a request</span> 9
+        <span id="S3.I1.ix1.p1.1.14" class="ltx_text ltx_font_serif ltx_font_bold">header</span> Max-Forwards <span id="S3.I1.ix1.p1.1.15" class="ltx_text ltx_font_serif ltx_font_bold">–</span> <span id="S3.I1.ix1.p1.1.16" class="ltx_text ltx_font_serif ltx_font_bold">mandatory</span> <span id="S3.I1.ix1.p1.1.17" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>        10
+
+    <span id="S3.I1.ix1.p1.1.18" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>                12
+
+    <span id="S3.I1.ix1.p1.1.19" class="ltx_text ltx_font_serif ltx_font_bold">response –</span>        14
+        ; <span id="S3.I1.ix1.p1.1.20" class="ltx_text ltx_font_serif ltx_font_italic">Response only</span>  15
+        <span id="S3.I1.ix1.p1.1.21" class="ltx_text ltx_font_serif ltx_font_bold">statusLine</span>  <span id="S3.I1.ix1.p1.1.22" class="ltx_text ltx_font_serif ltx_font_bold">=</span> SIP-Version SP Status-Code<span id="S3.I1.ix1.p1.1.23" class="ltx_text ltx_font_sansserif">:code</span> SP Reason-Phrase<span id="S3.I1.ix1.p1.1.24" class="ltx_text ltx_font_sansserif">:rphrase</span>  16
+        <span id="S3.I1.ix1.p1.1.25" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>  17
+    <span id="S3.I1.ix1.p1.1.26" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>        18
+
+    <span id="S3.I1.ix1.p1.1.27" class="ltx_text ltx_font_serif ltx_font_bold">enum</span> Method      =  INVITEm / ACKm / OPTIONSm / BYEm / CANCELm / REGISTERm / extension-method   20
+    extension-method  =  token                                                                                 21
+    INVITEm           =  %x49.4E.56.49.54.45 <span id="S3.I1.ix1.p1.1.28" class="ltx_text ltx_font_serif ltx_font_italic">; INVITE in caps  </span>                                                22
+    <span id="S3.I1.ix1.p1.1.29" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>  23
+
+    <span id="S3.I1.ix1.p1.1.30" class="ltx_text ltx_font_serif ltx_font_bold">struct</span> Request-URI =  SIP-URI / SIPS-URI / absoluteURI <span id="S3.I1.ix1.p1.1.31" class="ltx_text ltx_font_serif ltx_font_bold">– lazy ˝</span>                                           25
+    <span id="S3.I1.ix1.p1.1.32" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>  26
+
+    <span id="S3.I1.ix1.p1.1.33" class="ltx_text ltx_font_serif ltx_font_bold">uint16</span> Status-Code =  Informational / Redirection / Success / Client-Error / Server-Error         28
+                               / Global-Failure / extension-code                              29
+    <span id="S3.I1.ix1.p1.1.34" class="ltx_text ltx_font_serif ltx_font_bold">uint16</span> Global-Failure  =      "600"  <span id="S3.I1.ix1.p1.1.35" class="ltx_text ltx_font_serif ltx_font_italic">;  Busy Everywhere</span>                      30
+                               /  "603"  <span id="S3.I1.ix1.p1.1.36" class="ltx_text ltx_font_serif ltx_font_italic">;  Decline</span>                                  31
+                               /  "604"  <span id="S3.I1.ix1.p1.1.37" class="ltx_text ltx_font_serif ltx_font_italic">;  Does not exist anywhere</span>                  32
+                               /  "606"  <span id="S3.I1.ix1.p1.1.38" class="ltx_text ltx_font_serif ltx_font_italic">;  Not Acceptable </span>                          33
+    <span id="S3.I1.ix1.p1.1.39" class="ltx_text ltx_font_serif ltx_font_bold">uint16</span> extension-code  =  3DIGIT <span id="S3.I1.ix1.p1.1.40" class="ltx_text ltx_font_serif ltx_font_bold">–</span> extension-code &gt;= 100 &amp;&amp; extension-code &lt;= 699 <span id="S3.I1.ix1.p1.1.41" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>        34
+    <span id="S3.I1.ix1.p1.1.42" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>  35
+
+    ; <span id="S3.I1.ix1.p1.1.43" class="ltx_text ltx_font_serif ltx_font_italic">Header CSeq</span>  37
+    <span id="S3.I1.ix1.p1.1.44" class="ltx_text ltx_font_serif ltx_font_bold">header</span> CSeq <span id="S3.I1.ix1.p1.1.45" class="ltx_text ltx_font_serif ltx_font_bold">=</span> 1*DIGIT<span id="S3.I1.ix1.p1.1.46" class="ltx_text ltx_font_sansserif">:number as uint32</span> LWS Method<span id="S3.I1.ix1.p1.1.47" class="ltx_text ltx_font_sansserif">:method</span>      38
+
+    ; <span id="S3.I1.ix1.p1.1.48" class="ltx_text ltx_font_serif ltx_font_italic">Header Max-Forwards</span> 40
+    <span id="S3.I1.ix1.p1.1.49" class="ltx_text ltx_font_serif ltx_font_bold">header</span> Max-Forwards <span id="S3.I1.ix1.p1.1.50" class="ltx_text ltx_font_serif ltx_font_bold">=</span> 1*DIGIT<span id="S3.I1.ix1.p1.1.51" class="ltx_text ltx_font_sansserif">:value as uint32</span> <span id="S3.I1.ix1.p1.1.52" class="ltx_text ltx_font_serif ltx_font_bold">–</span> <span id="S3.I1.ix1.p1.1.53" class="ltx_text ltx_font_serif ltx_font_bold">mandatory</span> <span id="S3.I1.ix1.p1.1.54" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>        41
+
+    ; <span id="S3.I1.ix1.p1.1.55" class="ltx_text ltx_font_serif ltx_font_italic">Header To</span>  43
+    <span id="S3.I1.ix1.p1.1.56" class="ltx_text ltx_font_serif ltx_font_bold">header</span> To <span id="S3.I1.ix1.p1.1.57" class="ltx_text ltx_font_serif ltx_font_bold">–</span> "to" / "t" <span id="S3.I1.ix1.p1.1.58" class="ltx_text ltx_font_serif ltx_font_bold">˝</span> <span id="S3.I1.ix1.p1.1.59" class="ltx_text ltx_font_serif ltx_font_bold">=</span> ( name-addr / addr-spec<span id="S3.I1.ix1.p1.1.60" class="ltx_text ltx_font_sansserif">:uri</span> ) *( SEMI to-param ) <span id="S3.I1.ix1.p1.1.61" class="ltx_text ltx_font_serif ltx_font_bold">– mandatory</span>   44
+    name-addr        =  [ display-name ] LAQUOT addr-spec<span id="S3.I1.ix1.p1.1.62" class="ltx_text ltx_font_sansserif">:uri</span> RAQUOT                                    45
+    <span id="S3.I1.ix1.p1.1.63" class="ltx_text ltx_font_serif ltx_font_bold">struct</span> addr-spec =  SIP-URI / SIPS-URI / absoluteURI <span id="S3.I1.ix1.p1.1.64" class="ltx_text ltx_font_serif ltx_font_bold">– lazy ˝</span>                                           46
+
+    <span id="S3.I1.ix1.p1.1.65" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span>  48
+<span id="S3.I1.ix1.p1.1.66" class="ltx_text ltx_font_serif ltx_font_bold">˝</span>            49
+  </pre>
+</div>
+</li>
+</ul>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>Excerpt of the Zebu Specification for the SIP protocol</figcaption>
+</figure>
+<section id="S3.SS2.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Parser entry points</h4>
+
+<div id="S3.SS2.SSS0.Px1.p1" class="ltx_para">
+<p id="S3.SS2.SSS0.Px1.p1.1" class="ltx_p">The Zebu programmer annotates the rule for parsing the command line of a
+request message with <span id="S3.SS2.SSS0.Px1.p1.1.1" class="ltx_text ltx_font_typewriter">requestLine</span>, the rule for parsing the command
+line of a response message with <span id="S3.SS2.SSS0.Px1.p1.1.2" class="ltx_text ltx_font_typewriter">statusLine</span>, and the rules for
+parsing each kind of header with <span id="S3.SS2.SSS0.Px1.p1.1.3" class="ltx_text ltx_font_typewriter">header</span>. Because a command line
+or header field cannot contain another command line or header field, the
+nonterminals for these lines are no longer useful. In the case of a
+command line, the nonterminal is simply dropped. Thus, for example, the
+ABNF rule for the <span id="S3.SS2.SSS0.Px1.p1.1.4" class="ltx_text ltx_font_typewriter">Request-Line</span> nonterminal
+(Figure <a href="#S2.F1" title="Figure 1 ‣ 2.1 ABNF formalism ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>, line 1) is transformed into the following Zebu
+rule (<span id="S3.SS2.SSS0.Px1.p1.1.5" class="ltx_text ltx_font_italic">c.f.</span>, Figure <a href="#S3.F3" title="Figure 3 ‣ 3.2 Annotating an ABNF specification ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>, line 4):</p>
+</div>
+<div id="S3.SS2.SSS0.Px1.p2" class="ltx_para">
+<pre id="S3.SS2.SSS0.Px1.p2.1" class="ltx_verbatim ltx_font_typewriter" style="font-size:70%;">
+  <span id="S3.SS2.SSS0.Px1.p2.1.1" class="ltx_text ltx_font_serif ltx_font_bold">requestLine</span> <span id="S3.SS2.SSS0.Px1.p2.1.2" class="ltx_text ltx_font_serif ltx_font_bold">=</span> Method SP Request-URI SP SIP-Version
+</pre>
+</div>
+<div id="S3.SS2.SSS0.Px1.p3" class="ltx_para ltx_noindent">
+<p id="S3.SS2.SSS0.Px1.p3.1" class="ltx_p">In the case of a header field, the description of the key is moved from the
+right-hand side of the rule to the left, where it replaces the nonterminal,
+resulting in a rule whose structure is suggestive of a key-value pair. For
+example, the ABNF <span id="S3.SS2.SSS0.Px1.p3.1.1" class="ltx_text ltx_font_typewriter">CSeq</span> rule on line 10 of Figure <a href="#S2.F1" title="Figure 1 ‣ 2.1 ABNF formalism ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>
+is reorganized into the following Zebu rule (<span id="S3.SS2.SSS0.Px1.p3.1.2" class="ltx_text ltx_font_italic">c.f.</span>,
+Figure <a href="#S3.F3" title="Figure 3 ‣ 3.2 Annotating an ABNF specification ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>, line 38)</p>
+</div>
+<div id="S3.SS2.SSS0.Px1.p4" class="ltx_para">
+<pre id="S3.SS2.SSS0.Px1.p4.1" class="ltx_verbatim ltx_font_typewriter" style="font-size:70%;">
+  <span id="S3.SS2.SSS0.Px1.p4.1.1" class="ltx_text ltx_font_serif ltx_font_bold">header</span> CSeq <span id="S3.SS2.SSS0.Px1.p4.1.2" class="ltx_text ltx_font_serif ltx_font_bold">=</span> 1*DIGIT LWS Method
+</pre>
+</div>
+<div id="S3.SS2.SSS0.Px1.p5" class="ltx_para ltx_noindent">
+<p id="S3.SS2.SSS0.Px1.p5.1" class="ltx_p">(The delimiter <span id="S3.SS2.SSS0.Px1.p5.1.1" class="ltx_text ltx_font_typewriter">HCOLON</span> is also dropped, as it is a constant of the
+protocol). Some header fields, such as the SIP <span id="S3.SS2.SSS0.Px1.p5.1.2" class="ltx_text ltx_font_typewriter">To</span> header field,
+can be represented by any of a set of keys. In this case, the header is
+given a name, which is followed by the ABNF specification of the possible
+variants, in braces, as shown in line 44 of Figure <a href="#S3.F3" title="Figure 3 ‣ 3.2 Annotating an ABNF specification ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>.
+As in ABNF, the matching of the header key, and any other string specified
+by a Zebu grammar, is case insensitive.</p>
+</div>
+</section>
+<section id="S3.SS2.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">RFC constraints</h4>
+
+<div id="S3.SS2.SSS0.Px2.p1" class="ltx_para">
+<p id="S3.SS2.SSS0.Px2.p1.1" class="ltx_p">The text of the RFC for a protocol typically indicates how often certain
+header fields may appear, whether header fields can be modified, and
+various constraints on the values of the header subfields. The Zebu
+programmer must annotate the corresponding ABNF rules with these
+constraints. Constraints are specified in braces at the end of a grammar
+rule. Possible atomic constraints are that a header field is mandatory
+(<span id="S3.SS2.SSS0.Px2.p1.1.1" class="ltx_text ltx_font_typewriter">mandatory</span>) and that a header field can appear more than once in a
+message (<span id="S3.SS2.SSS0.Px2.p1.1.2" class="ltx_text ltx_font_typewriter">multiple</span>). For example, in the SIP specification, the header
+<span id="S3.SS2.SSS0.Px2.p1.1.3" class="ltx_text ltx_font_typewriter">To</span> is specified to be mandatory and read-only (line 44). More
+complex constraints can be expressed using C-like boolean expressions. For
+example, in Section <a href="#S2.SS2" title="2.2 Hand-writing parsers ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2.2</span></a>, we noted that in a request message, the
+method mentioned in the command line must be the same as the method
+mentioned in the CSeq header. This constraint is described in line 7.</p>
+</div>
+<div id="S3.SS2.SSS0.Px2.p2" class="ltx_para">
+<p id="S3.SS2.SSS0.Px2.p2.1" class="ltx_p">Some constraints on header fields are specific to either request or
+response messages. Accordingly, the Zebu programmer must group the request
+line and its associated constraints in a <span id="S3.SS2.SSS0.Px2.p2.1.1" class="ltx_text ltx_font_italic">request block</span>, and the
+status line and its associated constraints in a <span id="S3.SS2.SSS0.Px2.p2.1.2" class="ltx_text ltx_font_italic">response block</span>. In
+the case of SIP, the request block (lines 2-12) indicates that for the
+<span id="S3.SS2.SSS0.Px2.p2.1.3" class="ltx_text ltx_font_typewriter">CSeq</span> header the method must be the same as the method in the
+request line (line 7), and that the <span id="S3.SS2.SSS0.Px2.p2.1.4" class="ltx_text ltx_font_typewriter">Max-Forwards</span> header is
+mandatory (line 10). The constraints in the response block (lines 14-18)
+have been elided.</p>
+</div>
+</section>
+<section id="S3.SS2.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Subfields used by the application</h4>
+
+<div id="S3.SS2.SSS0.Px3.p1" class="ltx_para">
+<p id="S3.SS2.SSS0.Px3.p1.1" class="ltx_p">The parsing functions generated by the Zebu compiler create a data
+structure for each command line or header field that is parsed. By
+default, this data structure contains only the type of the command line or
+header field and a pointer to its starting point in the message text. When
+the application will use a certain subfield of the command line or message
+header, the Zebu programmer can annotate the nonterminal deriving this
+subfield with an identifier name. This annotation causes the Zebu compiler
+to create a corresponding entry in the enclosing command line or header
+field data structure. For example, in line 4, the Zebu programmer has
+indicated that the application needs to use the method in the command
+line, which is given the name <span id="S3.SS2.SSS0.Px3.p1.1.1" class="ltx_text ltx_font_sansserif">method</span>, and the URI, which is given
+the name <span id="S3.SS2.SSS0.Px3.p1.1.2" class="ltx_text ltx_font_sansserif">uri</span>.</p>
+</div>
+<div id="S3.SS2.SSS0.Px3.p2" class="ltx_para">
+<p id="S3.SS2.SSS0.Px3.p2.1" class="ltx_p">By default, a subfield is just represented as a pointer to the start of its
+value in the message text. This is the case of <span id="S3.SS2.SSS0.Px3.p2.1.1" class="ltx_text ltx_font_sansserif">method</span> and
+<span id="S3.SS2.SSS0.Px3.p2.1.2" class="ltx_text ltx_font_sansserif">uri</span> in our example. Often, however, the application will need to
+use the value in some other form, such as an integer. The Zebu programmer
+can additionally specify a type for a named value, either at the
+nonterminal reference or at its definition. For example, in line 38 the
+CSeq number is specified as being a <span id="S3.SS2.SSS0.Px3.p2.1.3" class="ltx_text ltx_font_sansserif">uint32</span>. Nonterminals can also be
+specified as structures (<span id="S3.SS2.SSS0.Px3.p2.1.4" class="ltx_text ltx_font_typewriter">struct</span>), unions (<span id="S3.SS2.SSS0.Px3.p2.1.5" class="ltx_text ltx_font_typewriter">union</span>), and
+enumerations (<span id="S3.SS2.SSS0.Px3.p2.1.6" class="ltx_text ltx_font_typewriter">enum</span>). A structure collects all derived named
+subfields. As illustrated in the case of <span id="S3.SS2.SSS0.Px3.p2.1.7" class="ltx_text ltx_font_typewriter">Request-URI</span> (line 25), a
+structure may even be used in the case of an alternation, when the
+application does not need to know from what element of the alternation a
+named entry is derived. A union, in contrast, records which alternation
+was matched and in each case only includes subfields derived from the given
+alternation. Finally, an enumeration is a special case of union in which
+the only information that is recorded is the identity of the matching
+alternation; the matched data is not stored. In line 20, for example,
+<span id="S3.SS2.SSS0.Px3.p2.1.8" class="ltx_text ltx_font_typewriter">Method</span> is specified as being an enumeration, because the
+application only needs to know whether the method of the message is one of
+the standard ones or an extension method, but does not need to know the
+identity of the extension method in the latter case.</p>
+</div>
+<div id="S3.SS2.SSS0.Px3.p3" class="ltx_para">
+<p id="S3.SS2.SSS0.Px3.p3.1" class="ltx_p">An application may use the information in certain subfields only in
+some exceptional cases. The Zebu constraint <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">lazy</span> allows the
+programmer to specify that a specific subfield should not be parsed until
+requested by the application. For example, in the SIP specification,
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">Request-URI</span> has this annotation (line 25).</p>
+</div>
+</section>
+</section>
+<section id="S3.SS3" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.3 </span>The Zebu compiler</h3>
+
+<div id="S3.SS3.p1" class="ltx_para">
+<p id="S3.SS3.p1.1" class="ltx_p">The Zebu compiler verifies the consistency of the ABNF specification and
+the annotations added by the programmer, and then generates stub functions
+allowing an application to parse the command line and header fields and
+access information about the parsed data. The Zebu compiler is around
+3700 lines of OCaml code. A run-time environment defining various utility
+functions is also provided, and amounts to around 700 lines of C code.</p>
+</div>
+<section id="S3.SS3.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Verifications</h4>
+
+<div id="S3.SS3.SSS0.Px1.p1" class="ltx_para">
+<p id="S3.SS3.SSS0.Px1.p1.1" class="ltx_p">Although RFCs are widely published and form the <span id="S3.SS3.SSS0.Px1.p1.1.1" class="ltx_text ltx_font_italic">de facto</span> standard for
+many protocols, we have found some errors in RFC ABNF specifications.
+These are simple errors, such as typographical errors, but still they
+complicate the process of translating an ABNF specification into code,
+whether done by hand or using a parser generator. The Zebu compiler thus
+checks basic consistency properties of the ABNF specification: that there
+is no omission (<span id="S3.SS3.SSS0.Px1.p1.1.2" class="ltx_text ltx_font_italic">i.e.</span>, each referenced rule is defined), that there is
+no double definition, and that there are no cycles.</p>
+</div>
+<div id="S3.SS3.SSS0.Px1.p2" class="ltx_para">
+<p id="S3.SS3.SSS0.Px1.p2.1" class="ltx_p">Additionally, the annotations provided by the Zebu programmer must be
+consistent with the ABNF specification. For example, in line 30, the
+nonterminal <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">Global-Failure</span> is annotated with <span id="S3.SS3.SSS0.Px1.p2.1.1" class="ltx_text ltx_font_typewriter">uint16</span>.
+This non-terminal is specified to be an alternation of strings, and thus
+the Zebu compiler checks that each element of this alternation represents
+an unsigned integer that is less than <math id="S3.SS3.SSS0.Px1.p2.1.m1.1" class="ltx_Math" alttext="2^{16}" display="inline"><semantics id="S3.SS3.SSS0.Px1.p2.1.m1.1a"><msup id="S3.SS3.SSS0.Px1.p2.1.m1.1.1" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1.cmml"><mn id="S3.SS3.SSS0.Px1.p2.1.m1.1.1.2" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1.2.cmml">2</mn><mn id="S3.SS3.SSS0.Px1.p2.1.m1.1.1.3" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1.3.cmml">16</mn></msup><annotation-xml encoding="MathML-Content" id="S3.SS3.SSS0.Px1.p2.1.m1.1b"><apply id="S3.SS3.SSS0.Px1.p2.1.m1.1.1.cmml" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1"><csymbol cd="ambiguous" id="S3.SS3.SSS0.Px1.p2.1.m1.1.1.1.cmml" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1">superscript</csymbol><cn type="integer" id="S3.SS3.SSS0.Px1.p2.1.m1.1.1.2.cmml" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1.2">2</cn><cn type="integer" id="S3.SS3.SSS0.Px1.p2.1.m1.1.1.3.cmml" xref="S3.SS3.SSS0.Px1.p2.1.m1.1.1.3">16</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS3.SSS0.Px1.p2.1.m1.1c">2^{16}</annotation></semantics></math>.</p>
+</div>
+</section>
+<section id="S3.SS3.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Code generation</h4>
+
+<div id="S3.SS3.SSS0.Px2.p1" class="ltx_para">
+<p id="S3.SS3.SSS0.Px2.p1.1" class="ltx_p">An application does not use the data structures declared in a Zebu
+specification directly, but instead uses stub functions generated by the
+Zebu compiler. The use of stub functions allows parsing to be carried out
+lazily, so that only as much data is parsed as is needed to fulfill the
+request of a given stub function call. As illustrated in Figure
+<a href="#S3.F4" title="Figure 4 ‣ Code generation ‣ 3.3 The Zebu compiler ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>a, stub functions are generated for determining the type of
+a message (request or response), for parsing the command line and the
+various headers, for accessing individual header subfields, and for
+managing the parsing of subfields designated as <span id="S3.SS3.SSS0.Px2.p1.1.1" class="ltx_text ltx_font_typewriter">lazy</span>. The names of
+these stub functions depend on the specific structure of the grammar, but
+follow a well-defined schema that facilitates their use by the application
+developer.</p>
+</div>
+<figure id="S3.F4" class="ltx_figure">
+<p id="S3.F4.1" class="ltx_p ltx_align_bottom"><span class="ltx_rule" style="width:100%;height:0.4pt;background:black;display:inline-block;"> </span><span id="S3.F4.1.1" class="ltx_text"><span class="ltx_rule" style="width:0.4pt;background:black;display:inline-block;"> </span>
+<span id="S3.F4.1.1.1" class="ltx_inline-block ltx_align_bottom">
+<span id="S3.F4.1.1.1.1" class="ltx_block ltx_align_bottom">
+<span id="S3.I2" class="ltx_itemize">
+<span id="S3.I2.ix1" class="ltx_item" style="list-style-type:none;"><span class="ltx_tag ltx_tag_item"></span>
+<span id="S3.I2.ix1.p1" class="ltx_para ltx_minipage ltx_align_middle" style="width:426.1pt;"><pre id="S3.I2.ix1.p1.1" class="ltx_verbatim ltx_font_typewriter" style="font-size:70%;">
+<span id="S3.I2.ix1.p1.1.1" class="ltx_text ltx_font_serif ltx_font_italic">// Init </span>
+extern sip3261           sip3261_init();
+<span id="S3.I2.ix1.p1.1.2" class="ltx_text ltx_font_serif ltx_font_italic">// Top level parser </span>
+extern void              sip3261_parse(sip3261, char *, int);
+<span id="S3.I2.ix1.p1.1.3" class="ltx_text ltx_font_serif ltx_font_italic">// Generic parser for <span id="S3.I2.ix1.p1.1.3.1" class="ltx_text ltx_font_typewriter">headers</span></span>
+extern void              sip3261_parse_headers(sip3261, E_Headers);
+<span id="S3.I2.ix1.p1.1.4" class="ltx_text ltx_font_serif ltx_font_italic">// Dedicated parser for <span id="S3.I2.ix1.p1.1.4.1" class="ltx_text ltx_font_typewriter">addr-spec</span></span>
+extern void              sip3261_parse_addr_spec(T_Lazy_addr_spec);
+<span id="S3.I2.ix1.p1.1.5" class="ltx_text ltx_font_serif ltx_font_italic">// Accessors</span>
+extern T_bool            sip3261_isRequest(sip3261);
+extern T_bool            sip3261_isResponse(sip3261);
+extern T_RequestLine     sip3261_get_RequestLine(sip3261);
+extern T_header_From     sip3261_get_header_From(sip3261);
+extern T_Method          sip3261_RequestLine_getMethod(T_RequestLine);
+extern T_MethodEnum      sip3261_Method_getType(T_Method);
+extern T_Str             sip3261_Method_getValue(T_Method);
+extern T_Lazy_addr_spec  sip3261_header_From_getUri(T_header_From);
+extern T_addr_spec       sip3261_Lazy_Addr_spec_getParsed(T_Lazy_addr_spec);
+extern T_Option_Str      sip3261_Addr_spec_gethost(T_addr_spec);
+extern T_Str             sip3261_Option_Str_getVal(T_Option_Str);
+<span id="S3.I2.ix1.p1.1.6" class="ltx_text ltx_font_serif ltx_font_italic">[…]</span> <span id="S3.I2.ix1.p1.1.7" class="ltx_text ltx_inline-block" style="width:0.0pt;"><a href="#S3.F4" title="Figure 4 ‣ Code generation ‣ 3.3 The Zebu compiler ‣ 3 Robust Parser Development with Zebu" class="ltx_ref ltx_font_serif ltx_font_italic"><span class="ltx_text ltx_ref_tag">4</span></a><span id="S3.I2.ix1.p1.1.7.1" class="ltx_text ltx_font_serif ltx_font_italic">a. Generated stubs</span></span>
+</pre>
+</span></span>
+</span>
+<span id="S3.F4.1.1.1.1.1" class="ltx_p"><span class="ltx_rule" style="width:100%;height:1px;background:black;display:inline-block;"> </span></span>
+<span id="S3.I3" class="ltx_itemize">
+<span id="S3.I3.ix1" class="ltx_item" style="list-style-type:none;"><span class="ltx_tag ltx_tag_item"></span>
+<span id="S3.I3.ix1.p1" class="ltx_para ltx_minipage ltx_align_middle" style="width:426.1pt;"><pre id="S3.I3.ix1.p1.1" class="ltx_verbatim ltx_font_typewriter" style="font-size:70%;">
+  sip3261 msg = sip3261_init();
+  sip3261 msg = sip3261_parse(msg, buf, len);                              1
+  <span id="S3.I3.ix1.p1.1.1" class="ltx_text ltx_font_serif ltx_font_italic">// Process only request messages</span>                           2
+  if (sip3261_isRequest(msg)) {                                      3
+    <span id="S3.I3.ix1.p1.1.2" class="ltx_text ltx_font_serif ltx_font_italic">// Filter INVITE methods</span>  4
+    T_RequestLine requestLine = sip3261_get_RequestLine(msg);  5
+    if (sip3261_Method_getType(sip3261_RequestLine_getMethod(requestLine)) == E_INVITEm) {      6
+      <span id="S3.I3.ix1.p1.1.3" class="ltx_text ltx_font_serif ltx_font_italic">// We parse only the header From</span>                             7
+      sip3261_parse_headers(msg, E_HEADER_FROM);                        8
+      T_Lazy_addr_spec l_addr_spec = sip3261_header_From_getUri(sip3261_get_header_From(msg));  9
+      sip3261_parse_addr_spec(l_addr_spec);   10
+      T_Option_Str host = sip3261_Lazy_Addr_spec_getParsed(l_addr_spec);  11
+      <span id="S3.I3.ix1.p1.1.4" class="ltx_text ltx_font_serif ltx_font_italic">// host may be undefined in some cases, check it and log its value</span>  12
+      if (sip3261_Option_Str_isDefined(host)) {                                  13
+         mylog(sip3261_Option_Str_getVal(host));                                    14
+  }}}                                                              15
+</pre>
+</span></span>
+</span>
+<span id="S3.F4.1.1.1.1.2" class="ltx_p" style="width:0.0pt;"><a href="#S3.F4" title="Figure 4 ‣ Code generation ‣ 3.3 The Zebu compiler ‣ 3 Robust Parser Development with Zebu" class="ltx_ref ltx_font_italic" style="font-size:70%;"><span class="ltx_text ltx_ref_tag">4</span></a><span id="S3.F4.1.1.1.1.2.1" class="ltx_text ltx_font_italic" style="font-size:70%;">b. Application logic</span></span>
+</span>
+</span><span class="ltx_rule" style="width:0.4pt;background:black;display:inline-block;"> </span></span><span class="ltx_rule" style="width:100%;height:0.4pt;background:black;display:inline-block;"> </span></p>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 4: </span>Fragment of a Zebu-based SIP message statistics reporting application</figcaption>
+</figure>
+<div id="S3.SS3.SSS0.Px2.p2" class="ltx_para">
+<p id="S3.SS3.SSS0.Px2.p2.1" class="ltx_p">The parsing functions generated by the Zebu compiler use the two-level
+parsing strategy described in Section <a href="#S3.SS1" title="3.1 Issues ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3.1</span></a>. Header-specific
+parsers use the PCRE <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib12" title="" class="ltx_ref">12</a>]</cite> library for matching the regular
+expression of a header value that has been derived from the ABNF
+specification. The parsing functions contain run-time assertions that
+check the constraints specified in the RFC. Once a header is parsed and
+checked, its named subfields, if any, are converted to the specified types
+and stored in the data structure associated with the header. The values of
+the named subfields can then be accessed using the “get” stub functions.</p>
+</div>
+</section>
+</section>
+<section id="S3.SS4" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.4 </span>Developing an application with Zebu</h3>
+
+<div id="S3.SS4.p1" class="ltx_para">
+<p id="S3.SS4.p1.1" class="ltx_p">The developer defines the application logic as an ordinary C program, using
+the stub functions to access information about the message content.
+Figure <a href="#S3.F4" title="Figure 4 ‣ Code generation ‣ 3.3 The Zebu compiler ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>b illustrates the implementation of an application
+that extracts the host information from the URI stored in the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">From</span>
+header field of an <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> message. This kind of operation is
+useful in, <span id="S3.SS4.p1.1.1" class="ltx_text ltx_font_italic">e.g.</span> an intrusion detection system, which searches
+for certain patterns of information in network messages.</p>
+</div>
+<div id="S3.SS4.p2" class="ltx_para">
+<p id="S3.SS4.p2.1" class="ltx_p">The application uses the stubs generated from the SIP message grammar
+specification to access the required information. The application
+initially uses the functions
+<span id="S3.SS4.p2.1.1" class="ltx_text ltx_font_typewriter">sip3261_Method_getType</span> and
+<span id="S3.SS4.p2.1.2" class="ltx_text ltx_font_typewriter">sip3261_RequestLine_getMethod</span> to determine whether the
+current message is an <span id="S3.SS4.p2.1.3" class="ltx_text ltx_font_typewriter">INVITE</span> request (line 6). If so, it uses the
+function <span id="S3.SS4.p2.1.4" class="ltx_text ltx_font_typewriter">sip3261_parse_headers</span> to parse the <span id="S3.SS4.p2.1.5" class="ltx_text ltx_font_typewriter">From</span>
+header field (line 8), and then the functions
+<span id="S3.SS4.p2.1.6" class="ltx_text ltx_font_typewriter">sip3261_header_From_getUri</span> and
+<span id="S3.SS4.p2.1.7" class="ltx_text ltx_font_typewriter">sip3261_get_header_From</span> to extract the URI (line 9).
+Line 46 of the Zebu SIP specification indicates that the parsing of the URI
+should be lazy, so the function
+<span id="S3.SS4.p2.1.8" class="ltx_text ltx_font_typewriter">sip3261_Lazy_Addr_spec_getParsed</span> is used to force the
+parsing of this subfield (line 10). After a check that the host name is
+present (line 13), its value is extracted using the function
+<span id="S3.SS4.p2.1.9" class="ltx_text ltx_font_typewriter">sip3261_Option_Str_getVal</span> in line 14.</p>
+</div>
+<div id="S3.SS4.p3" class="ltx_para">
+<p id="S3.SS4.p3.1" class="ltx_p">Overall, due to the annotations in the Zebu specification, stub functions
+are available to access exactly the message fragments needed by the
+application. Similarly, memory usage is limited to the application’s
+declared needs.</p>
+</div>
+</section>
+</section>
+<section id="S4" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">4 </span>Experiments</h2>
+
+<div id="S4.p1" class="ltx_para">
+<p id="S4.p1.1" class="ltx_p">A robust network application must accept valid messages, to provide
+continuous service, and reject invalid network messages, to avoid
+corrupting its internal state. As the parser is the front-line in the
+treatment of network messages, it has a key role to play in providing this
+robustness. In this section, we evaluate the robustness improvement
+offered by Zebu, by comparing the reaction of Zebu-based parsers and a
+variety of existing parsers to valid and invalid network messages. Our
+experiments are based on a mutation analysis technique.</p>
+</div>
+<div id="S4.p2" class="ltx_para">
+<p id="S4.p2.1" class="ltx_p">For SIP, we compare with the oSIP and SER parsers previously described in
+Section <a href="#S2" title="2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>. For RTSP, we use the parser in the widely used VLC
+media player and streaming server <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib32" title="" class="ltx_ref">32</a>]</cite>, and the parser provided by
+the LiveMedia library <span id="footnote1" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">1</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">1</sup><span class="ltx_tag ltx_tag_note">1</span>LiveMedia: Streaming Media,
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self" style="font-size:70%;">http://www.livemediacast.net/</span></span></span></span>.
+Figure <a href="#S4.F5" title="Figure 5 ‣ 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a> shows the sizes of the ABNF and Zebu specifications
+of the message grammars for SIP and RTSP. The Zebu specification is
+longer, because it includes rules that are mentioned only by reference to
+another RFC in the original SIP and RTSP specifications. Figure
+<a href="#S4.F5" title="Figure 5 ‣ 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a> also shows the number of lines of code in the oSIP, SER,
+VLC, and LiveMedia parser implementations.</p>
+</div>
+<figure id="S4.F5" class="ltx_figure">
+<table id="S4.F5.1" class="ltx_tabular ltx_centering ltx_align_middle">
+<tbody class="ltx_tbody">
+<tr id="S4.F5.1.1.1" class="ltx_tr">
+<td id="S4.F5.1.1.1.1" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t"><span id="S4.F5.1.1.1.1.1" class="ltx_text" style="font-size:70%;">Protocol</span></td>
+<td id="S4.F5.1.1.1.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.1.1.2.1" class="ltx_text" style="font-size:70%;">ABNF size</span></td>
+<td id="S4.F5.1.1.1.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.1.1.3.1" class="ltx_text" style="font-size:70%;">Zebu spec size</span></td>
+<td id="S4.F5.1.1.1.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.1.1.4.1" class="ltx_text" style="font-size:70%;">Parser</span></td>
+<td id="S4.F5.1.1.1.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.1.1.5.1" class="ltx_text" style="font-size:70%;">Parser size</span></td>
+</tr>
+<tr id="S4.F5.1.2.2" class="ltx_tr">
+<td id="S4.F5.1.2.2.1" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t"><span id="S4.F5.1.2.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">SIP</span></td>
+<td id="S4.F5.1.2.2.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.2.2.2.1" class="ltx_text" style="font-size:70%;">700 (approx)</span></td>
+<td id="S4.F5.1.2.2.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.2.2.3.1" class="ltx_text" style="font-size:70%;">1081</span></td>
+<td id="S4.F5.1.2.2.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.2.2.4.1" class="ltx_text" style="font-size:70%;">oSIP</span></td>
+<td id="S4.F5.1.2.2.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.2.2.5.1" class="ltx_text" style="font-size:70%;">11982</span></td>
+</tr>
+<tr id="S4.F5.1.3.3" class="ltx_tr">
+<td id="S4.F5.1.3.3.1" class="ltx_td ltx_border_l ltx_border_r"></td>
+<td id="S4.F5.1.3.3.2" class="ltx_td ltx_border_r"></td>
+<td id="S4.F5.1.3.3.3" class="ltx_td ltx_border_r"></td>
+<td id="S4.F5.1.3.3.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.3.3.4.1" class="ltx_text" style="font-size:70%;">SER</span></td>
+<td id="S4.F5.1.3.3.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.3.3.5.1" class="ltx_text" style="font-size:70%;">13277</span></td>
+</tr>
+<tr id="S4.F5.1.4.4" class="ltx_tr">
+<td id="S4.F5.1.4.4.1" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t"><span id="S4.F5.1.4.4.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">RTSP</span></td>
+<td id="S4.F5.1.4.4.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.4.4.2.1" class="ltx_text" style="font-size:70%;">200 (approx)</span></td>
+<td id="S4.F5.1.4.4.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.4.4.3.1" class="ltx_text" style="font-size:70%;">330</span></td>
+<td id="S4.F5.1.4.4.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.4.4.4.1" class="ltx_text" style="font-size:70%;">VLC</span></td>
+<td id="S4.F5.1.4.4.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F5.1.4.4.5.1" class="ltx_text" style="font-size:70%;">1200 (approx)</span></td>
+</tr>
+<tr id="S4.F5.1.5.5" class="ltx_tr">
+<td id="S4.F5.1.5.5.1" class="ltx_td ltx_border_b ltx_border_l ltx_border_r"></td>
+<td id="S4.F5.1.5.5.2" class="ltx_td ltx_border_b ltx_border_r"></td>
+<td id="S4.F5.1.5.5.3" class="ltx_td ltx_border_b ltx_border_r"></td>
+<td id="S4.F5.1.5.5.4" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F5.1.5.5.4.1" class="ltx_text" style="font-size:70%;">LiveMedia</span></td>
+<td id="S4.F5.1.5.5.5" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F5.1.5.5.5.1" class="ltx_text" style="font-size:70%;">1000 (approx)</span></td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering" style="font-size:70%;"><span class="ltx_tag ltx_tag_figure">Figure 5: </span>The sizes of the SIP and RTSP message grammars, and the sizes of
+existing parsers. Sizes in lines of code.</figcaption>
+</figure>
+<div id="S4.p3" class="ltx_para">
+<p id="S4.p3.1" class="ltx_p">In the rest of this section, we first introduce mutation analysis, and
+then compare the robustness of existing SIP and RTSP parsers with that
+of the corresponding Zebu-based parsers. Finally, we evaluate the
+performance of Zebu, showing that Zebu-based parsers are often as
+efficient as hand-written ones.</p>
+</div>
+<section id="S4.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.1 </span>Robustness evaluation</h3>
+
+<div id="S4.SS1.p1" class="ltx_para">
+<p id="S4.SS1.p1.1" class="ltx_p">Mutation analysis is a fault-based testing technique for unit-level testing
+<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib7" title="" class="ltx_ref">7</a>]</cite>. Traditional mutation testing involves
+introducing small changes, <span id="S4.SS1.p1.1.1" class="ltx_text ltx_font_italic">i.e.</span>, mutations, in program source code,
+to determine whether a given test suite is sufficient to distinguish
+between correct and incorrect programs. In our case, however, we are
+interested in assessing the robustness of the program, <span id="S4.SS1.p1.1.2" class="ltx_text ltx_font_italic">i.e.</span>, the
+parser, and thus we introduce mutations into the test data, <span id="S4.SS1.p1.1.3" class="ltx_text ltx_font_italic">i.e.</span>, the
+network messages, rather than into the program source code. We use
+mutation rules both to generate invalid messages and to generate valid
+messages that have properties that are known to be challenging for network
+protocol message parsers. A robust parser should reject the invalid
+messages and accept the valid ones.</p>
+</div>
+<div id="S4.SS1.p2" class="ltx_para">
+<p id="S4.SS1.p2.1" class="ltx_p">To generate invalid messages, we have defined a set of mutation rules for
+messages based on ABNF structure:</p>
+</div>
+<div id="S4.SS1.p3" class="ltx_para">
+<ul id="S4.I1" class="ltx_itemize">
+<li id="S4.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S4.I1.i1.p1" class="ltx_para">
+<p id="S4.I1.i1.p1.1" class="ltx_p">Mutations on the characters set. Message literals are derived from a
+fixed set of possible characters. The first, middle, or last character of
+a message literal is replaced with any character outside the valid set.</p>
+</div>
+</li>
+<li id="S4.I1.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S4.I1.i2.p1" class="ltx_para">
+<p id="S4.I1.i2.p1.1" class="ltx_p">Mutations on repetitions. As described in Section <a href="#S2.SS1" title="2.1 ABNF formalism ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2.1</span></a>,
+ABNF offers a generic mechanism of repetition. Mutants are chosen to
+describe an invalid number of repetitions.</p>
+</div>
+</li>
+<li id="S4.I1.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S4.I1.i3.p1" class="ltx_para">
+<p id="S4.I1.i3.p1.1" class="ltx_p">Mutations based on constraints. Protocol specifications include
+additional constraints not specified in the message grammar about the
+values of header subfields. For example, the response code of a SIP
+response is not only an unsigned integer of three digits, but its value
+must also be less than 699 (see Figure <a href="#S3.F3" title="Figure 3 ‣ 3.2 Annotating an ABNF specification ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>). Mutants
+are chosen that violate these constraints.</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="S4.SS1.p4" class="ltx_para">
+<p id="S4.SS1.p4.1" class="ltx_p">To generate valid but problematic messages, we have extended our character
+set mutation rule to create messages of the form suggested by the SIP
+Torture Test Message RFC <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib28" title="" class="ltx_ref">28</a>]</cite>. This RFC describes a set of valid
+SIP messages that test corner cases in SIP implementations.</p>
+</div>
+<div id="S4.SS1.p5" class="ltx_para">
+<p id="S4.SS1.p5.1" class="ltx_p">To compare the robustness of Zebu-based applications to applications based
+on hand-crafted parsers, we consider the parsing of the principal fields of
+a network protocol message. For SIP, these fields are the command line and
+the six mandatory header fields, while for RTSP they are the command line
+and the header fields <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">Transport</span>, <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">CSeq</span> and
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">UserAgent</span>. We drive each of the parsers listed in
+Figure <a href="#S4.F5" title="Figure 5 ‣ 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a> using minimal applications that request access to
+these fields. The Zebu-based applications <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">log-Zebu-SIP</span> and
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">log-Zebu-RTSP</span>, for SIP and RTSP respectively, consist of a few
+lines of C code that log statistical information about incoming
+messages. These applications use the stubs generated by the Zebu compiler
+to access network messages, analogous to the code illustrated in
+Figure <a href="#S3.F4" title="Figure 4 ‣ Code generation ‣ 3.3 The Zebu compiler ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>b. The SER application, <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">log-SER</span> is written
+using the SER configuration language to access the information in the
+various fields. The other applications, <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">log-oSIP</span> using oSIP,
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">log-VLC</span> using VLC, and <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">log-LiveMedia</span> using LiveMedia, are
+written in C using the appropriate API functions provided by the given
+parser.</p>
+</div>
+<section id="S4.SS1.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Invalid messages</h4>
+
+<div id="S4.SS1.SSS0.Px1.p1" class="ltx_para">
+<p id="S4.SS1.SSS0.Px1.p1.1" class="ltx_p">In our first set of tests, we apply our mutation rules to SIP and RTSP
+messages, generating a stream of invalid messages, which we then send to
+each of the SIP and RTSP applications, respectively. As shown in
+Figure <a href="#S4.F6" title="Figure 6 ‣ Invalid messages ‣ 4.1 Robustness evaluation ‣ 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>, while the Zebu-based applications detect every
+mutant as representing an invalid message, none of the hand-crafted parsers
+detects more than about 25% of the injected mutants. This situation may
+have a critical impact. In the case of SIP for example, we have crashed SER
+via a stream of 2416 incorrect messages, sent within of 17 seconds.
+Because SER is widely used for telephony, which is a critical service, the
+ability to crash the server is unacceptable.</p>
+</div>
+<figure id="S4.F6" class="ltx_figure">
+<table id="S4.F6.1" class="ltx_tabular ltx_centering ltx_align_middle">
+<tbody class="ltx_tbody">
+<tr id="S4.F6.1.1.1" class="ltx_tr">
+<td id="S4.F6.1.1.1.1" class="ltx_td ltx_border_r" colspan="2"></td>
+<td id="S4.F6.1.1.1.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t">
+<table id="S4.F6.1.1.1.2.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F6.1.1.1.2.1.1" class="ltx_tr">
+<td id="S4.F6.1.1.1.2.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F6.1.1.1.2.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutation</span></td>
+</tr>
+<tr id="S4.F6.1.1.1.2.1.2" class="ltx_tr">
+<td id="S4.F6.1.1.1.2.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F6.1.1.1.2.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">sites</span></td>
+</tr>
+</table>
+</td>
+<td id="S4.F6.1.1.1.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t">
+<table id="S4.F6.1.1.1.3.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F6.1.1.1.3.1.1" class="ltx_tr">
+<td id="S4.F6.1.1.1.3.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F6.1.1.1.3.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Injected</span></td>
+</tr>
+<tr id="S4.F6.1.1.1.3.1.2" class="ltx_tr">
+<td id="S4.F6.1.1.1.3.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F6.1.1.1.3.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutants</span></td>
+</tr>
+</table>
+</td>
+<td id="S4.F6.1.1.1.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t">
+<table id="S4.F6.1.1.1.4.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F6.1.1.1.4.1.1" class="ltx_tr">
+<td id="S4.F6.1.1.1.4.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F6.1.1.1.4.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Detected</span></td>
+</tr>
+<tr id="S4.F6.1.1.1.4.1.2" class="ltx_tr">
+<td id="S4.F6.1.1.1.4.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F6.1.1.1.4.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutants</span></td>
+</tr>
+</table>
+</td>
+<td id="S4.F6.1.1.1.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t" colspan="3">
+<table id="S4.F6.1.1.1.5.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F6.1.1.1.5.1.1" class="ltx_tr">
+<td id="S4.F6.1.1.1.5.1.1.1" class="ltx_td ltx_nopad_r ltx_align_center"><span id="S4.F6.1.1.1.5.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">% detected</span></td>
+</tr>
+<tr id="S4.F6.1.1.1.5.1.2" class="ltx_tr">
+<td id="S4.F6.1.1.1.5.1.2.1" class="ltx_td ltx_nopad_r ltx_align_center"><span id="S4.F6.1.1.1.5.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutants</span></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr id="S4.F6.1.2.2" class="ltx_tr">
+<td id="S4.F6.1.2.2.1" class="ltx_td ltx_nopad_r ltx_border_l ltx_border_r ltx_border_t"></td>
+<td id="S4.F6.1.2.2.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.2.2.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-Zebu-SIP</span></td>
+<td id="S4.F6.1.2.2.3" class="ltx_td ltx_border_l ltx_border_r ltx_border_t"></td>
+<td id="S4.F6.1.2.2.4" class="ltx_td ltx_border_l ltx_border_r ltx_border_t"></td>
+<td id="S4.F6.1.2.2.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.2.2.5.1" class="ltx_text" style="font-size:70%;">5976</span></td>
+<td id="S4.F6.1.2.2.6" class="ltx_td ltx_nopad_l ltx_border_t"></td>
+<td id="S4.F6.1.2.2.7" class="ltx_td ltx_align_right ltx_border_t">
+<span id="S4.F6.1.2.2.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">100.0</span><span id="S4.F6.1.2.2.7.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+<td id="S4.F6.1.2.2.8" class="ltx_td ltx_nopad_r ltx_border_r ltx_border_t"></td>
+</tr>
+<tr id="S4.F6.1.3.3" class="ltx_tr">
+<td id="S4.F6.1.3.3.1" class="ltx_td ltx_nopad_r ltx_align_center ltx_border_l ltx_border_r">
+<span id="S4.F6.1.3.3.1.1" class="ltx_text" style="font-size:70%;"> </span><span id="S4.F6.1.3.3.1.2" class="ltx_text ltx_font_bold" style="font-size:70%;">SIP</span>
+</td>
+<td id="S4.F6.1.3.3.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.3.3.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-oSIP</span></td>
+<td id="S4.F6.1.3.3.3" class="ltx_td ltx_align_center ltx_border_r"><span id="S4.F6.1.3.3.3.1" class="ltx_text" style="font-size:70%;">81</span></td>
+<td id="S4.F6.1.3.3.4" class="ltx_td ltx_align_center ltx_border_r"><span id="S4.F6.1.3.3.4.1" class="ltx_text" style="font-size:70%;">5976</span></td>
+<td id="S4.F6.1.3.3.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.3.3.5.1" class="ltx_text" style="font-size:70%;">1020</span></td>
+<td id="S4.F6.1.3.3.6" class="ltx_td ltx_nopad_l ltx_border_t"></td>
+<td id="S4.F6.1.3.3.7" class="ltx_td ltx_align_right ltx_border_t">
+<span id="S4.F6.1.3.3.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">17.1</span><span id="S4.F6.1.3.3.7.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+<td id="S4.F6.1.3.3.8" class="ltx_td ltx_nopad_r ltx_border_r ltx_border_t"></td>
+</tr>
+<tr id="S4.F6.1.4.4" class="ltx_tr">
+<td id="S4.F6.1.4.4.1" class="ltx_td ltx_nopad_r ltx_border_l ltx_border_r"></td>
+<td id="S4.F6.1.4.4.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.4.4.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-SER</span></td>
+<td id="S4.F6.1.4.4.3" class="ltx_td ltx_border_l ltx_border_r"></td>
+<td id="S4.F6.1.4.4.4" class="ltx_td ltx_border_l ltx_border_r"></td>
+<td id="S4.F6.1.4.4.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.4.4.5.1" class="ltx_text" style="font-size:70%;">1512</span></td>
+<td id="S4.F6.1.4.4.6" class="ltx_td ltx_nopad_l ltx_border_t"></td>
+<td id="S4.F6.1.4.4.7" class="ltx_td ltx_align_right ltx_border_t">
+<span id="S4.F6.1.4.4.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">25.3</span><span id="S4.F6.1.4.4.7.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+<td id="S4.F6.1.4.4.8" class="ltx_td ltx_nopad_r ltx_border_r ltx_border_t"></td>
+</tr>
+<tr id="S4.F6.1.5.5" class="ltx_tr">
+<td id="S4.F6.1.5.5.1" class="ltx_td ltx_nopad_r ltx_border_l ltx_border_r ltx_border_tt"></td>
+<td id="S4.F6.1.5.5.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_tt"><span id="S4.F6.1.5.5.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-Zebu-RTSP</span></td>
+<td id="S4.F6.1.5.5.3" class="ltx_td ltx_border_r ltx_border_tt"></td>
+<td id="S4.F6.1.5.5.4" class="ltx_td ltx_border_r ltx_border_tt"></td>
+<td id="S4.F6.1.5.5.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_tt"><span id="S4.F6.1.5.5.5.1" class="ltx_text" style="font-size:70%;">2730</span></td>
+<td id="S4.F6.1.5.5.6" class="ltx_td ltx_nopad_l ltx_border_tt"></td>
+<td id="S4.F6.1.5.5.7" class="ltx_td ltx_align_right ltx_border_tt">
+<span id="S4.F6.1.5.5.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">100.0</span><span id="S4.F6.1.5.5.7.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+<td id="S4.F6.1.5.5.8" class="ltx_td ltx_nopad_r ltx_border_r ltx_border_tt"></td>
+</tr>
+<tr id="S4.F6.1.6.6" class="ltx_tr">
+<td id="S4.F6.1.6.6.1" class="ltx_td ltx_nopad_r ltx_align_center ltx_border_l ltx_border_r">
+<span id="S4.F6.1.6.6.1.1" class="ltx_text" style="font-size:70%;"> </span><span id="S4.F6.1.6.6.1.2" class="ltx_text ltx_font_bold" style="font-size:70%;">RTSP</span>
+</td>
+<td id="S4.F6.1.6.6.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.6.6.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-VLC</span></td>
+<td id="S4.F6.1.6.6.3" class="ltx_td ltx_align_center ltx_border_r"><span id="S4.F6.1.6.6.3.1" class="ltx_text" style="font-size:70%;">19</span></td>
+<td id="S4.F6.1.6.6.4" class="ltx_td ltx_align_center ltx_border_r"><span id="S4.F6.1.6.6.4.1" class="ltx_text" style="font-size:70%;">2730</span></td>
+<td id="S4.F6.1.6.6.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F6.1.6.6.5.1" class="ltx_text" style="font-size:70%;">4</span></td>
+<td id="S4.F6.1.6.6.6" class="ltx_td ltx_nopad_l ltx_border_t"></td>
+<td id="S4.F6.1.6.6.7" class="ltx_td ltx_align_right ltx_border_t">
+<span id="S4.F6.1.6.6.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">0.1</span><span id="S4.F6.1.6.6.7.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+<td id="S4.F6.1.6.6.8" class="ltx_td ltx_nopad_r ltx_border_r ltx_border_t"></td>
+</tr>
+<tr id="S4.F6.1.7.7" class="ltx_tr">
+<td id="S4.F6.1.7.7.1" class="ltx_td ltx_nopad_r ltx_border_b ltx_border_l ltx_border_r"></td>
+<td id="S4.F6.1.7.7.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F6.1.7.7.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-LiveMedia</span></td>
+<td id="S4.F6.1.7.7.3" class="ltx_td ltx_border_b ltx_border_r"></td>
+<td id="S4.F6.1.7.7.4" class="ltx_td ltx_border_b ltx_border_r"></td>
+<td id="S4.F6.1.7.7.5" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F6.1.7.7.5.1" class="ltx_text" style="font-size:70%;">748</span></td>
+<td id="S4.F6.1.7.7.6" class="ltx_td ltx_nopad_l ltx_border_b ltx_border_t"></td>
+<td id="S4.F6.1.7.7.7" class="ltx_td ltx_align_right ltx_border_b ltx_border_t">
+<span id="S4.F6.1.7.7.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">27.4</span><span id="S4.F6.1.7.7.7.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+<td id="S4.F6.1.7.7.8" class="ltx_td ltx_nopad_r ltx_border_b ltx_border_r ltx_border_t"></td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering" style="font-size:70%;"><span class="ltx_tag ltx_tag_figure">Figure 6: </span>Mutation coverage for invalid 
+<br class="ltx_break">SIP and RTSP
+messages</figcaption>
+</figure>
+</section>
+<section id="S4.SS1.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Valid messages</h4>
+
+<div id="S4.SS1.SSS0.Px2.p1" class="ltx_para">
+<p id="S4.SS1.SSS0.Px2.p1.1" class="ltx_p">While message parsers should detect erroneous messages as early as possible
+to preserve the robustness of the applications that use them, they also
+must correctly parse valid messages. The SIP Torture Test Message
+RFC <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib28" title="" class="ltx_ref">28</a>]</cite> describes a set of valid SIP messages that test corner
+cases in SIP implementations. Guided by this RFC, we have extended our
+character set mutation rule to generate mutants that are valid SIP messages
+but are designed to torture a SIP implementation.
+Figure <a href="#S4.F7" title="Figure 7 ‣ Valid messages ‣ 4.1 Robustness evaluation ‣ 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">7</span></a> shows that up to about 4% of the valid
+messages are rejected by hand-crafted SIP parsers. By comparison, the
+Zebu-based SIP parser strictly follows the message grammar.</p>
+</div>
+<figure id="S4.F7" class="ltx_figure">
+<table id="S4.F7.1" class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="S4.F7.1.1.1" class="ltx_tr">
+<th id="S4.F7.1.1.1.1" class="ltx_td ltx_th ltx_th_column ltx_border_r" colspan="2"></th>
+<th id="S4.F7.1.1.1.2" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_r ltx_border_t">
+<table id="S4.F7.1.1.1.2.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F7.1.1.1.2.1.1" class="ltx_tr">
+<td id="S4.F7.1.1.1.2.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.2.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutation</span></td>
+</tr>
+<tr id="S4.F7.1.1.1.2.1.2" class="ltx_tr">
+<td id="S4.F7.1.1.1.2.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.2.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">sites</span></td>
+</tr>
+</table>
+</th>
+<th id="S4.F7.1.1.1.3" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_r ltx_border_t">
+<table id="S4.F7.1.1.1.3.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F7.1.1.1.3.1.1" class="ltx_tr">
+<td id="S4.F7.1.1.1.3.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.3.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Injected</span></td>
+</tr>
+<tr id="S4.F7.1.1.1.3.1.2" class="ltx_tr">
+<td id="S4.F7.1.1.1.3.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.3.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutants</span></td>
+</tr>
+</table>
+</th>
+<th id="S4.F7.1.1.1.4" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_r ltx_border_t">
+<table id="S4.F7.1.1.1.4.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F7.1.1.1.4.1.1" class="ltx_tr">
+<td id="S4.F7.1.1.1.4.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.4.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Rejected</span></td>
+</tr>
+<tr id="S4.F7.1.1.1.4.1.2" class="ltx_tr">
+<td id="S4.F7.1.1.1.4.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.4.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutants</span></td>
+</tr>
+</table>
+</th>
+<th id="S4.F7.1.1.1.5" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_r ltx_border_t">
+<table id="S4.F7.1.1.1.5.1" class="ltx_tabular ltx_align_middle">
+<tr id="S4.F7.1.1.1.5.1.1" class="ltx_tr">
+<td id="S4.F7.1.1.1.5.1.1.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.5.1.1.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">% rejected</span></td>
+</tr>
+<tr id="S4.F7.1.1.1.5.1.2" class="ltx_tr">
+<td id="S4.F7.1.1.1.5.1.2.1" class="ltx_td ltx_align_center"><span id="S4.F7.1.1.1.5.1.2.1.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Mutants</span></td>
+</tr>
+</table>
+</th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="S4.F7.1.2.1" class="ltx_tr">
+<td id="S4.F7.1.2.1.1" class="ltx_td ltx_nopad_r ltx_border_l ltx_border_r ltx_border_t"></td>
+<td id="S4.F7.1.2.1.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F7.1.2.1.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-Zebu-SIP</span></td>
+<td id="S4.F7.1.2.1.3" class="ltx_td ltx_border_l ltx_border_r ltx_border_t"></td>
+<td id="S4.F7.1.2.1.4" class="ltx_td ltx_border_l ltx_border_r ltx_border_t"></td>
+<td id="S4.F7.1.2.1.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F7.1.2.1.5.1" class="ltx_text" style="font-size:70%;">0</span></td>
+<td id="S4.F7.1.2.1.6" class="ltx_td ltx_align_center ltx_border_r ltx_border_t">
+<span id="S4.F7.1.2.1.6.1" class="ltx_text ltx_font_bold" style="font-size:70%;">0.0</span><span id="S4.F7.1.2.1.6.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+</tr>
+<tr id="S4.F7.1.3.2" class="ltx_tr">
+<td id="S4.F7.1.3.2.1" class="ltx_td ltx_nopad_r ltx_align_center ltx_border_l ltx_border_r">
+<span id="S4.F7.1.3.2.1.1" class="ltx_text" style="font-size:70%;"> </span><span id="S4.F7.1.3.2.1.2" class="ltx_text ltx_font_bold" style="font-size:70%;">SIP</span>
+</td>
+<td id="S4.F7.1.3.2.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F7.1.3.2.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-oSIP</span></td>
+<td id="S4.F7.1.3.2.3" class="ltx_td ltx_align_center ltx_border_r"><span id="S4.F7.1.3.2.3.1" class="ltx_text" style="font-size:70%;">18</span></td>
+<td id="S4.F7.1.3.2.4" class="ltx_td ltx_align_center ltx_border_r"><span id="S4.F7.1.3.2.4.1" class="ltx_text" style="font-size:70%;">549</span></td>
+<td id="S4.F7.1.3.2.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F7.1.3.2.5.1" class="ltx_text" style="font-size:70%;">21</span></td>
+<td id="S4.F7.1.3.2.6" class="ltx_td ltx_align_center ltx_border_r ltx_border_t">
+<span id="S4.F7.1.3.2.6.1" class="ltx_text ltx_font_bold" style="font-size:70%;">3.9</span><span id="S4.F7.1.3.2.6.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+</tr>
+<tr id="S4.F7.1.4.3" class="ltx_tr">
+<td id="S4.F7.1.4.3.1" class="ltx_td ltx_nopad_r ltx_border_bb ltx_border_l ltx_border_r"></td>
+<td id="S4.F7.1.4.3.2" class="ltx_td ltx_nopad_l ltx_align_center ltx_border_bb ltx_border_r ltx_border_t"><span id="S4.F7.1.4.3.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">log-SER</span></td>
+<td id="S4.F7.1.4.3.3" class="ltx_td ltx_border_bb ltx_border_l ltx_border_r"></td>
+<td id="S4.F7.1.4.3.4" class="ltx_td ltx_border_bb ltx_border_l ltx_border_r"></td>
+<td id="S4.F7.1.4.3.5" class="ltx_td ltx_align_center ltx_border_bb ltx_border_r ltx_border_t"><span id="S4.F7.1.4.3.5.1" class="ltx_text" style="font-size:70%;">2</span></td>
+<td id="S4.F7.1.4.3.6" class="ltx_td ltx_align_center ltx_border_bb ltx_border_r ltx_border_t">
+<span id="S4.F7.1.4.3.6.1" class="ltx_text ltx_font_bold" style="font-size:70%;">0.4</span><span id="S4.F7.1.4.3.6.2" class="ltx_text" style="font-size:70%;">%</span>
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering" style="font-size:70%;"><span class="ltx_tag ltx_tag_figure">Figure 7: </span>Mutation coverage for valid SIP 
+<br class="ltx_break">messages</figcaption>
+</figure>
+<div id="S4.SS1.SSS0.Px2.p2" class="ltx_para">
+<p id="S4.SS1.SSS0.Px2.p2.1" class="ltx_p">We have tried an analogous experiment with the RTSP applications, but the
+VLC and LiveMedia parsers are quite lax in their parsing of the message
+elements, such as the URI, that are covered by the SIP Torture Test RFC,
+and thus all three applications accept all of the mutated messages.</p>
+</div>
+</section>
+</section>
+<section id="S4.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.2 </span>Performance Evaluation</h3>
+
+<div id="S4.SS2.p1" class="ltx_para">
+<p id="S4.SS2.p1.1" class="ltx_p">We now compare the performance of Zebu-based parsers to that of
+hand-crafted ones. Our results are only for SIP, which is the most
+demanding in terms of performance. For our experiments, we have implemented
+four versions of the SIP message statistics reporting application described
+in Section <a href="#S3.SS4" title="3.4 Developing an application with Zebu ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3.4</span></a>. In each case, the application records the
+host information of the URI stored in the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">From</span> header field of an
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> message. The first version (<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-module</span>) is
+implemented as a dedicated SER module to obtain full access to the internal
+data structures of SER. The second version (<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-exec</span>) is
+written using the configuration language of SER and relies on the escape
+mechanism provided by SER to invoke <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">sed</span> to extract the host
+information, as described in Section <a href="#S2.SS4" title="2.4 Integrating a parser with an application ‣ 2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2.4</span></a>. The third version
+(<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-oSIP</span>) is implemented using a few lines of C code on top of the
+oSIP SIP stack. The last version (<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-Zebu</span>) is the Zebu-based
+application depicted in Figure <a href="#S3.F4" title="Figure 4 ‣ Code generation ‣ 3.3 The Zebu compiler ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>b.</p>
+</div>
+<div id="S4.SS2.p2" class="ltx_para">
+<p id="S4.SS2.p2.5" class="ltx_p">Our application illustrates the case where an application such as a
+intrusion detection system needs to access a fragment of a header subfield.
+To explore the effect that various kinds of messages have on the parsing
+performance for such an application, we consider a collection of
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages, which are relevant to our application, and an
+example of a non-<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> message, which is not. Among the
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages, in <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span><sub id="S4.SS2.p2.5.1" class="ltx_sub">1</sub> the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">From</span> header
+field contains only the URI subfield and an required tag subfield; all of
+the other subfields, which are optional, are omitted. This entails the
+minimal processing for a message that is relevant to the application. The
+remaining <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages, <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span><sub id="S4.SS2.p2.5.2" class="ltx_sub">2</sub> and
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span><sub id="S4.SS2.p2.5.3" class="ltx_sub">3</sub>, show the effect of varying the position of the
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">From</span> header field. In <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span><sub id="S4.SS2.p2.5.4" class="ltx_sub">2</sub>, the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">From</span> header
+field is the first of 34 header fields, while in <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span><sub id="S4.SS2.p2.5.5" class="ltx_sub">2</sub> it is
+the last of 34 header fields. The non-<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> message is a
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">BYE</span> and has 7 headers.</p>
+</div>
+<figure id="S4.F8" class="ltx_figure">
+<table id="S4.F8.3" class="ltx_tabular ltx_centering ltx_align_middle">
+<tbody class="ltx_tbody">
+<tr id="S4.F8.3.4.1" class="ltx_tr">
+<td id="S4.F8.3.4.1.1" class="ltx_td ltx_border_r" colspan="2"></td>
+<td id="S4.F8.3.4.1.2" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t" colspan="2"><span id="S4.F8.3.4.1.2.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">inv-SER-module</span></td>
+<td id="S4.F8.3.4.1.3" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t" colspan="2"><span id="S4.F8.3.4.1.3.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">inv-SER-exec</span></td>
+<td id="S4.F8.3.4.1.4" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t" colspan="2"><span id="S4.F8.3.4.1.4.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">inv-oSIP</span></td>
+<td id="S4.F8.3.4.1.5" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t" colspan="2"><span id="S4.F8.3.4.1.5.1" class="ltx_text ltx_font_typewriter" style="font-size:70%;">inv-Zebu</span></td>
+</tr>
+<tr id="S4.F8.3.5.2" class="ltx_tr">
+<td id="S4.F8.3.5.2.1" class="ltx_td ltx_border_r"></td>
+<td id="S4.F8.3.5.2.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.2.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Message size</span></td>
+<td id="S4.F8.3.5.2.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.3.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Cycles</span></td>
+<td id="S4.F8.3.5.2.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.4.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Ratio</span></td>
+<td id="S4.F8.3.5.2.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.5.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Cycles</span></td>
+<td id="S4.F8.3.5.2.6" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.6.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Ratio</span></td>
+<td id="S4.F8.3.5.2.7" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.7.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Cycles</span></td>
+<td id="S4.F8.3.5.2.8" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.8.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Ratio</span></td>
+<td id="S4.F8.3.5.2.9" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.9.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Cycles</span></td>
+<td id="S4.F8.3.5.2.10" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.5.2.10.1" class="ltx_text ltx_font_bold" style="font-size:70%;">Ratio</span></td>
+</tr>
+<tr id="S4.F8.1.1" class="ltx_tr">
+<td id="S4.F8.1.1.1" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t">
+<span id="S4.F8.1.1.1.1" class="ltx_text" style="font-size:70%;">INVITE</span><sub id="S4.F8.1.1.1.2" class="ltx_sub"><span id="S4.F8.1.1.1.2.1" class="ltx_text" style="font-size:70%;">1</span></sub>
+</td>
+<td id="S4.F8.1.1.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.2.1" class="ltx_text" style="font-size:70%;">697</span></td>
+<td id="S4.F8.1.1.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.3.1" class="ltx_text" style="font-size:70%;">13 788</span></td>
+<td id="S4.F8.1.1.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.4.1" class="ltx_text" style="font-size:70%;">1</span></td>
+<td id="S4.F8.1.1.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.5.1" class="ltx_text" style="font-size:70%;">7 593 550</span></td>
+<td id="S4.F8.1.1.6" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.6.1" class="ltx_text" style="font-size:70%;">551</span></td>
+<td id="S4.F8.1.1.7" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.7.1" class="ltx_text" style="font-size:70%;">182 703</span></td>
+<td id="S4.F8.1.1.8" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.8.1" class="ltx_text" style="font-size:70%;">13</span></td>
+<td id="S4.F8.1.1.9" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.9.1" class="ltx_text" style="font-size:70%;">51 054</span></td>
+<td id="S4.F8.1.1.10" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.1.1.10.1" class="ltx_text" style="font-size:70%;">4</span></td>
+</tr>
+<tr id="S4.F8.2.2" class="ltx_tr">
+<td id="S4.F8.2.2.1" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t">
+<span id="S4.F8.2.2.1.1" class="ltx_text" style="font-size:70%;">INVITE</span><sub id="S4.F8.2.2.1.2" class="ltx_sub"><span id="S4.F8.2.2.1.2.1" class="ltx_text" style="font-size:70%;">2</span></sub>
+</td>
+<td id="S4.F8.2.2.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.2.1" class="ltx_text" style="font-size:70%;">1 734</span></td>
+<td id="S4.F8.2.2.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.3.1" class="ltx_text" style="font-size:70%;">13 595</span></td>
+<td id="S4.F8.2.2.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.4.1" class="ltx_text" style="font-size:70%;">1</span></td>
+<td id="S4.F8.2.2.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.5.1" class="ltx_text" style="font-size:70%;">8 803 456</span></td>
+<td id="S4.F8.2.2.6" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.6.1" class="ltx_text" style="font-size:70%;">648</span></td>
+<td id="S4.F8.2.2.7" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.7.1" class="ltx_text" style="font-size:70%;">276 275</span></td>
+<td id="S4.F8.2.2.8" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.8.1" class="ltx_text" style="font-size:70%;">20</span></td>
+<td id="S4.F8.2.2.9" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.9.1" class="ltx_text" style="font-size:70%;">80 270</span></td>
+<td id="S4.F8.2.2.10" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.2.2.10.1" class="ltx_text" style="font-size:70%;">6</span></td>
+</tr>
+<tr id="S4.F8.3.3" class="ltx_tr">
+<td id="S4.F8.3.3.1" class="ltx_td ltx_align_center ltx_border_l ltx_border_r ltx_border_t">
+<span id="S4.F8.3.3.1.1" class="ltx_text" style="font-size:70%;">INVITE</span><sub id="S4.F8.3.3.1.2" class="ltx_sub"><span id="S4.F8.3.3.1.2.1" class="ltx_text" style="font-size:70%;">3</span></sub>
+</td>
+<td id="S4.F8.3.3.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.2.1" class="ltx_text" style="font-size:70%;">1 734</span></td>
+<td id="S4.F8.3.3.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.3.1" class="ltx_text" style="font-size:70%;">32 045</span></td>
+<td id="S4.F8.3.3.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.4.1" class="ltx_text" style="font-size:70%;">1</span></td>
+<td id="S4.F8.3.3.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.5.1" class="ltx_text" style="font-size:70%;">10 015 827</span></td>
+<td id="S4.F8.3.3.6" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.6.1" class="ltx_text" style="font-size:70%;">313</span></td>
+<td id="S4.F8.3.3.7" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.7.1" class="ltx_text" style="font-size:70%;">-</span></td>
+<td id="S4.F8.3.3.8" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.8.1" class="ltx_text" style="font-size:70%;">-</span></td>
+<td id="S4.F8.3.3.9" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.9.1" class="ltx_text" style="font-size:70%;">133 164</span></td>
+<td id="S4.F8.3.3.10" class="ltx_td ltx_align_center ltx_border_r ltx_border_t"><span id="S4.F8.3.3.10.1" class="ltx_text" style="font-size:70%;">4</span></td>
+</tr>
+<tr id="S4.F8.3.6.3" class="ltx_tr">
+<td id="S4.F8.3.6.3.1" class="ltx_td ltx_align_center ltx_border_b ltx_border_l ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.1.1" class="ltx_text" style="font-size:70%;">BYE</span></td>
+<td id="S4.F8.3.6.3.2" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.2.1" class="ltx_text" style="font-size:70%;">334</span></td>
+<td id="S4.F8.3.6.3.3" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.3.1" class="ltx_text" style="font-size:70%;">10 252</span></td>
+<td id="S4.F8.3.6.3.4" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.4.1" class="ltx_text" style="font-size:70%;">1</span></td>
+<td id="S4.F8.3.6.3.5" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.5.1" class="ltx_text" style="font-size:70%;">10 765</span></td>
+<td id="S4.F8.3.6.3.6" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.6.1" class="ltx_text" style="font-size:70%;">1</span></td>
+<td id="S4.F8.3.6.3.7" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.7.1" class="ltx_text" style="font-size:70%;">105 773</span></td>
+<td id="S4.F8.3.6.3.8" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.8.1" class="ltx_text" style="font-size:70%;">10</span></td>
+<td id="S4.F8.3.6.3.9" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.9.1" class="ltx_text" style="font-size:70%;">6 037</span></td>
+<td id="S4.F8.3.6.3.10" class="ltx_td ltx_align_center ltx_border_b ltx_border_r ltx_border_t"><span id="S4.F8.3.6.3.10.1" class="ltx_text" style="font-size:70%;">0.6</span></td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering" style="font-size:70%;"><span class="ltx_tag ltx_tag_figure">Figure 8: </span>Performance of SIP applications (time in
+cycles, ratio as compared to <span id="S4.F8.8.1" class="ltx_text ltx_font_typewriter">inv-SER-module</span>)</figcaption>
+</figure>
+<div id="S4.SS2.p3" class="ltx_para">
+<p id="S4.SS2.p3.1" class="ltx_p">Our experiments were performed using a Pentium III (1GHz) as the server,
+which is stressed by a bi-processor Xeon 3.2Ghz client.
+Figure <a href="#S4.F8" title="Figure 8 ‣ 4.2 Performance Evaluation ‣ 4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">8</span></a> compares the parsing time for each of the
+applications to that of <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">SER-module</span>, which has the fastest parser
+among the existing parsers that we tested.</p>
+</div>
+<div id="S4.SS2.p4" class="ltx_para">
+<p id="S4.SS2.p4.1" class="ltx_p">SER uses the efficient two-level parsing strategy described in Section
+<a href="#S3.SS1" title="3.1 Issues ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3.1</span></a>, to parse only the header fields that are relevant to
+the application. The parsing done by <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-module</span> is
+particularly efficient in the case of <span id="S4.SS2.p4.1.1" class="ltx_text ltx_font_typewriter">INVITE</span> messages, as the
+information required by the application is already available in the
+SER internal data structures. The parsing done by
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-exec</span> is roughly as efficient as that done by
+<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-module</span> for the non-<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> message. The parsing
+done by <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-exec</span> for the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages, on the
+other hand, is up to 648 times slower, because it forks a <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">sed</span>
+process. Despite the bad performance in this case, the use of the
+configuration language of SER remains relevant, because it provides
+ease of programming and safety, which are not provided by the use of a
+SER module.</p>
+</div>
+<div id="S4.SS2.p5" class="ltx_para">
+<p id="S4.SS2.p5.1" class="ltx_p">The parsing done by <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-oSIP</span> is over 13 times slower than the
+parsing done by <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-module</span> for <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages and
+over 10 times slower for the non-<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> message. In both
+cases, oSIP parses the six required SIP headers (plus two more
+required headers in the case of a <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">REGISTER</span> message) and stores
+pointers to the starting point of each sub-field. As the application
+requests information about the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> header field, oSIP
+additionally copies the subfields into a data structure that is
+provided to the application, roughly doubling the execution time. No
+results are presented for <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-oSIP</span> for <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span><sub id="S4.SS2.p5.1.1" class="ltx_sub">3</sub>,
+because oSIP crashes on this message.</p>
+</div>
+<div id="S4.SS2.p6" class="ltx_para">
+<p id="S4.SS2.p6.1" class="ltx_p">Finally, while Zebu follows the same two-level parsing strategy as SER, the
+parsing done by <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-Zebu</span> is significantly slower than the parsing
+done by <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">inv-SER-module</span> for the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages, because
+Zebu checks the URI more rigorously than SER. On the other hand, Zebu is
+significantly more efficient than SER for the non-<span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">INVITE</span> messages.
+SER is directed towards routing applications, and thus it
+always parses the <span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">Via</span> header, which is essential in the routing
+process, although irrelevant to our application. Thus, Zebu provides
+better performance in such cases by being more closely tailored to the
+needs of the application, and retains safety, which is lost in SER when
+using the module approach.</p>
+</div>
+</section>
+</section>
+<section id="S5" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">5 </span>Related Work</h2>
+
+<div id="S5.p1" class="ltx_para">
+<p id="S5.p1.1" class="ltx_p">Parser generators such as DATASCRIPT <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="" class="ltx_ref">3</a>]</cite>,
+PacketTypes <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib18" title="" class="ltx_ref">18</a>]</cite>,
+PADS <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib9" title="" class="ltx_ref">9</a>]</cite>, GAPA <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib5" title="" class="ltx_ref">5</a>]</cite> and
+binpac <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib22" title="" class="ltx_ref">22</a>]</cite> have been recently developed to address the growing
+complexity of network protocol messages. However, as described in
+Section <a href="#S2" title="2 Issues in developing network protocol parsers" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>, these tools do not fulfill all the requirements of
+network application developers. APG <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib17" title="" class="ltx_ref">17</a>]</cite> is a parser generator that
+accepts ABNF directly. Semantic actions are specified via callback
+functions rather than annotations on the grammar. We have found the use of
+such callback functions to be somewhat heavyweight, in our experience in
+using APG. Furthermore, APG is not specific to HTTP-like text-based
+protocols, and thus cannot implement the two-level parsing strategy
+outlined in Section <a href="#S3.SS1" title="3.1 Issues ‣ 3 Robust Parser Development with Zebu" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3.1</span></a>, which we have found (Section
+<a href="#S4" title="4 Experiments" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>) essential to obtaining good performance.</p>
+</div>
+<div id="S5.p2" class="ltx_para">
+<p id="S5.p2.1" class="ltx_p">Domain-specific languages have been used successfully in various
+application domains including operating
+systems <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib16" title="" class="ltx_ref">16</a>, <a href="#bib.bib19" title="" class="ltx_ref">19</a>]</cite> and
+networks <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib11" title="" class="ltx_ref">11</a>, <a href="#bib.bib13" title="" class="ltx_ref">13</a>]</cite>. Several of
+these languages have explicitly targeted improving system robustness. The
+Devil language, in the domain of device-driver development, provides
+high-level abstractions for specifying the code for interacting with the
+device, and performs a number of compile-time and (optional) run-time
+verifications to check that the specifications are
+consistent <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib25" title="" class="ltx_ref">25</a>]</cite>. The language Promela++ for
+specifying network protocols, can be translated automatically both into the
+model checking language Promela <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib14" title="" class="ltx_ref">14</a>]</cite> and into efficient C
+code, thus easing the development of a protocol implementation that is
+both verified and efficient <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib4" title="" class="ltx_ref">4</a>]</cite>.</p>
+</div>
+<div id="S5.p3" class="ltx_para">
+<p id="S5.p3.1" class="ltx_p">Mutation analysis has been used to test the robustness of other software
+components, such as operating systems <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib8" title="" class="ltx_ref">8</a>]</cite>, network intrusion
+detection systems <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib31" title="" class="ltx_ref">31</a>]</cite>, and databases <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib30" title="" class="ltx_ref">30</a>]</cite>. Our work is
+most similar to the work on network intrusion detection systems, which
+also mutates network protocol messages.</p>
+</div>
+</section>
+<section id="S6" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">6 </span>Conclusion</h2>
+
+<div id="S6.p1" class="ltx_para">
+<p id="S6.p1.1" class="ltx_p">In this paper, we have presented the Zebu declarative language for
+describing protocol message formats and related processing
+constraints. Zebu builds on the ABNF notations typically used in RFCs
+to describe protocol grammars. In evaluating Zebu, we have
+particularly focused on analyzing the improvement in robustness that
+it provides. For this, we have defined a test methodology based on a
+mutation analysis that injects errors into network messages. We have
+applied our test methodology to SIP and RTSP servers by comparing
+existing parsers with Zebu-generated ones.</p>
+</div>
+<div id="S6.p2" class="ltx_para">
+<p id="S6.p2.1" class="ltx_p">The results of our experiments show that nearly 4 times more erroneous
+messages are detected by the Zebu-based parser than by widely-used
+hand-written parsers. In the case of SIP, we were able to crash the widely
+used SER parser <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib23" title="" class="ltx_ref">23</a>]</cite> via a stream of 2416 incorrect
+messages, sent within a space of 17 seconds. Because SER is used for
+telephony, which is a critical service, the ability to crash the server is
+unacceptable. We have also found valid messages that are not accepted by
+the SER and oSIP parsers, which can similarly have a critical impact.
+Finally, we have shown that the added safety and robustness provided by
+Zebu does not significantly impact performance. In the case of SIP, in
+micro-benchmarks, we have found that a Zebu-based parser is often as
+efficient as a hand-crafted one.</p>
+</div>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul class="ltx_biblist">
+<li id="bib.bib1" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock">
+T. Akira.
+
+</span>
+<span class="ltx_bibblock">Converter from ABNF to regexp.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://cvs.m17n.org/~akr/abnf</span>/.
+
+</span>
+</li>
+<li id="bib.bib2" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[2]</span>
+<span class="ltx_bibblock">
+Apache.
+
+</span>
+<span class="ltx_bibblock">HTTP server project.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.apache.org</span>.
+
+</span>
+</li>
+<li id="bib.bib3" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[3]</span>
+<span class="ltx_bibblock">
+G. Back.
+
+</span>
+<span class="ltx_bibblock">DataScript - a specification and scripting language for binary
+data.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib3.1.1" class="ltx_text ltx_font_italic">Proceedings of the ACM Conference on Generative Programming
+and Component Engineering</span>, number 2487 in Lecture Notes in Commputer
+Science, pages 66–77, Pittsburgh, PA, USA, Oct. 2002.
+
+</span>
+</li>
+<li id="bib.bib4" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[4]</span>
+<span class="ltx_bibblock">
+A. Basu, J. G. Morrisett, and T. von Eicken.
+
+</span>
+<span class="ltx_bibblock">Promela++: A language for constructing correct and efficient
+protocols.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib4.1.1" class="ltx_text ltx_font_italic">Proceedings IEEE Conference on Computer Communications</span>, San
+Francisco, CA, USA, Mar. 1998.
+
+</span>
+</li>
+<li id="bib.bib5" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[5]</span>
+<span class="ltx_bibblock">
+N. Borisov, D. J. Brumley, H. J. Wang, J. Dunagan, P. Joshi, and C. Guo.
+
+</span>
+<span class="ltx_bibblock">A generic application-level protocol analyzer and its language.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib5.1.1" class="ltx_text ltx_font_italic">14th Annual Network &amp; Distributed System Security
+Symposium</span>, San Diego, CA, USA, Feb. 2007.
+
+</span>
+</li>
+<li id="bib.bib6" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[6]</span>
+<span class="ltx_bibblock">
+D. Crocker and P. Overell.
+
+</span>
+<span class="ltx_bibblock">Augmented BNF for Syntax Specifications: ABNF.
+
+</span>
+<span class="ltx_bibblock">Internet Engineering Task Force: RFC 2234, Nov. 1997.
+
+</span>
+</li>
+<li id="bib.bib7" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[7]</span>
+<span class="ltx_bibblock">
+R. A. DeMillo, R. J. Lipton, and F. G. Sayward.
+
+</span>
+<span class="ltx_bibblock">Hints on test data selection: help for the practicing programmer.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib7.1.1" class="ltx_text ltx_font_italic">Computer</span>, 11(4):34–41, Apr. 1978.
+
+</span>
+</li>
+<li id="bib.bib8" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[8]</span>
+<span class="ltx_bibblock">
+J. Duraes and H. Madeira.
+
+</span>
+<span class="ltx_bibblock">Characterization of operating systems behavior in the presence of
+faulty drivers through software fault emulation.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib8.1.1" class="ltx_text ltx_font_italic">2002 Pacific Rim International Symposium on Dependable
+Computing</span>, pages 201–209, Dec. 2002.
+
+</span>
+</li>
+<li id="bib.bib9" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[9]</span>
+<span class="ltx_bibblock">
+K. Fisher and R. Gruber.
+
+</span>
+<span class="ltx_bibblock">PADS: a domain-specific language for processing ad hoc data.
+
+</span>
+<span class="ltx_bibblock">In V. Sarkar and M. W. Hall, editors, <span id="bib.bib9.1.1" class="ltx_text ltx_font_italic">Proceedings of the ACM
+SIGPLAN 2005 Conference on Programming Language Design and Implementation</span>,
+pages 295–304, Chicago, IL, USA, June 2005. ACM.
+
+</span>
+</li>
+<li id="bib.bib10" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[10]</span>
+<span class="ltx_bibblock">
+Gaim 1.5.0: A multi-protocol instant messaging (IM) client.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://gaim.sourceforge.net</span>.
+
+</span>
+</li>
+<li id="bib.bib11" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[11]</span>
+<span class="ltx_bibblock">
+D. Gay, P. Levis, J. R. von Behren, M. Welsh, E. A. Brewer, and D. E. Culler.
+
+</span>
+<span class="ltx_bibblock">The nesC language: A holistic approach to networked embedded
+systems.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib11.1.1" class="ltx_text ltx_font_italic">Proceedings of the ACM Conference on Programming Language
+Design and Implementation</span>, pages 1–11, San Diego, California, June 2003.
+
+</span>
+</li>
+<li id="bib.bib12" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[12]</span>
+<span class="ltx_bibblock">
+P. Hazel.
+
+</span>
+<span class="ltx_bibblock">PCRE - perl compatible regular expressions.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.pcre.org</span>/, July 2006.
+
+</span>
+</li>
+<li id="bib.bib13" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[13]</span>
+<span class="ltx_bibblock">
+M. Hicks, P. Kakkar, J. Moore, C. Gunter, and S. Nettles.
+
+</span>
+<span class="ltx_bibblock">PLAN: A packet language for active networks.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib13.1.1" class="ltx_text ltx_font_italic">Proceedings of the ACM International Conference on
+Functional Programming Languages</span>, pages 86–93. ACM, June 1998.
+
+</span>
+</li>
+<li id="bib.bib14" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[14]</span>
+<span class="ltx_bibblock">
+G. J. Holzmann.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib14.1.1" class="ltx_text ltx_font_italic">Design and Validation of Computer Protocols</span>.
+
+</span>
+<span class="ltx_bibblock">Prentice Hall, 1991.
+
+</span>
+</li>
+<li id="bib.bib15" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[15]</span>
+<span class="ltx_bibblock">
+S. C. Johnson.
+
+</span>
+<span class="ltx_bibblock">Yacc: Yet another compiler compiler.
+
+</span>
+<span class="ltx_bibblock">Technical report, Bell Telephone Laboratories, 1975.
+
+</span>
+</li>
+<li id="bib.bib16" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[16]</span>
+<span class="ltx_bibblock">
+B. T. Loo, T. Condie, J. M. Hellerstein, P. Maniatis, T. Roscoe, and I. Stoica.
+
+</span>
+<span class="ltx_bibblock">Implementing declarative overlays.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib16.1.1" class="ltx_text ltx_font_italic">Proceedings of the 20th ACM Symposium on Operating Systems
+Principles</span>, pages 75–90, Brighton, UK, Oct. 2005.
+
+</span>
+</li>
+<li id="bib.bib17" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[17]</span>
+<span class="ltx_bibblock">
+D. T. Lowell.
+
+</span>
+<span class="ltx_bibblock">APG - an ABNF parser generator.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.coasttocoastresearch.com</span>/, June 2006.
+
+</span>
+</li>
+<li id="bib.bib18" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[18]</span>
+<span class="ltx_bibblock">
+P. J. McCann and S. Chandra.
+
+</span>
+<span class="ltx_bibblock">Packet types: Abstract specifications of network protocol messages.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib18.1.1" class="ltx_text ltx_font_italic">ACM SIGCOMM 2000 Conference on Applications, Technologies,
+Architectures, and Protocols for Computer Communication</span>, pages 321–333,
+Stockholm, Sweden, Aug. 2000.
+
+</span>
+</li>
+<li id="bib.bib19" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[19]</span>
+<span class="ltx_bibblock">
+F. Mérillon, L. Réveillère, C. Consel, R. Marlet, and G. Muller.
+
+</span>
+<span class="ltx_bibblock">Devil: An IDL for Hardware Programming.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib19.1.1" class="ltx_text ltx_font_italic">4th Symposium on Operating Systems Design and Implementation
+(OSDI 2000)</span>, pages 17–30, San Diego, California, Oct. 2000.
+
+</span>
+</li>
+<li id="bib.bib20" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[20]</span>
+<span class="ltx_bibblock">
+A. Moizard.
+
+</span>
+<span class="ltx_bibblock">The GNU oSIP library.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.gnu.org/software/osip</span>, June 2001.
+
+</span>
+</li>
+<li id="bib.bib21" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[21]</span>
+<span class="ltx_bibblock">
+PADS distribution.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.padsproj.org/download-src-1.03.html</span>.
+
+</span>
+</li>
+<li id="bib.bib22" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[22]</span>
+<span class="ltx_bibblock">
+R. Pang, V. Paxson, R. Sommer, and L. Peterson.
+
+</span>
+<span class="ltx_bibblock">binpac: a yacc for writing application protocol parsers.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib22.1.1" class="ltx_text ltx_font_italic">Proceedings of the 6th ACM SIGCOMM on Internet measurement</span>,
+pages 289–300, Rio de Janeiro, Brazil, Oct. 2006.
+
+</span>
+</li>
+<li id="bib.bib23" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[23]</span>
+<span class="ltx_bibblock">
+A. Pelinescu-Onciul, J. Janak, and J. Kuthan.
+
+</span>
+<span class="ltx_bibblock">SIP express router (SER).
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib23.1.1" class="ltx_text ltx_font_italic">IEEE Network Magazine</span>, 17(4):9, July/August 2003.
+
+</span>
+</li>
+<li id="bib.bib24" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[24]</span>
+<span class="ltx_bibblock">
+X. Qie, R. Pang, and L. L. Peterson.
+
+</span>
+<span class="ltx_bibblock">Defensive programming: Using an annotation toolkit to build
+DoS-resistant software.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib24.1.1" class="ltx_text ltx_font_italic">5th Symposium on Operating System Design and Implementation
+(OSDI 2002)</span>, pages 45–60, Boston, MA, USA, Dec. 2002.
+
+</span>
+</li>
+<li id="bib.bib25" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[25]</span>
+<span class="ltx_bibblock">
+L. Réveillère and G. Muller.
+
+</span>
+<span class="ltx_bibblock">Improving driver robustness: an evaluation of the Devil approach.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib25.1.1" class="ltx_text ltx_font_italic">The International Conference on Dependable Systems and
+Networks</span>, pages 131–140, Göteborg, Sweden, July 2001. IEEE Computer
+Society.
+
+</span>
+</li>
+<li id="bib.bib26" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[26]</span>
+<span class="ltx_bibblock">
+Rosenberg, J. et al.
+
+</span>
+<span class="ltx_bibblock">SIP: Session Initiation Protocol.
+
+</span>
+<span class="ltx_bibblock">RFC 3261, IETF, June 2002.
+
+</span>
+</li>
+<li id="bib.bib27" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[27]</span>
+<span class="ltx_bibblock">
+rtsp.org: Real time streaming protocol information and updates.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.rtsp.org</span>.
+
+</span>
+</li>
+<li id="bib.bib28" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[28]</span>
+<span class="ltx_bibblock">
+R. Sparks, A. Hawrylyshen, A. Johnston, J. Rosenberg, and H. Schulzrinne.
+
+</span>
+<span class="ltx_bibblock">Session initiation protocol (SIP) torture test messages.
+
+</span>
+<span class="ltx_bibblock">Internet Engineering Task Force: RFC 4475, May 2006.
+
+</span>
+</li>
+<li id="bib.bib29" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[29]</span>
+<span class="ltx_bibblock">
+A. Spencer.
+
+</span>
+<span class="ltx_bibblock">Asterisk: The open source PBX.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.asterisk.org</span>.
+
+</span>
+</li>
+<li id="bib.bib30" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[30]</span>
+<span class="ltx_bibblock">
+J. Tuya, M. J. Suárez-Cabala, and C. de la Riva.
+
+</span>
+<span class="ltx_bibblock">Mutating database queries.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib30.1.1" class="ltx_text ltx_font_italic">Information and Software Technology</span>, 2006.
+
+</span>
+<span class="ltx_bibblock">To appear.
+
+</span>
+</li>
+<li id="bib.bib31" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[31]</span>
+<span class="ltx_bibblock">
+G. Vigna, W. Robertson, and D. Balzarotti.
+
+</span>
+<span class="ltx_bibblock">Testing network-based intrusion detection signatures using mutant
+exploits.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib31.1.1" class="ltx_text ltx_font_italic">Proceedings of the 11th ACM Conference on Computer and
+Communications Security</span>, pages 21–30, Washingtion, DC, USA, Oct. 2004.
+
+</span>
+</li>
+<li id="bib.bib32" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[32]</span>
+<span class="ltx_bibblock">
+The videolan project.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_ref ltx_nolink ltx_fname ltx_font_typewriter ltx_ref_self">http://www.videolan.org/vlc</span>/.
+
+</span>
+</li>
+</ul>
+</section>
+<div class="ltx_pagination ltx_role_newpage"></div>
+<div id="p14" class="ltx_para">
+<p id="p14.1" class="ltx_p"><span id="p14.1.1" class="ltx_text"></span></p>
+<div class="ltx_pagination ltx_role_newpage"></div>
+</div>
+</article>
+</div>
+<div class="ar5iv-footer"><a href="/html/0704.1372" class="ar5iv-nav-button ar5iv-nav-button-prev">◄</a>
+    <a class="ar5iv-home-button" href="/"><img height="40" alt="ar5iv homepage" src="/assets/ar5iv.png"></a>
+    <a href="/feeling_lucky" class="ar5iv-text-button">Feeling<br>lucky?</a>
+    <a href="/log/0704.1373" class="ar5iv-text-button ar5iv-severity-ok">Conversion<br>report</a>
+    <a class="ar5iv-text-button" target="_blank" href="https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+0704.1373">Report<br>an issue</a>
+    <a href="https://arxiv.org/abs/0704.1373" class="ar5iv-text-button arxiv-ui-theme">View&nbsp;original<br>on&nbsp;arXiv</a><a href="/html/0704.1374" class="ar5iv-nav-button ar5iv-nav-button-next">►</a>
+</div><footer class="ltx_page_footer">
+<a class="ar5iv-toggle-color-scheme" href="javascript:toggleColorScheme()" title="Toggle ar5iv color scheme"><span class="color-scheme-icon"></span></a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/license" target="_blank">Copyright</a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/policies/privacy_policy" target="_blank">Privacy Policy</a>
+
+<div class="ltx_page_logo">Generated  on Fri Mar 15 22:44:25 2024 by <a target="_blank" href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+
+    <script>
+      var canMathML = typeof(MathMLElement) == "function";
+      if (!canMathML) {
+        var body = document.querySelector("body");
+        body.firstElementChild.setAttribute('style', 'opacity: 0;');
+        var loading = document.createElement("div");
+        loading.setAttribute("id", "mathjax-loading-spinner");
+        var message = document.createElement("div");
+        message.setAttribute("id", "mathjax-loading-message");
+        message.innerText = "Typesetting Equations...";
+        body.prepend(loading);
+        body.prepend(message);
+
+        var el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.querySelector("head").appendChild(el);
+
+        window.MathJax = {
+          startup: {
+            pageReady: () => {
+              return MathJax.startup.defaultPageReady().then(() => {
+                body.removeChild(loading);
+                body.removeChild(message);
+                body.firstElementChild.removeAttribute('style');
+              }); } } };
+      }
+    </script>
+    <script>
+    // Auxiliary function, building the preview feature when
+    // an inline citation is clicked
+    function clicked_cite(e) {
+      e.preventDefault();
+      let cite = this.closest('.ltx_cite');
+      let next = cite.nextSibling;
+      if (next && next.nodeType == Node.ELEMENT_NODE && next.getAttribute('class') == "ar5iv-bibitem-preview") {
+        next.remove();
+        return; }
+      // Before adding a preview modal,
+      // cleanup older previews, in case they're still open
+      document.querySelectorAll('span.ar5iv-bibitem-preview').forEach(function(node) {
+        node.remove();
+      })
+
+      // Create the preview
+      preview = document.createElement('span');
+      preview.setAttribute('class','ar5iv-bibitem-preview');
+      let target = document.getElementById(this.getAttribute('href').slice(1));
+      target.childNodes.forEach(function (child) {
+        preview.append(child.cloneNode(true));
+      });
+      let close_x = document.createElement('button');
+      close_x.setAttribute("aria-label","Close modal for bibliography item preview");
+      close_x.textContent = "×";
+      close_x.setAttribute('class', 'ar5iv-button-close-preview');
+      close_x.setAttribute('onclick','this.parentNode.remove()');
+      preview.append(close_x);
+      preview.querySelectorAll('.ltx_tag_bibitem').forEach(function(node) {
+        node.remove();
+      });
+      cite.parentNode.insertBefore(preview, cite.nextSibling);
+      return;
+    }
+    // Global Document initialization:
+    // - assign the preview feature to all inline citation links
+    document.querySelectorAll(".ltx_cite .ltx_ref").forEach(function (link) {
+      link.addEventListener("click", clicked_cite);
+    });
+    </script>
+    </body>
+</html>

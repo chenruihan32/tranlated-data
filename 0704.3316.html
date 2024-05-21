@@ -1,0 +1,941 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[0704.3316] Vocabulary growth in collaborative tagging systems</title><meta property="og:description" content="We analyze a large-scale snapshot of del.icio.us
+and investigate how the number of different tags in the system grows
+as a function of a suitably defined notion of time.
+We study the temporal evolution of the global vo…">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vocabulary growth in collaborative tagging systems">
+<meta name="twitter:image:src" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta name="twitter:image:alt" content="ar5iv logo">
+<meta property="og:title" content="Vocabulary growth in collaborative tagging systems">
+<meta property="og:site_name" content="ar5iv">
+<meta property="og:image" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ar5iv.labs.arxiv.org/html/0704.3316">
+
+<!--Generated on Mon Feb 26 23:40:35 2024 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<!--Document created on 8 February 2007.-->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script>
+  function detectColorScheme(){
+    var theme="light";
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if(current_theme){
+      if(current_theme == "dark"){
+        theme = "dark";
+      } }
+    else if(!window.matchMedia) { return false; }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      theme = "dark"; }
+    if (theme=="dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light"); } }
+
+  detectColorScheme();
+
+  function toggleColorScheme(){
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+      if (current_theme == "light") {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+      else {
+        localStorage.setItem("ar5iv_theme", "light"); } }
+    else {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+    detectColorScheme(); }
+</script>
+<link media="all" rel="stylesheet" href="/assets/ar5iv-fonts.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv-site.0.2.2.css">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document ltx_authors_1line">
+<div id="p1" class="ltx_para">
+<span id="p1.1" class="ltx_ERROR undefined">\toappear</span>
+</div>
+<h1 class="ltx_title ltx_title_document">Vocabulary growth in collaborative tagging systems</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">
+Ciro Cattuto
+<br class="ltx_break">
+<br class="ltx_break">
+<br class="ltx_break">
+Andrea Baldassarri
+<br class="ltx_break">
+<br class="ltx_break">
+<br class="ltx_break">
+</span><span class="ltx_author_notes">
+<span class="ltx_contact ltx_role_address">Museo Storico della Fisica e Centro Studi e Ricerche “Enrico Fermi”
+</span>
+<span class="ltx_contact ltx_role_address">Compendio Viminale, 00184 Roma, Italy
+</span>
+<span class="ltx_contact ltx_role_email"><a href="mailto:ciro.cattuto@roma1.infn.it">ciro.cattuto@roma1.infn.it</a>
+</span>
+<span class="ltx_contact ltx_role_address">Dipartimento di Fisica, Università di Roma “La Sapienza”
+</span>
+<span class="ltx_contact ltx_role_address">P.le A. Moro, 2, I-00185 Roma, Italy
+</span>
+<span class="ltx_contact ltx_role_email"><a href="mailto:andrea.baldassarri@roma1.infn.it">andrea.baldassarri@roma1.infn.it</a>
+</span></span></span>
+</div>
+<div class="ltx_dates">(8 February 2007)</div>
+
+<div class="ltx_abstract">
+<h6 class="ltx_title ltx_title_abstract">Abstract</h6>
+<p id="id1.id1" class="ltx_p">We analyze a large-scale snapshot of <span id="id1.id1.1" class="ltx_text ltx_font_italic">del.icio.us</span>
+and investigate how the number of different tags in the system grows
+as a function of a suitably defined notion of time.
+We study the temporal evolution of the global vocabulary size,
+i.e. the number of distinct tags in the entire system,
+as well as the evolution of local vocabularies,
+that is the growth of the number of distinct tags used
+in the context of a given resource or user. In both cases,
+we find power-law behaviors with exponents smaller than one.
+Surprisingly, the observed growth behaviors are remarkably regular
+throughout the entire history of the system
+and across very different resources being bookmarked.
+Similar sub-linear laws of growth have been observed in written text,
+and this qualitative universality calls for an explanation
+and points in the direction of non-trivial cognitive processes in the
+complex interaction patterns characterizing collaborative tagging. </p>
+</div>
+<div class="ltx_classification">
+<h6 class="ltx_title ltx_title_classification">category: </h6>H.3.4 Information Systems Systems and Software
+</div>
+<div class="ltx_classification">
+<h6 class="ltx_title ltx_title_classification">category: </h6>H.3.1 Information Storage and Retrieval Content Analysis and Indexing
+</div>
+<div class="ltx_classification">
+<h6 class="ltx_title ltx_title_classification">keywords: </h6>folksonomies, collaborative tagging, statistical analysis,
+<br class="ltx_break">growth processes, tag vocabulary, social software, research
+</div>
+<section id="S1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">1 </span>Introduction</h2>
+
+<div id="S1.p1" class="ltx_para">
+<p id="S1.p1.1" class="ltx_p">The paradigm of collaborative tagging <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib1" title="" class="ltx_ref">1</a>, <a href="#bib.bib2" title="" class="ltx_ref">2</a>]</cite>
+has been swiftly adopted and deployed in a wide range of systems,
+motivating a surge of interest in understanding their structure and evolution.
+Folksonomies have been known to exhibit striking statistical regularities
+and activity patterns <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="" class="ltx_ref">3</a>, <a href="#bib.bib4" title="" class="ltx_ref">4</a>]</cite>.</p>
+</div>
+<div id="S1.p2" class="ltx_para">
+<p id="S1.p2.1" class="ltx_p">In this context, a natural topic for investigation is the
+vocabulary of tags that is used within a given system,
+and in particular its evolution over time,
+as new users, resources and tags come into play.
+Some insights in this direction are reported in <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="" class="ltx_ref">3</a>]</cite>
+and <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib5" title="" class="ltx_ref">5</a>]</cite>, but a systematic attempt at characterizing
+vocabulary growth in collaborative tagging system is still lacking.
+Here we make a first step in that direction by analyzing a large-scale
+snapshot of <span id="S1.p2.1.1" class="ltx_text ltx_font_italic">del.icio.us</span> and identifying a few stylized facts
+about the temporal evolution of tag vocabulary in a variety of contexts.</p>
+</div>
+<div id="S1.p3" class="ltx_para">
+<p id="S1.p3.1" class="ltx_p">Ordinary vocabularies of words
+feature several interesting properties, and one of the most striking
+is related to their growth <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib6" title="" class="ltx_ref">6</a>]</cite>.
+If one scans a text written in natural language and
+monitors the number of different words that have appeared as a function of the
+total number of words read, one realizes that this growth is described
+by a sub-linear law of growth, and often by a power-law behavior with an
+exponent smaller than one. It is thus tempting to investigate the
+same features in a folksonomy, regarded as a stream of time-ordered posts
+in a given context.
+How does the number of tags grow? Is the
+asymptotic number of tags finite? What is the rate of invention of new tags?
+Does their number eventually reach a plateau?
+Beyond the pure theoretical interest, these questions may be important
+for collaborative tagging and more generally for understanding
+the dynamics of tags in online social communities, where
+a deeper understanding of the temporal evolution of the system
+is important for both managing existing systems and designing new ones.</p>
+</div>
+<div id="S1.p4" class="ltx_para">
+<p id="S1.p4.1" class="ltx_p">The outline of the paper is as follows. Section <a href="#S2" title="2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> describes
+the experimental data we analyzed. Section <a href="#S3" title="3 Global vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a> is devoted
+to the temporal evolution of the global vocabulary, i.e. the growth
+of the number of different tags in the entire system, while the analysis
+of local vocabulary growth – the number of distinct tags used
+in the context of a given resource or user –
+is addressed in Section <a href="#S4" title="4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>.
+In Section <a href="#S5" title="5 Conclusions ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a> we cast this work in a wider perspective
+and discuss some open questions.</p>
+</div>
+</section>
+<section id="S2" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">2 </span>Experimental data</h2>
+
+<div id="S2.p1" class="ltx_para">
+<p id="S2.p1.1" class="ltx_p">Our analysis will focus on <span id="S2.p1.1.1" class="ltx_text ltx_font_italic">del.icio.us</span> for several reasons:
+i) it was the first system to deploy the ideas and technologies of
+collaborative tagging, so it has acquired a paradigmatic character and it is
+the natural starting point for any quantitative study. ii) because of its
+popularity, it has a large community of active users and comprises a precious
+body of raw data on the structure and evolution of a folksonomy.
+iii) it is a <span id="S2.p1.1.2" class="ltx_text ltx_font_italic">broad folksonomy</span> <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib7" title="" class="ltx_ref">7</a>]</cite>, i.e. single tagging events
+(posts) retain their identity and can be individually retrieved.
+This allows to define and measure the multiplicity (or frequency) of tags
+in a given context (for exampe, a resource or a user), providing a precious
+opportunity to probe social aspects in the tagging behavior of a community.
+Contrary to this, popular tagging systems falling in the <span id="S2.p1.1.3" class="ltx_text ltx_font_italic">narrow folksonomy</span>
+class (<span id="S2.p1.1.4" class="ltx_text ltx_font_italic">Flickr</span>, for example) are based on a different model of user interaction,
+where tags are mostly applied by the content creator, no notion of tag
+multiplicity is possible in the context of a single resource,
+and no access is given to the raw sequence of tagging events.</p>
+</div>
+<div id="S2.p2" class="ltx_para">
+<p id="S2.p2.1" class="ltx_p">The basic unit of information
+in a collaborative tagging system is a <span id="S2.p2.1.1" class="ltx_text ltx_font_typewriter">(user, resource, {tags})</span>
+triple, here referred to as “post”.
+In <span id="S2.p2.1.2" class="ltx_text ltx_font_italic">del.icio.us</span> (as well as in many other systems) a post also contains
+a timestamp indicating the physical time of the tagging event,
+so that the temporal ordering of posts can be preserved
+and the dynamical evolution of the system over time
+can be reconstructed and investigated.</p>
+</div>
+<div id="S2.p3" class="ltx_para">
+<p id="S2.p3.9" class="ltx_p">The dataset used for the present analysis consists of approximately <math id="S2.p3.1.m1.1" class="ltx_Math" alttext="5\cdot 10^{6}" display="inline"><semantics id="S2.p3.1.m1.1a"><mrow id="S2.p3.1.m1.1.1" xref="S2.p3.1.m1.1.1.cmml"><mn id="S2.p3.1.m1.1.1.2" xref="S2.p3.1.m1.1.1.2.cmml">5</mn><mo lspace="0.222em" rspace="0.222em" id="S2.p3.1.m1.1.1.1" xref="S2.p3.1.m1.1.1.1.cmml">⋅</mo><msup id="S2.p3.1.m1.1.1.3" xref="S2.p3.1.m1.1.1.3.cmml"><mn id="S2.p3.1.m1.1.1.3.2" xref="S2.p3.1.m1.1.1.3.2.cmml">10</mn><mn id="S2.p3.1.m1.1.1.3.3" xref="S2.p3.1.m1.1.1.3.3.cmml">6</mn></msup></mrow><annotation-xml encoding="MathML-Content" id="S2.p3.1.m1.1b"><apply id="S2.p3.1.m1.1.1.cmml" xref="S2.p3.1.m1.1.1"><ci id="S2.p3.1.m1.1.1.1.cmml" xref="S2.p3.1.m1.1.1.1">⋅</ci><cn type="integer" id="S2.p3.1.m1.1.1.2.cmml" xref="S2.p3.1.m1.1.1.2">5</cn><apply id="S2.p3.1.m1.1.1.3.cmml" xref="S2.p3.1.m1.1.1.3"><csymbol cd="ambiguous" id="S2.p3.1.m1.1.1.3.1.cmml" xref="S2.p3.1.m1.1.1.3">superscript</csymbol><cn type="integer" id="S2.p3.1.m1.1.1.3.2.cmml" xref="S2.p3.1.m1.1.1.3.2">10</cn><cn type="integer" id="S2.p3.1.m1.1.1.3.3.cmml" xref="S2.p3.1.m1.1.1.3.3">6</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.1.m1.1c">5\cdot 10^{6}</annotation></semantics></math> posts, comprising about <math id="S2.p3.2.m2.1" class="ltx_Math" alttext="650000" display="inline"><semantics id="S2.p3.2.m2.1a"><mn id="S2.p3.2.m2.1.1" xref="S2.p3.2.m2.1.1.cmml">650000</mn><annotation-xml encoding="MathML-Content" id="S2.p3.2.m2.1b"><cn type="integer" id="S2.p3.2.m2.1.1.cmml" xref="S2.p3.2.m2.1.1">650000</cn></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.2.m2.1c">650000</annotation></semantics></math> users, <math id="S2.p3.3.m3.1" class="ltx_Math" alttext="1.9\cdot 10^{6}" display="inline"><semantics id="S2.p3.3.m3.1a"><mrow id="S2.p3.3.m3.1.1" xref="S2.p3.3.m3.1.1.cmml"><mn id="S2.p3.3.m3.1.1.2" xref="S2.p3.3.m3.1.1.2.cmml">1.9</mn><mo lspace="0.222em" rspace="0.222em" id="S2.p3.3.m3.1.1.1" xref="S2.p3.3.m3.1.1.1.cmml">⋅</mo><msup id="S2.p3.3.m3.1.1.3" xref="S2.p3.3.m3.1.1.3.cmml"><mn id="S2.p3.3.m3.1.1.3.2" xref="S2.p3.3.m3.1.1.3.2.cmml">10</mn><mn id="S2.p3.3.m3.1.1.3.3" xref="S2.p3.3.m3.1.1.3.3.cmml">6</mn></msup></mrow><annotation-xml encoding="MathML-Content" id="S2.p3.3.m3.1b"><apply id="S2.p3.3.m3.1.1.cmml" xref="S2.p3.3.m3.1.1"><ci id="S2.p3.3.m3.1.1.1.cmml" xref="S2.p3.3.m3.1.1.1">⋅</ci><cn type="float" id="S2.p3.3.m3.1.1.2.cmml" xref="S2.p3.3.m3.1.1.2">1.9</cn><apply id="S2.p3.3.m3.1.1.3.cmml" xref="S2.p3.3.m3.1.1.3"><csymbol cd="ambiguous" id="S2.p3.3.m3.1.1.3.1.cmml" xref="S2.p3.3.m3.1.1.3">superscript</csymbol><cn type="integer" id="S2.p3.3.m3.1.1.3.2.cmml" xref="S2.p3.3.m3.1.1.3.2">10</cn><cn type="integer" id="S2.p3.3.m3.1.1.3.3.cmml" xref="S2.p3.3.m3.1.1.3.3">6</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.3.m3.1c">1.9\cdot 10^{6}</annotation></semantics></math> resources and
+<math id="S2.p3.4.m4.1" class="ltx_Math" alttext="2.5\cdot 10^{6}" display="inline"><semantics id="S2.p3.4.m4.1a"><mrow id="S2.p3.4.m4.1.1" xref="S2.p3.4.m4.1.1.cmml"><mn id="S2.p3.4.m4.1.1.2" xref="S2.p3.4.m4.1.1.2.cmml">2.5</mn><mo lspace="0.222em" rspace="0.222em" id="S2.p3.4.m4.1.1.1" xref="S2.p3.4.m4.1.1.1.cmml">⋅</mo><msup id="S2.p3.4.m4.1.1.3" xref="S2.p3.4.m4.1.1.3.cmml"><mn id="S2.p3.4.m4.1.1.3.2" xref="S2.p3.4.m4.1.1.3.2.cmml">10</mn><mn id="S2.p3.4.m4.1.1.3.3" xref="S2.p3.4.m4.1.1.3.3.cmml">6</mn></msup></mrow><annotation-xml encoding="MathML-Content" id="S2.p3.4.m4.1b"><apply id="S2.p3.4.m4.1.1.cmml" xref="S2.p3.4.m4.1.1"><ci id="S2.p3.4.m4.1.1.1.cmml" xref="S2.p3.4.m4.1.1.1">⋅</ci><cn type="float" id="S2.p3.4.m4.1.1.2.cmml" xref="S2.p3.4.m4.1.1.2">2.5</cn><apply id="S2.p3.4.m4.1.1.3.cmml" xref="S2.p3.4.m4.1.1.3"><csymbol cd="ambiguous" id="S2.p3.4.m4.1.1.3.1.cmml" xref="S2.p3.4.m4.1.1.3">superscript</csymbol><cn type="integer" id="S2.p3.4.m4.1.1.3.2.cmml" xref="S2.p3.4.m4.1.1.3.2">10</cn><cn type="integer" id="S2.p3.4.m4.1.1.3.3.cmml" xref="S2.p3.4.m4.1.1.3.3">6</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.4.m4.1c">2.5\cdot 10^{6}</annotation></semantics></math> distinct tags, and covering almost <math id="S2.p3.5.m5.1" class="ltx_Math" alttext="3" display="inline"><semantics id="S2.p3.5.m5.1a"><mn id="S2.p3.5.m5.1.1" xref="S2.p3.5.m5.1.1.cmml">3</mn><annotation-xml encoding="MathML-Content" id="S2.p3.5.m5.1b"><cn type="integer" id="S2.p3.5.m5.1.1.cmml" xref="S2.p3.5.m5.1.1">3</cn></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.5.m5.1c">3</annotation></semantics></math> years of user
+activity, from early 2004 up to November 2006. In processing the data,
+we discarded all posts containing no tags (about <math id="S2.p3.6.m6.1" class="ltx_Math" alttext="7" display="inline"><semantics id="S2.p3.6.m6.1a"><mn id="S2.p3.6.m6.1.1" xref="S2.p3.6.m6.1.1.cmml">7</mn><annotation-xml encoding="MathML-Content" id="S2.p3.6.m6.1b"><cn type="integer" id="S2.p3.6.m6.1.1.cmml" xref="S2.p3.6.m6.1.1">7</cn></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.6.m6.1c">7</annotation></semantics></math>% of the total).
+Regarding tags, since <span id="S2.p3.9.3" class="ltx_text ltx_font_italic">del.icio.us</span> is case-preserving but not case sensitive, we ignored
+capitalization in tag comparison, and counted all different capitalizations of
+a given tag as instances of the same lower-case tag.
+The timestamp of each post was used to establish post ordering
+and determine the temporal evolution of the system.
+Posts with invalid timestamps, i.e. times set in the future or before <span id="S2.p3.9.4" class="ltx_text ltx_font_italic">del.icio.us</span> started operating,
+were discarded as well (less than <math id="S2.p3.7.m7.1" class="ltx_Math" alttext="0.5" display="inline"><semantics id="S2.p3.7.m7.1a"><mn id="S2.p3.7.m7.1.1" xref="S2.p3.7.m7.1.1.cmml">0.5</mn><annotation-xml encoding="MathML-Content" id="S2.p3.7.m7.1b"><cn type="float" id="S2.p3.7.m7.1.1.cmml" xref="S2.p3.7.m7.1.1">0.5</cn></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.7.m7.1c">0.5</annotation></semantics></math>% of the total).
+After performing the above cuts on the data, a time-ordered sequence of posts
+was built and then converted to a time-ordered table of tag assignments (TAS),
+by mapping each post of the form <span id="S2.p3.8.1" class="ltx_text ltx_font_typewriter">(user, resource, {tag1, tag2, <math id="S2.p3.8.1.m1.1" class="ltx_Math" alttext="\dots" display="inline"><semantics id="S2.p3.8.1.m1.1a"><mi class="ltx_mathvariant_monospace" mathvariant="monospace" id="S2.p3.8.1.m1.1.1" xref="S2.p3.8.1.m1.1.1.cmml">…</mi><annotation-xml encoding="MathML-Content" id="S2.p3.8.1.m1.1b"><ci id="S2.p3.8.1.m1.1.1.cmml" xref="S2.p3.8.1.m1.1.1">monospace-…</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.8.1.m1.1c">\dots</annotation></semantics></math> })</span>
+into adjacent rows of the form <span id="S2.p3.9.2" class="ltx_text ltx_font_typewriter">(tag1, user, resource), (tag2, user, resource), <math id="S2.p3.9.2.m1.1" class="ltx_Math" alttext="\dots" display="inline"><semantics id="S2.p3.9.2.m1.1a"><mi class="ltx_mathvariant_monospace" mathvariant="monospace" id="S2.p3.9.2.m1.1.1" xref="S2.p3.9.2.m1.1.1.cmml">…</mi><annotation-xml encoding="MathML-Content" id="S2.p3.9.2.m1.1b"><ci id="S2.p3.9.2.m1.1.1.cmml" xref="S2.p3.9.2.m1.1.1">monospace-…</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.p3.9.2.m1.1c">\dots</annotation></semantics></math> </span>,
+one for each tag in the post. Such a table, and selections of it,
+were used as the base for analysis described in the following.</p>
+</div>
+<div id="S2.p4" class="ltx_para">
+<p id="S2.p4.1" class="ltx_p">Of course, since we rely on post timestamps to reconstruct the history of the
+system, our reconstruction is only as much accurate as it is true that posts
+are left unchanged after having been entered into the system. We have no way
+of detecting and accounting for removed and updated posts, and we will assume
+in the following that post removal or updating have a negligible contribution
+on the overall evolution of the folksonomy.</p>
+</div>
+<figure id="S2.F1" class="ltx_figure"><img src="/html/0704.3316/assets/x1.png" id="S2.F1.g1" class="ltx_graphics ltx_img_landscape" width="461" height="335" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>Temporal evolution of the total number of distinct tags in <span id="S2.F1.10.1" class="ltx_text ltx_font_italic">del.icio.us</span>.
+As a function of the intrinsic time <math id="S2.F1.5.m1.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S2.F1.5.m1.1b"><mi id="S2.F1.5.m1.1.1" xref="S2.F1.5.m1.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S2.F1.5.m1.1c"><ci id="S2.F1.5.m1.1.1.cmml" xref="S2.F1.5.m1.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F1.5.m1.1d">\tau</annotation></semantics></math> (see main text), the number <math id="S2.F1.6.m2.1" class="ltx_Math" alttext="N(\tau)" display="inline"><semantics id="S2.F1.6.m2.1b"><mrow id="S2.F1.6.m2.1.2" xref="S2.F1.6.m2.1.2.cmml"><mi id="S2.F1.6.m2.1.2.2" xref="S2.F1.6.m2.1.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S2.F1.6.m2.1.2.1" xref="S2.F1.6.m2.1.2.1.cmml">​</mo><mrow id="S2.F1.6.m2.1.2.3.2" xref="S2.F1.6.m2.1.2.cmml"><mo stretchy="false" id="S2.F1.6.m2.1.2.3.2.1" xref="S2.F1.6.m2.1.2.cmml">(</mo><mi id="S2.F1.6.m2.1.1" xref="S2.F1.6.m2.1.1.cmml">τ</mi><mo stretchy="false" id="S2.F1.6.m2.1.2.3.2.2" xref="S2.F1.6.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S2.F1.6.m2.1c"><apply id="S2.F1.6.m2.1.2.cmml" xref="S2.F1.6.m2.1.2"><times id="S2.F1.6.m2.1.2.1.cmml" xref="S2.F1.6.m2.1.2.1"></times><ci id="S2.F1.6.m2.1.2.2.cmml" xref="S2.F1.6.m2.1.2.2">𝑁</ci><ci id="S2.F1.6.m2.1.1.cmml" xref="S2.F1.6.m2.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.F1.6.m2.1d">N(\tau)</annotation></semantics></math>
+of distinct tags (red dots) increases closely following a power-law (straight line
+in a log-log plot) across the entire history of the system. The solid black
+line, provided as an aid for the eye, corresponds to a power-law with exponent
+<math id="S2.F1.7.m3.1" class="ltx_Math" alttext="\gamma\simeq 0.8" display="inline"><semantics id="S2.F1.7.m3.1b"><mrow id="S2.F1.7.m3.1.1" xref="S2.F1.7.m3.1.1.cmml"><mi id="S2.F1.7.m3.1.1.2" xref="S2.F1.7.m3.1.1.2.cmml">γ</mi><mo id="S2.F1.7.m3.1.1.1" xref="S2.F1.7.m3.1.1.1.cmml">≃</mo><mn id="S2.F1.7.m3.1.1.3" xref="S2.F1.7.m3.1.1.3.cmml">0.8</mn></mrow><annotation-xml encoding="MathML-Content" id="S2.F1.7.m3.1c"><apply id="S2.F1.7.m3.1.1.cmml" xref="S2.F1.7.m3.1.1"><csymbol cd="latexml" id="S2.F1.7.m3.1.1.1.cmml" xref="S2.F1.7.m3.1.1.1">similar-to-or-equals</csymbol><ci id="S2.F1.7.m3.1.1.2.cmml" xref="S2.F1.7.m3.1.1.2">𝛾</ci><cn type="float" id="S2.F1.7.m3.1.1.3.cmml" xref="S2.F1.7.m3.1.1.3">0.8</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S2.F1.7.m3.1d">\gamma\simeq 0.8</annotation></semantics></math>. The inset shows the number <math id="S2.F1.8.m4.1" class="ltx_Math" alttext="N" display="inline"><semantics id="S2.F1.8.m4.1b"><mi id="S2.F1.8.m4.1.1" xref="S2.F1.8.m4.1.1.cmml">N</mi><annotation-xml encoding="MathML-Content" id="S2.F1.8.m4.1c"><ci id="S2.F1.8.m4.1.1.cmml" xref="S2.F1.8.m4.1.1">𝑁</ci></annotation-xml><annotation encoding="application/x-tex" id="S2.F1.8.m4.1d">N</annotation></semantics></math> of distinct tags as
+function of physical time, spanning almost 3 years of growth
+and six orders of magnitude in vocabulary size.
+The main graph and the inset refer to the same interval of physical time.
+</figcaption>
+</figure>
+</section>
+<section id="S3" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">3 </span>Global vocabulary growth</h2>
+
+<div id="S3.p1" class="ltx_para">
+<p id="S3.p1.6" class="ltx_p">We begin by studying the evolution over time of the size of the global
+“tag vocabulary”, i.e. the total number of different tags
+that are present in the folksonomy. As a function of physical time
+(inset of Fig. <a href="#S2.F1" title="Figure 1 ‣ 2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>) the growth of the global vocabulary
+is rather featureless, and reflects the huge growth of <span id="S3.p1.6.1" class="ltx_text ltx_font_italic">del.icio.us</span>
+over the past <math id="S3.p1.1.m1.1" class="ltx_Math" alttext="3" display="inline"><semantics id="S3.p1.1.m1.1a"><mn id="S3.p1.1.m1.1.1" xref="S3.p1.1.m1.1.1.cmml">3</mn><annotation-xml encoding="MathML-Content" id="S3.p1.1.m1.1b"><cn type="integer" id="S3.p1.1.m1.1.1.cmml" xref="S3.p1.1.m1.1.1">3</cn></annotation-xml><annotation encoding="application/x-tex" id="S3.p1.1.m1.1c">3</annotation></semantics></math> years. The fact that the system grew up in size
+so fast, indeed, makes physical time unsuitable to study the temporal
+evolution of <span id="S3.p1.6.2" class="ltx_text ltx_font_italic">del.icio.us</span>, because a large fraction of the total activity
+is compressed in the final part of its temporal history.
+Physical time is in many respects “external” to the system,
+and a much better notion of “time” can be defined in terms of quantities
+that are intrinsic to the system itself. As mentioned above,
+we start our analysis from a time-ordered table of tag assignments.
+For the system as a whole, we can define an “intrinsic time” <math id="S3.p1.2.m2.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.p1.2.m2.1a"><mi id="S3.p1.2.m2.1.1" xref="S3.p1.2.m2.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.p1.2.m2.1b"><ci id="S3.p1.2.m2.1.1.cmml" xref="S3.p1.2.m2.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.p1.2.m2.1c">\tau</annotation></semantics></math>
+as the index of a tag assignment into such a table, so that <math id="S3.p1.3.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.p1.3.m3.1a"><mi id="S3.p1.3.m3.1.1" xref="S3.p1.3.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.p1.3.m3.1b"><ci id="S3.p1.3.m3.1.1.cmml" xref="S3.p1.3.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.p1.3.m3.1c">\tau</annotation></semantics></math> runs
+from <math id="S3.p1.4.m4.1" class="ltx_Math" alttext="1" display="inline"><semantics id="S3.p1.4.m4.1a"><mn id="S3.p1.4.m4.1.1" xref="S3.p1.4.m4.1.1.cmml">1</mn><annotation-xml encoding="MathML-Content" id="S3.p1.4.m4.1b"><cn type="integer" id="S3.p1.4.m4.1.1.cmml" xref="S3.p1.4.m4.1.1">1</cn></annotation-xml><annotation encoding="application/x-tex" id="S3.p1.4.m4.1c">1</annotation></semantics></math> to the number of total tags assignments, i.e. the sum
+of the number of tags in all posts (about <math id="S3.p1.5.m5.1" class="ltx_Math" alttext="1.4\cdot 10^{8}" display="inline"><semantics id="S3.p1.5.m5.1a"><mrow id="S3.p1.5.m5.1.1" xref="S3.p1.5.m5.1.1.cmml"><mn id="S3.p1.5.m5.1.1.2" xref="S3.p1.5.m5.1.1.2.cmml">1.4</mn><mo lspace="0.222em" rspace="0.222em" id="S3.p1.5.m5.1.1.1" xref="S3.p1.5.m5.1.1.1.cmml">⋅</mo><msup id="S3.p1.5.m5.1.1.3" xref="S3.p1.5.m5.1.1.3.cmml"><mn id="S3.p1.5.m5.1.1.3.2" xref="S3.p1.5.m5.1.1.3.2.cmml">10</mn><mn id="S3.p1.5.m5.1.1.3.3" xref="S3.p1.5.m5.1.1.3.3.cmml">8</mn></msup></mrow><annotation-xml encoding="MathML-Content" id="S3.p1.5.m5.1b"><apply id="S3.p1.5.m5.1.1.cmml" xref="S3.p1.5.m5.1.1"><ci id="S3.p1.5.m5.1.1.1.cmml" xref="S3.p1.5.m5.1.1.1">⋅</ci><cn type="float" id="S3.p1.5.m5.1.1.2.cmml" xref="S3.p1.5.m5.1.1.2">1.4</cn><apply id="S3.p1.5.m5.1.1.3.cmml" xref="S3.p1.5.m5.1.1.3"><csymbol cd="ambiguous" id="S3.p1.5.m5.1.1.3.1.cmml" xref="S3.p1.5.m5.1.1.3">superscript</csymbol><cn type="integer" id="S3.p1.5.m5.1.1.3.2.cmml" xref="S3.p1.5.m5.1.1.3.2">10</cn><cn type="integer" id="S3.p1.5.m5.1.1.3.3.cmml" xref="S3.p1.5.m5.1.1.3.3">8</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.p1.5.m5.1c">1.4\cdot 10^{8}</annotation></semantics></math> in our case).
+For each post added to the system, this “clock” <math id="S3.p1.6.m6.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.p1.6.m6.1a"><mi id="S3.p1.6.m6.1.1" xref="S3.p1.6.m6.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.p1.6.m6.1b"><ci id="S3.p1.6.m6.1.1.cmml" xref="S3.p1.6.m6.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.p1.6.m6.1c">\tau</annotation></semantics></math> increases
+by a number of ticks equal to the number of tags in that post.</p>
+</div>
+<div id="S3.p2" class="ltx_para">
+<p id="S3.p2.3" class="ltx_p">Fig. <a href="#S2.F1" title="Figure 1 ‣ 2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> shows the total number of distinct tags <math id="S3.p2.1.m1.1" class="ltx_Math" alttext="N(\tau)" display="inline"><semantics id="S3.p2.1.m1.1a"><mrow id="S3.p2.1.m1.1.2" xref="S3.p2.1.m1.1.2.cmml"><mi id="S3.p2.1.m1.1.2.2" xref="S3.p2.1.m1.1.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S3.p2.1.m1.1.2.1" xref="S3.p2.1.m1.1.2.1.cmml">​</mo><mrow id="S3.p2.1.m1.1.2.3.2" xref="S3.p2.1.m1.1.2.cmml"><mo stretchy="false" id="S3.p2.1.m1.1.2.3.2.1" xref="S3.p2.1.m1.1.2.cmml">(</mo><mi id="S3.p2.1.m1.1.1" xref="S3.p2.1.m1.1.1.cmml">τ</mi><mo stretchy="false" id="S3.p2.1.m1.1.2.3.2.2" xref="S3.p2.1.m1.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S3.p2.1.m1.1b"><apply id="S3.p2.1.m1.1.2.cmml" xref="S3.p2.1.m1.1.2"><times id="S3.p2.1.m1.1.2.1.cmml" xref="S3.p2.1.m1.1.2.1"></times><ci id="S3.p2.1.m1.1.2.2.cmml" xref="S3.p2.1.m1.1.2.2">𝑁</ci><ci id="S3.p2.1.m1.1.1.cmml" xref="S3.p2.1.m1.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.p2.1.m1.1c">N(\tau)</annotation></semantics></math>
+present in the system at time <math id="S3.p2.2.m2.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.p2.2.m2.1a"><mi id="S3.p2.2.m2.1.1" xref="S3.p2.2.m2.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.p2.2.m2.1b"><ci id="S3.p2.2.m2.1.1.cmml" xref="S3.p2.2.m2.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.p2.2.m2.1c">\tau</annotation></semantics></math>, as a function of <math id="S3.p2.3.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.p2.3.m3.1a"><mi id="S3.p2.3.m3.1.1" xref="S3.p2.3.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.p2.3.m3.1b"><ci id="S3.p2.3.m3.1.1.cmml" xref="S3.p2.3.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.p2.3.m3.1c">\tau</annotation></semantics></math>.
+In terms of this intrinsic time, a remarkably clean power-law behavior
+(straight line on a log-log plot) can be observed throughout the
+full history of the system. This is even more interesting because
+the data shown in Fig. <a href="#S2.F1" title="Figure 1 ‣ 2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> span a time interval covering
+almost the entire history of <span id="S3.p2.3.1" class="ltx_text ltx_font_italic">del.icio.us</span>: the power-law trend emerges already
+at the very beginning and is obeyed all the way to present times,
+as the number of active users and that of bookmarked resources
+dramatically increase over time. It’s worth noticing the following points:</p>
+<ul id="S3.I1" class="ltx_itemize">
+<li id="S3.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S3.I1.i1.p1" class="ltx_para">
+<p id="S3.I1.i1.p1.1" class="ltx_p">The number <math id="S3.I1.i1.p1.1.m1.1" class="ltx_Math" alttext="N" display="inline"><semantics id="S3.I1.i1.p1.1.m1.1a"><mi id="S3.I1.i1.p1.1.m1.1.1" xref="S3.I1.i1.p1.1.m1.1.1.cmml">N</mi><annotation-xml encoding="MathML-Content" id="S3.I1.i1.p1.1.m1.1b"><ci id="S3.I1.i1.p1.1.m1.1.1.cmml" xref="S3.I1.i1.p1.1.m1.1.1">𝑁</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i1.p1.1.m1.1c">N</annotation></semantics></math> of distinct tags present in the system does not appear
+to level off towards a steady-state plateau. This is not surprising
+in its own merit because <span id="S3.I1.i1.p1.1.1" class="ltx_text ltx_font_italic">del.icio.us</span> is an open-ended system and new users
+and resources are a source of continuous novelty for the tags
+comprised by the folksonomy.</p>
+</div>
+</li>
+<li id="S3.I1.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S3.I1.i2.p1" class="ltx_para">
+<p id="S3.I1.i2.p1.4" class="ltx_p">The power-law growth followed by <math id="S3.I1.i2.p1.1.m1.1" class="ltx_Math" alttext="N(\tau)" display="inline"><semantics id="S3.I1.i2.p1.1.m1.1a"><mrow id="S3.I1.i2.p1.1.m1.1.2" xref="S3.I1.i2.p1.1.m1.1.2.cmml"><mi id="S3.I1.i2.p1.1.m1.1.2.2" xref="S3.I1.i2.p1.1.m1.1.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S3.I1.i2.p1.1.m1.1.2.1" xref="S3.I1.i2.p1.1.m1.1.2.1.cmml">​</mo><mrow id="S3.I1.i2.p1.1.m1.1.2.3.2" xref="S3.I1.i2.p1.1.m1.1.2.cmml"><mo stretchy="false" id="S3.I1.i2.p1.1.m1.1.2.3.2.1" xref="S3.I1.i2.p1.1.m1.1.2.cmml">(</mo><mi id="S3.I1.i2.p1.1.m1.1.1" xref="S3.I1.i2.p1.1.m1.1.1.cmml">τ</mi><mo stretchy="false" id="S3.I1.i2.p1.1.m1.1.2.3.2.2" xref="S3.I1.i2.p1.1.m1.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S3.I1.i2.p1.1.m1.1b"><apply id="S3.I1.i2.p1.1.m1.1.2.cmml" xref="S3.I1.i2.p1.1.m1.1.2"><times id="S3.I1.i2.p1.1.m1.1.2.1.cmml" xref="S3.I1.i2.p1.1.m1.1.2.1"></times><ci id="S3.I1.i2.p1.1.m1.1.2.2.cmml" xref="S3.I1.i2.p1.1.m1.1.2.2">𝑁</ci><ci id="S3.I1.i2.p1.1.m1.1.1.cmml" xref="S3.I1.i2.p1.1.m1.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i2.p1.1.m1.1c">N(\tau)</annotation></semantics></math> is of the form
+<math id="S3.I1.i2.p1.2.m2.1" class="ltx_Math" alttext="N(\tau)\sim\tau^{\gamma}" display="inline"><semantics id="S3.I1.i2.p1.2.m2.1a"><mrow id="S3.I1.i2.p1.2.m2.1.2" xref="S3.I1.i2.p1.2.m2.1.2.cmml"><mrow id="S3.I1.i2.p1.2.m2.1.2.2" xref="S3.I1.i2.p1.2.m2.1.2.2.cmml"><mi id="S3.I1.i2.p1.2.m2.1.2.2.2" xref="S3.I1.i2.p1.2.m2.1.2.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S3.I1.i2.p1.2.m2.1.2.2.1" xref="S3.I1.i2.p1.2.m2.1.2.2.1.cmml">​</mo><mrow id="S3.I1.i2.p1.2.m2.1.2.2.3.2" xref="S3.I1.i2.p1.2.m2.1.2.2.cmml"><mo stretchy="false" id="S3.I1.i2.p1.2.m2.1.2.2.3.2.1" xref="S3.I1.i2.p1.2.m2.1.2.2.cmml">(</mo><mi id="S3.I1.i2.p1.2.m2.1.1" xref="S3.I1.i2.p1.2.m2.1.1.cmml">τ</mi><mo stretchy="false" id="S3.I1.i2.p1.2.m2.1.2.2.3.2.2" xref="S3.I1.i2.p1.2.m2.1.2.2.cmml">)</mo></mrow></mrow><mo id="S3.I1.i2.p1.2.m2.1.2.1" xref="S3.I1.i2.p1.2.m2.1.2.1.cmml">∼</mo><msup id="S3.I1.i2.p1.2.m2.1.2.3" xref="S3.I1.i2.p1.2.m2.1.2.3.cmml"><mi id="S3.I1.i2.p1.2.m2.1.2.3.2" xref="S3.I1.i2.p1.2.m2.1.2.3.2.cmml">τ</mi><mi id="S3.I1.i2.p1.2.m2.1.2.3.3" xref="S3.I1.i2.p1.2.m2.1.2.3.3.cmml">γ</mi></msup></mrow><annotation-xml encoding="MathML-Content" id="S3.I1.i2.p1.2.m2.1b"><apply id="S3.I1.i2.p1.2.m2.1.2.cmml" xref="S3.I1.i2.p1.2.m2.1.2"><csymbol cd="latexml" id="S3.I1.i2.p1.2.m2.1.2.1.cmml" xref="S3.I1.i2.p1.2.m2.1.2.1">similar-to</csymbol><apply id="S3.I1.i2.p1.2.m2.1.2.2.cmml" xref="S3.I1.i2.p1.2.m2.1.2.2"><times id="S3.I1.i2.p1.2.m2.1.2.2.1.cmml" xref="S3.I1.i2.p1.2.m2.1.2.2.1"></times><ci id="S3.I1.i2.p1.2.m2.1.2.2.2.cmml" xref="S3.I1.i2.p1.2.m2.1.2.2.2">𝑁</ci><ci id="S3.I1.i2.p1.2.m2.1.1.cmml" xref="S3.I1.i2.p1.2.m2.1.1">𝜏</ci></apply><apply id="S3.I1.i2.p1.2.m2.1.2.3.cmml" xref="S3.I1.i2.p1.2.m2.1.2.3"><csymbol cd="ambiguous" id="S3.I1.i2.p1.2.m2.1.2.3.1.cmml" xref="S3.I1.i2.p1.2.m2.1.2.3">superscript</csymbol><ci id="S3.I1.i2.p1.2.m2.1.2.3.2.cmml" xref="S3.I1.i2.p1.2.m2.1.2.3.2">𝜏</ci><ci id="S3.I1.i2.p1.2.m2.1.2.3.3.cmml" xref="S3.I1.i2.p1.2.m2.1.2.3.3">𝛾</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i2.p1.2.m2.1c">N(\tau)\sim\tau^{\gamma}</annotation></semantics></math>, with <math id="S3.I1.i2.p1.3.m3.1" class="ltx_Math" alttext="\gamma&lt;1" display="inline"><semantics id="S3.I1.i2.p1.3.m3.1a"><mrow id="S3.I1.i2.p1.3.m3.1.1" xref="S3.I1.i2.p1.3.m3.1.1.cmml"><mi id="S3.I1.i2.p1.3.m3.1.1.2" xref="S3.I1.i2.p1.3.m3.1.1.2.cmml">γ</mi><mo id="S3.I1.i2.p1.3.m3.1.1.1" xref="S3.I1.i2.p1.3.m3.1.1.1.cmml">&lt;</mo><mn id="S3.I1.i2.p1.3.m3.1.1.3" xref="S3.I1.i2.p1.3.m3.1.1.3.cmml">1</mn></mrow><annotation-xml encoding="MathML-Content" id="S3.I1.i2.p1.3.m3.1b"><apply id="S3.I1.i2.p1.3.m3.1.1.cmml" xref="S3.I1.i2.p1.3.m3.1.1"><lt id="S3.I1.i2.p1.3.m3.1.1.1.cmml" xref="S3.I1.i2.p1.3.m3.1.1.1"></lt><ci id="S3.I1.i2.p1.3.m3.1.1.2.cmml" xref="S3.I1.i2.p1.3.m3.1.1.2">𝛾</ci><cn type="integer" id="S3.I1.i2.p1.3.m3.1.1.3.cmml" xref="S3.I1.i2.p1.3.m3.1.1.3">1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i2.p1.3.m3.1c">\gamma&lt;1</annotation></semantics></math>. The black line
+in Fig. <a href="#S2.F1" title="Figure 1 ‣ 2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> corresponds to <math id="S3.I1.i2.p1.4.m4.1" class="ltx_Math" alttext="\gamma\simeq 0.8" display="inline"><semantics id="S3.I1.i2.p1.4.m4.1a"><mrow id="S3.I1.i2.p1.4.m4.1.1" xref="S3.I1.i2.p1.4.m4.1.1.cmml"><mi id="S3.I1.i2.p1.4.m4.1.1.2" xref="S3.I1.i2.p1.4.m4.1.1.2.cmml">γ</mi><mo id="S3.I1.i2.p1.4.m4.1.1.1" xref="S3.I1.i2.p1.4.m4.1.1.1.cmml">≃</mo><mn id="S3.I1.i2.p1.4.m4.1.1.3" xref="S3.I1.i2.p1.4.m4.1.1.3.cmml">0.8</mn></mrow><annotation-xml encoding="MathML-Content" id="S3.I1.i2.p1.4.m4.1b"><apply id="S3.I1.i2.p1.4.m4.1.1.cmml" xref="S3.I1.i2.p1.4.m4.1.1"><csymbol cd="latexml" id="S3.I1.i2.p1.4.m4.1.1.1.cmml" xref="S3.I1.i2.p1.4.m4.1.1.1">similar-to-or-equals</csymbol><ci id="S3.I1.i2.p1.4.m4.1.1.2.cmml" xref="S3.I1.i2.p1.4.m4.1.1.2">𝛾</ci><cn type="float" id="S3.I1.i2.p1.4.m4.1.1.3.cmml" xref="S3.I1.i2.p1.4.m4.1.1.3">0.8</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i2.p1.4.m4.1c">\gamma\simeq 0.8</annotation></semantics></math>.</p>
+</div>
+</li>
+<li id="S3.I1.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S3.I1.i3.p1" class="ltx_para">
+<p id="S3.I1.i3.p1.3" class="ltx_p">The rate at which new tags appear at time <math id="S3.I1.i3.p1.1.m1.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.I1.i3.p1.1.m1.1a"><mi id="S3.I1.i3.p1.1.m1.1.1" xref="S3.I1.i3.p1.1.m1.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.I1.i3.p1.1.m1.1b"><ci id="S3.I1.i3.p1.1.m1.1.1.cmml" xref="S3.I1.i3.p1.1.m1.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i3.p1.1.m1.1c">\tau</annotation></semantics></math> scales as
+<math id="S3.I1.i3.p1.2.m2.1" class="ltx_Math" alttext="dN(\tau)/d\tau\sim\tau^{\gamma-1}" display="inline"><semantics id="S3.I1.i3.p1.2.m2.1a"><mrow id="S3.I1.i3.p1.2.m2.1.2" xref="S3.I1.i3.p1.2.m2.1.2.cmml"><mrow id="S3.I1.i3.p1.2.m2.1.2.2" xref="S3.I1.i3.p1.2.m2.1.2.2.cmml"><mrow id="S3.I1.i3.p1.2.m2.1.2.2.2" xref="S3.I1.i3.p1.2.m2.1.2.2.2.cmml"><mrow id="S3.I1.i3.p1.2.m2.1.2.2.2.2" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.cmml"><mi id="S3.I1.i3.p1.2.m2.1.2.2.2.2.2" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.2.cmml">d</mi><mo lspace="0em" rspace="0em" id="S3.I1.i3.p1.2.m2.1.2.2.2.2.1" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.1.cmml">​</mo><mi id="S3.I1.i3.p1.2.m2.1.2.2.2.2.3" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.3.cmml">N</mi><mo lspace="0em" rspace="0em" id="S3.I1.i3.p1.2.m2.1.2.2.2.2.1a" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.1.cmml">​</mo><mrow id="S3.I1.i3.p1.2.m2.1.2.2.2.2.4.2" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.cmml"><mo stretchy="false" id="S3.I1.i3.p1.2.m2.1.2.2.2.2.4.2.1" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.cmml">(</mo><mi id="S3.I1.i3.p1.2.m2.1.1" xref="S3.I1.i3.p1.2.m2.1.1.cmml">τ</mi><mo stretchy="false" id="S3.I1.i3.p1.2.m2.1.2.2.2.2.4.2.2" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.cmml">)</mo></mrow></mrow><mo id="S3.I1.i3.p1.2.m2.1.2.2.2.1" xref="S3.I1.i3.p1.2.m2.1.2.2.2.1.cmml">/</mo><mi id="S3.I1.i3.p1.2.m2.1.2.2.2.3" xref="S3.I1.i3.p1.2.m2.1.2.2.2.3.cmml">d</mi></mrow><mo lspace="0em" rspace="0em" id="S3.I1.i3.p1.2.m2.1.2.2.1" xref="S3.I1.i3.p1.2.m2.1.2.2.1.cmml">​</mo><mi id="S3.I1.i3.p1.2.m2.1.2.2.3" xref="S3.I1.i3.p1.2.m2.1.2.2.3.cmml">τ</mi></mrow><mo id="S3.I1.i3.p1.2.m2.1.2.1" xref="S3.I1.i3.p1.2.m2.1.2.1.cmml">∼</mo><msup id="S3.I1.i3.p1.2.m2.1.2.3" xref="S3.I1.i3.p1.2.m2.1.2.3.cmml"><mi id="S3.I1.i3.p1.2.m2.1.2.3.2" xref="S3.I1.i3.p1.2.m2.1.2.3.2.cmml">τ</mi><mrow id="S3.I1.i3.p1.2.m2.1.2.3.3" xref="S3.I1.i3.p1.2.m2.1.2.3.3.cmml"><mi id="S3.I1.i3.p1.2.m2.1.2.3.3.2" xref="S3.I1.i3.p1.2.m2.1.2.3.3.2.cmml">γ</mi><mo id="S3.I1.i3.p1.2.m2.1.2.3.3.1" xref="S3.I1.i3.p1.2.m2.1.2.3.3.1.cmml">−</mo><mn id="S3.I1.i3.p1.2.m2.1.2.3.3.3" xref="S3.I1.i3.p1.2.m2.1.2.3.3.3.cmml">1</mn></mrow></msup></mrow><annotation-xml encoding="MathML-Content" id="S3.I1.i3.p1.2.m2.1b"><apply id="S3.I1.i3.p1.2.m2.1.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2"><csymbol cd="latexml" id="S3.I1.i3.p1.2.m2.1.2.1.cmml" xref="S3.I1.i3.p1.2.m2.1.2.1">similar-to</csymbol><apply id="S3.I1.i3.p1.2.m2.1.2.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2"><times id="S3.I1.i3.p1.2.m2.1.2.2.1.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.1"></times><apply id="S3.I1.i3.p1.2.m2.1.2.2.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2"><divide id="S3.I1.i3.p1.2.m2.1.2.2.2.1.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2.1"></divide><apply id="S3.I1.i3.p1.2.m2.1.2.2.2.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2"><times id="S3.I1.i3.p1.2.m2.1.2.2.2.2.1.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.1"></times><ci id="S3.I1.i3.p1.2.m2.1.2.2.2.2.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.2">𝑑</ci><ci id="S3.I1.i3.p1.2.m2.1.2.2.2.2.3.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2.2.3">𝑁</ci><ci id="S3.I1.i3.p1.2.m2.1.1.cmml" xref="S3.I1.i3.p1.2.m2.1.1">𝜏</ci></apply><ci id="S3.I1.i3.p1.2.m2.1.2.2.2.3.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.2.3">𝑑</ci></apply><ci id="S3.I1.i3.p1.2.m2.1.2.2.3.cmml" xref="S3.I1.i3.p1.2.m2.1.2.2.3">𝜏</ci></apply><apply id="S3.I1.i3.p1.2.m2.1.2.3.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3"><csymbol cd="ambiguous" id="S3.I1.i3.p1.2.m2.1.2.3.1.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3">superscript</csymbol><ci id="S3.I1.i3.p1.2.m2.1.2.3.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3.2">𝜏</ci><apply id="S3.I1.i3.p1.2.m2.1.2.3.3.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3.3"><minus id="S3.I1.i3.p1.2.m2.1.2.3.3.1.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3.3.1"></minus><ci id="S3.I1.i3.p1.2.m2.1.2.3.3.2.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3.3.2">𝛾</ci><cn type="integer" id="S3.I1.i3.p1.2.m2.1.2.3.3.3.cmml" xref="S3.I1.i3.p1.2.m2.1.2.3.3.3">1</cn></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i3.p1.2.m2.1c">dN(\tau)/d\tau\sim\tau^{\gamma-1}</annotation></semantics></math>. That is, new tags
+– as a function of the intrinsic time <math id="S3.I1.i3.p1.3.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S3.I1.i3.p1.3.m3.1a"><mi id="S3.I1.i3.p1.3.m3.1.1" xref="S3.I1.i3.p1.3.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S3.I1.i3.p1.3.m3.1b"><ci id="S3.I1.i3.p1.3.m3.1.1.cmml" xref="S3.I1.i3.p1.3.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.I1.i3.p1.3.m3.1c">\tau</annotation></semantics></math> – appear less
+and less frequently, with the invention rate of new tags
+monotonically decreasing towards zero. The approach to zero is however so slow
+that the cumulated number of tags, asymptotically, does not converge
+to a constant value but is unbounded —
+assuming the observed trend stays valid.</p>
+</div>
+</li>
+</ul>
+<p id="S3.p2.4" class="ltx_p">It is remarkable that the above statistical regularities hold
+throughout the history of <span id="S3.p2.4.1" class="ltx_text ltx_font_italic">del.icio.us</span>, while the system undergoes a huge change
+in the size of its user base, the number of bookmarked resources,
+several changes in the user interface are made, tag suggestion is introduced, and so on.</p>
+</div>
+<div id="S3.p3" class="ltx_para">
+<p id="S3.p3.1" class="ltx_p">The above observations constitute the core facts of the present study,
+and in the following we will shift from the global view of the system
+to a local one, to see whether these facts stay valid, and to deepen our analysis.</p>
+</div>
+<section id="S3.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.1 </span>Sub-linearity in vocabulary growth</h3>
+
+<div id="S3.SS1.p1" class="ltx_para">
+<p id="S3.SS1.p1.10" class="ltx_p">The sub-linear growth reported here is not a newly observed phenomenon.
+When dealing with the evolution of the number of attributes pertaining to some
+collection of objects, this sub-linear growth is generally referred to as
+<span id="S3.SS1.p1.10.1" class="ltx_text ltx_font_italic">Heaps’ law</span> <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib6" title="" class="ltx_ref">6</a>]</cite>. As an example, sub-linear behavior has
+been observed in the growth of vocabulary size in texts, i.e. in the number
+of different words in a text as a function of the total number of words
+observed while scanning through it. For the case of English corpora,
+vocabulary growth exponents in the range <math id="S3.SS1.p1.1.m1.1" class="ltx_Math" alttext="0.4&lt;\gamma&lt;0.6" display="inline"><semantics id="S3.SS1.p1.1.m1.1a"><mrow id="S3.SS1.p1.1.m1.1.1" xref="S3.SS1.p1.1.m1.1.1.cmml"><mn id="S3.SS1.p1.1.m1.1.1.2" xref="S3.SS1.p1.1.m1.1.1.2.cmml">0.4</mn><mo id="S3.SS1.p1.1.m1.1.1.3" xref="S3.SS1.p1.1.m1.1.1.3.cmml">&lt;</mo><mi id="S3.SS1.p1.1.m1.1.1.4" xref="S3.SS1.p1.1.m1.1.1.4.cmml">γ</mi><mo id="S3.SS1.p1.1.m1.1.1.5" xref="S3.SS1.p1.1.m1.1.1.5.cmml">&lt;</mo><mn id="S3.SS1.p1.1.m1.1.1.6" xref="S3.SS1.p1.1.m1.1.1.6.cmml">0.6</mn></mrow><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.1.m1.1b"><apply id="S3.SS1.p1.1.m1.1.1.cmml" xref="S3.SS1.p1.1.m1.1.1"><and id="S3.SS1.p1.1.m1.1.1a.cmml" xref="S3.SS1.p1.1.m1.1.1"></and><apply id="S3.SS1.p1.1.m1.1.1b.cmml" xref="S3.SS1.p1.1.m1.1.1"><lt id="S3.SS1.p1.1.m1.1.1.3.cmml" xref="S3.SS1.p1.1.m1.1.1.3"></lt><cn type="float" id="S3.SS1.p1.1.m1.1.1.2.cmml" xref="S3.SS1.p1.1.m1.1.1.2">0.4</cn><ci id="S3.SS1.p1.1.m1.1.1.4.cmml" xref="S3.SS1.p1.1.m1.1.1.4">𝛾</ci></apply><apply id="S3.SS1.p1.1.m1.1.1c.cmml" xref="S3.SS1.p1.1.m1.1.1"><lt id="S3.SS1.p1.1.m1.1.1.5.cmml" xref="S3.SS1.p1.1.m1.1.1.5"></lt><share href="#S3.SS1.p1.1.m1.1.1.4.cmml" id="S3.SS1.p1.1.m1.1.1d.cmml" xref="S3.SS1.p1.1.m1.1.1"></share><cn type="float" id="S3.SS1.p1.1.m1.1.1.6.cmml" xref="S3.SS1.p1.1.m1.1.1.6">0.6</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.1.m1.1c">0.4&lt;\gamma&lt;0.6</annotation></semantics></math>
+have been reported <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib8" title="" class="ltx_ref">8</a>]</cite>. The vocabulary
+size of the Thai subset of WWW internet web pages has also been found to obey
+a sub-linear power-law behavior with exponent <math id="S3.SS1.p1.2.m2.1" class="ltx_Math" alttext="\gamma\approx 0.5" display="inline"><semantics id="S3.SS1.p1.2.m2.1a"><mrow id="S3.SS1.p1.2.m2.1.1" xref="S3.SS1.p1.2.m2.1.1.cmml"><mi id="S3.SS1.p1.2.m2.1.1.2" xref="S3.SS1.p1.2.m2.1.1.2.cmml">γ</mi><mo id="S3.SS1.p1.2.m2.1.1.1" xref="S3.SS1.p1.2.m2.1.1.1.cmml">≈</mo><mn id="S3.SS1.p1.2.m2.1.1.3" xref="S3.SS1.p1.2.m2.1.1.3.cmml">0.5</mn></mrow><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.2.m2.1b"><apply id="S3.SS1.p1.2.m2.1.1.cmml" xref="S3.SS1.p1.2.m2.1.1"><approx id="S3.SS1.p1.2.m2.1.1.1.cmml" xref="S3.SS1.p1.2.m2.1.1.1"></approx><ci id="S3.SS1.p1.2.m2.1.1.2.cmml" xref="S3.SS1.p1.2.m2.1.1.2">𝛾</ci><cn type="float" id="S3.SS1.p1.2.m2.1.1.3.cmml" xref="S3.SS1.p1.2.m2.1.1.3">0.5</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.2.m2.1c">\gamma\approx 0.5</annotation></semantics></math>
+<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib9" title="" class="ltx_ref">9</a>]</cite>. In contrast, the exponent we observe here is comparatively high.
+As a side effect, standard “approximate text searching” algorithms might lose efficiency
+when applied to folksonomies <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="" class="ltx_ref">10</a>]</cite>. Approximate text searching algorithms
+allow a limited number of lexical differences between the terms found and those actually sought.
+The key ingredient that allows approximate search algorithms
+to scale reasonably is the relatively low vocabulary size,
+or equivalently a small exponent <math id="S3.SS1.p1.3.m3.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S3.SS1.p1.3.m3.1a"><mi id="S3.SS1.p1.3.m3.1.1" xref="S3.SS1.p1.3.m3.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.3.m3.1b"><ci id="S3.SS1.p1.3.m3.1.1.cmml" xref="S3.SS1.p1.3.m3.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.3.m3.1c">\gamma</annotation></semantics></math>. In order to get a feeling of the
+scales involved here, consider that in the case of <span id="S3.SS1.p1.10.2" class="ltx_text ltx_font_italic">del.icio.us</span> we have
+<math id="S3.SS1.p1.4.m4.1" class="ltx_Math" alttext="\tau\simeq 10^{8}" display="inline"><semantics id="S3.SS1.p1.4.m4.1a"><mrow id="S3.SS1.p1.4.m4.1.1" xref="S3.SS1.p1.4.m4.1.1.cmml"><mi id="S3.SS1.p1.4.m4.1.1.2" xref="S3.SS1.p1.4.m4.1.1.2.cmml">τ</mi><mo id="S3.SS1.p1.4.m4.1.1.1" xref="S3.SS1.p1.4.m4.1.1.1.cmml">≃</mo><msup id="S3.SS1.p1.4.m4.1.1.3" xref="S3.SS1.p1.4.m4.1.1.3.cmml"><mn id="S3.SS1.p1.4.m4.1.1.3.2" xref="S3.SS1.p1.4.m4.1.1.3.2.cmml">10</mn><mn id="S3.SS1.p1.4.m4.1.1.3.3" xref="S3.SS1.p1.4.m4.1.1.3.3.cmml">8</mn></msup></mrow><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.4.m4.1b"><apply id="S3.SS1.p1.4.m4.1.1.cmml" xref="S3.SS1.p1.4.m4.1.1"><csymbol cd="latexml" id="S3.SS1.p1.4.m4.1.1.1.cmml" xref="S3.SS1.p1.4.m4.1.1.1">similar-to-or-equals</csymbol><ci id="S3.SS1.p1.4.m4.1.1.2.cmml" xref="S3.SS1.p1.4.m4.1.1.2">𝜏</ci><apply id="S3.SS1.p1.4.m4.1.1.3.cmml" xref="S3.SS1.p1.4.m4.1.1.3"><csymbol cd="ambiguous" id="S3.SS1.p1.4.m4.1.1.3.1.cmml" xref="S3.SS1.p1.4.m4.1.1.3">superscript</csymbol><cn type="integer" id="S3.SS1.p1.4.m4.1.1.3.2.cmml" xref="S3.SS1.p1.4.m4.1.1.3.2">10</cn><cn type="integer" id="S3.SS1.p1.4.m4.1.1.3.3.cmml" xref="S3.SS1.p1.4.m4.1.1.3.3">8</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.4.m4.1c">\tau\simeq 10^{8}</annotation></semantics></math>, so that the vocabulary size <math id="S3.SS1.p1.5.m5.1" class="ltx_Math" alttext="N(\tau)" display="inline"><semantics id="S3.SS1.p1.5.m5.1a"><mrow id="S3.SS1.p1.5.m5.1.2" xref="S3.SS1.p1.5.m5.1.2.cmml"><mi id="S3.SS1.p1.5.m5.1.2.2" xref="S3.SS1.p1.5.m5.1.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S3.SS1.p1.5.m5.1.2.1" xref="S3.SS1.p1.5.m5.1.2.1.cmml">​</mo><mrow id="S3.SS1.p1.5.m5.1.2.3.2" xref="S3.SS1.p1.5.m5.1.2.cmml"><mo stretchy="false" id="S3.SS1.p1.5.m5.1.2.3.2.1" xref="S3.SS1.p1.5.m5.1.2.cmml">(</mo><mi id="S3.SS1.p1.5.m5.1.1" xref="S3.SS1.p1.5.m5.1.1.cmml">τ</mi><mo stretchy="false" id="S3.SS1.p1.5.m5.1.2.3.2.2" xref="S3.SS1.p1.5.m5.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.5.m5.1b"><apply id="S3.SS1.p1.5.m5.1.2.cmml" xref="S3.SS1.p1.5.m5.1.2"><times id="S3.SS1.p1.5.m5.1.2.1.cmml" xref="S3.SS1.p1.5.m5.1.2.1"></times><ci id="S3.SS1.p1.5.m5.1.2.2.cmml" xref="S3.SS1.p1.5.m5.1.2.2">𝑁</ci><ci id="S3.SS1.p1.5.m5.1.1.cmml" xref="S3.SS1.p1.5.m5.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.5.m5.1c">N(\tau)</annotation></semantics></math> might have been two
+order of magnitudes smaller (<math id="S3.SS1.p1.6.m6.1" class="ltx_Math" alttext="10^{4}" display="inline"><semantics id="S3.SS1.p1.6.m6.1a"><msup id="S3.SS1.p1.6.m6.1.1" xref="S3.SS1.p1.6.m6.1.1.cmml"><mn id="S3.SS1.p1.6.m6.1.1.2" xref="S3.SS1.p1.6.m6.1.1.2.cmml">10</mn><mn id="S3.SS1.p1.6.m6.1.1.3" xref="S3.SS1.p1.6.m6.1.1.3.cmml">4</mn></msup><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.6.m6.1b"><apply id="S3.SS1.p1.6.m6.1.1.cmml" xref="S3.SS1.p1.6.m6.1.1"><csymbol cd="ambiguous" id="S3.SS1.p1.6.m6.1.1.1.cmml" xref="S3.SS1.p1.6.m6.1.1">superscript</csymbol><cn type="integer" id="S3.SS1.p1.6.m6.1.1.2.cmml" xref="S3.SS1.p1.6.m6.1.1.2">10</cn><cn type="integer" id="S3.SS1.p1.6.m6.1.1.3.cmml" xref="S3.SS1.p1.6.m6.1.1.3">4</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.6.m6.1c">10^{4}</annotation></semantics></math> as compared with <math id="S3.SS1.p1.7.m7.1" class="ltx_Math" alttext="10^{6}" display="inline"><semantics id="S3.SS1.p1.7.m7.1a"><msup id="S3.SS1.p1.7.m7.1.1" xref="S3.SS1.p1.7.m7.1.1.cmml"><mn id="S3.SS1.p1.7.m7.1.1.2" xref="S3.SS1.p1.7.m7.1.1.2.cmml">10</mn><mn id="S3.SS1.p1.7.m7.1.1.3" xref="S3.SS1.p1.7.m7.1.1.3.cmml">6</mn></msup><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.7.m7.1b"><apply id="S3.SS1.p1.7.m7.1.1.cmml" xref="S3.SS1.p1.7.m7.1.1"><csymbol cd="ambiguous" id="S3.SS1.p1.7.m7.1.1.1.cmml" xref="S3.SS1.p1.7.m7.1.1">superscript</csymbol><cn type="integer" id="S3.SS1.p1.7.m7.1.1.2.cmml" xref="S3.SS1.p1.7.m7.1.1.2">10</cn><cn type="integer" id="S3.SS1.p1.7.m7.1.1.3.cmml" xref="S3.SS1.p1.7.m7.1.1.3">6</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.7.m7.1c">10^{6}</annotation></semantics></math>) if the sub-linear
+exponent <math id="S3.SS1.p1.8.m8.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S3.SS1.p1.8.m8.1a"><mi id="S3.SS1.p1.8.m8.1.1" xref="S3.SS1.p1.8.m8.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.8.m8.1b"><ci id="S3.SS1.p1.8.m8.1.1.cmml" xref="S3.SS1.p1.8.m8.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.8.m8.1c">\gamma</annotation></semantics></math> had the value <math id="S3.SS1.p1.9.m9.1" class="ltx_Math" alttext="0.5" display="inline"><semantics id="S3.SS1.p1.9.m9.1a"><mn id="S3.SS1.p1.9.m9.1.1" xref="S3.SS1.p1.9.m9.1.1.cmml">0.5</mn><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.9.m9.1b"><cn type="float" id="S3.SS1.p1.9.m9.1.1.cmml" xref="S3.SS1.p1.9.m9.1.1">0.5</cn></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.9.m9.1c">0.5</annotation></semantics></math>, which is characteristic of
+English texts (instead of the measured <math id="S3.SS1.p1.10.m10.1" class="ltx_Math" alttext="0.8" display="inline"><semantics id="S3.SS1.p1.10.m10.1a"><mn id="S3.SS1.p1.10.m10.1.1" xref="S3.SS1.p1.10.m10.1.1.cmml">0.8</mn><annotation-xml encoding="MathML-Content" id="S3.SS1.p1.10.m10.1b"><cn type="float" id="S3.SS1.p1.10.m10.1.1.cmml" xref="S3.SS1.p1.10.m10.1.1">0.8</cn></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.p1.10.m10.1c">0.8</annotation></semantics></math>).
+Attempts to explain the power-law behaviors of vocabulary growth
+in terms of the measured Zipf’s frequency-rank
+distribution of words can be found in literature <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib11" title="" class="ltx_ref">11</a>]</cite>, as well as
+ad-hoc modifications of simple stochastic models <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib12" title="" class="ltx_ref">12</a>]</cite>.</p>
+</div>
+<div id="S3.SS1.p2" class="ltx_para">
+<p id="S3.SS1.p2.1" class="ltx_p">It is important to remark that, at odds with texts, no grammatical structure is
+embedded in tags. Moreover, the words used in folksonomies are mainly nouns or,
+in general, synthetic descriptions of categories <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib13" title="" class="ltx_ref">13</a>]</cite>.
+In this sense, the only linguistic mechanisms that could be responsible for a
+sub-linear growth is a possibly hierarchical organization of tags
+induced by semantics. Another important difference is that in written texts
+the number of authors is usually limited, while the number of
+users contributing to the tag vocabulary of <span id="S3.SS1.p2.1.1" class="ltx_text ltx_font_italic">del.icio.us</span> is large and growing in time.</p>
+</div>
+<div class="ltx_pagination ltx_role_newpage"></div>
+</section>
+</section>
+<section id="S4" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">4 </span>Local vocabulary growth</h2>
+
+<div id="S4.p1" class="ltx_para">
+<p id="S4.p1.2" class="ltx_p">We will now shift our focus to a local scope,
+moving from a global view of tag vocabulary to a more fine-grained one,
+dealing with the restricted contexts of single resources and users.
+Specifically, we will investigate how the number of different tags associated
+with a given resource (or user) grows as a function of an intrinsic time.
+The notion of time we adopt in the following is the same
+we employed for the global analysis of Section <a href="#S3" title="3 Global vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>,
+except that in this case it is restricted to the context of a single
+resource or user: given a resource (or a user),
+we select from the global, time-ordered TAS table
+only those tag assignments that involve that resource (or user).
+We define the intrinsic time <math id="S4.p1.1.m1.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.p1.1.m1.1a"><mi id="S4.p1.1.m1.1.1" xref="S4.p1.1.m1.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.p1.1.m1.1b"><ci id="S4.p1.1.m1.1.1.cmml" xref="S4.p1.1.m1.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.p1.1.m1.1c">\tau</annotation></semantics></math> as the index into the selection,
+i.e. the cumulated number of tags associated with that resource (or user).
+Thus our notion of time is resource-dependent (or user-dependent),
+and <math id="S4.p1.2.m2.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.p1.2.m2.1a"><mi id="S4.p1.2.m2.1.1" xref="S4.p1.2.m2.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.p1.2.m2.1b"><ci id="S4.p1.2.m2.1.1.cmml" xref="S4.p1.2.m2.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.p1.2.m2.1c">\tau</annotation></semantics></math> naturally measures metadata accumulation in the specific
+semantic context of a single resource or user.</p>
+</div>
+<figure id="S4.F2" class="ltx_figure"><img src="/html/0704.3316/assets/x2.png" id="S4.F2.g1" class="ltx_graphics ltx_img_landscape" width="461" height="327" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>For <math id="S4.F2.8.m1.1" class="ltx_Math" alttext="10" display="inline"><semantics id="S4.F2.8.m1.1b"><mn id="S4.F2.8.m1.1.1" xref="S4.F2.8.m1.1.1.cmml">10</mn><annotation-xml encoding="MathML-Content" id="S4.F2.8.m1.1c"><cn type="integer" id="S4.F2.8.m1.1.1.cmml" xref="S4.F2.8.m1.1.1">10</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.8.m1.1d">10</annotation></semantics></math> different resources in <span id="S4.F2.17.1" class="ltx_text ltx_font_italic">del.icio.us</span>, the number of users <math id="S4.F2.9.m2.1" class="ltx_Math" alttext="U(\tau)" display="inline"><semantics id="S4.F2.9.m2.1b"><mrow id="S4.F2.9.m2.1.2" xref="S4.F2.9.m2.1.2.cmml"><mi id="S4.F2.9.m2.1.2.2" xref="S4.F2.9.m2.1.2.2.cmml">U</mi><mo lspace="0em" rspace="0em" id="S4.F2.9.m2.1.2.1" xref="S4.F2.9.m2.1.2.1.cmml">​</mo><mrow id="S4.F2.9.m2.1.2.3.2" xref="S4.F2.9.m2.1.2.cmml"><mo stretchy="false" id="S4.F2.9.m2.1.2.3.2.1" xref="S4.F2.9.m2.1.2.cmml">(</mo><mi id="S4.F2.9.m2.1.1" xref="S4.F2.9.m2.1.1.cmml">τ</mi><mo stretchy="false" id="S4.F2.9.m2.1.2.3.2.2" xref="S4.F2.9.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F2.9.m2.1c"><apply id="S4.F2.9.m2.1.2.cmml" xref="S4.F2.9.m2.1.2"><times id="S4.F2.9.m2.1.2.1.cmml" xref="S4.F2.9.m2.1.2.1"></times><ci id="S4.F2.9.m2.1.2.2.cmml" xref="S4.F2.9.m2.1.2.2">𝑈</ci><ci id="S4.F2.9.m2.1.1.cmml" xref="S4.F2.9.m2.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.9.m2.1d">U(\tau)</annotation></semantics></math>
+who have bookmarked them is shown as a function of the intrinsic time <math id="S4.F2.10.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.F2.10.m3.1b"><mi id="S4.F2.10.m3.1.1" xref="S4.F2.10.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.F2.10.m3.1c"><ci id="S4.F2.10.m3.1.1.cmml" xref="S4.F2.10.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.10.m3.1d">\tau</annotation></semantics></math>
+pertaining to each resource. The <math id="S4.F2.11.m4.1" class="ltx_Math" alttext="10" display="inline"><semantics id="S4.F2.11.m4.1b"><mn id="S4.F2.11.m4.1.1" xref="S4.F2.11.m4.1.1.cmml">10</mn><annotation-xml encoding="MathML-Content" id="S4.F2.11.m4.1c"><cn type="integer" id="S4.F2.11.m4.1.1.cmml" xref="S4.F2.11.m4.1.1">10</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.11.m4.1d">10</annotation></semantics></math> chosen resources are
+among the <math id="S4.F2.12.m5.1" class="ltx_Math" alttext="1000" display="inline"><semantics id="S4.F2.12.m5.1b"><mn id="S4.F2.12.m5.1.1" xref="S4.F2.12.m5.1.1.cmml">1000</mn><annotation-xml encoding="MathML-Content" id="S4.F2.12.m5.1c"><cn type="integer" id="S4.F2.12.m5.1.1.cmml" xref="S4.F2.12.m5.1.1">1000</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.12.m5.1d">1000</annotation></semantics></math> top-bookmarked resources in <span id="S4.F2.18.2" class="ltx_text ltx_font_italic">del.icio.us</span>, with ranks starting from
+<math id="S4.F2.13.m6.1" class="ltx_Math" alttext="100" display="inline"><semantics id="S4.F2.13.m6.1b"><mn id="S4.F2.13.m6.1.1" xref="S4.F2.13.m6.1.1.cmml">100</mn><annotation-xml encoding="MathML-Content" id="S4.F2.13.m6.1c"><cn type="integer" id="S4.F2.13.m6.1.1.cmml" xref="S4.F2.13.m6.1.1">100</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.13.m6.1d">100</annotation></semantics></math> and decreasing at intervals of <math id="S4.F2.14.m7.1" class="ltx_Math" alttext="100" display="inline"><semantics id="S4.F2.14.m7.1b"><mn id="S4.F2.14.m7.1.1" xref="S4.F2.14.m7.1.1.cmml">100</mn><annotation-xml encoding="MathML-Content" id="S4.F2.14.m7.1c"><cn type="integer" id="S4.F2.14.m7.1.1.cmml" xref="S4.F2.14.m7.1.1">100</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F2.14.m7.1d">100</annotation></semantics></math>.
+An approximately linear trend is visible, which correspond to a comparatively stable average number of tags
+in the posts associated with those resources: the blue and red lines
+show the expected linear growth for two different number of
+average tags per post, respectively 1.5 and 5.
+</figcaption>
+</figure>
+<figure id="S4.F3" class="ltx_figure"><img src="/html/0704.3316/assets/x3.png" id="S4.F3.g1" class="ltx_graphics ltx_centering ltx_img_square" width="368" height="339" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>Probability distribution <math id="S4.F3.5.m1.1" class="ltx_Math" alttext="P(n)" display="inline"><semantics id="S4.F3.5.m1.1b"><mrow id="S4.F3.5.m1.1.2" xref="S4.F3.5.m1.1.2.cmml"><mi id="S4.F3.5.m1.1.2.2" xref="S4.F3.5.m1.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.F3.5.m1.1.2.1" xref="S4.F3.5.m1.1.2.1.cmml">​</mo><mrow id="S4.F3.5.m1.1.2.3.2" xref="S4.F3.5.m1.1.2.cmml"><mo stretchy="false" id="S4.F3.5.m1.1.2.3.2.1" xref="S4.F3.5.m1.1.2.cmml">(</mo><mi id="S4.F3.5.m1.1.1" xref="S4.F3.5.m1.1.1.cmml">n</mi><mo stretchy="false" id="S4.F3.5.m1.1.2.3.2.2" xref="S4.F3.5.m1.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F3.5.m1.1c"><apply id="S4.F3.5.m1.1.2.cmml" xref="S4.F3.5.m1.1.2"><times id="S4.F3.5.m1.1.2.1.cmml" xref="S4.F3.5.m1.1.2.1"></times><ci id="S4.F3.5.m1.1.2.2.cmml" xref="S4.F3.5.m1.1.2.2">𝑃</ci><ci id="S4.F3.5.m1.1.1.cmml" xref="S4.F3.5.m1.1.1">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F3.5.m1.1d">P(n)</annotation></semantics></math> of the number of tags
+contained in a post in <span id="S4.F3.10.1" class="ltx_text ltx_font_italic">del.icio.us</span>. The distribution displays a steep
+power-law tail (<math id="S4.F3.6.m2.1" class="ltx_Math" alttext="\sim n^{-3.5}" display="inline"><semantics id="S4.F3.6.m2.1b"><mrow id="S4.F3.6.m2.1.1" xref="S4.F3.6.m2.1.1.cmml"><mi id="S4.F3.6.m2.1.1.2" xref="S4.F3.6.m2.1.1.2.cmml"></mi><mo id="S4.F3.6.m2.1.1.1" xref="S4.F3.6.m2.1.1.1.cmml">∼</mo><msup id="S4.F3.6.m2.1.1.3" xref="S4.F3.6.m2.1.1.3.cmml"><mi id="S4.F3.6.m2.1.1.3.2" xref="S4.F3.6.m2.1.1.3.2.cmml">n</mi><mrow id="S4.F3.6.m2.1.1.3.3" xref="S4.F3.6.m2.1.1.3.3.cmml"><mo id="S4.F3.6.m2.1.1.3.3b" xref="S4.F3.6.m2.1.1.3.3.cmml">−</mo><mn id="S4.F3.6.m2.1.1.3.3.2" xref="S4.F3.6.m2.1.1.3.3.2.cmml">3.5</mn></mrow></msup></mrow><annotation-xml encoding="MathML-Content" id="S4.F3.6.m2.1c"><apply id="S4.F3.6.m2.1.1.cmml" xref="S4.F3.6.m2.1.1"><csymbol cd="latexml" id="S4.F3.6.m2.1.1.1.cmml" xref="S4.F3.6.m2.1.1.1">similar-to</csymbol><csymbol cd="latexml" id="S4.F3.6.m2.1.1.2.cmml" xref="S4.F3.6.m2.1.1.2">absent</csymbol><apply id="S4.F3.6.m2.1.1.3.cmml" xref="S4.F3.6.m2.1.1.3"><csymbol cd="ambiguous" id="S4.F3.6.m2.1.1.3.1.cmml" xref="S4.F3.6.m2.1.1.3">superscript</csymbol><ci id="S4.F3.6.m2.1.1.3.2.cmml" xref="S4.F3.6.m2.1.1.3.2">𝑛</ci><apply id="S4.F3.6.m2.1.1.3.3.cmml" xref="S4.F3.6.m2.1.1.3.3"><minus id="S4.F3.6.m2.1.1.3.3.1.cmml" xref="S4.F3.6.m2.1.1.3.3"></minus><cn type="float" id="S4.F3.6.m2.1.1.3.3.2.cmml" xref="S4.F3.6.m2.1.1.3.3.2">3.5</cn></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F3.6.m2.1d">\sim n^{-3.5}</annotation></semantics></math>, dashed line), and the global average value
+<math id="S4.F3.7.m3.1" class="ltx_Math" alttext="\bar{n}" display="inline"><semantics id="S4.F3.7.m3.1b"><mover accent="true" id="S4.F3.7.m3.1.1" xref="S4.F3.7.m3.1.1.cmml"><mi id="S4.F3.7.m3.1.1.2" xref="S4.F3.7.m3.1.1.2.cmml">n</mi><mo id="S4.F3.7.m3.1.1.1" xref="S4.F3.7.m3.1.1.1.cmml">¯</mo></mover><annotation-xml encoding="MathML-Content" id="S4.F3.7.m3.1c"><apply id="S4.F3.7.m3.1.1.cmml" xref="S4.F3.7.m3.1.1"><ci id="S4.F3.7.m3.1.1.1.cmml" xref="S4.F3.7.m3.1.1.1">¯</ci><ci id="S4.F3.7.m3.1.1.2.cmml" xref="S4.F3.7.m3.1.1.2">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F3.7.m3.1d">\bar{n}</annotation></semantics></math> is well-defined, with <math id="S4.F3.8.m4.1" class="ltx_Math" alttext="\bar{n}\simeq 3.4" display="inline"><semantics id="S4.F3.8.m4.1b"><mrow id="S4.F3.8.m4.1.1" xref="S4.F3.8.m4.1.1.cmml"><mover accent="true" id="S4.F3.8.m4.1.1.2" xref="S4.F3.8.m4.1.1.2.cmml"><mi id="S4.F3.8.m4.1.1.2.2" xref="S4.F3.8.m4.1.1.2.2.cmml">n</mi><mo id="S4.F3.8.m4.1.1.2.1" xref="S4.F3.8.m4.1.1.2.1.cmml">¯</mo></mover><mo id="S4.F3.8.m4.1.1.1" xref="S4.F3.8.m4.1.1.1.cmml">≃</mo><mn id="S4.F3.8.m4.1.1.3" xref="S4.F3.8.m4.1.1.3.cmml">3.4</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.F3.8.m4.1c"><apply id="S4.F3.8.m4.1.1.cmml" xref="S4.F3.8.m4.1.1"><csymbol cd="latexml" id="S4.F3.8.m4.1.1.1.cmml" xref="S4.F3.8.m4.1.1.1">similar-to-or-equals</csymbol><apply id="S4.F3.8.m4.1.1.2.cmml" xref="S4.F3.8.m4.1.1.2"><ci id="S4.F3.8.m4.1.1.2.1.cmml" xref="S4.F3.8.m4.1.1.2.1">¯</ci><ci id="S4.F3.8.m4.1.1.2.2.cmml" xref="S4.F3.8.m4.1.1.2.2">𝑛</ci></apply><cn type="float" id="S4.F3.8.m4.1.1.3.cmml" xref="S4.F3.8.m4.1.1.3">3.4</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F3.8.m4.1d">\bar{n}\simeq 3.4</annotation></semantics></math> (vertical line).
+</figcaption>
+</figure>
+<section id="S4.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.1 </span>Resource-specific vocabularies</h3>
+
+<div id="S4.SS1.p1" class="ltx_para">
+<p id="S4.SS1.p1.14" class="ltx_p">In Fig. <a href="#S4.F2" title="Figure 2 ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> we consider <math id="S4.SS1.p1.1.m1.1" class="ltx_Math" alttext="10" display="inline"><semantics id="S4.SS1.p1.1.m1.1a"><mn id="S4.SS1.p1.1.m1.1.1" xref="S4.SS1.p1.1.m1.1.1.cmml">10</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.1.m1.1b"><cn type="integer" id="S4.SS1.p1.1.m1.1.1.cmml" xref="S4.SS1.p1.1.m1.1.1">10</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.1.m1.1c">10</annotation></semantics></math> different popular resources
+and we plot the number of users who have bookmarked them as a function of the
+intrinsic time <math id="S4.SS1.p1.2.m2.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.SS1.p1.2.m2.1a"><mi id="S4.SS1.p1.2.m2.1.1" xref="S4.SS1.p1.2.m2.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.2.m2.1b"><ci id="S4.SS1.p1.2.m2.1.1.cmml" xref="S4.SS1.p1.2.m2.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.2.m2.1c">\tau</annotation></semantics></math> for each resource (the total number of tags assigned to
+it). The resources are chosen among the <math id="S4.SS1.p1.3.m3.1" class="ltx_Math" alttext="1000" display="inline"><semantics id="S4.SS1.p1.3.m3.1a"><mn id="S4.SS1.p1.3.m3.1.1" xref="S4.SS1.p1.3.m3.1.1.cmml">1000</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.3.m3.1b"><cn type="integer" id="S4.SS1.p1.3.m3.1.1.cmml" xref="S4.SS1.p1.3.m3.1.1">1000</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.3.m3.1c">1000</annotation></semantics></math> top-bookmarked resources in the
+system, starting from rank <math id="S4.SS1.p1.4.m4.1" class="ltx_Math" alttext="100" display="inline"><semantics id="S4.SS1.p1.4.m4.1a"><mn id="S4.SS1.p1.4.m4.1.1" xref="S4.SS1.p1.4.m4.1.1.cmml">100</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.4.m4.1b"><cn type="integer" id="S4.SS1.p1.4.m4.1.1.cmml" xref="S4.SS1.p1.4.m4.1.1">100</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.4.m4.1c">100</annotation></semantics></math> and decreasing at intervals of <math id="S4.SS1.p1.5.m5.1" class="ltx_Math" alttext="100" display="inline"><semantics id="S4.SS1.p1.5.m5.1a"><mn id="S4.SS1.p1.5.m5.1.1" xref="S4.SS1.p1.5.m5.1.1.cmml">100</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.5.m5.1b"><cn type="integer" id="S4.SS1.p1.5.m5.1.1.cmml" xref="S4.SS1.p1.5.m5.1.1">100</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.5.m5.1c">100</annotation></semantics></math>.
+The growth behaviors are approximately lineare and quite homogeneous,
+and no systematic differences are observed with respect to the rank, at this level.
+The observed linear dependence can be easily understood by studying
+the probability distribution of the number of tags contained in a post,
+here referred to as “post length”.
+The global distribution of the number of tags in a post
+is shown in Fig. <a href="#S4.F3" title="Figure 3 ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>.
+It is interesting to notice that the distribution displays
+an initial exponential decay, with a typical number of tags equal to <math id="S4.SS1.p1.6.m6.1" class="ltx_Math" alttext="3" display="inline"><semantics id="S4.SS1.p1.6.m6.1a"><mn id="S4.SS1.p1.6.m6.1.1" xref="S4.SS1.p1.6.m6.1.1.cmml">3</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.6.m6.1b"><cn type="integer" id="S4.SS1.p1.6.m6.1.1.cmml" xref="S4.SS1.p1.6.m6.1.1">3</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.6.m6.1c">3</annotation></semantics></math>-<math id="S4.SS1.p1.7.m7.1" class="ltx_Math" alttext="4" display="inline"><semantics id="S4.SS1.p1.7.m7.1a"><mn id="S4.SS1.p1.7.m7.1.1" xref="S4.SS1.p1.7.m7.1.1.cmml">4</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.7.m7.1b"><cn type="integer" id="S4.SS1.p1.7.m7.1.1.cmml" xref="S4.SS1.p1.7.m7.1.1">4</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.7.m7.1c">4</annotation></semantics></math>,
+while for large post lengths it becomes algebraic.
+The power-law tail, however, is quite steep,
+with an exponent that appears to be close to <math id="S4.SS1.p1.8.m8.1" class="ltx_Math" alttext="-3.5" display="inline"><semantics id="S4.SS1.p1.8.m8.1a"><mrow id="S4.SS1.p1.8.m8.1.1" xref="S4.SS1.p1.8.m8.1.1.cmml"><mo id="S4.SS1.p1.8.m8.1.1a" xref="S4.SS1.p1.8.m8.1.1.cmml">−</mo><mn id="S4.SS1.p1.8.m8.1.1.2" xref="S4.SS1.p1.8.m8.1.1.2.cmml">3.5</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.8.m8.1b"><apply id="S4.SS1.p1.8.m8.1.1.cmml" xref="S4.SS1.p1.8.m8.1.1"><minus id="S4.SS1.p1.8.m8.1.1.1.cmml" xref="S4.SS1.p1.8.m8.1.1"></minus><cn type="float" id="S4.SS1.p1.8.m8.1.1.2.cmml" xref="S4.SS1.p1.8.m8.1.1.2">3.5</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.8.m8.1c">-3.5</annotation></semantics></math>.
+This means that such a fat tail does not contribute significantly
+to the dispersion of the post length when the number of posts is increased,
+i.e. that the average number of tags <math id="S4.SS1.p1.9.m9.1" class="ltx_Math" alttext="\bar{n}\simeq 3.4" display="inline"><semantics id="S4.SS1.p1.9.m9.1a"><mrow id="S4.SS1.p1.9.m9.1.1" xref="S4.SS1.p1.9.m9.1.1.cmml"><mover accent="true" id="S4.SS1.p1.9.m9.1.1.2" xref="S4.SS1.p1.9.m9.1.1.2.cmml"><mi id="S4.SS1.p1.9.m9.1.1.2.2" xref="S4.SS1.p1.9.m9.1.1.2.2.cmml">n</mi><mo id="S4.SS1.p1.9.m9.1.1.2.1" xref="S4.SS1.p1.9.m9.1.1.2.1.cmml">¯</mo></mover><mo id="S4.SS1.p1.9.m9.1.1.1" xref="S4.SS1.p1.9.m9.1.1.1.cmml">≃</mo><mn id="S4.SS1.p1.9.m9.1.1.3" xref="S4.SS1.p1.9.m9.1.1.3.cmml">3.4</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.9.m9.1b"><apply id="S4.SS1.p1.9.m9.1.1.cmml" xref="S4.SS1.p1.9.m9.1.1"><csymbol cd="latexml" id="S4.SS1.p1.9.m9.1.1.1.cmml" xref="S4.SS1.p1.9.m9.1.1.1">similar-to-or-equals</csymbol><apply id="S4.SS1.p1.9.m9.1.1.2.cmml" xref="S4.SS1.p1.9.m9.1.1.2"><ci id="S4.SS1.p1.9.m9.1.1.2.1.cmml" xref="S4.SS1.p1.9.m9.1.1.2.1">¯</ci><ci id="S4.SS1.p1.9.m9.1.1.2.2.cmml" xref="S4.SS1.p1.9.m9.1.1.2.2">𝑛</ci></apply><cn type="float" id="S4.SS1.p1.9.m9.1.1.3.cmml" xref="S4.SS1.p1.9.m9.1.1.3">3.4</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.9.m9.1c">\bar{n}\simeq 3.4</annotation></semantics></math> is an intrinsic
+characteristic of the system and does not depend strongly on the size of the dataset.
+Because of this, in the context of a resource, each post contributes
+exactly <math id="S4.SS1.p1.10.m10.1" class="ltx_Math" alttext="1" display="inline"><semantics id="S4.SS1.p1.10.m10.1a"><mn id="S4.SS1.p1.10.m10.1.1" xref="S4.SS1.p1.10.m10.1.1.cmml">1</mn><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.10.m10.1b"><cn type="integer" id="S4.SS1.p1.10.m10.1.1.cmml" xref="S4.SS1.p1.10.m10.1.1">1</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.10.m10.1c">1</annotation></semantics></math> new user and a well-defined number of tags <math id="S4.SS1.p1.11.m11.1" class="ltx_Math" alttext="\bar{n}" display="inline"><semantics id="S4.SS1.p1.11.m11.1a"><mover accent="true" id="S4.SS1.p1.11.m11.1.1" xref="S4.SS1.p1.11.m11.1.1.cmml"><mi id="S4.SS1.p1.11.m11.1.1.2" xref="S4.SS1.p1.11.m11.1.1.2.cmml">n</mi><mo id="S4.SS1.p1.11.m11.1.1.1" xref="S4.SS1.p1.11.m11.1.1.1.cmml">¯</mo></mover><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.11.m11.1b"><apply id="S4.SS1.p1.11.m11.1.1.cmml" xref="S4.SS1.p1.11.m11.1.1"><ci id="S4.SS1.p1.11.m11.1.1.1.cmml" xref="S4.SS1.p1.11.m11.1.1.1">¯</ci><ci id="S4.SS1.p1.11.m11.1.1.2.cmml" xref="S4.SS1.p1.11.m11.1.1.2">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.11.m11.1c">\bar{n}</annotation></semantics></math>
+(eventually adding up to <math id="S4.SS1.p1.12.m12.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.SS1.p1.12.m12.1a"><mi id="S4.SS1.p1.12.m12.1.1" xref="S4.SS1.p1.12.m12.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.12.m12.1b"><ci id="S4.SS1.p1.12.m12.1.1.cmml" xref="S4.SS1.p1.12.m12.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.12.m12.1c">\tau</annotation></semantics></math>), so that in Fig. <a href="#S4.F2" title="Figure 2 ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> a linear dependence
+is observed between the cumulated number of users <math id="S4.SS1.p1.13.m13.1" class="ltx_Math" alttext="U(\tau)" display="inline"><semantics id="S4.SS1.p1.13.m13.1a"><mrow id="S4.SS1.p1.13.m13.1.2" xref="S4.SS1.p1.13.m13.1.2.cmml"><mi id="S4.SS1.p1.13.m13.1.2.2" xref="S4.SS1.p1.13.m13.1.2.2.cmml">U</mi><mo lspace="0em" rspace="0em" id="S4.SS1.p1.13.m13.1.2.1" xref="S4.SS1.p1.13.m13.1.2.1.cmml">​</mo><mrow id="S4.SS1.p1.13.m13.1.2.3.2" xref="S4.SS1.p1.13.m13.1.2.cmml"><mo stretchy="false" id="S4.SS1.p1.13.m13.1.2.3.2.1" xref="S4.SS1.p1.13.m13.1.2.cmml">(</mo><mi id="S4.SS1.p1.13.m13.1.1" xref="S4.SS1.p1.13.m13.1.1.cmml">τ</mi><mo stretchy="false" id="S4.SS1.p1.13.m13.1.2.3.2.2" xref="S4.SS1.p1.13.m13.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.13.m13.1b"><apply id="S4.SS1.p1.13.m13.1.2.cmml" xref="S4.SS1.p1.13.m13.1.2"><times id="S4.SS1.p1.13.m13.1.2.1.cmml" xref="S4.SS1.p1.13.m13.1.2.1"></times><ci id="S4.SS1.p1.13.m13.1.2.2.cmml" xref="S4.SS1.p1.13.m13.1.2.2">𝑈</ci><ci id="S4.SS1.p1.13.m13.1.1.cmml" xref="S4.SS1.p1.13.m13.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.13.m13.1c">U(\tau)</annotation></semantics></math>
+and <math id="S4.SS1.p1.14.m14.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.SS1.p1.14.m14.1a"><mi id="S4.SS1.p1.14.m14.1.1" xref="S4.SS1.p1.14.m14.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.SS1.p1.14.m14.1b"><ci id="S4.SS1.p1.14.m14.1.1.cmml" xref="S4.SS1.p1.14.m14.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.p1.14.m14.1c">\tau</annotation></semantics></math>. <span id="footnote1" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">1</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">1</sup><span class="ltx_tag ltx_tag_note">1</span>It is interesting to notice that posts with more
+than <math id="footnote1.m1.1" class="ltx_Math" alttext="40" display="inline"><semantics id="footnote1.m1.1b"><mn id="footnote1.m1.1.1" xref="footnote1.m1.1.1.cmml">40</mn><annotation-xml encoding="MathML-Content" id="footnote1.m1.1c"><cn type="integer" id="footnote1.m1.1.1.cmml" xref="footnote1.m1.1.1">40</cn></annotation-xml><annotation encoding="application/x-tex" id="footnote1.m1.1d">40</annotation></semantics></math> tags are present, and they are not just due to spammers.</span></span></span></p>
+</div>
+<figure id="S4.F4" class="ltx_figure"><img src="/html/0704.3316/assets/x4.png" id="S4.F4.g1" class="ltx_graphics ltx_img_landscape" width="461" height="322" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 4: </span>Vocabulary growth for single resources.
+For <math id="S4.F4.6.m1.1" class="ltx_Math" alttext="10" display="inline"><semantics id="S4.F4.6.m1.1b"><mn id="S4.F4.6.m1.1.1" xref="S4.F4.6.m1.1.1.cmml">10</mn><annotation-xml encoding="MathML-Content" id="S4.F4.6.m1.1c"><cn type="integer" id="S4.F4.6.m1.1.1.cmml" xref="S4.F4.6.m1.1.1">10</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F4.6.m1.1d">10</annotation></semantics></math> different resources in <span id="S4.F4.12.1" class="ltx_text ltx_font_italic">del.icio.us</span>, the number of distinct tags <math id="S4.F4.7.m2.1" class="ltx_Math" alttext="N(\tau)" display="inline"><semantics id="S4.F4.7.m2.1b"><mrow id="S4.F4.7.m2.1.2" xref="S4.F4.7.m2.1.2.cmml"><mi id="S4.F4.7.m2.1.2.2" xref="S4.F4.7.m2.1.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S4.F4.7.m2.1.2.1" xref="S4.F4.7.m2.1.2.1.cmml">​</mo><mrow id="S4.F4.7.m2.1.2.3.2" xref="S4.F4.7.m2.1.2.cmml"><mo stretchy="false" id="S4.F4.7.m2.1.2.3.2.1" xref="S4.F4.7.m2.1.2.cmml">(</mo><mi id="S4.F4.7.m2.1.1" xref="S4.F4.7.m2.1.1.cmml">τ</mi><mo stretchy="false" id="S4.F4.7.m2.1.2.3.2.2" xref="S4.F4.7.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F4.7.m2.1c"><apply id="S4.F4.7.m2.1.2.cmml" xref="S4.F4.7.m2.1.2"><times id="S4.F4.7.m2.1.2.1.cmml" xref="S4.F4.7.m2.1.2.1"></times><ci id="S4.F4.7.m2.1.2.2.cmml" xref="S4.F4.7.m2.1.2.2">𝑁</ci><ci id="S4.F4.7.m2.1.1.cmml" xref="S4.F4.7.m2.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F4.7.m2.1d">N(\tau)</annotation></semantics></math>
+associated with them is plotted as a function of the
+intrinsic time <math id="S4.F4.8.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.F4.8.m3.1b"><mi id="S4.F4.8.m3.1.1" xref="S4.F4.8.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.F4.8.m3.1c"><ci id="S4.F4.8.m3.1.1.cmml" xref="S4.F4.8.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.F4.8.m3.1d">\tau</annotation></semantics></math> pertaining to each resource.
+The <math id="S4.F4.9.m4.1" class="ltx_Math" alttext="10" display="inline"><semantics id="S4.F4.9.m4.1b"><mn id="S4.F4.9.m4.1.1" xref="S4.F4.9.m4.1.1.cmml">10</mn><annotation-xml encoding="MathML-Content" id="S4.F4.9.m4.1c"><cn type="integer" id="S4.F4.9.m4.1.1.cmml" xref="S4.F4.9.m4.1.1">10</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F4.9.m4.1d">10</annotation></semantics></math> chosen resources are the same of Fig. <a href="#S4.F2" title="Figure 2 ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>.
+While single resources display a
+somehow noisy evolution, an overall power-law behavior governing the
+vocabulary growth is apparent, with an exponent <math id="S4.F4.10.m5.1" class="ltx_Math" alttext="\gamma\simeq 2/3" display="inline"><semantics id="S4.F4.10.m5.1b"><mrow id="S4.F4.10.m5.1.1" xref="S4.F4.10.m5.1.1.cmml"><mi id="S4.F4.10.m5.1.1.2" xref="S4.F4.10.m5.1.1.2.cmml">γ</mi><mo id="S4.F4.10.m5.1.1.1" xref="S4.F4.10.m5.1.1.1.cmml">≃</mo><mrow id="S4.F4.10.m5.1.1.3" xref="S4.F4.10.m5.1.1.3.cmml"><mn id="S4.F4.10.m5.1.1.3.2" xref="S4.F4.10.m5.1.1.3.2.cmml">2</mn><mo id="S4.F4.10.m5.1.1.3.1" xref="S4.F4.10.m5.1.1.3.1.cmml">/</mo><mn id="S4.F4.10.m5.1.1.3.3" xref="S4.F4.10.m5.1.1.3.3.cmml">3</mn></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F4.10.m5.1c"><apply id="S4.F4.10.m5.1.1.cmml" xref="S4.F4.10.m5.1.1"><csymbol cd="latexml" id="S4.F4.10.m5.1.1.1.cmml" xref="S4.F4.10.m5.1.1.1">similar-to-or-equals</csymbol><ci id="S4.F4.10.m5.1.1.2.cmml" xref="S4.F4.10.m5.1.1.2">𝛾</ci><apply id="S4.F4.10.m5.1.1.3.cmml" xref="S4.F4.10.m5.1.1.3"><divide id="S4.F4.10.m5.1.1.3.1.cmml" xref="S4.F4.10.m5.1.1.3.1"></divide><cn type="integer" id="S4.F4.10.m5.1.1.3.2.cmml" xref="S4.F4.10.m5.1.1.3.2">2</cn><cn type="integer" id="S4.F4.10.m5.1.1.3.3.cmml" xref="S4.F4.10.m5.1.1.3.3">3</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F4.10.m5.1d">\gamma\simeq 2/3</annotation></semantics></math> (red line).
+</figcaption>
+</figure>
+</section>
+<section id="S4.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.2 </span>Scaling</h3>
+
+<div id="S4.SS2.p1" class="ltx_para">
+<p id="S4.SS2.p1.4" class="ltx_p">The large number of users tagging each resource make the statistical
+features of resources quite similar, as long as they are popular enough.
+This can be shown, for instance,
+by looking at the vocabulary growth in the context of a single resource.
+To this end, we consider the growth of the number
+<math id="S4.SS2.p1.1.m1.1" class="ltx_math_unparsed" alttext="N(\tau" display="inline"><semantics id="S4.SS2.p1.1.m1.1a"><mrow id="S4.SS2.p1.1.m1.1b"><mi id="S4.SS2.p1.1.m1.1.1">N</mi><mrow id="S4.SS2.p1.1.m1.1.2"><mo stretchy="false" id="S4.SS2.p1.1.m1.1.2.1">(</mo><mi id="S4.SS2.p1.1.m1.1.2.2">τ</mi></mrow></mrow><annotation encoding="application/x-tex" id="S4.SS2.p1.1.m1.1c">N(\tau</annotation></semantics></math>) of distinct tags associated with the same <math id="S4.SS2.p1.2.m2.1" class="ltx_Math" alttext="10" display="inline"><semantics id="S4.SS2.p1.2.m2.1a"><mn id="S4.SS2.p1.2.m2.1.1" xref="S4.SS2.p1.2.m2.1.1.cmml">10</mn><annotation-xml encoding="MathML-Content" id="S4.SS2.p1.2.m2.1b"><cn type="integer" id="S4.SS2.p1.2.m2.1.1.cmml" xref="S4.SS2.p1.2.m2.1.1">10</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p1.2.m2.1c">10</annotation></semantics></math> popular resources of
+Fig. <a href="#S4.F2" title="Figure 2 ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>, as a function of the intrinsic (resource-specific) time
+<math id="S4.SS2.p1.3.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.SS2.p1.3.m3.1a"><mi id="S4.SS2.p1.3.m3.1.1" xref="S4.SS2.p1.3.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.SS2.p1.3.m3.1b"><ci id="S4.SS2.p1.3.m3.1.1.cmml" xref="S4.SS2.p1.3.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p1.3.m3.1c">\tau</annotation></semantics></math>. While the vocabulary growth exhibits a somehow noisy temporal
+evolution, the general trend of growth appears to be compatible with an algebraic
+law of growth, a power-law with an exponent close to <math id="S4.SS2.p1.4.m4.1" class="ltx_Math" alttext="2/3" display="inline"><semantics id="S4.SS2.p1.4.m4.1a"><mrow id="S4.SS2.p1.4.m4.1.1" xref="S4.SS2.p1.4.m4.1.1.cmml"><mn id="S4.SS2.p1.4.m4.1.1.2" xref="S4.SS2.p1.4.m4.1.1.2.cmml">2</mn><mo id="S4.SS2.p1.4.m4.1.1.1" xref="S4.SS2.p1.4.m4.1.1.1.cmml">/</mo><mn id="S4.SS2.p1.4.m4.1.1.3" xref="S4.SS2.p1.4.m4.1.1.3.cmml">3</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.SS2.p1.4.m4.1b"><apply id="S4.SS2.p1.4.m4.1.1.cmml" xref="S4.SS2.p1.4.m4.1.1"><divide id="S4.SS2.p1.4.m4.1.1.1.cmml" xref="S4.SS2.p1.4.m4.1.1.1"></divide><cn type="integer" id="S4.SS2.p1.4.m4.1.1.2.cmml" xref="S4.SS2.p1.4.m4.1.1.2">2</cn><cn type="integer" id="S4.SS2.p1.4.m4.1.1.3.cmml" xref="S4.SS2.p1.4.m4.1.1.3">3</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p1.4.m4.1c">2/3</annotation></semantics></math>.
+This is a striking regularity, valid for very different resources across the system.
+Also, at this level of detail, no systematic dependence on the popularity of a
+resource can be detected. The local exponent of growth is smaller than the
+global one (Fig. <a href="#S2.F1" title="Figure 1 ‣ 2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>) and the relation between the two
+may be linked to the statistical properties of tag co-occurrence, and might
+ultimately provide insights into the semantic structure of folksonomies.</p>
+</div>
+<div id="S4.SS2.p2" class="ltx_para">
+<p id="S4.SS2.p2.7" class="ltx_p">To better probe the similarity of growth behaviors for different resources,
+we defined a rescaled growth curve, where both the intrinsic time <math id="S4.SS2.p2.1.m1.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.SS2.p2.1.m1.1a"><mi id="S4.SS2.p2.1.m1.1.1" xref="S4.SS2.p2.1.m1.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.1.m1.1b"><ci id="S4.SS2.p2.1.m1.1.1.cmml" xref="S4.SS2.p2.1.m1.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.1.m1.1c">\tau</annotation></semantics></math>
+and the final number of distinct tags <math id="S4.SS2.p2.2.m2.1" class="ltx_Math" alttext="N(\tau_{max})" display="inline"><semantics id="S4.SS2.p2.2.m2.1a"><mrow id="S4.SS2.p2.2.m2.1.1" xref="S4.SS2.p2.2.m2.1.1.cmml"><mi id="S4.SS2.p2.2.m2.1.1.3" xref="S4.SS2.p2.2.m2.1.1.3.cmml">N</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.2.m2.1.1.2" xref="S4.SS2.p2.2.m2.1.1.2.cmml">​</mo><mrow id="S4.SS2.p2.2.m2.1.1.1.1" xref="S4.SS2.p2.2.m2.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.SS2.p2.2.m2.1.1.1.1.2" xref="S4.SS2.p2.2.m2.1.1.1.1.1.cmml">(</mo><msub id="S4.SS2.p2.2.m2.1.1.1.1.1" xref="S4.SS2.p2.2.m2.1.1.1.1.1.cmml"><mi id="S4.SS2.p2.2.m2.1.1.1.1.1.2" xref="S4.SS2.p2.2.m2.1.1.1.1.1.2.cmml">τ</mi><mrow id="S4.SS2.p2.2.m2.1.1.1.1.1.3" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.cmml"><mi id="S4.SS2.p2.2.m2.1.1.1.1.1.3.2" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.2.m2.1.1.1.1.1.3.1" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.1.cmml">​</mo><mi id="S4.SS2.p2.2.m2.1.1.1.1.1.3.3" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.2.m2.1.1.1.1.1.3.1a" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.1.cmml">​</mo><mi id="S4.SS2.p2.2.m2.1.1.1.1.1.3.4" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.4.cmml">x</mi></mrow></msub><mo stretchy="false" id="S4.SS2.p2.2.m2.1.1.1.1.3" xref="S4.SS2.p2.2.m2.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.2.m2.1b"><apply id="S4.SS2.p2.2.m2.1.1.cmml" xref="S4.SS2.p2.2.m2.1.1"><times id="S4.SS2.p2.2.m2.1.1.2.cmml" xref="S4.SS2.p2.2.m2.1.1.2"></times><ci id="S4.SS2.p2.2.m2.1.1.3.cmml" xref="S4.SS2.p2.2.m2.1.1.3">𝑁</ci><apply id="S4.SS2.p2.2.m2.1.1.1.1.1.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1"><csymbol cd="ambiguous" id="S4.SS2.p2.2.m2.1.1.1.1.1.1.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1">subscript</csymbol><ci id="S4.SS2.p2.2.m2.1.1.1.1.1.2.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1.1.2">𝜏</ci><apply id="S4.SS2.p2.2.m2.1.1.1.1.1.3.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3"><times id="S4.SS2.p2.2.m2.1.1.1.1.1.3.1.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.1"></times><ci id="S4.SS2.p2.2.m2.1.1.1.1.1.3.2.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.2">𝑚</ci><ci id="S4.SS2.p2.2.m2.1.1.1.1.1.3.3.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.3">𝑎</ci><ci id="S4.SS2.p2.2.m2.1.1.1.1.1.3.4.cmml" xref="S4.SS2.p2.2.m2.1.1.1.1.1.3.4">𝑥</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.2.m2.1c">N(\tau_{max})</annotation></semantics></math> are divided
+by their final values, <math id="S4.SS2.p2.3.m3.1" class="ltx_Math" alttext="\tau_{max}" display="inline"><semantics id="S4.SS2.p2.3.m3.1a"><msub id="S4.SS2.p2.3.m3.1.1" xref="S4.SS2.p2.3.m3.1.1.cmml"><mi id="S4.SS2.p2.3.m3.1.1.2" xref="S4.SS2.p2.3.m3.1.1.2.cmml">τ</mi><mrow id="S4.SS2.p2.3.m3.1.1.3" xref="S4.SS2.p2.3.m3.1.1.3.cmml"><mi id="S4.SS2.p2.3.m3.1.1.3.2" xref="S4.SS2.p2.3.m3.1.1.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.3.m3.1.1.3.1" xref="S4.SS2.p2.3.m3.1.1.3.1.cmml">​</mo><mi id="S4.SS2.p2.3.m3.1.1.3.3" xref="S4.SS2.p2.3.m3.1.1.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.3.m3.1.1.3.1a" xref="S4.SS2.p2.3.m3.1.1.3.1.cmml">​</mo><mi id="S4.SS2.p2.3.m3.1.1.3.4" xref="S4.SS2.p2.3.m3.1.1.3.4.cmml">x</mi></mrow></msub><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.3.m3.1b"><apply id="S4.SS2.p2.3.m3.1.1.cmml" xref="S4.SS2.p2.3.m3.1.1"><csymbol cd="ambiguous" id="S4.SS2.p2.3.m3.1.1.1.cmml" xref="S4.SS2.p2.3.m3.1.1">subscript</csymbol><ci id="S4.SS2.p2.3.m3.1.1.2.cmml" xref="S4.SS2.p2.3.m3.1.1.2">𝜏</ci><apply id="S4.SS2.p2.3.m3.1.1.3.cmml" xref="S4.SS2.p2.3.m3.1.1.3"><times id="S4.SS2.p2.3.m3.1.1.3.1.cmml" xref="S4.SS2.p2.3.m3.1.1.3.1"></times><ci id="S4.SS2.p2.3.m3.1.1.3.2.cmml" xref="S4.SS2.p2.3.m3.1.1.3.2">𝑚</ci><ci id="S4.SS2.p2.3.m3.1.1.3.3.cmml" xref="S4.SS2.p2.3.m3.1.1.3.3">𝑎</ci><ci id="S4.SS2.p2.3.m3.1.1.3.4.cmml" xref="S4.SS2.p2.3.m3.1.1.3.4">𝑥</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.3.m3.1c">\tau_{max}</annotation></semantics></math> and <math id="S4.SS2.p2.4.m4.1" class="ltx_Math" alttext="N(\tau_{max})" display="inline"><semantics id="S4.SS2.p2.4.m4.1a"><mrow id="S4.SS2.p2.4.m4.1.1" xref="S4.SS2.p2.4.m4.1.1.cmml"><mi id="S4.SS2.p2.4.m4.1.1.3" xref="S4.SS2.p2.4.m4.1.1.3.cmml">N</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.4.m4.1.1.2" xref="S4.SS2.p2.4.m4.1.1.2.cmml">​</mo><mrow id="S4.SS2.p2.4.m4.1.1.1.1" xref="S4.SS2.p2.4.m4.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.SS2.p2.4.m4.1.1.1.1.2" xref="S4.SS2.p2.4.m4.1.1.1.1.1.cmml">(</mo><msub id="S4.SS2.p2.4.m4.1.1.1.1.1" xref="S4.SS2.p2.4.m4.1.1.1.1.1.cmml"><mi id="S4.SS2.p2.4.m4.1.1.1.1.1.2" xref="S4.SS2.p2.4.m4.1.1.1.1.1.2.cmml">τ</mi><mrow id="S4.SS2.p2.4.m4.1.1.1.1.1.3" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.cmml"><mi id="S4.SS2.p2.4.m4.1.1.1.1.1.3.2" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.4.m4.1.1.1.1.1.3.1" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.1.cmml">​</mo><mi id="S4.SS2.p2.4.m4.1.1.1.1.1.3.3" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.4.m4.1.1.1.1.1.3.1a" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.1.cmml">​</mo><mi id="S4.SS2.p2.4.m4.1.1.1.1.1.3.4" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.4.cmml">x</mi></mrow></msub><mo stretchy="false" id="S4.SS2.p2.4.m4.1.1.1.1.3" xref="S4.SS2.p2.4.m4.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.4.m4.1b"><apply id="S4.SS2.p2.4.m4.1.1.cmml" xref="S4.SS2.p2.4.m4.1.1"><times id="S4.SS2.p2.4.m4.1.1.2.cmml" xref="S4.SS2.p2.4.m4.1.1.2"></times><ci id="S4.SS2.p2.4.m4.1.1.3.cmml" xref="S4.SS2.p2.4.m4.1.1.3">𝑁</ci><apply id="S4.SS2.p2.4.m4.1.1.1.1.1.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1"><csymbol cd="ambiguous" id="S4.SS2.p2.4.m4.1.1.1.1.1.1.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1">subscript</csymbol><ci id="S4.SS2.p2.4.m4.1.1.1.1.1.2.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1.1.2">𝜏</ci><apply id="S4.SS2.p2.4.m4.1.1.1.1.1.3.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3"><times id="S4.SS2.p2.4.m4.1.1.1.1.1.3.1.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.1"></times><ci id="S4.SS2.p2.4.m4.1.1.1.1.1.3.2.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.2">𝑚</ci><ci id="S4.SS2.p2.4.m4.1.1.1.1.1.3.3.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.3">𝑎</ci><ci id="S4.SS2.p2.4.m4.1.1.1.1.1.3.4.cmml" xref="S4.SS2.p2.4.m4.1.1.1.1.1.3.4">𝑥</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.4.m4.1c">N(\tau_{max})</annotation></semantics></math>, respectively.
+In this way, the curves for different resource can be easily plotted on the same graph.
+As shown in Fig. <a href="#S4.F5" title="Figure 5 ‣ 4.2 Scaling ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a>, all the rescaled curves lie between
+two limit power-laws, <math id="S4.SS2.p2.5.m5.1" class="ltx_Math" alttext="(\tau/\tau_{max})^{1}" display="inline"><semantics id="S4.SS2.p2.5.m5.1a"><msup id="S4.SS2.p2.5.m5.1.1" xref="S4.SS2.p2.5.m5.1.1.cmml"><mrow id="S4.SS2.p2.5.m5.1.1.1.1" xref="S4.SS2.p2.5.m5.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.SS2.p2.5.m5.1.1.1.1.2" xref="S4.SS2.p2.5.m5.1.1.1.1.1.cmml">(</mo><mrow id="S4.SS2.p2.5.m5.1.1.1.1.1" xref="S4.SS2.p2.5.m5.1.1.1.1.1.cmml"><mi id="S4.SS2.p2.5.m5.1.1.1.1.1.2" xref="S4.SS2.p2.5.m5.1.1.1.1.1.2.cmml">τ</mi><mo id="S4.SS2.p2.5.m5.1.1.1.1.1.1" xref="S4.SS2.p2.5.m5.1.1.1.1.1.1.cmml">/</mo><msub id="S4.SS2.p2.5.m5.1.1.1.1.1.3" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.cmml"><mi id="S4.SS2.p2.5.m5.1.1.1.1.1.3.2" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.2.cmml">τ</mi><mrow id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.cmml"><mi id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.2" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.1" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.1.cmml">​</mo><mi id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.3" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.1a" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.1.cmml">​</mo><mi id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.4" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.4.cmml">x</mi></mrow></msub></mrow><mo stretchy="false" id="S4.SS2.p2.5.m5.1.1.1.1.3" xref="S4.SS2.p2.5.m5.1.1.1.1.1.cmml">)</mo></mrow><mn id="S4.SS2.p2.5.m5.1.1.3" xref="S4.SS2.p2.5.m5.1.1.3.cmml">1</mn></msup><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.5.m5.1b"><apply id="S4.SS2.p2.5.m5.1.1.cmml" xref="S4.SS2.p2.5.m5.1.1"><csymbol cd="ambiguous" id="S4.SS2.p2.5.m5.1.1.2.cmml" xref="S4.SS2.p2.5.m5.1.1">superscript</csymbol><apply id="S4.SS2.p2.5.m5.1.1.1.1.1.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1"><divide id="S4.SS2.p2.5.m5.1.1.1.1.1.1.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.1"></divide><ci id="S4.SS2.p2.5.m5.1.1.1.1.1.2.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.2">𝜏</ci><apply id="S4.SS2.p2.5.m5.1.1.1.1.1.3.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3"><csymbol cd="ambiguous" id="S4.SS2.p2.5.m5.1.1.1.1.1.3.1.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3">subscript</csymbol><ci id="S4.SS2.p2.5.m5.1.1.1.1.1.3.2.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.2">𝜏</ci><apply id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3"><times id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.1.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.1"></times><ci id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.2.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.2">𝑚</ci><ci id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.3.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.3">𝑎</ci><ci id="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.4.cmml" xref="S4.SS2.p2.5.m5.1.1.1.1.1.3.3.4">𝑥</ci></apply></apply></apply><cn type="integer" id="S4.SS2.p2.5.m5.1.1.3.cmml" xref="S4.SS2.p2.5.m5.1.1.3">1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.5.m5.1c">(\tau/\tau_{max})^{1}</annotation></semantics></math> and <math id="S4.SS2.p2.6.m6.1" class="ltx_Math" alttext="(\tau/\tau_{max})^{1/2}" display="inline"><semantics id="S4.SS2.p2.6.m6.1a"><msup id="S4.SS2.p2.6.m6.1.1" xref="S4.SS2.p2.6.m6.1.1.cmml"><mrow id="S4.SS2.p2.6.m6.1.1.1.1" xref="S4.SS2.p2.6.m6.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.SS2.p2.6.m6.1.1.1.1.2" xref="S4.SS2.p2.6.m6.1.1.1.1.1.cmml">(</mo><mrow id="S4.SS2.p2.6.m6.1.1.1.1.1" xref="S4.SS2.p2.6.m6.1.1.1.1.1.cmml"><mi id="S4.SS2.p2.6.m6.1.1.1.1.1.2" xref="S4.SS2.p2.6.m6.1.1.1.1.1.2.cmml">τ</mi><mo id="S4.SS2.p2.6.m6.1.1.1.1.1.1" xref="S4.SS2.p2.6.m6.1.1.1.1.1.1.cmml">/</mo><msub id="S4.SS2.p2.6.m6.1.1.1.1.1.3" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.cmml"><mi id="S4.SS2.p2.6.m6.1.1.1.1.1.3.2" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.2.cmml">τ</mi><mrow id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.cmml"><mi id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.2" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.1" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.1.cmml">​</mo><mi id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.3" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.1a" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.1.cmml">​</mo><mi id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.4" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.4.cmml">x</mi></mrow></msub></mrow><mo stretchy="false" id="S4.SS2.p2.6.m6.1.1.1.1.3" xref="S4.SS2.p2.6.m6.1.1.1.1.1.cmml">)</mo></mrow><mrow id="S4.SS2.p2.6.m6.1.1.3" xref="S4.SS2.p2.6.m6.1.1.3.cmml"><mn id="S4.SS2.p2.6.m6.1.1.3.2" xref="S4.SS2.p2.6.m6.1.1.3.2.cmml">1</mn><mo id="S4.SS2.p2.6.m6.1.1.3.1" xref="S4.SS2.p2.6.m6.1.1.3.1.cmml">/</mo><mn id="S4.SS2.p2.6.m6.1.1.3.3" xref="S4.SS2.p2.6.m6.1.1.3.3.cmml">2</mn></mrow></msup><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.6.m6.1b"><apply id="S4.SS2.p2.6.m6.1.1.cmml" xref="S4.SS2.p2.6.m6.1.1"><csymbol cd="ambiguous" id="S4.SS2.p2.6.m6.1.1.2.cmml" xref="S4.SS2.p2.6.m6.1.1">superscript</csymbol><apply id="S4.SS2.p2.6.m6.1.1.1.1.1.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1"><divide id="S4.SS2.p2.6.m6.1.1.1.1.1.1.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.1"></divide><ci id="S4.SS2.p2.6.m6.1.1.1.1.1.2.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.2">𝜏</ci><apply id="S4.SS2.p2.6.m6.1.1.1.1.1.3.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3"><csymbol cd="ambiguous" id="S4.SS2.p2.6.m6.1.1.1.1.1.3.1.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3">subscript</csymbol><ci id="S4.SS2.p2.6.m6.1.1.1.1.1.3.2.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.2">𝜏</ci><apply id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3"><times id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.1.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.1"></times><ci id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.2.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.2">𝑚</ci><ci id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.3.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.3">𝑎</ci><ci id="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.4.cmml" xref="S4.SS2.p2.6.m6.1.1.1.1.1.3.3.4">𝑥</ci></apply></apply></apply><apply id="S4.SS2.p2.6.m6.1.1.3.cmml" xref="S4.SS2.p2.6.m6.1.1.3"><divide id="S4.SS2.p2.6.m6.1.1.3.1.cmml" xref="S4.SS2.p2.6.m6.1.1.3.1"></divide><cn type="integer" id="S4.SS2.p2.6.m6.1.1.3.2.cmml" xref="S4.SS2.p2.6.m6.1.1.3.2">1</cn><cn type="integer" id="S4.SS2.p2.6.m6.1.1.3.3.cmml" xref="S4.SS2.p2.6.m6.1.1.3.3">2</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.6.m6.1c">(\tau/\tau_{max})^{1/2}</annotation></semantics></math>.
+More importantly, all curves tend to lie along a “universal” growth curve
+with an exponent close to <math id="S4.SS2.p2.7.m7.1" class="ltx_Math" alttext="2/3" display="inline"><semantics id="S4.SS2.p2.7.m7.1a"><mrow id="S4.SS2.p2.7.m7.1.1" xref="S4.SS2.p2.7.m7.1.1.cmml"><mn id="S4.SS2.p2.7.m7.1.1.2" xref="S4.SS2.p2.7.m7.1.1.2.cmml">2</mn><mo id="S4.SS2.p2.7.m7.1.1.1" xref="S4.SS2.p2.7.m7.1.1.1.cmml">/</mo><mn id="S4.SS2.p2.7.m7.1.1.3" xref="S4.SS2.p2.7.m7.1.1.3.cmml">3</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.SS2.p2.7.m7.1b"><apply id="S4.SS2.p2.7.m7.1.1.cmml" xref="S4.SS2.p2.7.m7.1.1"><divide id="S4.SS2.p2.7.m7.1.1.1.cmml" xref="S4.SS2.p2.7.m7.1.1.1"></divide><cn type="integer" id="S4.SS2.p2.7.m7.1.1.2.cmml" xref="S4.SS2.p2.7.m7.1.1.2">2</cn><cn type="integer" id="S4.SS2.p2.7.m7.1.1.3.cmml" xref="S4.SS2.p2.7.m7.1.1.3">3</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.p2.7.m7.1c">2/3</annotation></semantics></math>.</p>
+</div>
+<figure id="S4.F5" class="ltx_figure"><img src="/html/0704.3316/assets/x5.png" id="S4.F5.g1" class="ltx_graphics ltx_img_landscape" width="461" height="335" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 5: </span>Rescaled vocabulary growth. The curves of Fig. <a href="#S4.F4" title="Figure 4 ‣ 4.1 Resource-specific vocabularies ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>
+were rescaled by dividing both the intrinsic time <math id="S4.F5.8.m1.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.F5.8.m1.1b"><mi id="S4.F5.8.m1.1.1" xref="S4.F5.8.m1.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.F5.8.m1.1c"><ci id="S4.F5.8.m1.1.1.cmml" xref="S4.F5.8.m1.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.F5.8.m1.1d">\tau</annotation></semantics></math>
+and the number of distinct tags <math id="S4.F5.9.m2.1" class="ltx_Math" alttext="N(\tau)" display="inline"><semantics id="S4.F5.9.m2.1b"><mrow id="S4.F5.9.m2.1.2" xref="S4.F5.9.m2.1.2.cmml"><mi id="S4.F5.9.m2.1.2.2" xref="S4.F5.9.m2.1.2.2.cmml">N</mi><mo lspace="0em" rspace="0em" id="S4.F5.9.m2.1.2.1" xref="S4.F5.9.m2.1.2.1.cmml">​</mo><mrow id="S4.F5.9.m2.1.2.3.2" xref="S4.F5.9.m2.1.2.cmml"><mo stretchy="false" id="S4.F5.9.m2.1.2.3.2.1" xref="S4.F5.9.m2.1.2.cmml">(</mo><mi id="S4.F5.9.m2.1.1" xref="S4.F5.9.m2.1.1.cmml">τ</mi><mo stretchy="false" id="S4.F5.9.m2.1.2.3.2.2" xref="S4.F5.9.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F5.9.m2.1c"><apply id="S4.F5.9.m2.1.2.cmml" xref="S4.F5.9.m2.1.2"><times id="S4.F5.9.m2.1.2.1.cmml" xref="S4.F5.9.m2.1.2.1"></times><ci id="S4.F5.9.m2.1.2.2.cmml" xref="S4.F5.9.m2.1.2.2">𝑁</ci><ci id="S4.F5.9.m2.1.1.cmml" xref="S4.F5.9.m2.1.1">𝜏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F5.9.m2.1d">N(\tau)</annotation></semantics></math> by their final (resource-specific)
+values <math id="S4.F5.10.m3.1" class="ltx_Math" alttext="\tau_{\mbox{\small max}}" display="inline"><semantics id="S4.F5.10.m3.1b"><msub id="S4.F5.10.m3.1.1" xref="S4.F5.10.m3.1.1.cmml"><mi id="S4.F5.10.m3.1.1.2" xref="S4.F5.10.m3.1.1.2.cmml">τ</mi><mtext mathsize="128%" id="S4.F5.10.m3.1.1.3" xref="S4.F5.10.m3.1.1.3a.cmml">max</mtext></msub><annotation-xml encoding="MathML-Content" id="S4.F5.10.m3.1c"><apply id="S4.F5.10.m3.1.1.cmml" xref="S4.F5.10.m3.1.1"><csymbol cd="ambiguous" id="S4.F5.10.m3.1.1.1.cmml" xref="S4.F5.10.m3.1.1">subscript</csymbol><ci id="S4.F5.10.m3.1.1.2.cmml" xref="S4.F5.10.m3.1.1.2">𝜏</ci><ci id="S4.F5.10.m3.1.1.3a.cmml" xref="S4.F5.10.m3.1.1.3"><mtext mathsize="90%" id="S4.F5.10.m3.1.1.3.cmml" xref="S4.F5.10.m3.1.1.3">max</mtext></ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F5.10.m3.1d">\tau_{\mbox{\small max}}</annotation></semantics></math> and <math id="S4.F5.11.m4.1" class="ltx_math_unparsed" alttext="N(\tau_{\mbox{\small max}}" display="inline"><semantics id="S4.F5.11.m4.1b"><mrow id="S4.F5.11.m4.1c"><mi id="S4.F5.11.m4.1.1">N</mi><mrow id="S4.F5.11.m4.1.2"><mo stretchy="false" id="S4.F5.11.m4.1.2.1">(</mo><msub id="S4.F5.11.m4.1.2.2"><mi id="S4.F5.11.m4.1.2.2.2">τ</mi><mtext mathsize="128%" id="S4.F5.11.m4.1.2.2.3">max</mtext></msub></mrow></mrow><annotation encoding="application/x-tex" id="S4.F5.11.m4.1d">N(\tau_{\mbox{\small max}}</annotation></semantics></math>, respectively.
+After rescaling, all curves lie approximately
+along the “universal” <math id="S4.F5.12.m5.1" class="ltx_Math" alttext="(\tau/\tau_{\mbox{\small max}})^{2/3}" display="inline"><semantics id="S4.F5.12.m5.1b"><msup id="S4.F5.12.m5.1.1" xref="S4.F5.12.m5.1.1.cmml"><mrow id="S4.F5.12.m5.1.1.1.1" xref="S4.F5.12.m5.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.F5.12.m5.1.1.1.1.2" xref="S4.F5.12.m5.1.1.1.1.1.cmml">(</mo><mrow id="S4.F5.12.m5.1.1.1.1.1" xref="S4.F5.12.m5.1.1.1.1.1.cmml"><mi id="S4.F5.12.m5.1.1.1.1.1.2" xref="S4.F5.12.m5.1.1.1.1.1.2.cmml">τ</mi><mo id="S4.F5.12.m5.1.1.1.1.1.1" xref="S4.F5.12.m5.1.1.1.1.1.1.cmml">/</mo><msub id="S4.F5.12.m5.1.1.1.1.1.3" xref="S4.F5.12.m5.1.1.1.1.1.3.cmml"><mi id="S4.F5.12.m5.1.1.1.1.1.3.2" xref="S4.F5.12.m5.1.1.1.1.1.3.2.cmml">τ</mi><mtext mathsize="128%" id="S4.F5.12.m5.1.1.1.1.1.3.3" xref="S4.F5.12.m5.1.1.1.1.1.3.3a.cmml">max</mtext></msub></mrow><mo stretchy="false" id="S4.F5.12.m5.1.1.1.1.3" xref="S4.F5.12.m5.1.1.1.1.1.cmml">)</mo></mrow><mrow id="S4.F5.12.m5.1.1.3" xref="S4.F5.12.m5.1.1.3.cmml"><mn id="S4.F5.12.m5.1.1.3.2" xref="S4.F5.12.m5.1.1.3.2.cmml">2</mn><mo id="S4.F5.12.m5.1.1.3.1" xref="S4.F5.12.m5.1.1.3.1.cmml">/</mo><mn id="S4.F5.12.m5.1.1.3.3" xref="S4.F5.12.m5.1.1.3.3.cmml">3</mn></mrow></msup><annotation-xml encoding="MathML-Content" id="S4.F5.12.m5.1c"><apply id="S4.F5.12.m5.1.1.cmml" xref="S4.F5.12.m5.1.1"><csymbol cd="ambiguous" id="S4.F5.12.m5.1.1.2.cmml" xref="S4.F5.12.m5.1.1">superscript</csymbol><apply id="S4.F5.12.m5.1.1.1.1.1.cmml" xref="S4.F5.12.m5.1.1.1.1"><divide id="S4.F5.12.m5.1.1.1.1.1.1.cmml" xref="S4.F5.12.m5.1.1.1.1.1.1"></divide><ci id="S4.F5.12.m5.1.1.1.1.1.2.cmml" xref="S4.F5.12.m5.1.1.1.1.1.2">𝜏</ci><apply id="S4.F5.12.m5.1.1.1.1.1.3.cmml" xref="S4.F5.12.m5.1.1.1.1.1.3"><csymbol cd="ambiguous" id="S4.F5.12.m5.1.1.1.1.1.3.1.cmml" xref="S4.F5.12.m5.1.1.1.1.1.3">subscript</csymbol><ci id="S4.F5.12.m5.1.1.1.1.1.3.2.cmml" xref="S4.F5.12.m5.1.1.1.1.1.3.2">𝜏</ci><ci id="S4.F5.12.m5.1.1.1.1.1.3.3a.cmml" xref="S4.F5.12.m5.1.1.1.1.1.3.3"><mtext mathsize="90%" id="S4.F5.12.m5.1.1.1.1.1.3.3.cmml" xref="S4.F5.12.m5.1.1.1.1.1.3.3">max</mtext></ci></apply></apply><apply id="S4.F5.12.m5.1.1.3.cmml" xref="S4.F5.12.m5.1.1.3"><divide id="S4.F5.12.m5.1.1.3.1.cmml" xref="S4.F5.12.m5.1.1.3.1"></divide><cn type="integer" id="S4.F5.12.m5.1.1.3.2.cmml" xref="S4.F5.12.m5.1.1.3.2">2</cn><cn type="integer" id="S4.F5.12.m5.1.1.3.3.cmml" xref="S4.F5.12.m5.1.1.3.3">3</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F5.12.m5.1d">(\tau/\tau_{\mbox{\small max}})^{2/3}</annotation></semantics></math> line
+(thick red line). On approaching the common endpoint,
+the slope of all curves appear to lie in the <math id="S4.F5.13.m6.1" class="ltx_Math" alttext="0.5" display="inline"><semantics id="S4.F5.13.m6.1b"><mn id="S4.F5.13.m6.1.1" xref="S4.F5.13.m6.1.1.cmml">0.5</mn><annotation-xml encoding="MathML-Content" id="S4.F5.13.m6.1c"><cn type="float" id="S4.F5.13.m6.1.1.cmml" xref="S4.F5.13.m6.1.1">0.5</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F5.13.m6.1d">0.5</annotation></semantics></math>-<math id="S4.F5.14.m7.1" class="ltx_Math" alttext="1" display="inline"><semantics id="S4.F5.14.m7.1b"><mn id="S4.F5.14.m7.1.1" xref="S4.F5.14.m7.1.1.cmml">1</mn><annotation-xml encoding="MathML-Content" id="S4.F5.14.m7.1c"><cn type="integer" id="S4.F5.14.m7.1.1.cmml" xref="S4.F5.14.m7.1.1">1</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F5.14.m7.1d">1</annotation></semantics></math> range
+(dashed line and thin red line, see also Fig. <a href="#S4.F6" title="Figure 6 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>).
+</figcaption>
+</figure>
+</section>
+<section id="S4.SS3" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.3 </span>Distribution of growth exponents</h3>
+
+<div id="S4.SS3.p1" class="ltx_para">
+<p id="S4.SS3.p1.8" class="ltx_p">In order to make a more quantitative measure over a broader set of resources,
+we implement the following unsupervised procedure for characterizing
+the growth of local tag vocabularies: for each resource we measure
+an effective exponent <math id="S4.SS3.p1.1.m1.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.SS3.p1.1.m1.1a"><mi id="S4.SS3.p1.1.m1.1.1" xref="S4.SS3.p1.1.m1.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.1.m1.1b"><ci id="S4.SS3.p1.1.m1.1.1.cmml" xref="S4.SS3.p1.1.m1.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.1.m1.1c">\gamma</annotation></semantics></math> that approximates
+the rescaled vocabulary growth with a power-law <math id="S4.SS3.p1.2.m2.1" class="ltx_Math" alttext="(\tau/\tau_{max})^{\gamma}" display="inline"><semantics id="S4.SS3.p1.2.m2.1a"><msup id="S4.SS3.p1.2.m2.1.1" xref="S4.SS3.p1.2.m2.1.1.cmml"><mrow id="S4.SS3.p1.2.m2.1.1.1.1" xref="S4.SS3.p1.2.m2.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.SS3.p1.2.m2.1.1.1.1.2" xref="S4.SS3.p1.2.m2.1.1.1.1.1.cmml">(</mo><mrow id="S4.SS3.p1.2.m2.1.1.1.1.1" xref="S4.SS3.p1.2.m2.1.1.1.1.1.cmml"><mi id="S4.SS3.p1.2.m2.1.1.1.1.1.2" xref="S4.SS3.p1.2.m2.1.1.1.1.1.2.cmml">τ</mi><mo id="S4.SS3.p1.2.m2.1.1.1.1.1.1" xref="S4.SS3.p1.2.m2.1.1.1.1.1.1.cmml">/</mo><msub id="S4.SS3.p1.2.m2.1.1.1.1.1.3" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.cmml"><mi id="S4.SS3.p1.2.m2.1.1.1.1.1.3.2" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.2.cmml">τ</mi><mrow id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.cmml"><mi id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.2" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.1" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.1.cmml">​</mo><mi id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.3" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.1a" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.1.cmml">​</mo><mi id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.4" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.4.cmml">x</mi></mrow></msub></mrow><mo stretchy="false" id="S4.SS3.p1.2.m2.1.1.1.1.3" xref="S4.SS3.p1.2.m2.1.1.1.1.1.cmml">)</mo></mrow><mi id="S4.SS3.p1.2.m2.1.1.3" xref="S4.SS3.p1.2.m2.1.1.3.cmml">γ</mi></msup><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.2.m2.1b"><apply id="S4.SS3.p1.2.m2.1.1.cmml" xref="S4.SS3.p1.2.m2.1.1"><csymbol cd="ambiguous" id="S4.SS3.p1.2.m2.1.1.2.cmml" xref="S4.SS3.p1.2.m2.1.1">superscript</csymbol><apply id="S4.SS3.p1.2.m2.1.1.1.1.1.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1"><divide id="S4.SS3.p1.2.m2.1.1.1.1.1.1.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.1"></divide><ci id="S4.SS3.p1.2.m2.1.1.1.1.1.2.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.2">𝜏</ci><apply id="S4.SS3.p1.2.m2.1.1.1.1.1.3.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3"><csymbol cd="ambiguous" id="S4.SS3.p1.2.m2.1.1.1.1.1.3.1.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3">subscript</csymbol><ci id="S4.SS3.p1.2.m2.1.1.1.1.1.3.2.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.2">𝜏</ci><apply id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3"><times id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.1.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.1"></times><ci id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.2.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.2">𝑚</ci><ci id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.3.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.3">𝑎</ci><ci id="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.4.cmml" xref="S4.SS3.p1.2.m2.1.1.1.1.1.3.3.4">𝑥</ci></apply></apply></apply><ci id="S4.SS3.p1.2.m2.1.1.3.cmml" xref="S4.SS3.p1.2.m2.1.1.3">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.2.m2.1c">(\tau/\tau_{max})^{\gamma}</annotation></semantics></math>.
+The simplest way to do this is to
+compute <math id="S4.SS3.p1.3.m3.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.SS3.p1.3.m3.1a"><mi id="S4.SS3.p1.3.m3.1.1" xref="S4.SS3.p1.3.m3.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.3.m3.1b"><ci id="S4.SS3.p1.3.m3.1.1.cmml" xref="S4.SS3.p1.3.m3.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.3.m3.1c">\gamma</annotation></semantics></math> as <math id="S4.SS3.p1.4.m4.4" class="ltx_Math" alttext="\gamma=\log(N(\tau_{max}))/\log(\tau_{max})" display="inline"><semantics id="S4.SS3.p1.4.m4.4a"><mrow id="S4.SS3.p1.4.m4.4.4" xref="S4.SS3.p1.4.m4.4.4.cmml"><mi id="S4.SS3.p1.4.m4.4.4.4" xref="S4.SS3.p1.4.m4.4.4.4.cmml">γ</mi><mo id="S4.SS3.p1.4.m4.4.4.3" xref="S4.SS3.p1.4.m4.4.4.3.cmml">=</mo><mrow id="S4.SS3.p1.4.m4.4.4.2" xref="S4.SS3.p1.4.m4.4.4.2.cmml"><mrow id="S4.SS3.p1.4.m4.3.3.1.1.1" xref="S4.SS3.p1.4.m4.3.3.1.1.2.cmml"><mi id="S4.SS3.p1.4.m4.1.1" xref="S4.SS3.p1.4.m4.1.1.cmml">log</mi><mo id="S4.SS3.p1.4.m4.3.3.1.1.1a" xref="S4.SS3.p1.4.m4.3.3.1.1.2.cmml">⁡</mo><mrow id="S4.SS3.p1.4.m4.3.3.1.1.1.1" xref="S4.SS3.p1.4.m4.3.3.1.1.2.cmml"><mo stretchy="false" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.2" xref="S4.SS3.p1.4.m4.3.3.1.1.2.cmml">(</mo><mrow id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.cmml"><mi id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.3" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.3.cmml">N</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.2" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.2.cmml">​</mo><mrow id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.cmml"><mo stretchy="false" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.2" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.cmml">(</mo><msub id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.cmml"><mi id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.2" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.2.cmml">τ</mi><mrow id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.cmml"><mi id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.2" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.1" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.1.cmml">​</mo><mi id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.3" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.1a" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.1.cmml">​</mo><mi id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.4" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.4.cmml">x</mi></mrow></msub><mo stretchy="false" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.3" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.cmml">)</mo></mrow></mrow><mo stretchy="false" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.3" xref="S4.SS3.p1.4.m4.3.3.1.1.2.cmml">)</mo></mrow></mrow><mo id="S4.SS3.p1.4.m4.4.4.2.3" xref="S4.SS3.p1.4.m4.4.4.2.3.cmml">/</mo><mrow id="S4.SS3.p1.4.m4.4.4.2.2.1" xref="S4.SS3.p1.4.m4.4.4.2.2.2.cmml"><mi id="S4.SS3.p1.4.m4.2.2" xref="S4.SS3.p1.4.m4.2.2.cmml">log</mi><mo id="S4.SS3.p1.4.m4.4.4.2.2.1a" xref="S4.SS3.p1.4.m4.4.4.2.2.2.cmml">⁡</mo><mrow id="S4.SS3.p1.4.m4.4.4.2.2.1.1" xref="S4.SS3.p1.4.m4.4.4.2.2.2.cmml"><mo stretchy="false" id="S4.SS3.p1.4.m4.4.4.2.2.1.1.2" xref="S4.SS3.p1.4.m4.4.4.2.2.2.cmml">(</mo><msub id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.cmml"><mi id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.2" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.2.cmml">τ</mi><mrow id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.cmml"><mi id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.2" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.2.cmml">m</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.1" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.1.cmml">​</mo><mi id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.3" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.3.cmml">a</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.1a" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.1.cmml">​</mo><mi id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.4" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.4.cmml">x</mi></mrow></msub><mo stretchy="false" id="S4.SS3.p1.4.m4.4.4.2.2.1.1.3" xref="S4.SS3.p1.4.m4.4.4.2.2.2.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.4.m4.4b"><apply id="S4.SS3.p1.4.m4.4.4.cmml" xref="S4.SS3.p1.4.m4.4.4"><eq id="S4.SS3.p1.4.m4.4.4.3.cmml" xref="S4.SS3.p1.4.m4.4.4.3"></eq><ci id="S4.SS3.p1.4.m4.4.4.4.cmml" xref="S4.SS3.p1.4.m4.4.4.4">𝛾</ci><apply id="S4.SS3.p1.4.m4.4.4.2.cmml" xref="S4.SS3.p1.4.m4.4.4.2"><divide id="S4.SS3.p1.4.m4.4.4.2.3.cmml" xref="S4.SS3.p1.4.m4.4.4.2.3"></divide><apply id="S4.SS3.p1.4.m4.3.3.1.1.2.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1"><log id="S4.SS3.p1.4.m4.1.1.cmml" xref="S4.SS3.p1.4.m4.1.1"></log><apply id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1"><times id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.2.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.2"></times><ci id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.3.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.3">𝑁</ci><apply id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1"><csymbol cd="ambiguous" id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.1.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1">subscript</csymbol><ci id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.2.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.2">𝜏</ci><apply id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3"><times id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.1.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.1"></times><ci id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.2.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.2">𝑚</ci><ci id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.3.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.3">𝑎</ci><ci id="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.4.cmml" xref="S4.SS3.p1.4.m4.3.3.1.1.1.1.1.1.1.1.3.4">𝑥</ci></apply></apply></apply></apply><apply id="S4.SS3.p1.4.m4.4.4.2.2.2.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1"><log id="S4.SS3.p1.4.m4.2.2.cmml" xref="S4.SS3.p1.4.m4.2.2"></log><apply id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1"><csymbol cd="ambiguous" id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.1.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1">subscript</csymbol><ci id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.2.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.2">𝜏</ci><apply id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3"><times id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.1.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.1"></times><ci id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.2.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.2">𝑚</ci><ci id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.3.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.3">𝑎</ci><ci id="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.4.cmml" xref="S4.SS3.p1.4.m4.4.4.2.2.1.1.1.3.4">𝑥</ci></apply></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.4.m4.4c">\gamma=\log(N(\tau_{max}))/\log(\tau_{max})</annotation></semantics></math>.
+Fig. <a href="#S4.F6" title="Figure 6 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a> shows the probability distribution of the resulting
+values of <math id="S4.SS3.p1.5.m5.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.SS3.p1.5.m5.1a"><mi id="S4.SS3.p1.5.m5.1.1" xref="S4.SS3.p1.5.m5.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.5.m5.1b"><ci id="S4.SS3.p1.5.m5.1.1.cmml" xref="S4.SS3.p1.5.m5.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.5.m5.1c">\gamma</annotation></semantics></math>, measured for three groups of resources.
+In particular, the red curve in Fig. <a href="#S4.F6" title="Figure 6 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a> displays
+the distribution of <math id="S4.SS3.p1.6.m6.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.SS3.p1.6.m6.1a"><mi id="S4.SS3.p1.6.m6.1.1" xref="S4.SS3.p1.6.m6.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.6.m6.1b"><ci id="S4.SS3.p1.6.m6.1.1.cmml" xref="S4.SS3.p1.6.m6.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.6.m6.1c">\gamma</annotation></semantics></math> values for the <math id="S4.SS3.p1.7.m7.1" class="ltx_Math" alttext="1000" display="inline"><semantics id="S4.SS3.p1.7.m7.1a"><mn id="S4.SS3.p1.7.m7.1.1" xref="S4.SS3.p1.7.m7.1.1.cmml">1000</mn><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.7.m7.1b"><cn type="integer" id="S4.SS3.p1.7.m7.1.1.cmml" xref="S4.SS3.p1.7.m7.1.1">1000</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.7.m7.1c">1000</annotation></semantics></math> top ranked
+(most bookmarked) resources in <span id="S4.SS3.p1.8.1" class="ltx_text ltx_font_italic">del.icio.us</span>. The distribution is well
+approximated by a rather narrow Gaussian distribution,
+whose average value is <math id="S4.SS3.p1.8.m8.1" class="ltx_Math" alttext="\gamma^{*}\simeq 0.7" display="inline"><semantics id="S4.SS3.p1.8.m8.1a"><mrow id="S4.SS3.p1.8.m8.1.1" xref="S4.SS3.p1.8.m8.1.1.cmml"><msup id="S4.SS3.p1.8.m8.1.1.2" xref="S4.SS3.p1.8.m8.1.1.2.cmml"><mi id="S4.SS3.p1.8.m8.1.1.2.2" xref="S4.SS3.p1.8.m8.1.1.2.2.cmml">γ</mi><mo id="S4.SS3.p1.8.m8.1.1.2.3" xref="S4.SS3.p1.8.m8.1.1.2.3.cmml">∗</mo></msup><mo id="S4.SS3.p1.8.m8.1.1.1" xref="S4.SS3.p1.8.m8.1.1.1.cmml">≃</mo><mn id="S4.SS3.p1.8.m8.1.1.3" xref="S4.SS3.p1.8.m8.1.1.3.cmml">0.7</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.SS3.p1.8.m8.1b"><apply id="S4.SS3.p1.8.m8.1.1.cmml" xref="S4.SS3.p1.8.m8.1.1"><csymbol cd="latexml" id="S4.SS3.p1.8.m8.1.1.1.cmml" xref="S4.SS3.p1.8.m8.1.1.1">similar-to-or-equals</csymbol><apply id="S4.SS3.p1.8.m8.1.1.2.cmml" xref="S4.SS3.p1.8.m8.1.1.2"><csymbol cd="ambiguous" id="S4.SS3.p1.8.m8.1.1.2.1.cmml" xref="S4.SS3.p1.8.m8.1.1.2">superscript</csymbol><ci id="S4.SS3.p1.8.m8.1.1.2.2.cmml" xref="S4.SS3.p1.8.m8.1.1.2.2">𝛾</ci><times id="S4.SS3.p1.8.m8.1.1.2.3.cmml" xref="S4.SS3.p1.8.m8.1.1.2.3"></times></apply><cn type="float" id="S4.SS3.p1.8.m8.1.1.3.cmml" xref="S4.SS3.p1.8.m8.1.1.3">0.7</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p1.8.m8.1c">\gamma^{*}\simeq 0.7</annotation></semantics></math>.
+This seems to confirm the idea (Fig. <a href="#S4.F5" title="Figure 5 ‣ 4.2 Scaling ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a>) that there is
+a well-defined exponent of growth governing the temporal evolution
+of popular resources. Moreover, the vocabulary growth of popular resources
+appears slower than the system-wide vocabulary growth of Fig. <a href="#S2.F1" title="Figure 1 ‣ 2 Experimental data ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>.</p>
+</div>
+<figure id="S4.F6" class="ltx_figure"><img src="/html/0704.3316/assets/x6.png" id="S4.F6.g1" class="ltx_graphics ltx_img_square" width="461" height="436" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 6: </span>Probability distribution of the vocabulary growth exponent <math id="S4.F6.7.m1.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.F6.7.m1.1b"><mi id="S4.F6.7.m1.1.1" xref="S4.F6.7.m1.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.F6.7.m1.1c"><ci id="S4.F6.7.m1.1.1.cmml" xref="S4.F6.7.m1.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.F6.7.m1.1d">\gamma</annotation></semantics></math>
+for resources, as a function of their rank. The red curve is the normalized
+probability distribution <math id="S4.F6.8.m2.1" class="ltx_Math" alttext="P(\gamma)" display="inline"><semantics id="S4.F6.8.m2.1b"><mrow id="S4.F6.8.m2.1.2" xref="S4.F6.8.m2.1.2.cmml"><mi id="S4.F6.8.m2.1.2.2" xref="S4.F6.8.m2.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.F6.8.m2.1.2.1" xref="S4.F6.8.m2.1.2.1.cmml">​</mo><mrow id="S4.F6.8.m2.1.2.3.2" xref="S4.F6.8.m2.1.2.cmml"><mo stretchy="false" id="S4.F6.8.m2.1.2.3.2.1" xref="S4.F6.8.m2.1.2.cmml">(</mo><mi id="S4.F6.8.m2.1.1" xref="S4.F6.8.m2.1.1.cmml">γ</mi><mo stretchy="false" id="S4.F6.8.m2.1.2.3.2.2" xref="S4.F6.8.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F6.8.m2.1c"><apply id="S4.F6.8.m2.1.2.cmml" xref="S4.F6.8.m2.1.2"><times id="S4.F6.8.m2.1.2.1.cmml" xref="S4.F6.8.m2.1.2.1"></times><ci id="S4.F6.8.m2.1.2.2.cmml" xref="S4.F6.8.m2.1.2.2">𝑃</ci><ci id="S4.F6.8.m2.1.1.cmml" xref="S4.F6.8.m2.1.1">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F6.8.m2.1d">P(\gamma)</annotation></semantics></math> for the <math id="S4.F6.9.m3.1" class="ltx_Math" alttext="1000" display="inline"><semantics id="S4.F6.9.m3.1b"><mn id="S4.F6.9.m3.1.1" xref="S4.F6.9.m3.1.1.cmml">1000</mn><annotation-xml encoding="MathML-Content" id="S4.F6.9.m3.1c"><cn type="integer" id="S4.F6.9.m3.1.1.cmml" xref="S4.F6.9.m3.1.1">1000</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F6.9.m3.1d">1000</annotation></semantics></math> top-ranked
+(most bookmarked) resources in <span id="S4.F6.14.1" class="ltx_text ltx_font_italic">del.icio.us</span>. It appears to be sharply peaked
+at a characteristic value <math id="S4.F6.10.m4.1" class="ltx_Math" alttext="\gamma^{*}\simeq 0.71" display="inline"><semantics id="S4.F6.10.m4.1b"><mrow id="S4.F6.10.m4.1.1" xref="S4.F6.10.m4.1.1.cmml"><msup id="S4.F6.10.m4.1.1.2" xref="S4.F6.10.m4.1.1.2.cmml"><mi id="S4.F6.10.m4.1.1.2.2" xref="S4.F6.10.m4.1.1.2.2.cmml">γ</mi><mo id="S4.F6.10.m4.1.1.2.3" xref="S4.F6.10.m4.1.1.2.3.cmml">∗</mo></msup><mo id="S4.F6.10.m4.1.1.1" xref="S4.F6.10.m4.1.1.1.cmml">≃</mo><mn id="S4.F6.10.m4.1.1.3" xref="S4.F6.10.m4.1.1.3.cmml">0.71</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.F6.10.m4.1c"><apply id="S4.F6.10.m4.1.1.cmml" xref="S4.F6.10.m4.1.1"><csymbol cd="latexml" id="S4.F6.10.m4.1.1.1.cmml" xref="S4.F6.10.m4.1.1.1">similar-to-or-equals</csymbol><apply id="S4.F6.10.m4.1.1.2.cmml" xref="S4.F6.10.m4.1.1.2"><csymbol cd="ambiguous" id="S4.F6.10.m4.1.1.2.1.cmml" xref="S4.F6.10.m4.1.1.2">superscript</csymbol><ci id="S4.F6.10.m4.1.1.2.2.cmml" xref="S4.F6.10.m4.1.1.2.2">𝛾</ci><times id="S4.F6.10.m4.1.1.2.3.cmml" xref="S4.F6.10.m4.1.1.2.3"></times></apply><cn type="float" id="S4.F6.10.m4.1.1.3.cmml" xref="S4.F6.10.m4.1.1.3">0.71</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F6.10.m4.1d">\gamma^{*}\simeq 0.71</annotation></semantics></math> (vertical line)
+and can be closely fitted with a Gaussian (dashed line).
+This indicates that highly bookmarked
+resources share a characteristic law of growth, as already pointed out
+in Fig. <a href="#S4.F5" title="Figure 5 ‣ 4.2 Scaling ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a>. On computing the distribution <math id="S4.F6.11.m5.1" class="ltx_Math" alttext="P(\gamma)" display="inline"><semantics id="S4.F6.11.m5.1b"><mrow id="S4.F6.11.m5.1.2" xref="S4.F6.11.m5.1.2.cmml"><mi id="S4.F6.11.m5.1.2.2" xref="S4.F6.11.m5.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.F6.11.m5.1.2.1" xref="S4.F6.11.m5.1.2.1.cmml">​</mo><mrow id="S4.F6.11.m5.1.2.3.2" xref="S4.F6.11.m5.1.2.cmml"><mo stretchy="false" id="S4.F6.11.m5.1.2.3.2.1" xref="S4.F6.11.m5.1.2.cmml">(</mo><mi id="S4.F6.11.m5.1.1" xref="S4.F6.11.m5.1.1.cmml">γ</mi><mo stretchy="false" id="S4.F6.11.m5.1.2.3.2.2" xref="S4.F6.11.m5.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F6.11.m5.1c"><apply id="S4.F6.11.m5.1.2.cmml" xref="S4.F6.11.m5.1.2"><times id="S4.F6.11.m5.1.2.1.cmml" xref="S4.F6.11.m5.1.2.1"></times><ci id="S4.F6.11.m5.1.2.2.cmml" xref="S4.F6.11.m5.1.2.2">𝑃</ci><ci id="S4.F6.11.m5.1.1.cmml" xref="S4.F6.11.m5.1.1">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F6.11.m5.1d">P(\gamma)</annotation></semantics></math>
+for less and less popular resources (black curve and blue curve),
+the peak shifts towards higher values of <math id="S4.F6.12.m6.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.F6.12.m6.1b"><mi id="S4.F6.12.m6.1.1" xref="S4.F6.12.m6.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.F6.12.m6.1c"><ci id="S4.F6.12.m6.1.1.cmml" xref="S4.F6.12.m6.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.F6.12.m6.1d">\gamma</annotation></semantics></math>
+and the growth behavior becomes more and more linear.
+The typical number of users who have bookmarked the resources used
+in this analysis is approximately a few thousands for the red curve,
+a few hundreds for the black curve, and just a few users for the blue one.
+</figcaption>
+</figure>
+<div id="S4.SS3.p2" class="ltx_para">
+<p id="S4.SS3.p2.3" class="ltx_p">On computing the distribution <math id="S4.SS3.p2.1.m1.1" class="ltx_Math" alttext="P(\gamma)" display="inline"><semantics id="S4.SS3.p2.1.m1.1a"><mrow id="S4.SS3.p2.1.m1.1.2" xref="S4.SS3.p2.1.m1.1.2.cmml"><mi id="S4.SS3.p2.1.m1.1.2.2" xref="S4.SS3.p2.1.m1.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p2.1.m1.1.2.1" xref="S4.SS3.p2.1.m1.1.2.1.cmml">​</mo><mrow id="S4.SS3.p2.1.m1.1.2.3.2" xref="S4.SS3.p2.1.m1.1.2.cmml"><mo stretchy="false" id="S4.SS3.p2.1.m1.1.2.3.2.1" xref="S4.SS3.p2.1.m1.1.2.cmml">(</mo><mi id="S4.SS3.p2.1.m1.1.1" xref="S4.SS3.p2.1.m1.1.1.cmml">γ</mi><mo stretchy="false" id="S4.SS3.p2.1.m1.1.2.3.2.2" xref="S4.SS3.p2.1.m1.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS3.p2.1.m1.1b"><apply id="S4.SS3.p2.1.m1.1.2.cmml" xref="S4.SS3.p2.1.m1.1.2"><times id="S4.SS3.p2.1.m1.1.2.1.cmml" xref="S4.SS3.p2.1.m1.1.2.1"></times><ci id="S4.SS3.p2.1.m1.1.2.2.cmml" xref="S4.SS3.p2.1.m1.1.2.2">𝑃</ci><ci id="S4.SS3.p2.1.m1.1.1.cmml" xref="S4.SS3.p2.1.m1.1.1">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p2.1.m1.1c">P(\gamma)</annotation></semantics></math>
+for less and less popular resources (black and blue curves),
+the distribution gets broader and its peak shifts towards
+higher values of <math id="S4.SS3.p2.2.m2.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.SS3.p2.2.m2.1a"><mi id="S4.SS3.p2.2.m2.1.1" xref="S4.SS3.p2.2.m2.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.SS3.p2.2.m2.1b"><ci id="S4.SS3.p2.2.m2.1.1.cmml" xref="S4.SS3.p2.2.m2.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p2.2.m2.1c">\gamma</annotation></semantics></math>, indicating that the growth
+behavior is becoming more and more linear. This crossover
+from sub-linear to linear growth for resources bookmarked
+by just a few users is expected and corresponds
+to a sort of “priming” effect for the resource:
+the first few users who bookmark it build the “core”
+tag vocabulary for the resource, and since only a few posts
+are present at that time, most tags are new and the
+size of the vocabulary grows linearly with the total
+number of tags <math id="S4.SS3.p2.3.m3.1" class="ltx_Math" alttext="\tau" display="inline"><semantics id="S4.SS3.p2.3.m3.1a"><mi id="S4.SS3.p2.3.m3.1.1" xref="S4.SS3.p2.3.m3.1.1.cmml">τ</mi><annotation-xml encoding="MathML-Content" id="S4.SS3.p2.3.m3.1b"><ci id="S4.SS3.p2.3.m3.1.1.cmml" xref="S4.SS3.p2.3.m3.1.1">𝜏</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p2.3.m3.1c">\tau</annotation></semantics></math> as well as with the number of posts
+associated with the resource. As more and more users
+bookmark the resource, correlations and social effects
+come into play and the law of growth crosses over
+from the linear to the “universal” sub-linear behavior reported above.</p>
+</div>
+<div id="S4.SS3.p3" class="ltx_para">
+<p id="S4.SS3.p3.4" class="ltx_p">To make contact between local vocabulary growth in the context
+of a single resource and vocabulary growth in the context of a single user,
+we repeat the above analysis for the <math id="S4.SS3.p3.1.m1.1" class="ltx_Math" alttext="1000" display="inline"><semantics id="S4.SS3.p3.1.m1.1a"><mn id="S4.SS3.p3.1.m1.1.1" xref="S4.SS3.p3.1.m1.1.1.cmml">1000</mn><annotation-xml encoding="MathML-Content" id="S4.SS3.p3.1.m1.1b"><cn type="integer" id="S4.SS3.p3.1.m1.1.1.cmml" xref="S4.SS3.p3.1.m1.1.1">1000</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p3.1.m1.1c">1000</annotation></semantics></math> most active users
+in <span id="S4.SS3.p3.4.1" class="ltx_text ltx_font_italic">del.icio.us</span> (as measured by the number of resources they bookmarked).
+The resulting probability distribution <math id="S4.SS3.p3.2.m2.1" class="ltx_Math" alttext="P(\gamma)" display="inline"><semantics id="S4.SS3.p3.2.m2.1a"><mrow id="S4.SS3.p3.2.m2.1.2" xref="S4.SS3.p3.2.m2.1.2.cmml"><mi id="S4.SS3.p3.2.m2.1.2.2" xref="S4.SS3.p3.2.m2.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p3.2.m2.1.2.1" xref="S4.SS3.p3.2.m2.1.2.1.cmml">​</mo><mrow id="S4.SS3.p3.2.m2.1.2.3.2" xref="S4.SS3.p3.2.m2.1.2.cmml"><mo stretchy="false" id="S4.SS3.p3.2.m2.1.2.3.2.1" xref="S4.SS3.p3.2.m2.1.2.cmml">(</mo><mi id="S4.SS3.p3.2.m2.1.1" xref="S4.SS3.p3.2.m2.1.1.cmml">γ</mi><mo stretchy="false" id="S4.SS3.p3.2.m2.1.2.3.2.2" xref="S4.SS3.p3.2.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS3.p3.2.m2.1b"><apply id="S4.SS3.p3.2.m2.1.2.cmml" xref="S4.SS3.p3.2.m2.1.2"><times id="S4.SS3.p3.2.m2.1.2.1.cmml" xref="S4.SS3.p3.2.m2.1.2.1"></times><ci id="S4.SS3.p3.2.m2.1.2.2.cmml" xref="S4.SS3.p3.2.m2.1.2.2">𝑃</ci><ci id="S4.SS3.p3.2.m2.1.1.cmml" xref="S4.SS3.p3.2.m2.1.1">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p3.2.m2.1c">P(\gamma)</annotation></semantics></math> is shown
+in Fig. <a href="#S4.F7" title="Figure 7 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">7</span></a> and is qualitatively similar
+to the ones of Fig. <a href="#S4.F6" title="Figure 6 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>. In particular,
+we notice that the peak of <math id="S4.SS3.p3.3.m3.1" class="ltx_Math" alttext="P(\gamma)" display="inline"><semantics id="S4.SS3.p3.3.m3.1a"><mrow id="S4.SS3.p3.3.m3.1.2" xref="S4.SS3.p3.3.m3.1.2.cmml"><mi id="S4.SS3.p3.3.m3.1.2.2" xref="S4.SS3.p3.3.m3.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.SS3.p3.3.m3.1.2.1" xref="S4.SS3.p3.3.m3.1.2.1.cmml">​</mo><mrow id="S4.SS3.p3.3.m3.1.2.3.2" xref="S4.SS3.p3.3.m3.1.2.cmml"><mo stretchy="false" id="S4.SS3.p3.3.m3.1.2.3.2.1" xref="S4.SS3.p3.3.m3.1.2.cmml">(</mo><mi id="S4.SS3.p3.3.m3.1.1" xref="S4.SS3.p3.3.m3.1.1.cmml">γ</mi><mo stretchy="false" id="S4.SS3.p3.3.m3.1.2.3.2.2" xref="S4.SS3.p3.3.m3.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.SS3.p3.3.m3.1b"><apply id="S4.SS3.p3.3.m3.1.2.cmml" xref="S4.SS3.p3.3.m3.1.2"><times id="S4.SS3.p3.3.m3.1.2.1.cmml" xref="S4.SS3.p3.3.m3.1.2.1"></times><ci id="S4.SS3.p3.3.m3.1.2.2.cmml" xref="S4.SS3.p3.3.m3.1.2.2">𝑃</ci><ci id="S4.SS3.p3.3.m3.1.1.cmml" xref="S4.SS3.p3.3.m3.1.1">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p3.3.m3.1c">P(\gamma)</annotation></semantics></math> is compatible
+with the value <math id="S4.SS3.p3.4.m4.1" class="ltx_Math" alttext="\gamma^{*}" display="inline"><semantics id="S4.SS3.p3.4.m4.1a"><msup id="S4.SS3.p3.4.m4.1.1" xref="S4.SS3.p3.4.m4.1.1.cmml"><mi id="S4.SS3.p3.4.m4.1.1.2" xref="S4.SS3.p3.4.m4.1.1.2.cmml">γ</mi><mo id="S4.SS3.p3.4.m4.1.1.3" xref="S4.SS3.p3.4.m4.1.1.3.cmml">∗</mo></msup><annotation-xml encoding="MathML-Content" id="S4.SS3.p3.4.m4.1b"><apply id="S4.SS3.p3.4.m4.1.1.cmml" xref="S4.SS3.p3.4.m4.1.1"><csymbol cd="ambiguous" id="S4.SS3.p3.4.m4.1.1.1.cmml" xref="S4.SS3.p3.4.m4.1.1">superscript</csymbol><ci id="S4.SS3.p3.4.m4.1.1.2.cmml" xref="S4.SS3.p3.4.m4.1.1.2">𝛾</ci><times id="S4.SS3.p3.4.m4.1.1.3.cmml" xref="S4.SS3.p3.4.m4.1.1.3"></times></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS3.p3.4.m4.1c">\gamma^{*}</annotation></semantics></math> observed for the top-ranked resources.</p>
+</div>
+<div id="S4.SS3.p4" class="ltx_para">
+<p id="S4.SS3.p4.1" class="ltx_p">We would like to remark that the huge variability
+of vocabularies, at the level of single users and resources,
+is not in contrast with very regular – and simple – features
+at the global level. On the contrary, the emergence of regularity
+from the uncoordinated activity of users is the hallmark of complexity
+and indicates that tools and concepts from complex system science
+may prove valuable for understanding the structure and dynamics of folksonomies.</p>
+</div>
+<figure id="S4.F7" class="ltx_figure"><img src="/html/0704.3316/assets/x7.png" id="S4.F7.g1" class="ltx_graphics ltx_img_square" width="461" height="437" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 7: </span>Probability distribution of the vocabulary growth exponent <math id="S4.F7.4.m1.1" class="ltx_Math" alttext="\gamma" display="inline"><semantics id="S4.F7.4.m1.1b"><mi id="S4.F7.4.m1.1.1" xref="S4.F7.4.m1.1.1.cmml">γ</mi><annotation-xml encoding="MathML-Content" id="S4.F7.4.m1.1c"><ci id="S4.F7.4.m1.1.1.cmml" xref="S4.F7.4.m1.1.1">𝛾</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.F7.4.m1.1d">\gamma</annotation></semantics></math>
+for user vocabularies. The distribution <math id="S4.F7.5.m2.1" class="ltx_Math" alttext="P(\gamma)" display="inline"><semantics id="S4.F7.5.m2.1b"><mrow id="S4.F7.5.m2.1.2" xref="S4.F7.5.m2.1.2.cmml"><mi id="S4.F7.5.m2.1.2.2" xref="S4.F7.5.m2.1.2.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="S4.F7.5.m2.1.2.1" xref="S4.F7.5.m2.1.2.1.cmml">​</mo><mrow id="S4.F7.5.m2.1.2.3.2" xref="S4.F7.5.m2.1.2.cmml"><mo stretchy="false" id="S4.F7.5.m2.1.2.3.2.1" xref="S4.F7.5.m2.1.2.cmml">(</mo><mi id="S4.F7.5.m2.1.1" xref="S4.F7.5.m2.1.1.cmml">γ</mi><mo stretchy="false" id="S4.F7.5.m2.1.2.3.2.2" xref="S4.F7.5.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="S4.F7.5.m2.1c"><apply id="S4.F7.5.m2.1.2.cmml" xref="S4.F7.5.m2.1.2"><times id="S4.F7.5.m2.1.2.1.cmml" xref="S4.F7.5.m2.1.2.1"></times><ci id="S4.F7.5.m2.1.2.2.cmml" xref="S4.F7.5.m2.1.2.2">𝑃</ci><ci id="S4.F7.5.m2.1.1.cmml" xref="S4.F7.5.m2.1.1">𝛾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.F7.5.m2.1d">P(\gamma)</annotation></semantics></math> was computed
+for the <math id="S4.F7.6.m3.1" class="ltx_Math" alttext="1000" display="inline"><semantics id="S4.F7.6.m3.1b"><mn id="S4.F7.6.m3.1.1" xref="S4.F7.6.m3.1.1.cmml">1000</mn><annotation-xml encoding="MathML-Content" id="S4.F7.6.m3.1c"><cn type="integer" id="S4.F7.6.m3.1.1.cmml" xref="S4.F7.6.m3.1.1">1000</cn></annotation-xml><annotation encoding="application/x-tex" id="S4.F7.6.m3.1d">1000</annotation></semantics></math> most active users in <span id="S4.F7.8.1" class="ltx_text ltx_font_italic">del.icio.us</span>. Similarly to Fig. <a href="#S4.F6" title="Figure 6 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>,
+it appears peaked around a characteristic value close to the same
+observed for top-ranked resources (vertical line, same as in Fig. <a href="#S4.F6" title="Figure 6 ‣ 4.3 Distribution of growth exponents ‣ 4 Local vocabulary growth ‣ Vocabulary growth in collaborative tagging systems" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>).
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="S5" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">5 </span>Conclusions</h2>
+
+<div id="S5.p1" class="ltx_para">
+<p id="S5.p1.1" class="ltx_p">In this paper we have presented a statistical analysis of a large-scale
+snapshot of <span id="S5.p1.1.1" class="ltx_text ltx_font_italic">del.icio.us</span>. We focused in particular on the growth of the system
+as mirrored by the number of distinct tags present in the system at a given time.
+We introduced a notion of intrinsic time, based on metrics that are internal
+to the system itself. In contrast with physical time, this definition exposes
+the natural laws of growth of the system and overcomes the trivial bias
+due to the growth of the user base. We investigated the growth of the
+global tag vocabulary as well as the growth of local vocabularies
+in the context of a given resource or user.</p>
+</div>
+<div id="S5.p2" class="ltx_para">
+<p id="S5.p2.1" class="ltx_p">A first interesting result is a power-law growth – characterized by an exponent smaller
+than one – of the number of distinct tags at the global level.
+This growth displays the same functional form, with no discontinuities, throughout
+the entire history of <span id="S5.p2.1.1" class="ltx_text ltx_font_italic">del.icio.us</span>. This is a surprising result,
+especially when considering the open-ended nature of the system
+and the several changes that have occurred in the interaction between the users
+and the system.</p>
+</div>
+<div id="S5.p3" class="ltx_para">
+<p id="S5.p3.1" class="ltx_p">Analyzing the growth dynamics of local vocabularies,
+associated with a given resource or user, may provide insights
+into the relationship between the behavior of individual users and
+vocabulary growth at the system – or community – level,
+as well as insights into the process of invention of new tags.
+For popular resources in <span id="S5.p3.1.1" class="ltx_text ltx_font_italic">del.icio.us</span> we report a sub-linear growth
+with exponents sharply peaked around a characteristic value
+(slightly different from the global one), while for less popular resources
+we observe exponent values slowly shifting towards <math id="S5.p3.1.m1.1" class="ltx_Math" alttext="1" display="inline"><semantics id="S5.p3.1.m1.1a"><mn id="S5.p3.1.m1.1.1" xref="S5.p3.1.m1.1.1.cmml">1</mn><annotation-xml encoding="MathML-Content" id="S5.p3.1.m1.1b"><cn type="integer" id="S5.p3.1.m1.1.1.cmml" xref="S5.p3.1.m1.1.1">1</cn></annotation-xml><annotation encoding="application/x-tex" id="S5.p3.1.m1.1c">1</annotation></semantics></math>.
+The sub-linear growth observed at the local level cannot be explained
+as a mere reflection of the growth in the number of users,
+(which, for resources, is linear in the intrinsic time)
+nor as an increase in the average number of tags per post
+(which has a rather stable characteristic value).</p>
+</div>
+<div id="S5.p4" class="ltx_para">
+<p id="S5.p4.1" class="ltx_p">These observations point out that sub-linear dictionary growth is a genuine
+non-trivial feature of the system and open several problems.
+Is sub-linear growth at the global level
+(or at the local level) related to correlations among users’ activity?
+Does the growth observed in the context of a single user
+reflect a collective/cooperative phenomenon,
+or is it just mirroring the complex cognitive processes (incorporating semantics)
+at the level of that individual user?
+Is the difference between local and global exponents relevant,
+and if so, what kind of information about the structure of tag space is it disclosing?
+What are the key elements in the user-system interaction that lead to the observed behaviors?</p>
+</div>
+<div id="S5.p5" class="ltx_para">
+<p id="S5.p5.1" class="ltx_p">These questions may play an important role for applications as well,
+especially in terms of defining quality metrics for the emergent vocabulary of a folksonomy,
+both at the global level and in semantically narrower contexts.
+Since the breadth of the tag vocabulary is linked to navigability,
+this might eventually impact the design of new systems.</p>
+</div>
+<div class="ltx_pagination ltx_role_newpage"></div>
+</section>
+<section id="S6" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">6 </span>Acknowledgments</h2>
+
+<div id="S6.p1" class="ltx_para">
+<p id="S6.p1.1" class="ltx_p">This research has been partly supported by the
+TAGora project (<span id="S6.p1.1.1" class="ltx_text ltx_font_typewriter">FP6-IST5-34721</span>) funded by the Future and Emerging
+Technologies program (IST-FET) of the European Commission.
+The information provided is the
+sole responsibility of the authors and does not reflect the
+Commission’s opinion. The Commission is not responsible for any use
+that may be made of data appearing in this publication.</p>
+</div>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul class="ltx_biblist">
+<li id="bib.bib1" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock">
+A. Mathes.
+
+</span>
+<span class="ltx_bibblock">Folksonomies – Cooperative Classification and Communication
+Through Shared Metadata, 2004.
+
+</span>
+<span class="ltx_bibblock">Graduate School of Library and Information Science, University of Illinois Urbana-Champaign.
+
+</span>
+<span class="ltx_bibblock">http://www.adammathes.com/academic/computer-mediated-communication/folksonomies.html.
+
+</span>
+</li>
+<li id="bib.bib2" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[2]</span>
+<span class="ltx_bibblock">
+T. Hammond, T. Hannay, B. Lund, and J. Scott.
+
+</span>
+<span class="ltx_bibblock">Social bookmarking tools (i): A general review.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib2.1.1" class="ltx_text ltx_font_italic">D-Lib Magazine</span>, 11, 2005.
+
+</span>
+</li>
+<li id="bib.bib3" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[3]</span>
+<span class="ltx_bibblock">
+S. Golder and B. A. Huberman.
+
+</span>
+<span class="ltx_bibblock">The structure of collaborative tagging systems.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib3.1.1" class="ltx_text ltx_font_italic">Journal of Information Science</span>, 32(2):198–208, 2006.
+
+</span>
+</li>
+<li id="bib.bib4" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[4]</span>
+<span class="ltx_bibblock">
+C. Cattuto, V. Loreto, and L. Pietronero.
+
+</span>
+<span class="ltx_bibblock">Semiotic dynamics and collaborative tagging.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib4.1.1" class="ltx_text ltx_font_italic">Proceedings of the National Academy of Sciences (PNAS)</span>,
+104:1461–1464, 2007.
+
+</span>
+</li>
+<li id="bib.bib5" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[5]</span>
+<span class="ltx_bibblock">
+C. Marlow, M. Naaman, D. Boyd, and M. Davis.
+
+</span>
+<span class="ltx_bibblock">Ht06, tagging paper, taxonomy, flickr, academic article, to read.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib5.1.1" class="ltx_text ltx_font_italic">HYPERTEXT ’06: Proceedings of the seventeenth conference on
+Hypertext and hypermedia</span>, pages 31–40, New York, NY, USA, 2006. ACM Press.
+
+</span>
+</li>
+<li id="bib.bib6" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[6]</span>
+<span class="ltx_bibblock">
+H. S. Heaps.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib6.1.1" class="ltx_text ltx_font_italic">Information Retrieval-Computational and Theoretical Aspects</span>.
+
+</span>
+<span class="ltx_bibblock">Academic Press, 1978.
+
+</span>
+</li>
+<li id="bib.bib7" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[7]</span>
+<span class="ltx_bibblock">
+T. V. Wal.
+
+</span>
+<span class="ltx_bibblock">Explaning and showing broad and narrow folksonomies, 2005.
+
+</span>
+<span class="ltx_bibblock">http://www.personalinfocloud.com/2005/02/
+<br class="ltx_break">explaining_and_.html
+
+</span>
+</li>
+<li id="bib.bib8" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[8]</span>
+<span class="ltx_bibblock">
+D. Harman
+
+</span>
+<span class="ltx_bibblock">Overview of the Third Text REtrieval Conference.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bib8.1.1" class="ltx_text ltx_font_italic">Proc. Third Text REtrieval Conference (TREC-3)</span>,
+NIST Special Publication 500-207, 1–19, 1995.
+
+</span>
+</li>
+<li id="bib.bib9" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[9]</span>
+<span class="ltx_bibblock">
+S. Sanguanpong, S. Warangrit, and K. Koht-arsa.
+
+</span>
+<span class="ltx_bibblock">Facts about the thai web, 2000.
+
+</span>
+<span class="ltx_bibblock">http://citeseer.ist.psu.edu/sanguanpong00facts.html
+
+</span>
+</li>
+<li id="bib.bib10" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[10]</span>
+<span class="ltx_bibblock">
+R. A. Baeza-Yates and G. Navarro.
+
+</span>
+<span class="ltx_bibblock">Block addressing indices for approximate text retrieval.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib10.1.1" class="ltx_text ltx_font_italic">Journal of the American Society of Information Science</span>,
+51(1):69–82, 2000.
+
+</span>
+</li>
+<li id="bib.bib11" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[11]</span>
+<span class="ltx_bibblock">
+D. C. van Leijenhorst and T. P. van der Weide.
+
+</span>
+<span class="ltx_bibblock">A formal derivation of heaps’ law.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib11.1.1" class="ltx_text ltx_font_italic">Information Sciences</span>, 170(2-4):263–272, 2005.
+
+</span>
+</li>
+<li id="bib.bib12" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[12]</span>
+<span class="ltx_bibblock">
+D. H. Zanette and M. A. Montemurro.
+
+</span>
+<span class="ltx_bibblock">Dynamics of text generation with realistic zipf’s distribution.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bib12.1.1" class="ltx_text ltx_font_italic">Journal of Quantitative Linguistics</span>, 12(1):29–40, 2005.
+
+</span>
+</li>
+<li id="bib.bib13" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[13]</span>
+<span class="ltx_bibblock">
+C. Veres.
+
+</span>
+<span class="ltx_bibblock">The language of folksonomies: What tags reveal about user
+classification.
+
+</span>
+<span class="ltx_bibblock">In C. Kop, G. Fliedl, H. C. Mayr, and E. Métais, editors, <span id="bib.bib13.1.1" class="ltx_text ltx_font_italic">NLDB</span>, volume 3999 of <span id="bib.bib13.2.2" class="ltx_text ltx_font_italic">Lecture Notes in Computer Science</span>, pages 58–69.
+Springer, 2006.
+
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<div class="ar5iv-footer"><a href="/html/0704.3315" class="ar5iv-nav-button ar5iv-nav-button-prev">◄</a>
+    <a class="ar5iv-home-button" href="/"><img height="40" alt="ar5iv homepage" src="/assets/ar5iv.png"></a>
+    <a href="/feeling_lucky" class="ar5iv-text-button">Feeling<br>lucky?</a>
+    <a href="/log/0704.3316" class="ar5iv-text-button ar5iv-severity-error">Conversion<br>report</a>
+    <a class="ar5iv-text-button" target="_blank" href="https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+0704.3316">Report<br>an issue</a>
+    <a href="https://arxiv.org/abs/0704.3316" class="ar5iv-text-button arxiv-ui-theme">View&nbsp;original<br>on&nbsp;arXiv</a><a href="/html/0704.3317" class="ar5iv-nav-button ar5iv-nav-button-next">►</a>
+</div><footer class="ltx_page_footer">
+<a class="ar5iv-toggle-color-scheme" href="javascript:toggleColorScheme()" title="Toggle ar5iv color scheme"><span class="color-scheme-icon"></span></a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/license" target="_blank">Copyright</a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/policies/privacy_policy" target="_blank">Privacy Policy</a>
+
+<div class="ltx_page_logo">Generated  on Mon Feb 26 23:40:35 2024 by <a target="_blank" href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+
+    <script>
+      var canMathML = typeof(MathMLElement) == "function";
+      if (!canMathML) {
+        var body = document.querySelector("body");
+        body.firstElementChild.setAttribute('style', 'opacity: 0;');
+        var loading = document.createElement("div");
+        loading.setAttribute("id", "mathjax-loading-spinner");
+        var message = document.createElement("div");
+        message.setAttribute("id", "mathjax-loading-message");
+        message.innerText = "Typesetting Equations...";
+        body.prepend(loading);
+        body.prepend(message);
+
+        var el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.querySelector("head").appendChild(el);
+
+        window.MathJax = {
+          startup: {
+            pageReady: () => {
+              return MathJax.startup.defaultPageReady().then(() => {
+                body.removeChild(loading);
+                body.removeChild(message);
+                body.firstElementChild.removeAttribute('style');
+              }); } } };
+      }
+    </script>
+    <script>
+    // Auxiliary function, building the preview feature when
+    // an inline citation is clicked
+    function clicked_cite(e) {
+      e.preventDefault();
+      let cite = this.closest('.ltx_cite');
+      let next = cite.nextSibling;
+      if (next && next.nodeType == Node.ELEMENT_NODE && next.getAttribute('class') == "ar5iv-bibitem-preview") {
+        next.remove();
+        return; }
+      // Before adding a preview modal,
+      // cleanup older previews, in case they're still open
+      document.querySelectorAll('span.ar5iv-bibitem-preview').forEach(function(node) {
+        node.remove();
+      })
+
+      // Create the preview
+      preview = document.createElement('span');
+      preview.setAttribute('class','ar5iv-bibitem-preview');
+      let target = document.getElementById(this.getAttribute('href').slice(1));
+      target.childNodes.forEach(function (child) {
+        preview.append(child.cloneNode(true));
+      });
+      let close_x = document.createElement('button');
+      close_x.setAttribute("aria-label","Close modal for bibliography item preview");
+      close_x.textContent = "×";
+      close_x.setAttribute('class', 'ar5iv-button-close-preview');
+      close_x.setAttribute('onclick','this.parentNode.remove()');
+      preview.append(close_x);
+      preview.querySelectorAll('.ltx_tag_bibitem').forEach(function(node) {
+        node.remove();
+      });
+      cite.parentNode.insertBefore(preview, cite.nextSibling);
+      return;
+    }
+    // Global Document initialization:
+    // - assign the preview feature to all inline citation links
+    document.querySelectorAll(".ltx_cite .ltx_ref").forEach(function (link) {
+      link.addEventListener("click", clicked_cite);
+    });
+    </script>
+    </body>
+</html>

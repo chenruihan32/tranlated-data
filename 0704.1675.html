@@ -1,0 +1,1219 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[0704.1675] Exploiting Social Annotation for Automatic Resource Discovery</title><meta property="og:description" content="Information integration applications, such as mediators or mashups,
+that require access to information resources currently rely on users
+manually discovering and integrating them in the application. Manual
+resource dis…">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Exploiting Social Annotation for Automatic Resource Discovery">
+<meta name="twitter:image:src" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta name="twitter:image:alt" content="ar5iv logo">
+<meta property="og:title" content="Exploiting Social Annotation for Automatic Resource Discovery">
+<meta property="og:site_name" content="ar5iv">
+<meta property="og:image" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ar5iv.labs.arxiv.org/html/0704.1675">
+
+<!--Generated on Fri Mar 15 22:26:57 2024 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script>
+  function detectColorScheme(){
+    var theme="light";
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if(current_theme){
+      if(current_theme == "dark"){
+        theme = "dark";
+      } }
+    else if(!window.matchMedia) { return false; }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      theme = "dark"; }
+    if (theme=="dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light"); } }
+
+  detectColorScheme();
+
+  function toggleColorScheme(){
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+      if (current_theme == "light") {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+      else {
+        localStorage.setItem("ar5iv_theme", "light"); } }
+    else {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+    detectColorScheme(); }
+</script>
+<link media="all" rel="stylesheet" href="/assets/ar5iv-fonts.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv-site.0.2.2.css">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document ltx_authors_1line">
+<h1 class="ltx_title ltx_title_document">Exploiting Social Annotation for Automatic Resource Discovery
+</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Anon Plangprasopchok and Kristina Lerman
+<br class="ltx_break">USC Information Sciences Institute
+<br class="ltx_break">4676 Admiralty Way 
+<br class="ltx_break">Marina del Rey, CA 90292, USA 
+<br class="ltx_break">{plangpra,lerman}@isi.edu
+</span></span>
+</div>
+
+<div class="ltx_abstract">
+<h6 class="ltx_title ltx_title_abstract">Abstract</h6>
+<p id="id1.id1" class="ltx_p">Information integration applications, such as mediators or mashups,
+that require access to information resources currently rely on users
+manually discovering and integrating them in the application. Manual
+resource discovery is a slow process, requiring the user to sift
+through results obtained via keyword-based search. Although search
+methods have advanced to include evidence from document contents,
+its metadata and the contents and link structure of the referring
+pages, they still do not adequately cover information sources —
+often called “the hidden Web”— that dynamically generate
+documents in response to a query. The recently popular social
+bookmarking sites, which allow users to annotate and share metadata
+about various information sources, provide rich evidence for
+resource discovery. In this paper, we describe a probabilistic model
+of the user annotation process in a social bookmarking system
+<em id="id1.id1.1" class="ltx_emph ltx_font_italic">del.icio.us</em>. We then use the model to automatically find
+resources relevant to a particular information domain. Our
+experimental results on data obtained from <em id="id1.id1.2" class="ltx_emph ltx_font_italic">del.icio.us</em> show
+this approach as a promising method for helping automate the
+resource discovery task.</p>
+</div>
+<section id="Sx1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Introduction</h2>
+
+<div id="Sx1.p1" class="ltx_para">
+<p id="Sx1.p1.1" class="ltx_p">As the Web matures, an increasing number of dynamic information
+sources and services come online. Unlike static Web pages, these
+resources generate their contents dynamically in response to a
+query. They can be HTML-based, searching the site via an HTML
+form, or be a Web service. Proliferation of such resources has led
+to a number of novel applications, including Web-based mashups,
+such as Google maps and Yahoo pipes, information integration
+applications (<span id="Sx1.p1.1.1" class="ltx_text ltx_font_bold">?</span>) and intelligent office assistants
+ (<span id="Sx1.p1.1.2" class="ltx_text ltx_font_bold">?</span>) that compose information resources within
+the tasks they perform. In all these applications, however, the
+user must discover and model the relevant resources. Manual
+resource discovery is a very time consuming and laborious process.
+The user usually queries a Web search engine with appropriate
+keywords and additional parameters (e.g., asking for .kml or .wsdl
+files), and then must examine every resource returned by the
+search engine to evaluate whether it has the desired
+functionality. Often, it is desirable to have not one but several
+resources with an equivalent functionality to ensure robustness of
+information integration applications in the face of resource
+failure. Identifying several equivalent resources makes manual
+resource discovery even more time consuming.</p>
+</div>
+<div id="Sx1.p2" class="ltx_para">
+<p id="Sx1.p2.1" class="ltx_p">The majority of the research in this area of information
+integration has focused on automating modeling resources — i.e.,
+understanding semantics of data they
+use (<span id="Sx1.p2.1.1" class="ltx_text ltx_font_bold">?</span>; <span id="Sx1.p2.1.2" class="ltx_text ltx_font_bold">?</span>) and the functionality they
+provide (<span id="Sx1.p2.1.3" class="ltx_text ltx_font_bold">?</span>). In comparison, the resource discovery
+problem has received much less attention. Note that traditional
+search engines, which index resources by their contents — the
+words or terms they contain
+— are not likely to be useful in this
+domain, since the contents is dynamically generated. At best, they
+rely on the metadata supplied by the resource authors or the
+anchor text in the pages that link to the resource.
+Woogle (<span id="Sx1.p2.1.4" class="ltx_text ltx_font_bold">?</span>) is one of the few search engines to index Web
+services based on the syntactic metadata provided in the WSDL
+files. It allows a user to search for services with a similar
+functionality or that accept the same inputs as another services.</p>
+</div>
+<div id="Sx1.p3" class="ltx_para">
+<p id="Sx1.p3.1" class="ltx_p">Recently, a new generation of Web sites has rapidly gained
+popularity. Dubbed “social media,” these sites allow users to
+share documents, including bookmarks, photos, or videos, and to
+<em id="Sx1.p3.1.1" class="ltx_emph ltx_font_italic">tag</em> the content with free-form keywords. While the initial
+purpose of tagging was to help users organize and manage their own
+documents, it has since been proposed that collective tagging of
+common documents can be used to organize information via an
+informal classification system dubbed a
+“folksonomy” (<span id="Sx1.p3.1.2" class="ltx_text ltx_font_bold">?</span>). Consider, for example,
+<em id="Sx1.p3.1.3" class="ltx_emph ltx_font_italic">http://geocoder.us</em>, a geocoding service that takes an input
+as address and returns its latitude and longitude. On the social
+bookmarking site <em id="Sx1.p3.1.4" class="ltx_emph ltx_font_italic">del.icio.us</em><span id="footnote1" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">1</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">1</sup><span class="ltx_tag ltx_tag_note">1</span>http://del.icio.us</span></span></span>,
+this resource has been tagged by more than <math id="Sx1.p3.1.m1.2" class="ltx_Math" alttext="1,000" display="inline"><semantics id="Sx1.p3.1.m1.2a"><mrow id="Sx1.p3.1.m1.2.3.2" xref="Sx1.p3.1.m1.2.3.1.cmml"><mn id="Sx1.p3.1.m1.1.1" xref="Sx1.p3.1.m1.1.1.cmml">1</mn><mo id="Sx1.p3.1.m1.2.3.2.1" xref="Sx1.p3.1.m1.2.3.1.cmml">,</mo><mn id="Sx1.p3.1.m1.2.2" xref="Sx1.p3.1.m1.2.2.cmml">000</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx1.p3.1.m1.2b"><list id="Sx1.p3.1.m1.2.3.1.cmml" xref="Sx1.p3.1.m1.2.3.2"><cn type="integer" id="Sx1.p3.1.m1.1.1.cmml" xref="Sx1.p3.1.m1.1.1">1</cn><cn type="integer" id="Sx1.p3.1.m1.2.2.cmml" xref="Sx1.p3.1.m1.2.2">000</cn></list></annotation-xml><annotation encoding="application/x-tex" id="Sx1.p3.1.m1.2c">1,000</annotation></semantics></math> people. The
+most common tags associated by users with this resource are
+“map,” “geocoding,” “gps,” “address,” “latitude,” and
+“longitude.” This example suggests that although there is
+generally no controlled vocabulary in a social annotation system,
+tags can be used to categorize resources by their functionality.</p>
+</div>
+<div id="Sx1.p4" class="ltx_para">
+<p id="Sx1.p4.1" class="ltx_p">We claim that social tagging can be used for information resource
+discovery. We explore three probabilistic generative models that
+can be used to describe the tagging process on <em id="Sx1.p4.1.1" class="ltx_emph ltx_font_italic">del.icio.us</em>.
+The first model is the probabilistic Latent Semantic
+model (<span id="Sx1.p4.1.2" class="ltx_text ltx_font_bold">?</span>) which ignores individual user by
+integrating bookmarking behaviors from all users.
+The second model, the three-way aspect model, was
+proposed (<span id="Sx1.p4.1.3" class="ltx_text ltx_font_bold">?</span>) to model <em id="Sx1.p4.1.4" class="ltx_emph ltx_font_italic">del.icio.us</em> users’
+annotations. The model assumes that there exists a global
+conceptual space that generates the observed values for users,
+resources and tags independently. We propose an alternative third
+model, motivated by the Author-Topic model
+(<span id="Sx1.p4.1.5" class="ltx_text ltx_font_bold">?</span>), which maintains that latent topics
+that are of interest to the author generate the words in the
+documents. Since a single resource on <em id="Sx1.p4.1.6" class="ltx_emph ltx_font_italic">del.icio.us</em> could be
+tagged differently by different users, we separate “topics”, as
+defined in Author-Topic model, into “(user) interests” and
+“(resource) topics”. Together user interests and resource topics
+generate tags for one resource. In order to use the models for
+resource discovery, we describe each resource by a topic
+distribution and then compare this distribution with that of all
+other resources in order to identify relevant resources.</p>
+</div>
+<div id="Sx1.p5" class="ltx_para">
+<p id="Sx1.p5.1" class="ltx_p">The paper is organized as follows. In the next section, we
+describe how tagging data is used in resource discovery. Subsequently
+we present the probabilistic model we have developed to
+aid in the resource discovery task. The section also describes two
+earlier related models. We then compares the performance of the
+three models on the datasets obtained from <em id="Sx1.p5.1.1" class="ltx_emph ltx_font_italic">del.icio.us</em>. We
+review prior work and finally present conclusions and future research
+directions.</p>
+</div>
+</section>
+<section id="Sx2" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Problem Definition</h2>
+
+<div id="Sx2.p1" class="ltx_para">
+<p id="Sx2.p1.1" class="ltx_p">Suppose a user needs to find resources that
+provide some functionality: e.g., a service that returns current
+weather conditions, or latitude and longitude of a given address. In
+order to improve robustness and data coverage of an application, we
+often want more than one resource with the necessary functionality.
+In this paper, for simplicity, we assume that the user provides an
+example resource, that we call a <em id="Sx2.p1.1.1" class="ltx_emph ltx_font_italic">seed</em>, and wants to find more
+resources with the same functionality. By “same” we mean a
+resource that will accept the same input data types as the seed, and
+will return the same data types as the seed after applying the same
+operation to them.
+Note that we could have a more stringent requirement that the
+resource return the same data as the seed for the same input, but
+we don’t want to exclude resources that may have different
+coverage.
+</p>
+</div>
+<div id="Sx2.p2" class="ltx_para">
+<p id="Sx2.p2.8" class="ltx_p">We claim that users in a social bookmarking system such as
+<em id="Sx2.p2.8.1" class="ltx_emph ltx_font_italic">del.icio.us</em> annotate resources according to their
+functionality or topic (category). Although <em id="Sx2.p2.8.2" class="ltx_emph ltx_font_italic">del.icio.us</em> and
+similar systems provide different means for users to annotate
+document, such as notes and tags, in this paper we focus on
+utilizing the tags only. Thus, the variables in our model are
+resources <math id="Sx2.p2.1.m1.1" class="ltx_Math" alttext="R" display="inline"><semantics id="Sx2.p2.1.m1.1a"><mi id="Sx2.p2.1.m1.1.1" xref="Sx2.p2.1.m1.1.1.cmml">R</mi><annotation-xml encoding="MathML-Content" id="Sx2.p2.1.m1.1b"><ci id="Sx2.p2.1.m1.1.1.cmml" xref="Sx2.p2.1.m1.1.1">𝑅</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.1.m1.1c">R</annotation></semantics></math>, users <math id="Sx2.p2.2.m2.1" class="ltx_Math" alttext="U" display="inline"><semantics id="Sx2.p2.2.m2.1a"><mi id="Sx2.p2.2.m2.1.1" xref="Sx2.p2.2.m2.1.1.cmml">U</mi><annotation-xml encoding="MathML-Content" id="Sx2.p2.2.m2.1b"><ci id="Sx2.p2.2.m2.1.1.cmml" xref="Sx2.p2.2.m2.1.1">𝑈</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.2.m2.1c">U</annotation></semantics></math> and tags <math id="Sx2.p2.3.m3.1" class="ltx_Math" alttext="T" display="inline"><semantics id="Sx2.p2.3.m3.1a"><mi id="Sx2.p2.3.m3.1.1" xref="Sx2.p2.3.m3.1.1.cmml">T</mi><annotation-xml encoding="MathML-Content" id="Sx2.p2.3.m3.1b"><ci id="Sx2.p2.3.m3.1.1.cmml" xref="Sx2.p2.3.m3.1.1">𝑇</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.3.m3.1c">T</annotation></semantics></math>. A bookmark <math id="Sx2.p2.4.m4.1" class="ltx_Math" alttext="i" display="inline"><semantics id="Sx2.p2.4.m4.1a"><mi id="Sx2.p2.4.m4.1.1" xref="Sx2.p2.4.m4.1.1.cmml">i</mi><annotation-xml encoding="MathML-Content" id="Sx2.p2.4.m4.1b"><ci id="Sx2.p2.4.m4.1.1.cmml" xref="Sx2.p2.4.m4.1.1">𝑖</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.4.m4.1c">i</annotation></semantics></math> of resource
+<math id="Sx2.p2.5.m5.1" class="ltx_Math" alttext="r" display="inline"><semantics id="Sx2.p2.5.m5.1a"><mi id="Sx2.p2.5.m5.1.1" xref="Sx2.p2.5.m5.1.1.cmml">r</mi><annotation-xml encoding="MathML-Content" id="Sx2.p2.5.m5.1b"><ci id="Sx2.p2.5.m5.1.1.cmml" xref="Sx2.p2.5.m5.1.1">𝑟</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.5.m5.1c">r</annotation></semantics></math> by user <math id="Sx2.p2.6.m6.1" class="ltx_Math" alttext="u" display="inline"><semantics id="Sx2.p2.6.m6.1a"><mi id="Sx2.p2.6.m6.1.1" xref="Sx2.p2.6.m6.1.1.cmml">u</mi><annotation-xml encoding="MathML-Content" id="Sx2.p2.6.m6.1b"><ci id="Sx2.p2.6.m6.1.1.cmml" xref="Sx2.p2.6.m6.1.1">𝑢</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.6.m6.1c">u</annotation></semantics></math> can be formalized as a tuple <math id="Sx2.p2.7.m7.4" class="ltx_Math" alttext="\langle r,u,\{t_{1},t_{2},\ldots\}\rangle_{i}" display="inline"><semantics id="Sx2.p2.7.m7.4a"><msub id="Sx2.p2.7.m7.4.4" xref="Sx2.p2.7.m7.4.4.cmml"><mrow id="Sx2.p2.7.m7.4.4.1.1" xref="Sx2.p2.7.m7.4.4.1.2.cmml"><mo stretchy="false" id="Sx2.p2.7.m7.4.4.1.1.2" xref="Sx2.p2.7.m7.4.4.1.2.cmml">⟨</mo><mi id="Sx2.p2.7.m7.2.2" xref="Sx2.p2.7.m7.2.2.cmml">r</mi><mo id="Sx2.p2.7.m7.4.4.1.1.3" xref="Sx2.p2.7.m7.4.4.1.2.cmml">,</mo><mi id="Sx2.p2.7.m7.3.3" xref="Sx2.p2.7.m7.3.3.cmml">u</mi><mo id="Sx2.p2.7.m7.4.4.1.1.4" xref="Sx2.p2.7.m7.4.4.1.2.cmml">,</mo><mrow id="Sx2.p2.7.m7.4.4.1.1.1.2" xref="Sx2.p2.7.m7.4.4.1.1.1.3.cmml"><mo stretchy="false" id="Sx2.p2.7.m7.4.4.1.1.1.2.3" xref="Sx2.p2.7.m7.4.4.1.1.1.3.cmml">{</mo><msub id="Sx2.p2.7.m7.4.4.1.1.1.1.1" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1.cmml"><mi id="Sx2.p2.7.m7.4.4.1.1.1.1.1.2" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1.2.cmml">t</mi><mn id="Sx2.p2.7.m7.4.4.1.1.1.1.1.3" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1.3.cmml">1</mn></msub><mo id="Sx2.p2.7.m7.4.4.1.1.1.2.4" xref="Sx2.p2.7.m7.4.4.1.1.1.3.cmml">,</mo><msub id="Sx2.p2.7.m7.4.4.1.1.1.2.2" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2.cmml"><mi id="Sx2.p2.7.m7.4.4.1.1.1.2.2.2" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2.2.cmml">t</mi><mn id="Sx2.p2.7.m7.4.4.1.1.1.2.2.3" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2.3.cmml">2</mn></msub><mo id="Sx2.p2.7.m7.4.4.1.1.1.2.5" xref="Sx2.p2.7.m7.4.4.1.1.1.3.cmml">,</mo><mi mathvariant="normal" id="Sx2.p2.7.m7.1.1" xref="Sx2.p2.7.m7.1.1.cmml">…</mi><mo stretchy="false" id="Sx2.p2.7.m7.4.4.1.1.1.2.6" xref="Sx2.p2.7.m7.4.4.1.1.1.3.cmml">}</mo></mrow><mo stretchy="false" id="Sx2.p2.7.m7.4.4.1.1.5" xref="Sx2.p2.7.m7.4.4.1.2.cmml">⟩</mo></mrow><mi id="Sx2.p2.7.m7.4.4.3" xref="Sx2.p2.7.m7.4.4.3.cmml">i</mi></msub><annotation-xml encoding="MathML-Content" id="Sx2.p2.7.m7.4b"><apply id="Sx2.p2.7.m7.4.4.cmml" xref="Sx2.p2.7.m7.4.4"><csymbol cd="ambiguous" id="Sx2.p2.7.m7.4.4.2.cmml" xref="Sx2.p2.7.m7.4.4">subscript</csymbol><list id="Sx2.p2.7.m7.4.4.1.2.cmml" xref="Sx2.p2.7.m7.4.4.1.1"><ci id="Sx2.p2.7.m7.2.2.cmml" xref="Sx2.p2.7.m7.2.2">𝑟</ci><ci id="Sx2.p2.7.m7.3.3.cmml" xref="Sx2.p2.7.m7.3.3">𝑢</ci><set id="Sx2.p2.7.m7.4.4.1.1.1.3.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.2"><apply id="Sx2.p2.7.m7.4.4.1.1.1.1.1.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1"><csymbol cd="ambiguous" id="Sx2.p2.7.m7.4.4.1.1.1.1.1.1.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1">subscript</csymbol><ci id="Sx2.p2.7.m7.4.4.1.1.1.1.1.2.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1.2">𝑡</ci><cn type="integer" id="Sx2.p2.7.m7.4.4.1.1.1.1.1.3.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.1.1.3">1</cn></apply><apply id="Sx2.p2.7.m7.4.4.1.1.1.2.2.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2"><csymbol cd="ambiguous" id="Sx2.p2.7.m7.4.4.1.1.1.2.2.1.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2">subscript</csymbol><ci id="Sx2.p2.7.m7.4.4.1.1.1.2.2.2.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2.2">𝑡</ci><cn type="integer" id="Sx2.p2.7.m7.4.4.1.1.1.2.2.3.cmml" xref="Sx2.p2.7.m7.4.4.1.1.1.2.2.3">2</cn></apply><ci id="Sx2.p2.7.m7.1.1.cmml" xref="Sx2.p2.7.m7.1.1">…</ci></set></list><ci id="Sx2.p2.7.m7.4.4.3.cmml" xref="Sx2.p2.7.m7.4.4.3">𝑖</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.7.m7.4c">\langle r,u,\{t_{1},t_{2},\ldots\}\rangle_{i}</annotation></semantics></math>, which can be further broken down into
+a co-occurrence of a triple of a resource, a user and a tag:
+<math id="Sx2.p2.8.m8.3" class="ltx_Math" alttext="\langle r,u,t\rangle" display="inline"><semantics id="Sx2.p2.8.m8.3a"><mrow id="Sx2.p2.8.m8.3.4.2" xref="Sx2.p2.8.m8.3.4.1.cmml"><mo stretchy="false" id="Sx2.p2.8.m8.3.4.2.1" xref="Sx2.p2.8.m8.3.4.1.cmml">⟨</mo><mi id="Sx2.p2.8.m8.1.1" xref="Sx2.p2.8.m8.1.1.cmml">r</mi><mo id="Sx2.p2.8.m8.3.4.2.2" xref="Sx2.p2.8.m8.3.4.1.cmml">,</mo><mi id="Sx2.p2.8.m8.2.2" xref="Sx2.p2.8.m8.2.2.cmml">u</mi><mo id="Sx2.p2.8.m8.3.4.2.3" xref="Sx2.p2.8.m8.3.4.1.cmml">,</mo><mi id="Sx2.p2.8.m8.3.3" xref="Sx2.p2.8.m8.3.3.cmml">t</mi><mo stretchy="false" id="Sx2.p2.8.m8.3.4.2.4" xref="Sx2.p2.8.m8.3.4.1.cmml">⟩</mo></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p2.8.m8.3b"><list id="Sx2.p2.8.m8.3.4.1.cmml" xref="Sx2.p2.8.m8.3.4.2"><ci id="Sx2.p2.8.m8.1.1.cmml" xref="Sx2.p2.8.m8.1.1">𝑟</ci><ci id="Sx2.p2.8.m8.2.2.cmml" xref="Sx2.p2.8.m8.2.2">𝑢</ci><ci id="Sx2.p2.8.m8.3.3.cmml" xref="Sx2.p2.8.m8.3.3">𝑡</ci></list></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p2.8.m8.3c">\langle r,u,t\rangle</annotation></semantics></math>.</p>
+</div>
+<div id="Sx2.p3" class="ltx_para">
+<p id="Sx2.p3.1" class="ltx_p">We collect these triples by crawling <em id="Sx2.p3.1.1" class="ltx_emph ltx_font_italic">del.icio.us</em>. The
+system provides three types of pages: a tag page — listing all
+resources that are tagged with a particular keyword; a user page
+— listing all resources that have been bookmarked by a
+particular user; and a resource page — listing all the tags the
+users have associated with that resource. <em id="Sx2.p3.1.2" class="ltx_emph ltx_font_italic">del.icio.us</em> also
+provides a method for navigating back and forth between these
+pages, allowing us to crawl the site. Given the seed, we get what
+<em id="Sx2.p3.1.3" class="ltx_emph ltx_font_italic">del.icio.us</em> shows as the most popular tags assigned by the
+users to it. Next we collect other resources annotated with these
+tags. For each of these we collect the resource-user-tag triples.
+We use these data to discover resources with the same
+functionality as the seed, as described below.</p>
+</div>
+</section>
+<section id="Sx3" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Approach</h2>
+
+<div id="Sx3.p1" class="ltx_para">
+<p id="Sx3.p1.1" class="ltx_p">We use probabilistic models in order to find
+a compressed description of the collected resources in terms of
+topic descriptions. This description is a vector of probabilities
+of how a particular resource is likely to be described by
+different topics. The topic distribution of the resource is
+subsequently used to compute similarity between resources using
+Jensen-Shannon divergence (<span id="Sx3.p1.1.1" class="ltx_text ltx_font_bold">?</span>). For the rest of this
+section, we describe the probabilistic models. We first briefly
+describe two existing models: the probabilistic Latent Semantic
+Analysis (pLSA) model and the Three-Way Aspect model (MWA). We
+then introduce a new model that explicitly takes into account
+users’ interests and resources’ topics. We compare performance of
+these models on the three <em id="Sx3.p1.1.2" class="ltx_emph ltx_font_italic">del.icio.us</em> datasets.</p>
+</div>
+<figure id="Sx3.F1" class="ltx_figure"><img src="/html/0704.1675/assets/x1.png" id="Sx3.F1.1.g1" class="ltx_graphics ltx_centering ltx_img_portrait" width="200" height="258" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>Graphical representations of the probabilistic Latent
+Semantic Model (left) and Multi-way Aspect Model (right) <math id="Sx3.F1.8.m1.1" class="ltx_Math" alttext="R" display="inline"><semantics id="Sx3.F1.8.m1.1b"><mi id="Sx3.F1.8.m1.1.1" xref="Sx3.F1.8.m1.1.1.cmml">R</mi><annotation-xml encoding="MathML-Content" id="Sx3.F1.8.m1.1c"><ci id="Sx3.F1.8.m1.1.1.cmml" xref="Sx3.F1.8.m1.1.1">𝑅</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F1.8.m1.1d">R</annotation></semantics></math>, <math id="Sx3.F1.9.m2.1" class="ltx_Math" alttext="U" display="inline"><semantics id="Sx3.F1.9.m2.1b"><mi id="Sx3.F1.9.m2.1.1" xref="Sx3.F1.9.m2.1.1.cmml">U</mi><annotation-xml encoding="MathML-Content" id="Sx3.F1.9.m2.1c"><ci id="Sx3.F1.9.m2.1.1.cmml" xref="Sx3.F1.9.m2.1.1">𝑈</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F1.9.m2.1d">U</annotation></semantics></math>,
+<math id="Sx3.F1.10.m3.1" class="ltx_Math" alttext="T" display="inline"><semantics id="Sx3.F1.10.m3.1b"><mi id="Sx3.F1.10.m3.1.1" xref="Sx3.F1.10.m3.1.1.cmml">T</mi><annotation-xml encoding="MathML-Content" id="Sx3.F1.10.m3.1c"><ci id="Sx3.F1.10.m3.1.1.cmml" xref="Sx3.F1.10.m3.1.1">𝑇</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F1.10.m3.1d">T</annotation></semantics></math> and <math id="Sx3.F1.11.m4.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx3.F1.11.m4.1b"><mi id="Sx3.F1.11.m4.1.1" xref="Sx3.F1.11.m4.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx3.F1.11.m4.1c"><ci id="Sx3.F1.11.m4.1.1.cmml" xref="Sx3.F1.11.m4.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F1.11.m4.1d">Z</annotation></semantics></math> denote variables “Resource”, “User”, “Tag” and
+“Topic” repectively. <math id="Sx3.F1.12.m5.1" class="ltx_Math" alttext="N_{t}" display="inline"><semantics id="Sx3.F1.12.m5.1b"><msub id="Sx3.F1.12.m5.1.1" xref="Sx3.F1.12.m5.1.1.cmml"><mi id="Sx3.F1.12.m5.1.1.2" xref="Sx3.F1.12.m5.1.1.2.cmml">N</mi><mi id="Sx3.F1.12.m5.1.1.3" xref="Sx3.F1.12.m5.1.1.3.cmml">t</mi></msub><annotation-xml encoding="MathML-Content" id="Sx3.F1.12.m5.1c"><apply id="Sx3.F1.12.m5.1.1.cmml" xref="Sx3.F1.12.m5.1.1"><csymbol cd="ambiguous" id="Sx3.F1.12.m5.1.1.1.cmml" xref="Sx3.F1.12.m5.1.1">subscript</csymbol><ci id="Sx3.F1.12.m5.1.1.2.cmml" xref="Sx3.F1.12.m5.1.1.2">𝑁</ci><ci id="Sx3.F1.12.m5.1.1.3.cmml" xref="Sx3.F1.12.m5.1.1.3">𝑡</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F1.12.m5.1d">N_{t}</annotation></semantics></math> represents a number of tag
+occurrences for a particular resource; D represents a number of
+resources. Meanwhile, <math id="Sx3.F1.13.m6.1" class="ltx_Math" alttext="N_{b}" display="inline"><semantics id="Sx3.F1.13.m6.1b"><msub id="Sx3.F1.13.m6.1.1" xref="Sx3.F1.13.m6.1.1.cmml"><mi id="Sx3.F1.13.m6.1.1.2" xref="Sx3.F1.13.m6.1.1.2.cmml">N</mi><mi id="Sx3.F1.13.m6.1.1.3" xref="Sx3.F1.13.m6.1.1.3.cmml">b</mi></msub><annotation-xml encoding="MathML-Content" id="Sx3.F1.13.m6.1c"><apply id="Sx3.F1.13.m6.1.1.cmml" xref="Sx3.F1.13.m6.1.1"><csymbol cd="ambiguous" id="Sx3.F1.13.m6.1.1.1.cmml" xref="Sx3.F1.13.m6.1.1">subscript</csymbol><ci id="Sx3.F1.13.m6.1.1.2.cmml" xref="Sx3.F1.13.m6.1.1.2">𝑁</ci><ci id="Sx3.F1.13.m6.1.1.3.cmml" xref="Sx3.F1.13.m6.1.1.3">𝑏</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F1.13.m6.1d">N_{b}</annotation></semantics></math> represents a number of all
+resource-user-tag co-occurrences in the social annotation system.
+Note that filled circles represent observed variables.
+</figcaption>
+</figure>
+<section id="Sx3.SSx1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">Probabilistic Latent Semantic Model (pLSA)</h3>
+
+<div id="Sx3.SSx1.p1" class="ltx_para">
+<p id="Sx3.SSx1.p1.2" class="ltx_p">Hoffman (<span id="Sx3.SSx1.p1.2.1" class="ltx_text ltx_font_bold">?</span>) proposed a
+probabilistic latent semantic model for associating word-document
+co-occurrences. The model hypothesized that a particular document is
+composed of a set of conceptual themes or topics <math id="Sx3.SSx1.p1.1.m1.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx3.SSx1.p1.1.m1.1a"><mi id="Sx3.SSx1.p1.1.m1.1.1" xref="Sx3.SSx1.p1.1.m1.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p1.1.m1.1b"><ci id="Sx3.SSx1.p1.1.m1.1.1.cmml" xref="Sx3.SSx1.p1.1.m1.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p1.1.m1.1c">Z</annotation></semantics></math>. Words in a
+document were generated by these topics with some probability. We
+adapted the model to the context of social annotation by claiming
+that all users have common agreement on annotating a particular
+resource. All bookmarks from all users associated with a given
+resource were aggregated into a single corpus. Figure <a href="#Sx3.F1" title="Figure 1 ‣ Approach ‣ Exploiting Social Annotation for Automatic Resource Discovery" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> shows
+the graphical representation of this model. Co-occurrences of a
+particular resource -tag pair were computed by summing
+resource-user-tag triples <math id="Sx3.SSx1.p1.2.m2.3" class="ltx_Math" alttext="\langle r,u,t\rangle" display="inline"><semantics id="Sx3.SSx1.p1.2.m2.3a"><mrow id="Sx3.SSx1.p1.2.m2.3.4.2" xref="Sx3.SSx1.p1.2.m2.3.4.1.cmml"><mo stretchy="false" id="Sx3.SSx1.p1.2.m2.3.4.2.1" xref="Sx3.SSx1.p1.2.m2.3.4.1.cmml">⟨</mo><mi id="Sx3.SSx1.p1.2.m2.1.1" xref="Sx3.SSx1.p1.2.m2.1.1.cmml">r</mi><mo id="Sx3.SSx1.p1.2.m2.3.4.2.2" xref="Sx3.SSx1.p1.2.m2.3.4.1.cmml">,</mo><mi id="Sx3.SSx1.p1.2.m2.2.2" xref="Sx3.SSx1.p1.2.m2.2.2.cmml">u</mi><mo id="Sx3.SSx1.p1.2.m2.3.4.2.3" xref="Sx3.SSx1.p1.2.m2.3.4.1.cmml">,</mo><mi id="Sx3.SSx1.p1.2.m2.3.3" xref="Sx3.SSx1.p1.2.m2.3.3.cmml">t</mi><mo stretchy="false" id="Sx3.SSx1.p1.2.m2.3.4.2.4" xref="Sx3.SSx1.p1.2.m2.3.4.1.cmml">⟩</mo></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p1.2.m2.3b"><list id="Sx3.SSx1.p1.2.m2.3.4.1.cmml" xref="Sx3.SSx1.p1.2.m2.3.4.2"><ci id="Sx3.SSx1.p1.2.m2.1.1.cmml" xref="Sx3.SSx1.p1.2.m2.1.1">𝑟</ci><ci id="Sx3.SSx1.p1.2.m2.2.2.cmml" xref="Sx3.SSx1.p1.2.m2.2.2">𝑢</ci><ci id="Sx3.SSx1.p1.2.m2.3.3.cmml" xref="Sx3.SSx1.p1.2.m2.3.3">𝑡</ci></list></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p1.2.m2.3c">\langle r,u,t\rangle</annotation></semantics></math> over all users.
+The joint distribution over resource and tag is</p>
+</div>
+<div id="Sx3.SSx1.p2" class="ltx_para">
+<table id="Sx3.E1" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E1.m1.5" class="ltx_Math" alttext="p(r,t)=\sum_{z}p(t|z)p(z|r)p(r)" display="block"><semantics id="Sx3.E1.m1.5a"><mrow id="Sx3.E1.m1.5.5" xref="Sx3.E1.m1.5.5.cmml"><mrow id="Sx3.E1.m1.5.5.4" xref="Sx3.E1.m1.5.5.4.cmml"><mi id="Sx3.E1.m1.5.5.4.2" xref="Sx3.E1.m1.5.5.4.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E1.m1.5.5.4.1" xref="Sx3.E1.m1.5.5.4.1.cmml">​</mo><mrow id="Sx3.E1.m1.5.5.4.3.2" xref="Sx3.E1.m1.5.5.4.3.1.cmml"><mo stretchy="false" id="Sx3.E1.m1.5.5.4.3.2.1" xref="Sx3.E1.m1.5.5.4.3.1.cmml">(</mo><mi id="Sx3.E1.m1.1.1" xref="Sx3.E1.m1.1.1.cmml">r</mi><mo id="Sx3.E1.m1.5.5.4.3.2.2" xref="Sx3.E1.m1.5.5.4.3.1.cmml">,</mo><mi id="Sx3.E1.m1.2.2" xref="Sx3.E1.m1.2.2.cmml">t</mi><mo stretchy="false" id="Sx3.E1.m1.5.5.4.3.2.3" xref="Sx3.E1.m1.5.5.4.3.1.cmml">)</mo></mrow></mrow><mo rspace="0.111em" id="Sx3.E1.m1.5.5.3" xref="Sx3.E1.m1.5.5.3.cmml">=</mo><mrow id="Sx3.E1.m1.5.5.2" xref="Sx3.E1.m1.5.5.2.cmml"><munder id="Sx3.E1.m1.5.5.2.3" xref="Sx3.E1.m1.5.5.2.3.cmml"><mo movablelimits="false" id="Sx3.E1.m1.5.5.2.3.2" xref="Sx3.E1.m1.5.5.2.3.2.cmml">∑</mo><mi id="Sx3.E1.m1.5.5.2.3.3" xref="Sx3.E1.m1.5.5.2.3.3.cmml">z</mi></munder><mrow id="Sx3.E1.m1.5.5.2.2" xref="Sx3.E1.m1.5.5.2.2.cmml"><mi id="Sx3.E1.m1.5.5.2.2.4" xref="Sx3.E1.m1.5.5.2.2.4.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E1.m1.5.5.2.2.3" xref="Sx3.E1.m1.5.5.2.2.3.cmml">​</mo><mrow id="Sx3.E1.m1.4.4.1.1.1.1" xref="Sx3.E1.m1.4.4.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E1.m1.4.4.1.1.1.1.2" xref="Sx3.E1.m1.4.4.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.E1.m1.4.4.1.1.1.1.1" xref="Sx3.E1.m1.4.4.1.1.1.1.1.cmml"><mi id="Sx3.E1.m1.4.4.1.1.1.1.1.2" xref="Sx3.E1.m1.4.4.1.1.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.E1.m1.4.4.1.1.1.1.1.1" xref="Sx3.E1.m1.4.4.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.E1.m1.4.4.1.1.1.1.1.3" xref="Sx3.E1.m1.4.4.1.1.1.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.E1.m1.4.4.1.1.1.1.3" xref="Sx3.E1.m1.4.4.1.1.1.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E1.m1.5.5.2.2.3a" xref="Sx3.E1.m1.5.5.2.2.3.cmml">​</mo><mi id="Sx3.E1.m1.5.5.2.2.5" xref="Sx3.E1.m1.5.5.2.2.5.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E1.m1.5.5.2.2.3b" xref="Sx3.E1.m1.5.5.2.2.3.cmml">​</mo><mrow id="Sx3.E1.m1.5.5.2.2.2.1" xref="Sx3.E1.m1.5.5.2.2.2.1.1.cmml"><mo stretchy="false" id="Sx3.E1.m1.5.5.2.2.2.1.2" xref="Sx3.E1.m1.5.5.2.2.2.1.1.cmml">(</mo><mrow id="Sx3.E1.m1.5.5.2.2.2.1.1" xref="Sx3.E1.m1.5.5.2.2.2.1.1.cmml"><mi id="Sx3.E1.m1.5.5.2.2.2.1.1.2" xref="Sx3.E1.m1.5.5.2.2.2.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E1.m1.5.5.2.2.2.1.1.1" xref="Sx3.E1.m1.5.5.2.2.2.1.1.1.cmml">|</mo><mi id="Sx3.E1.m1.5.5.2.2.2.1.1.3" xref="Sx3.E1.m1.5.5.2.2.2.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.E1.m1.5.5.2.2.2.1.3" xref="Sx3.E1.m1.5.5.2.2.2.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E1.m1.5.5.2.2.3c" xref="Sx3.E1.m1.5.5.2.2.3.cmml">​</mo><mi id="Sx3.E1.m1.5.5.2.2.6" xref="Sx3.E1.m1.5.5.2.2.6.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E1.m1.5.5.2.2.3d" xref="Sx3.E1.m1.5.5.2.2.3.cmml">​</mo><mrow id="Sx3.E1.m1.5.5.2.2.7.2" xref="Sx3.E1.m1.5.5.2.2.cmml"><mo stretchy="false" id="Sx3.E1.m1.5.5.2.2.7.2.1" xref="Sx3.E1.m1.5.5.2.2.cmml">(</mo><mi id="Sx3.E1.m1.3.3" xref="Sx3.E1.m1.3.3.cmml">r</mi><mo stretchy="false" id="Sx3.E1.m1.5.5.2.2.7.2.2" xref="Sx3.E1.m1.5.5.2.2.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E1.m1.5b"><apply id="Sx3.E1.m1.5.5.cmml" xref="Sx3.E1.m1.5.5"><eq id="Sx3.E1.m1.5.5.3.cmml" xref="Sx3.E1.m1.5.5.3"></eq><apply id="Sx3.E1.m1.5.5.4.cmml" xref="Sx3.E1.m1.5.5.4"><times id="Sx3.E1.m1.5.5.4.1.cmml" xref="Sx3.E1.m1.5.5.4.1"></times><ci id="Sx3.E1.m1.5.5.4.2.cmml" xref="Sx3.E1.m1.5.5.4.2">𝑝</ci><interval closure="open" id="Sx3.E1.m1.5.5.4.3.1.cmml" xref="Sx3.E1.m1.5.5.4.3.2"><ci id="Sx3.E1.m1.1.1.cmml" xref="Sx3.E1.m1.1.1">𝑟</ci><ci id="Sx3.E1.m1.2.2.cmml" xref="Sx3.E1.m1.2.2">𝑡</ci></interval></apply><apply id="Sx3.E1.m1.5.5.2.cmml" xref="Sx3.E1.m1.5.5.2"><apply id="Sx3.E1.m1.5.5.2.3.cmml" xref="Sx3.E1.m1.5.5.2.3"><csymbol cd="ambiguous" id="Sx3.E1.m1.5.5.2.3.1.cmml" xref="Sx3.E1.m1.5.5.2.3">subscript</csymbol><sum id="Sx3.E1.m1.5.5.2.3.2.cmml" xref="Sx3.E1.m1.5.5.2.3.2"></sum><ci id="Sx3.E1.m1.5.5.2.3.3.cmml" xref="Sx3.E1.m1.5.5.2.3.3">𝑧</ci></apply><apply id="Sx3.E1.m1.5.5.2.2.cmml" xref="Sx3.E1.m1.5.5.2.2"><times id="Sx3.E1.m1.5.5.2.2.3.cmml" xref="Sx3.E1.m1.5.5.2.2.3"></times><ci id="Sx3.E1.m1.5.5.2.2.4.cmml" xref="Sx3.E1.m1.5.5.2.2.4">𝑝</ci><apply id="Sx3.E1.m1.4.4.1.1.1.1.1.cmml" xref="Sx3.E1.m1.4.4.1.1.1.1"><csymbol cd="latexml" id="Sx3.E1.m1.4.4.1.1.1.1.1.1.cmml" xref="Sx3.E1.m1.4.4.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E1.m1.4.4.1.1.1.1.1.2.cmml" xref="Sx3.E1.m1.4.4.1.1.1.1.1.2">𝑡</ci><ci id="Sx3.E1.m1.4.4.1.1.1.1.1.3.cmml" xref="Sx3.E1.m1.4.4.1.1.1.1.1.3">𝑧</ci></apply><ci id="Sx3.E1.m1.5.5.2.2.5.cmml" xref="Sx3.E1.m1.5.5.2.2.5">𝑝</ci><apply id="Sx3.E1.m1.5.5.2.2.2.1.1.cmml" xref="Sx3.E1.m1.5.5.2.2.2.1"><csymbol cd="latexml" id="Sx3.E1.m1.5.5.2.2.2.1.1.1.cmml" xref="Sx3.E1.m1.5.5.2.2.2.1.1.1">conditional</csymbol><ci id="Sx3.E1.m1.5.5.2.2.2.1.1.2.cmml" xref="Sx3.E1.m1.5.5.2.2.2.1.1.2">𝑧</ci><ci id="Sx3.E1.m1.5.5.2.2.2.1.1.3.cmml" xref="Sx3.E1.m1.5.5.2.2.2.1.1.3">𝑟</ci></apply><ci id="Sx3.E1.m1.5.5.2.2.6.cmml" xref="Sx3.E1.m1.5.5.2.2.6">𝑝</ci><ci id="Sx3.E1.m1.3.3.cmml" xref="Sx3.E1.m1.3.3">𝑟</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E1.m1.5c">p(r,t)=\sum_{z}p(t|z)p(z|r)p(r)</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(1)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx1.p3" class="ltx_para">
+<p id="Sx3.SSx1.p3.4" class="ltx_p">In order to estimate parameters <math id="Sx3.SSx1.p3.1.m1.1" class="ltx_Math" alttext="p(t|z)" display="inline"><semantics id="Sx3.SSx1.p3.1.m1.1a"><mrow id="Sx3.SSx1.p3.1.m1.1.1" xref="Sx3.SSx1.p3.1.m1.1.1.cmml"><mi id="Sx3.SSx1.p3.1.m1.1.1.3" xref="Sx3.SSx1.p3.1.m1.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx1.p3.1.m1.1.1.2" xref="Sx3.SSx1.p3.1.m1.1.1.2.cmml">​</mo><mrow id="Sx3.SSx1.p3.1.m1.1.1.1.1" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx1.p3.1.m1.1.1.1.1.2" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx1.p3.1.m1.1.1.1.1.1" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.cmml"><mi id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.2" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.1" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.3" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.SSx1.p3.1.m1.1.1.1.1.3" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p3.1.m1.1b"><apply id="Sx3.SSx1.p3.1.m1.1.1.cmml" xref="Sx3.SSx1.p3.1.m1.1.1"><times id="Sx3.SSx1.p3.1.m1.1.1.2.cmml" xref="Sx3.SSx1.p3.1.m1.1.1.2"></times><ci id="Sx3.SSx1.p3.1.m1.1.1.3.cmml" xref="Sx3.SSx1.p3.1.m1.1.1.3">𝑝</ci><apply id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.cmml" xref="Sx3.SSx1.p3.1.m1.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.1.cmml" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.2.cmml" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.2">𝑡</ci><ci id="Sx3.SSx1.p3.1.m1.1.1.1.1.1.3.cmml" xref="Sx3.SSx1.p3.1.m1.1.1.1.1.1.3">𝑧</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p3.1.m1.1c">p(t|z)</annotation></semantics></math>, <math id="Sx3.SSx1.p3.2.m2.1" class="ltx_Math" alttext="p(z|r)" display="inline"><semantics id="Sx3.SSx1.p3.2.m2.1a"><mrow id="Sx3.SSx1.p3.2.m2.1.1" xref="Sx3.SSx1.p3.2.m2.1.1.cmml"><mi id="Sx3.SSx1.p3.2.m2.1.1.3" xref="Sx3.SSx1.p3.2.m2.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx1.p3.2.m2.1.1.2" xref="Sx3.SSx1.p3.2.m2.1.1.2.cmml">​</mo><mrow id="Sx3.SSx1.p3.2.m2.1.1.1.1" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx1.p3.2.m2.1.1.1.1.2" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx1.p3.2.m2.1.1.1.1.1" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.cmml"><mi id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.2" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.1" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.3" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.SSx1.p3.2.m2.1.1.1.1.3" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p3.2.m2.1b"><apply id="Sx3.SSx1.p3.2.m2.1.1.cmml" xref="Sx3.SSx1.p3.2.m2.1.1"><times id="Sx3.SSx1.p3.2.m2.1.1.2.cmml" xref="Sx3.SSx1.p3.2.m2.1.1.2"></times><ci id="Sx3.SSx1.p3.2.m2.1.1.3.cmml" xref="Sx3.SSx1.p3.2.m2.1.1.3">𝑝</ci><apply id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.cmml" xref="Sx3.SSx1.p3.2.m2.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.1.cmml" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.2.cmml" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.2">𝑧</ci><ci id="Sx3.SSx1.p3.2.m2.1.1.1.1.1.3.cmml" xref="Sx3.SSx1.p3.2.m2.1.1.1.1.1.3">𝑟</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p3.2.m2.1c">p(z|r)</annotation></semantics></math>, <math id="Sx3.SSx1.p3.3.m3.1" class="ltx_Math" alttext="p(r)" display="inline"><semantics id="Sx3.SSx1.p3.3.m3.1a"><mrow id="Sx3.SSx1.p3.3.m3.1.2" xref="Sx3.SSx1.p3.3.m3.1.2.cmml"><mi id="Sx3.SSx1.p3.3.m3.1.2.2" xref="Sx3.SSx1.p3.3.m3.1.2.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx1.p3.3.m3.1.2.1" xref="Sx3.SSx1.p3.3.m3.1.2.1.cmml">​</mo><mrow id="Sx3.SSx1.p3.3.m3.1.2.3.2" xref="Sx3.SSx1.p3.3.m3.1.2.cmml"><mo stretchy="false" id="Sx3.SSx1.p3.3.m3.1.2.3.2.1" xref="Sx3.SSx1.p3.3.m3.1.2.cmml">(</mo><mi id="Sx3.SSx1.p3.3.m3.1.1" xref="Sx3.SSx1.p3.3.m3.1.1.cmml">r</mi><mo stretchy="false" id="Sx3.SSx1.p3.3.m3.1.2.3.2.2" xref="Sx3.SSx1.p3.3.m3.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p3.3.m3.1b"><apply id="Sx3.SSx1.p3.3.m3.1.2.cmml" xref="Sx3.SSx1.p3.3.m3.1.2"><times id="Sx3.SSx1.p3.3.m3.1.2.1.cmml" xref="Sx3.SSx1.p3.3.m3.1.2.1"></times><ci id="Sx3.SSx1.p3.3.m3.1.2.2.cmml" xref="Sx3.SSx1.p3.3.m3.1.2.2">𝑝</ci><ci id="Sx3.SSx1.p3.3.m3.1.1.cmml" xref="Sx3.SSx1.p3.3.m3.1.1">𝑟</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p3.3.m3.1c">p(r)</annotation></semantics></math> we define
+log likelihood <math id="Sx3.SSx1.p3.4.m4.1" class="ltx_Math" alttext="L" display="inline"><semantics id="Sx3.SSx1.p3.4.m4.1a"><mi id="Sx3.SSx1.p3.4.m4.1.1" xref="Sx3.SSx1.p3.4.m4.1.1.cmml">L</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p3.4.m4.1b"><ci id="Sx3.SSx1.p3.4.m4.1.1.cmml" xref="Sx3.SSx1.p3.4.m4.1.1">𝐿</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p3.4.m4.1c">L</annotation></semantics></math>, which measures how the estimated parameters fit
+the observed data</p>
+</div>
+<div id="Sx3.SSx1.p4" class="ltx_para ltx_noindent">
+<table id="Sx3.E2" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E2.m1.7" class="ltx_Math" alttext="L=\sum_{r,t}n(r,t)log(p(r,t))" display="block"><semantics id="Sx3.E2.m1.7a"><mrow id="Sx3.E2.m1.7.7" xref="Sx3.E2.m1.7.7.cmml"><mi id="Sx3.E2.m1.7.7.3" xref="Sx3.E2.m1.7.7.3.cmml">L</mi><mo rspace="0.111em" id="Sx3.E2.m1.7.7.2" xref="Sx3.E2.m1.7.7.2.cmml">=</mo><mrow id="Sx3.E2.m1.7.7.1" xref="Sx3.E2.m1.7.7.1.cmml"><munder id="Sx3.E2.m1.7.7.1.2" xref="Sx3.E2.m1.7.7.1.2.cmml"><mo movablelimits="false" id="Sx3.E2.m1.7.7.1.2.2" xref="Sx3.E2.m1.7.7.1.2.2.cmml">∑</mo><mrow id="Sx3.E2.m1.2.2.2.4" xref="Sx3.E2.m1.2.2.2.3.cmml"><mi id="Sx3.E2.m1.1.1.1.1" xref="Sx3.E2.m1.1.1.1.1.cmml">r</mi><mo id="Sx3.E2.m1.2.2.2.4.1" xref="Sx3.E2.m1.2.2.2.3.cmml">,</mo><mi id="Sx3.E2.m1.2.2.2.2" xref="Sx3.E2.m1.2.2.2.2.cmml">t</mi></mrow></munder><mrow id="Sx3.E2.m1.7.7.1.1" xref="Sx3.E2.m1.7.7.1.1.cmml"><mi id="Sx3.E2.m1.7.7.1.1.3" xref="Sx3.E2.m1.7.7.1.1.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E2.m1.7.7.1.1.2" xref="Sx3.E2.m1.7.7.1.1.2.cmml">​</mo><mrow id="Sx3.E2.m1.7.7.1.1.4.2" xref="Sx3.E2.m1.7.7.1.1.4.1.cmml"><mo stretchy="false" id="Sx3.E2.m1.7.7.1.1.4.2.1" xref="Sx3.E2.m1.7.7.1.1.4.1.cmml">(</mo><mi id="Sx3.E2.m1.3.3" xref="Sx3.E2.m1.3.3.cmml">r</mi><mo id="Sx3.E2.m1.7.7.1.1.4.2.2" xref="Sx3.E2.m1.7.7.1.1.4.1.cmml">,</mo><mi id="Sx3.E2.m1.4.4" xref="Sx3.E2.m1.4.4.cmml">t</mi><mo stretchy="false" id="Sx3.E2.m1.7.7.1.1.4.2.3" xref="Sx3.E2.m1.7.7.1.1.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E2.m1.7.7.1.1.2a" xref="Sx3.E2.m1.7.7.1.1.2.cmml">​</mo><mi id="Sx3.E2.m1.7.7.1.1.5" xref="Sx3.E2.m1.7.7.1.1.5.cmml">l</mi><mo lspace="0em" rspace="0em" id="Sx3.E2.m1.7.7.1.1.2b" xref="Sx3.E2.m1.7.7.1.1.2.cmml">​</mo><mi id="Sx3.E2.m1.7.7.1.1.6" xref="Sx3.E2.m1.7.7.1.1.6.cmml">o</mi><mo lspace="0em" rspace="0em" id="Sx3.E2.m1.7.7.1.1.2c" xref="Sx3.E2.m1.7.7.1.1.2.cmml">​</mo><mi id="Sx3.E2.m1.7.7.1.1.7" xref="Sx3.E2.m1.7.7.1.1.7.cmml">g</mi><mo lspace="0em" rspace="0em" id="Sx3.E2.m1.7.7.1.1.2d" xref="Sx3.E2.m1.7.7.1.1.2.cmml">​</mo><mrow id="Sx3.E2.m1.7.7.1.1.1.1" xref="Sx3.E2.m1.7.7.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E2.m1.7.7.1.1.1.1.2" xref="Sx3.E2.m1.7.7.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.E2.m1.7.7.1.1.1.1.1" xref="Sx3.E2.m1.7.7.1.1.1.1.1.cmml"><mi id="Sx3.E2.m1.7.7.1.1.1.1.1.2" xref="Sx3.E2.m1.7.7.1.1.1.1.1.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E2.m1.7.7.1.1.1.1.1.1" xref="Sx3.E2.m1.7.7.1.1.1.1.1.1.cmml">​</mo><mrow id="Sx3.E2.m1.7.7.1.1.1.1.1.3.2" xref="Sx3.E2.m1.7.7.1.1.1.1.1.3.1.cmml"><mo stretchy="false" id="Sx3.E2.m1.7.7.1.1.1.1.1.3.2.1" xref="Sx3.E2.m1.7.7.1.1.1.1.1.3.1.cmml">(</mo><mi id="Sx3.E2.m1.5.5" xref="Sx3.E2.m1.5.5.cmml">r</mi><mo id="Sx3.E2.m1.7.7.1.1.1.1.1.3.2.2" xref="Sx3.E2.m1.7.7.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E2.m1.6.6" xref="Sx3.E2.m1.6.6.cmml">t</mi><mo stretchy="false" id="Sx3.E2.m1.7.7.1.1.1.1.1.3.2.3" xref="Sx3.E2.m1.7.7.1.1.1.1.1.3.1.cmml">)</mo></mrow></mrow><mo stretchy="false" id="Sx3.E2.m1.7.7.1.1.1.1.3" xref="Sx3.E2.m1.7.7.1.1.1.1.1.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E2.m1.7b"><apply id="Sx3.E2.m1.7.7.cmml" xref="Sx3.E2.m1.7.7"><eq id="Sx3.E2.m1.7.7.2.cmml" xref="Sx3.E2.m1.7.7.2"></eq><ci id="Sx3.E2.m1.7.7.3.cmml" xref="Sx3.E2.m1.7.7.3">𝐿</ci><apply id="Sx3.E2.m1.7.7.1.cmml" xref="Sx3.E2.m1.7.7.1"><apply id="Sx3.E2.m1.7.7.1.2.cmml" xref="Sx3.E2.m1.7.7.1.2"><csymbol cd="ambiguous" id="Sx3.E2.m1.7.7.1.2.1.cmml" xref="Sx3.E2.m1.7.7.1.2">subscript</csymbol><sum id="Sx3.E2.m1.7.7.1.2.2.cmml" xref="Sx3.E2.m1.7.7.1.2.2"></sum><list id="Sx3.E2.m1.2.2.2.3.cmml" xref="Sx3.E2.m1.2.2.2.4"><ci id="Sx3.E2.m1.1.1.1.1.cmml" xref="Sx3.E2.m1.1.1.1.1">𝑟</ci><ci id="Sx3.E2.m1.2.2.2.2.cmml" xref="Sx3.E2.m1.2.2.2.2">𝑡</ci></list></apply><apply id="Sx3.E2.m1.7.7.1.1.cmml" xref="Sx3.E2.m1.7.7.1.1"><times id="Sx3.E2.m1.7.7.1.1.2.cmml" xref="Sx3.E2.m1.7.7.1.1.2"></times><ci id="Sx3.E2.m1.7.7.1.1.3.cmml" xref="Sx3.E2.m1.7.7.1.1.3">𝑛</ci><interval closure="open" id="Sx3.E2.m1.7.7.1.1.4.1.cmml" xref="Sx3.E2.m1.7.7.1.1.4.2"><ci id="Sx3.E2.m1.3.3.cmml" xref="Sx3.E2.m1.3.3">𝑟</ci><ci id="Sx3.E2.m1.4.4.cmml" xref="Sx3.E2.m1.4.4">𝑡</ci></interval><ci id="Sx3.E2.m1.7.7.1.1.5.cmml" xref="Sx3.E2.m1.7.7.1.1.5">𝑙</ci><ci id="Sx3.E2.m1.7.7.1.1.6.cmml" xref="Sx3.E2.m1.7.7.1.1.6">𝑜</ci><ci id="Sx3.E2.m1.7.7.1.1.7.cmml" xref="Sx3.E2.m1.7.7.1.1.7">𝑔</ci><apply id="Sx3.E2.m1.7.7.1.1.1.1.1.cmml" xref="Sx3.E2.m1.7.7.1.1.1.1"><times id="Sx3.E2.m1.7.7.1.1.1.1.1.1.cmml" xref="Sx3.E2.m1.7.7.1.1.1.1.1.1"></times><ci id="Sx3.E2.m1.7.7.1.1.1.1.1.2.cmml" xref="Sx3.E2.m1.7.7.1.1.1.1.1.2">𝑝</ci><interval closure="open" id="Sx3.E2.m1.7.7.1.1.1.1.1.3.1.cmml" xref="Sx3.E2.m1.7.7.1.1.1.1.1.3.2"><ci id="Sx3.E2.m1.5.5.cmml" xref="Sx3.E2.m1.5.5">𝑟</ci><ci id="Sx3.E2.m1.6.6.cmml" xref="Sx3.E2.m1.6.6">𝑡</ci></interval></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E2.m1.7c">L=\sum_{r,t}n(r,t)log(p(r,t))</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(2)</span></td>
+</tr></tbody>
+</table>
+<p id="Sx3.SSx1.p4.2" class="ltx_p">where <math id="Sx3.SSx1.p4.1.m1.2" class="ltx_Math" alttext="n(r,t)" display="inline"><semantics id="Sx3.SSx1.p4.1.m1.2a"><mrow id="Sx3.SSx1.p4.1.m1.2.3" xref="Sx3.SSx1.p4.1.m1.2.3.cmml"><mi id="Sx3.SSx1.p4.1.m1.2.3.2" xref="Sx3.SSx1.p4.1.m1.2.3.2.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx1.p4.1.m1.2.3.1" xref="Sx3.SSx1.p4.1.m1.2.3.1.cmml">​</mo><mrow id="Sx3.SSx1.p4.1.m1.2.3.3.2" xref="Sx3.SSx1.p4.1.m1.2.3.3.1.cmml"><mo stretchy="false" id="Sx3.SSx1.p4.1.m1.2.3.3.2.1" xref="Sx3.SSx1.p4.1.m1.2.3.3.1.cmml">(</mo><mi id="Sx3.SSx1.p4.1.m1.1.1" xref="Sx3.SSx1.p4.1.m1.1.1.cmml">r</mi><mo id="Sx3.SSx1.p4.1.m1.2.3.3.2.2" xref="Sx3.SSx1.p4.1.m1.2.3.3.1.cmml">,</mo><mi id="Sx3.SSx1.p4.1.m1.2.2" xref="Sx3.SSx1.p4.1.m1.2.2.cmml">t</mi><mo stretchy="false" id="Sx3.SSx1.p4.1.m1.2.3.3.2.3" xref="Sx3.SSx1.p4.1.m1.2.3.3.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p4.1.m1.2b"><apply id="Sx3.SSx1.p4.1.m1.2.3.cmml" xref="Sx3.SSx1.p4.1.m1.2.3"><times id="Sx3.SSx1.p4.1.m1.2.3.1.cmml" xref="Sx3.SSx1.p4.1.m1.2.3.1"></times><ci id="Sx3.SSx1.p4.1.m1.2.3.2.cmml" xref="Sx3.SSx1.p4.1.m1.2.3.2">𝑛</ci><interval closure="open" id="Sx3.SSx1.p4.1.m1.2.3.3.1.cmml" xref="Sx3.SSx1.p4.1.m1.2.3.3.2"><ci id="Sx3.SSx1.p4.1.m1.1.1.cmml" xref="Sx3.SSx1.p4.1.m1.1.1">𝑟</ci><ci id="Sx3.SSx1.p4.1.m1.2.2.cmml" xref="Sx3.SSx1.p4.1.m1.2.2">𝑡</ci></interval></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p4.1.m1.2c">n(r,t)</annotation></semantics></math> is a number of resource-tag co-occurrences. The EM
+algorithm (<span id="Sx3.SSx1.p4.2.1" class="ltx_text ltx_font_bold">?</span>) was applied to estimate those parameters
+that maximize <math id="Sx3.SSx1.p4.2.m2.1" class="ltx_Math" alttext="L" display="inline"><semantics id="Sx3.SSx1.p4.2.m2.1a"><mi id="Sx3.SSx1.p4.2.m2.1.1" xref="Sx3.SSx1.p4.2.m2.1.1.cmml">L</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx1.p4.2.m2.1b"><ci id="Sx3.SSx1.p4.2.m2.1.1.cmml" xref="Sx3.SSx1.p4.2.m2.1.1">𝐿</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx1.p4.2.m2.1c">L</annotation></semantics></math>.</p>
+</div>
+</section>
+<section id="Sx3.SSx2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">Three-way Aspect Model (MWA)</h3>
+
+<div id="Sx3.SSx2.p1" class="ltx_para">
+<p id="Sx3.SSx2.p1.2" class="ltx_p">The three-way aspect model (or multi-way aspect model, MWA) was originally applied to
+document recommendation systems (<span id="Sx3.SSx2.p1.2.1" class="ltx_text ltx_font_bold">?</span>), involving 3 entities: user, document and word.
+The model takes into account both user interest (pure collaborative filtering) and document
+content (content-based). Recently, the three-way aspect model was applied on social annotation data in order to
+demonstrate emergent semantics in a social annotation system and to use these semantics for information
+retrieval (<span id="Sx3.SSx2.p1.2.2" class="ltx_text ltx_font_bold">?</span>). In this model, conceptual space was introduced as a latent
+variable, <math id="Sx3.SSx2.p1.1.m1.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx3.SSx2.p1.1.m1.1a"><mi id="Sx3.SSx2.p1.1.m1.1.1" xref="Sx3.SSx2.p1.1.m1.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p1.1.m1.1b"><ci id="Sx3.SSx2.p1.1.m1.1.1.cmml" xref="Sx3.SSx2.p1.1.m1.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p1.1.m1.1c">Z</annotation></semantics></math>,
+which independently generated occurrences of resources, users and tags for a particular
+triple <math id="Sx3.SSx2.p1.2.m2.3" class="ltx_Math" alttext="\langle r,u,t\rangle" display="inline"><semantics id="Sx3.SSx2.p1.2.m2.3a"><mrow id="Sx3.SSx2.p1.2.m2.3.4.2" xref="Sx3.SSx2.p1.2.m2.3.4.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p1.2.m2.3.4.2.1" xref="Sx3.SSx2.p1.2.m2.3.4.1.cmml">⟨</mo><mi id="Sx3.SSx2.p1.2.m2.1.1" xref="Sx3.SSx2.p1.2.m2.1.1.cmml">r</mi><mo id="Sx3.SSx2.p1.2.m2.3.4.2.2" xref="Sx3.SSx2.p1.2.m2.3.4.1.cmml">,</mo><mi id="Sx3.SSx2.p1.2.m2.2.2" xref="Sx3.SSx2.p1.2.m2.2.2.cmml">u</mi><mo id="Sx3.SSx2.p1.2.m2.3.4.2.3" xref="Sx3.SSx2.p1.2.m2.3.4.1.cmml">,</mo><mi id="Sx3.SSx2.p1.2.m2.3.3" xref="Sx3.SSx2.p1.2.m2.3.3.cmml">t</mi><mo stretchy="false" id="Sx3.SSx2.p1.2.m2.3.4.2.4" xref="Sx3.SSx2.p1.2.m2.3.4.1.cmml">⟩</mo></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p1.2.m2.3b"><list id="Sx3.SSx2.p1.2.m2.3.4.1.cmml" xref="Sx3.SSx2.p1.2.m2.3.4.2"><ci id="Sx3.SSx2.p1.2.m2.1.1.cmml" xref="Sx3.SSx2.p1.2.m2.1.1">𝑟</ci><ci id="Sx3.SSx2.p1.2.m2.2.2.cmml" xref="Sx3.SSx2.p1.2.m2.2.2">𝑢</ci><ci id="Sx3.SSx2.p1.2.m2.3.3.cmml" xref="Sx3.SSx2.p1.2.m2.3.3">𝑡</ci></list></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p1.2.m2.3c">\langle r,u,t\rangle</annotation></semantics></math> (see Figure <a href="#Sx3.F1" title="Figure 1 ‣ Approach ‣ Exploiting Social Annotation for Automatic Resource Discovery" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>). The joint
+distribution over resource, user, and tag was defined
+as follows</p>
+</div>
+<div id="Sx3.SSx2.p2" class="ltx_para">
+<table id="Sx3.E3" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E3.m1.7" class="ltx_Math" alttext="p(r,u,t)=\sum_{z}p(r|z)p(u|z)p(t|z)p(z)" display="block"><semantics id="Sx3.E3.m1.7a"><mrow id="Sx3.E3.m1.7.7" xref="Sx3.E3.m1.7.7.cmml"><mrow id="Sx3.E3.m1.7.7.5" xref="Sx3.E3.m1.7.7.5.cmml"><mi id="Sx3.E3.m1.7.7.5.2" xref="Sx3.E3.m1.7.7.5.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.5.1" xref="Sx3.E3.m1.7.7.5.1.cmml">​</mo><mrow id="Sx3.E3.m1.7.7.5.3.2" xref="Sx3.E3.m1.7.7.5.3.1.cmml"><mo stretchy="false" id="Sx3.E3.m1.7.7.5.3.2.1" xref="Sx3.E3.m1.7.7.5.3.1.cmml">(</mo><mi id="Sx3.E3.m1.1.1" xref="Sx3.E3.m1.1.1.cmml">r</mi><mo id="Sx3.E3.m1.7.7.5.3.2.2" xref="Sx3.E3.m1.7.7.5.3.1.cmml">,</mo><mi id="Sx3.E3.m1.2.2" xref="Sx3.E3.m1.2.2.cmml">u</mi><mo id="Sx3.E3.m1.7.7.5.3.2.3" xref="Sx3.E3.m1.7.7.5.3.1.cmml">,</mo><mi id="Sx3.E3.m1.3.3" xref="Sx3.E3.m1.3.3.cmml">t</mi><mo stretchy="false" id="Sx3.E3.m1.7.7.5.3.2.4" xref="Sx3.E3.m1.7.7.5.3.1.cmml">)</mo></mrow></mrow><mo rspace="0.111em" id="Sx3.E3.m1.7.7.4" xref="Sx3.E3.m1.7.7.4.cmml">=</mo><mrow id="Sx3.E3.m1.7.7.3" xref="Sx3.E3.m1.7.7.3.cmml"><munder id="Sx3.E3.m1.7.7.3.4" xref="Sx3.E3.m1.7.7.3.4.cmml"><mo movablelimits="false" id="Sx3.E3.m1.7.7.3.4.2" xref="Sx3.E3.m1.7.7.3.4.2.cmml">∑</mo><mi id="Sx3.E3.m1.7.7.3.4.3" xref="Sx3.E3.m1.7.7.3.4.3.cmml">z</mi></munder><mrow id="Sx3.E3.m1.7.7.3.3" xref="Sx3.E3.m1.7.7.3.3.cmml"><mi id="Sx3.E3.m1.7.7.3.3.5" xref="Sx3.E3.m1.7.7.3.3.5.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mrow id="Sx3.E3.m1.5.5.1.1.1.1" xref="Sx3.E3.m1.5.5.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E3.m1.5.5.1.1.1.1.2" xref="Sx3.E3.m1.5.5.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.E3.m1.5.5.1.1.1.1.1" xref="Sx3.E3.m1.5.5.1.1.1.1.1.cmml"><mi id="Sx3.E3.m1.5.5.1.1.1.1.1.2" xref="Sx3.E3.m1.5.5.1.1.1.1.1.2.cmml">r</mi><mo fence="false" id="Sx3.E3.m1.5.5.1.1.1.1.1.1" xref="Sx3.E3.m1.5.5.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.E3.m1.5.5.1.1.1.1.1.3" xref="Sx3.E3.m1.5.5.1.1.1.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.E3.m1.5.5.1.1.1.1.3" xref="Sx3.E3.m1.5.5.1.1.1.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4a" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mi id="Sx3.E3.m1.7.7.3.3.6" xref="Sx3.E3.m1.7.7.3.3.6.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4b" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mrow id="Sx3.E3.m1.6.6.2.2.2.1" xref="Sx3.E3.m1.6.6.2.2.2.1.1.cmml"><mo stretchy="false" id="Sx3.E3.m1.6.6.2.2.2.1.2" xref="Sx3.E3.m1.6.6.2.2.2.1.1.cmml">(</mo><mrow id="Sx3.E3.m1.6.6.2.2.2.1.1" xref="Sx3.E3.m1.6.6.2.2.2.1.1.cmml"><mi id="Sx3.E3.m1.6.6.2.2.2.1.1.2" xref="Sx3.E3.m1.6.6.2.2.2.1.1.2.cmml">u</mi><mo fence="false" id="Sx3.E3.m1.6.6.2.2.2.1.1.1" xref="Sx3.E3.m1.6.6.2.2.2.1.1.1.cmml">|</mo><mi id="Sx3.E3.m1.6.6.2.2.2.1.1.3" xref="Sx3.E3.m1.6.6.2.2.2.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.E3.m1.6.6.2.2.2.1.3" xref="Sx3.E3.m1.6.6.2.2.2.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4c" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mi id="Sx3.E3.m1.7.7.3.3.7" xref="Sx3.E3.m1.7.7.3.3.7.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4d" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mrow id="Sx3.E3.m1.7.7.3.3.3.1" xref="Sx3.E3.m1.7.7.3.3.3.1.1.cmml"><mo stretchy="false" id="Sx3.E3.m1.7.7.3.3.3.1.2" xref="Sx3.E3.m1.7.7.3.3.3.1.1.cmml">(</mo><mrow id="Sx3.E3.m1.7.7.3.3.3.1.1" xref="Sx3.E3.m1.7.7.3.3.3.1.1.cmml"><mi id="Sx3.E3.m1.7.7.3.3.3.1.1.2" xref="Sx3.E3.m1.7.7.3.3.3.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.E3.m1.7.7.3.3.3.1.1.1" xref="Sx3.E3.m1.7.7.3.3.3.1.1.1.cmml">|</mo><mi id="Sx3.E3.m1.7.7.3.3.3.1.1.3" xref="Sx3.E3.m1.7.7.3.3.3.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.E3.m1.7.7.3.3.3.1.3" xref="Sx3.E3.m1.7.7.3.3.3.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4e" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mi id="Sx3.E3.m1.7.7.3.3.8" xref="Sx3.E3.m1.7.7.3.3.8.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E3.m1.7.7.3.3.4f" xref="Sx3.E3.m1.7.7.3.3.4.cmml">​</mo><mrow id="Sx3.E3.m1.7.7.3.3.9.2" xref="Sx3.E3.m1.7.7.3.3.cmml"><mo stretchy="false" id="Sx3.E3.m1.7.7.3.3.9.2.1" xref="Sx3.E3.m1.7.7.3.3.cmml">(</mo><mi id="Sx3.E3.m1.4.4" xref="Sx3.E3.m1.4.4.cmml">z</mi><mo stretchy="false" id="Sx3.E3.m1.7.7.3.3.9.2.2" xref="Sx3.E3.m1.7.7.3.3.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E3.m1.7b"><apply id="Sx3.E3.m1.7.7.cmml" xref="Sx3.E3.m1.7.7"><eq id="Sx3.E3.m1.7.7.4.cmml" xref="Sx3.E3.m1.7.7.4"></eq><apply id="Sx3.E3.m1.7.7.5.cmml" xref="Sx3.E3.m1.7.7.5"><times id="Sx3.E3.m1.7.7.5.1.cmml" xref="Sx3.E3.m1.7.7.5.1"></times><ci id="Sx3.E3.m1.7.7.5.2.cmml" xref="Sx3.E3.m1.7.7.5.2">𝑝</ci><vector id="Sx3.E3.m1.7.7.5.3.1.cmml" xref="Sx3.E3.m1.7.7.5.3.2"><ci id="Sx3.E3.m1.1.1.cmml" xref="Sx3.E3.m1.1.1">𝑟</ci><ci id="Sx3.E3.m1.2.2.cmml" xref="Sx3.E3.m1.2.2">𝑢</ci><ci id="Sx3.E3.m1.3.3.cmml" xref="Sx3.E3.m1.3.3">𝑡</ci></vector></apply><apply id="Sx3.E3.m1.7.7.3.cmml" xref="Sx3.E3.m1.7.7.3"><apply id="Sx3.E3.m1.7.7.3.4.cmml" xref="Sx3.E3.m1.7.7.3.4"><csymbol cd="ambiguous" id="Sx3.E3.m1.7.7.3.4.1.cmml" xref="Sx3.E3.m1.7.7.3.4">subscript</csymbol><sum id="Sx3.E3.m1.7.7.3.4.2.cmml" xref="Sx3.E3.m1.7.7.3.4.2"></sum><ci id="Sx3.E3.m1.7.7.3.4.3.cmml" xref="Sx3.E3.m1.7.7.3.4.3">𝑧</ci></apply><apply id="Sx3.E3.m1.7.7.3.3.cmml" xref="Sx3.E3.m1.7.7.3.3"><times id="Sx3.E3.m1.7.7.3.3.4.cmml" xref="Sx3.E3.m1.7.7.3.3.4"></times><ci id="Sx3.E3.m1.7.7.3.3.5.cmml" xref="Sx3.E3.m1.7.7.3.3.5">𝑝</ci><apply id="Sx3.E3.m1.5.5.1.1.1.1.1.cmml" xref="Sx3.E3.m1.5.5.1.1.1.1"><csymbol cd="latexml" id="Sx3.E3.m1.5.5.1.1.1.1.1.1.cmml" xref="Sx3.E3.m1.5.5.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E3.m1.5.5.1.1.1.1.1.2.cmml" xref="Sx3.E3.m1.5.5.1.1.1.1.1.2">𝑟</ci><ci id="Sx3.E3.m1.5.5.1.1.1.1.1.3.cmml" xref="Sx3.E3.m1.5.5.1.1.1.1.1.3">𝑧</ci></apply><ci id="Sx3.E3.m1.7.7.3.3.6.cmml" xref="Sx3.E3.m1.7.7.3.3.6">𝑝</ci><apply id="Sx3.E3.m1.6.6.2.2.2.1.1.cmml" xref="Sx3.E3.m1.6.6.2.2.2.1"><csymbol cd="latexml" id="Sx3.E3.m1.6.6.2.2.2.1.1.1.cmml" xref="Sx3.E3.m1.6.6.2.2.2.1.1.1">conditional</csymbol><ci id="Sx3.E3.m1.6.6.2.2.2.1.1.2.cmml" xref="Sx3.E3.m1.6.6.2.2.2.1.1.2">𝑢</ci><ci id="Sx3.E3.m1.6.6.2.2.2.1.1.3.cmml" xref="Sx3.E3.m1.6.6.2.2.2.1.1.3">𝑧</ci></apply><ci id="Sx3.E3.m1.7.7.3.3.7.cmml" xref="Sx3.E3.m1.7.7.3.3.7">𝑝</ci><apply id="Sx3.E3.m1.7.7.3.3.3.1.1.cmml" xref="Sx3.E3.m1.7.7.3.3.3.1"><csymbol cd="latexml" id="Sx3.E3.m1.7.7.3.3.3.1.1.1.cmml" xref="Sx3.E3.m1.7.7.3.3.3.1.1.1">conditional</csymbol><ci id="Sx3.E3.m1.7.7.3.3.3.1.1.2.cmml" xref="Sx3.E3.m1.7.7.3.3.3.1.1.2">𝑡</ci><ci id="Sx3.E3.m1.7.7.3.3.3.1.1.3.cmml" xref="Sx3.E3.m1.7.7.3.3.3.1.1.3">𝑧</ci></apply><ci id="Sx3.E3.m1.7.7.3.3.8.cmml" xref="Sx3.E3.m1.7.7.3.3.8">𝑝</ci><ci id="Sx3.E3.m1.4.4.cmml" xref="Sx3.E3.m1.4.4">𝑧</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E3.m1.7c">p(r,u,t)=\sum_{z}p(r|z)p(u|z)p(t|z)p(z)</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(3)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx2.p3" class="ltx_para">
+<p id="Sx3.SSx2.p3.5" class="ltx_p">Similar to pLSA, the parameters <math id="Sx3.SSx2.p3.1.m1.1" class="ltx_Math" alttext="p(r|z)" display="inline"><semantics id="Sx3.SSx2.p3.1.m1.1a"><mrow id="Sx3.SSx2.p3.1.m1.1.1" xref="Sx3.SSx2.p3.1.m1.1.1.cmml"><mi id="Sx3.SSx2.p3.1.m1.1.1.3" xref="Sx3.SSx2.p3.1.m1.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.1.m1.1.1.2" xref="Sx3.SSx2.p3.1.m1.1.1.2.cmml">​</mo><mrow id="Sx3.SSx2.p3.1.m1.1.1.1.1" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.1.m1.1.1.1.1.2" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx2.p3.1.m1.1.1.1.1.1" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.cmml"><mi id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.2" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.2.cmml">r</mi><mo fence="false" id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.1" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.3" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.SSx2.p3.1.m1.1.1.1.1.3" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p3.1.m1.1b"><apply id="Sx3.SSx2.p3.1.m1.1.1.cmml" xref="Sx3.SSx2.p3.1.m1.1.1"><times id="Sx3.SSx2.p3.1.m1.1.1.2.cmml" xref="Sx3.SSx2.p3.1.m1.1.1.2"></times><ci id="Sx3.SSx2.p3.1.m1.1.1.3.cmml" xref="Sx3.SSx2.p3.1.m1.1.1.3">𝑝</ci><apply id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.1.m1.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.2.cmml" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.2">𝑟</ci><ci id="Sx3.SSx2.p3.1.m1.1.1.1.1.1.3.cmml" xref="Sx3.SSx2.p3.1.m1.1.1.1.1.1.3">𝑧</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p3.1.m1.1c">p(r|z)</annotation></semantics></math>, <math id="Sx3.SSx2.p3.2.m2.1" class="ltx_Math" alttext="p(u|z)" display="inline"><semantics id="Sx3.SSx2.p3.2.m2.1a"><mrow id="Sx3.SSx2.p3.2.m2.1.1" xref="Sx3.SSx2.p3.2.m2.1.1.cmml"><mi id="Sx3.SSx2.p3.2.m2.1.1.3" xref="Sx3.SSx2.p3.2.m2.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.2.m2.1.1.2" xref="Sx3.SSx2.p3.2.m2.1.1.2.cmml">​</mo><mrow id="Sx3.SSx2.p3.2.m2.1.1.1.1" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.2.m2.1.1.1.1.2" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx2.p3.2.m2.1.1.1.1.1" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.cmml"><mi id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.2" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.2.cmml">u</mi><mo fence="false" id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.1" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.3" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.SSx2.p3.2.m2.1.1.1.1.3" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p3.2.m2.1b"><apply id="Sx3.SSx2.p3.2.m2.1.1.cmml" xref="Sx3.SSx2.p3.2.m2.1.1"><times id="Sx3.SSx2.p3.2.m2.1.1.2.cmml" xref="Sx3.SSx2.p3.2.m2.1.1.2"></times><ci id="Sx3.SSx2.p3.2.m2.1.1.3.cmml" xref="Sx3.SSx2.p3.2.m2.1.1.3">𝑝</ci><apply id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.2.m2.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.2.cmml" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.2">𝑢</ci><ci id="Sx3.SSx2.p3.2.m2.1.1.1.1.1.3.cmml" xref="Sx3.SSx2.p3.2.m2.1.1.1.1.1.3">𝑧</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p3.2.m2.1c">p(u|z)</annotation></semantics></math>, <math id="Sx3.SSx2.p3.3.m3.1" class="ltx_Math" alttext="p(t|z)" display="inline"><semantics id="Sx3.SSx2.p3.3.m3.1a"><mrow id="Sx3.SSx2.p3.3.m3.1.1" xref="Sx3.SSx2.p3.3.m3.1.1.cmml"><mi id="Sx3.SSx2.p3.3.m3.1.1.3" xref="Sx3.SSx2.p3.3.m3.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.3.m3.1.1.2" xref="Sx3.SSx2.p3.3.m3.1.1.2.cmml">​</mo><mrow id="Sx3.SSx2.p3.3.m3.1.1.1.1" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.3.m3.1.1.1.1.2" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx2.p3.3.m3.1.1.1.1.1" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.cmml"><mi id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.2" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.1" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.3" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.3.cmml">z</mi></mrow><mo stretchy="false" id="Sx3.SSx2.p3.3.m3.1.1.1.1.3" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p3.3.m3.1b"><apply id="Sx3.SSx2.p3.3.m3.1.1.cmml" xref="Sx3.SSx2.p3.3.m3.1.1"><times id="Sx3.SSx2.p3.3.m3.1.1.2.cmml" xref="Sx3.SSx2.p3.3.m3.1.1.2"></times><ci id="Sx3.SSx2.p3.3.m3.1.1.3.cmml" xref="Sx3.SSx2.p3.3.m3.1.1.3">𝑝</ci><apply id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.3.m3.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.2.cmml" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.2">𝑡</ci><ci id="Sx3.SSx2.p3.3.m3.1.1.1.1.1.3.cmml" xref="Sx3.SSx2.p3.3.m3.1.1.1.1.1.3">𝑧</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p3.3.m3.1c">p(t|z)</annotation></semantics></math> and
+<math id="Sx3.SSx2.p3.4.m4.1" class="ltx_Math" alttext="p(z)" display="inline"><semantics id="Sx3.SSx2.p3.4.m4.1a"><mrow id="Sx3.SSx2.p3.4.m4.1.2" xref="Sx3.SSx2.p3.4.m4.1.2.cmml"><mi id="Sx3.SSx2.p3.4.m4.1.2.2" xref="Sx3.SSx2.p3.4.m4.1.2.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.4.m4.1.2.1" xref="Sx3.SSx2.p3.4.m4.1.2.1.cmml">​</mo><mrow id="Sx3.SSx2.p3.4.m4.1.2.3.2" xref="Sx3.SSx2.p3.4.m4.1.2.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.4.m4.1.2.3.2.1" xref="Sx3.SSx2.p3.4.m4.1.2.cmml">(</mo><mi id="Sx3.SSx2.p3.4.m4.1.1" xref="Sx3.SSx2.p3.4.m4.1.1.cmml">z</mi><mo stretchy="false" id="Sx3.SSx2.p3.4.m4.1.2.3.2.2" xref="Sx3.SSx2.p3.4.m4.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p3.4.m4.1b"><apply id="Sx3.SSx2.p3.4.m4.1.2.cmml" xref="Sx3.SSx2.p3.4.m4.1.2"><times id="Sx3.SSx2.p3.4.m4.1.2.1.cmml" xref="Sx3.SSx2.p3.4.m4.1.2.1"></times><ci id="Sx3.SSx2.p3.4.m4.1.2.2.cmml" xref="Sx3.SSx2.p3.4.m4.1.2.2">𝑝</ci><ci id="Sx3.SSx2.p3.4.m4.1.1.cmml" xref="Sx3.SSx2.p3.4.m4.1.1">𝑧</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p3.4.m4.1c">p(z)</annotation></semantics></math> were estimated by maximizing the log likelihood objective
+function, <math id="Sx3.SSx2.p3.5.m5.10" class="ltx_Math" alttext="L=\sum_{r,u,t}n(r,u,t)log(p(r,u,t))" display="inline"><semantics id="Sx3.SSx2.p3.5.m5.10a"><mrow id="Sx3.SSx2.p3.5.m5.10.10" xref="Sx3.SSx2.p3.5.m5.10.10.cmml"><mi id="Sx3.SSx2.p3.5.m5.10.10.3" xref="Sx3.SSx2.p3.5.m5.10.10.3.cmml">L</mi><mo rspace="0.111em" id="Sx3.SSx2.p3.5.m5.10.10.2" xref="Sx3.SSx2.p3.5.m5.10.10.2.cmml">=</mo><mrow id="Sx3.SSx2.p3.5.m5.10.10.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.cmml"><msub id="Sx3.SSx2.p3.5.m5.10.10.1.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.2.cmml"><mo id="Sx3.SSx2.p3.5.m5.10.10.1.2.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.2.2.cmml">∑</mo><mrow id="Sx3.SSx2.p3.5.m5.3.3.3.5" xref="Sx3.SSx2.p3.5.m5.3.3.3.4.cmml"><mi id="Sx3.SSx2.p3.5.m5.1.1.1.1" xref="Sx3.SSx2.p3.5.m5.1.1.1.1.cmml">r</mi><mo id="Sx3.SSx2.p3.5.m5.3.3.3.5.1" xref="Sx3.SSx2.p3.5.m5.3.3.3.4.cmml">,</mo><mi id="Sx3.SSx2.p3.5.m5.2.2.2.2" xref="Sx3.SSx2.p3.5.m5.2.2.2.2.cmml">u</mi><mo id="Sx3.SSx2.p3.5.m5.3.3.3.5.2" xref="Sx3.SSx2.p3.5.m5.3.3.3.4.cmml">,</mo><mi id="Sx3.SSx2.p3.5.m5.3.3.3.3" xref="Sx3.SSx2.p3.5.m5.3.3.3.3.cmml">t</mi></mrow></msub><mrow id="Sx3.SSx2.p3.5.m5.10.10.1.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.cmml"><mi id="Sx3.SSx2.p3.5.m5.10.10.1.1.3" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.5.m5.10.10.1.1.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.2.cmml">​</mo><mrow id="Sx3.SSx2.p3.5.m5.10.10.1.1.4.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.4.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.5.m5.10.10.1.1.4.2.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.4.1.cmml">(</mo><mi id="Sx3.SSx2.p3.5.m5.4.4" xref="Sx3.SSx2.p3.5.m5.4.4.cmml">r</mi><mo id="Sx3.SSx2.p3.5.m5.10.10.1.1.4.2.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.4.1.cmml">,</mo><mi id="Sx3.SSx2.p3.5.m5.5.5" xref="Sx3.SSx2.p3.5.m5.5.5.cmml">u</mi><mo id="Sx3.SSx2.p3.5.m5.10.10.1.1.4.2.3" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.4.1.cmml">,</mo><mi id="Sx3.SSx2.p3.5.m5.6.6" xref="Sx3.SSx2.p3.5.m5.6.6.cmml">t</mi><mo stretchy="false" id="Sx3.SSx2.p3.5.m5.10.10.1.1.4.2.4" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.5.m5.10.10.1.1.2a" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.2.cmml">​</mo><mi id="Sx3.SSx2.p3.5.m5.10.10.1.1.5" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.5.cmml">l</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.5.m5.10.10.1.1.2b" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.2.cmml">​</mo><mi id="Sx3.SSx2.p3.5.m5.10.10.1.1.6" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.6.cmml">o</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.5.m5.10.10.1.1.2c" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.2.cmml">​</mo><mi id="Sx3.SSx2.p3.5.m5.10.10.1.1.7" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.7.cmml">g</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.5.m5.10.10.1.1.2d" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.2.cmml">​</mo><mrow id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.cmml"><mi id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.1.cmml">​</mo><mrow id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.1.cmml"><mo stretchy="false" id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.2.1" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.1.cmml">(</mo><mi id="Sx3.SSx2.p3.5.m5.7.7" xref="Sx3.SSx2.p3.5.m5.7.7.cmml">r</mi><mo id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.2.2" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.SSx2.p3.5.m5.8.8" xref="Sx3.SSx2.p3.5.m5.8.8.cmml">u</mi><mo id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.2.3" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.SSx2.p3.5.m5.9.9" xref="Sx3.SSx2.p3.5.m5.9.9.cmml">t</mi><mo stretchy="false" id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.2.4" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.1.cmml">)</mo></mrow></mrow><mo stretchy="false" id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.3" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx2.p3.5.m5.10b"><apply id="Sx3.SSx2.p3.5.m5.10.10.cmml" xref="Sx3.SSx2.p3.5.m5.10.10"><eq id="Sx3.SSx2.p3.5.m5.10.10.2.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.2"></eq><ci id="Sx3.SSx2.p3.5.m5.10.10.3.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.3">𝐿</ci><apply id="Sx3.SSx2.p3.5.m5.10.10.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1"><apply id="Sx3.SSx2.p3.5.m5.10.10.1.2.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.2"><csymbol cd="ambiguous" id="Sx3.SSx2.p3.5.m5.10.10.1.2.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.2">subscript</csymbol><sum id="Sx3.SSx2.p3.5.m5.10.10.1.2.2.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.2.2"></sum><list id="Sx3.SSx2.p3.5.m5.3.3.3.4.cmml" xref="Sx3.SSx2.p3.5.m5.3.3.3.5"><ci id="Sx3.SSx2.p3.5.m5.1.1.1.1.cmml" xref="Sx3.SSx2.p3.5.m5.1.1.1.1">𝑟</ci><ci id="Sx3.SSx2.p3.5.m5.2.2.2.2.cmml" xref="Sx3.SSx2.p3.5.m5.2.2.2.2">𝑢</ci><ci id="Sx3.SSx2.p3.5.m5.3.3.3.3.cmml" xref="Sx3.SSx2.p3.5.m5.3.3.3.3">𝑡</ci></list></apply><apply id="Sx3.SSx2.p3.5.m5.10.10.1.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1"><times id="Sx3.SSx2.p3.5.m5.10.10.1.1.2.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.2"></times><ci id="Sx3.SSx2.p3.5.m5.10.10.1.1.3.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.3">𝑛</ci><vector id="Sx3.SSx2.p3.5.m5.10.10.1.1.4.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.4.2"><ci id="Sx3.SSx2.p3.5.m5.4.4.cmml" xref="Sx3.SSx2.p3.5.m5.4.4">𝑟</ci><ci id="Sx3.SSx2.p3.5.m5.5.5.cmml" xref="Sx3.SSx2.p3.5.m5.5.5">𝑢</ci><ci id="Sx3.SSx2.p3.5.m5.6.6.cmml" xref="Sx3.SSx2.p3.5.m5.6.6">𝑡</ci></vector><ci id="Sx3.SSx2.p3.5.m5.10.10.1.1.5.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.5">𝑙</ci><ci id="Sx3.SSx2.p3.5.m5.10.10.1.1.6.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.6">𝑜</ci><ci id="Sx3.SSx2.p3.5.m5.10.10.1.1.7.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.7">𝑔</ci><apply id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1"><times id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.1"></times><ci id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.2.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.2">𝑝</ci><vector id="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.1.cmml" xref="Sx3.SSx2.p3.5.m5.10.10.1.1.1.1.1.3.2"><ci id="Sx3.SSx2.p3.5.m5.7.7.cmml" xref="Sx3.SSx2.p3.5.m5.7.7">𝑟</ci><ci id="Sx3.SSx2.p3.5.m5.8.8.cmml" xref="Sx3.SSx2.p3.5.m5.8.8">𝑢</ci><ci id="Sx3.SSx2.p3.5.m5.9.9.cmml" xref="Sx3.SSx2.p3.5.m5.9.9">𝑡</ci></vector></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx2.p3.5.m5.10c">L=\sum_{r,u,t}n(r,u,t)log(p(r,u,t))</annotation></semantics></math>. EM algorithm was again applied to estimate those parameters.</p>
+</div>
+</section>
+<section id="Sx3.SSx3" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">Interest-Topic Model (ITM)</h3>
+
+<div id="Sx3.SSx3.p1" class="ltx_para">
+<p id="Sx3.SSx3.p1.1" class="ltx_p">The motivation to implement the model proposed in
+this paper comes from the observation that users in a social
+annotation system have very broad interests.
+A set of tags in a particular bookmark could reflect both users’
+interests and resources’ topics. As in the three-way aspect model,
+using a single latent variable to represent both “interests” and
+“topics” may not be appropriate, as intermixing between these two
+may skew the final similarity scores computed from the topic
+distribution over resources.
+</p>
+</div>
+<figure id="Sx3.F2" class="ltx_figure"><img src="/html/0704.1675/assets/x2.png" id="Sx3.F2.1.g1" class="ltx_graphics ltx_centering ltx_img_portrait" width="123" height="159" alt="Refer to caption">
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>Graphical representation on the proposed model. <math id="Sx3.F2.8.m1.1" class="ltx_Math" alttext="R" display="inline"><semantics id="Sx3.F2.8.m1.1b"><mi id="Sx3.F2.8.m1.1.1" xref="Sx3.F2.8.m1.1.1.cmml">R</mi><annotation-xml encoding="MathML-Content" id="Sx3.F2.8.m1.1c"><ci id="Sx3.F2.8.m1.1.1.cmml" xref="Sx3.F2.8.m1.1.1">𝑅</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F2.8.m1.1d">R</annotation></semantics></math>, <math id="Sx3.F2.9.m2.1" class="ltx_Math" alttext="U" display="inline"><semantics id="Sx3.F2.9.m2.1b"><mi id="Sx3.F2.9.m2.1.1" xref="Sx3.F2.9.m2.1.1.cmml">U</mi><annotation-xml encoding="MathML-Content" id="Sx3.F2.9.m2.1c"><ci id="Sx3.F2.9.m2.1.1.cmml" xref="Sx3.F2.9.m2.1.1">𝑈</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F2.9.m2.1d">U</annotation></semantics></math>,
+<math id="Sx3.F2.10.m3.1" class="ltx_Math" alttext="T" display="inline"><semantics id="Sx3.F2.10.m3.1b"><mi id="Sx3.F2.10.m3.1.1" xref="Sx3.F2.10.m3.1.1.cmml">T</mi><annotation-xml encoding="MathML-Content" id="Sx3.F2.10.m3.1c"><ci id="Sx3.F2.10.m3.1.1.cmml" xref="Sx3.F2.10.m3.1.1">𝑇</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F2.10.m3.1d">T</annotation></semantics></math>, <math id="Sx3.F2.11.m4.1" class="ltx_Math" alttext="I" display="inline"><semantics id="Sx3.F2.11.m4.1b"><mi id="Sx3.F2.11.m4.1.1" xref="Sx3.F2.11.m4.1.1.cmml">I</mi><annotation-xml encoding="MathML-Content" id="Sx3.F2.11.m4.1c"><ci id="Sx3.F2.11.m4.1.1.cmml" xref="Sx3.F2.11.m4.1.1">𝐼</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F2.11.m4.1d">I</annotation></semantics></math> and <math id="Sx3.F2.12.m5.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx3.F2.12.m5.1b"><mi id="Sx3.F2.12.m5.1.1" xref="Sx3.F2.12.m5.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx3.F2.12.m5.1c"><ci id="Sx3.F2.12.m5.1.1.cmml" xref="Sx3.F2.12.m5.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F2.12.m5.1d">Z</annotation></semantics></math> denote variables “Resource”, “User”, “Tag”,
+“Interest” and “Topic” repectively. <math id="Sx3.F2.13.m6.1" class="ltx_Math" alttext="N_{t}" display="inline"><semantics id="Sx3.F2.13.m6.1b"><msub id="Sx3.F2.13.m6.1.1" xref="Sx3.F2.13.m6.1.1.cmml"><mi id="Sx3.F2.13.m6.1.1.2" xref="Sx3.F2.13.m6.1.1.2.cmml">N</mi><mi id="Sx3.F2.13.m6.1.1.3" xref="Sx3.F2.13.m6.1.1.3.cmml">t</mi></msub><annotation-xml encoding="MathML-Content" id="Sx3.F2.13.m6.1c"><apply id="Sx3.F2.13.m6.1.1.cmml" xref="Sx3.F2.13.m6.1.1"><csymbol cd="ambiguous" id="Sx3.F2.13.m6.1.1.1.cmml" xref="Sx3.F2.13.m6.1.1">subscript</csymbol><ci id="Sx3.F2.13.m6.1.1.2.cmml" xref="Sx3.F2.13.m6.1.1.2">𝑁</ci><ci id="Sx3.F2.13.m6.1.1.3.cmml" xref="Sx3.F2.13.m6.1.1.3">𝑡</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.F2.13.m6.1d">N_{t}</annotation></semantics></math> represents a number
+of tag occurrences for a one bookmark (by a particular user to a
+particular resource); D represents a number of all bookmarks in
+social annotation system.
+</figcaption>
+</figure>
+<div id="Sx3.SSx3.p2" class="ltx_para">
+<p id="Sx3.SSx3.p2.2" class="ltx_p">Instead, we propose to explicitly separate the latent variables into
+two: one representing user interests, <math id="Sx3.SSx3.p2.1.m1.1" class="ltx_Math" alttext="I" display="inline"><semantics id="Sx3.SSx3.p2.1.m1.1a"><mi id="Sx3.SSx3.p2.1.m1.1.1" xref="Sx3.SSx3.p2.1.m1.1.1.cmml">I</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p2.1.m1.1b"><ci id="Sx3.SSx3.p2.1.m1.1.1.cmml" xref="Sx3.SSx3.p2.1.m1.1.1">𝐼</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p2.1.m1.1c">I</annotation></semantics></math>; another representing
+resource topics, <math id="Sx3.SSx3.p2.2.m2.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx3.SSx3.p2.2.m2.1a"><mi id="Sx3.SSx3.p2.2.m2.1.1" xref="Sx3.SSx3.p2.2.m2.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p2.2.m2.1b"><ci id="Sx3.SSx3.p2.2.m2.1.1.cmml" xref="Sx3.SSx3.p2.2.m2.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p2.2.m2.1c">Z</annotation></semantics></math>. According to the proposed model, the process
+of resource-user-tag co-occurrence could be described as a
+stochastic process:</p>
+<ul id="Sx3.I1" class="ltx_itemize">
+<li id="Sx3.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx3.I1.i1.p1" class="ltx_para">
+<p id="Sx3.I1.i1.p1.2" class="ltx_p">User <math id="Sx3.I1.i1.p1.1.m1.1" class="ltx_Math" alttext="u" display="inline"><semantics id="Sx3.I1.i1.p1.1.m1.1a"><mi id="Sx3.I1.i1.p1.1.m1.1.1" xref="Sx3.I1.i1.p1.1.m1.1.1.cmml">u</mi><annotation-xml encoding="MathML-Content" id="Sx3.I1.i1.p1.1.m1.1b"><ci id="Sx3.I1.i1.p1.1.m1.1.1.cmml" xref="Sx3.I1.i1.p1.1.m1.1.1">𝑢</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.I1.i1.p1.1.m1.1c">u</annotation></semantics></math> finds a resource <math id="Sx3.I1.i1.p1.2.m2.1" class="ltx_Math" alttext="r" display="inline"><semantics id="Sx3.I1.i1.p1.2.m2.1a"><mi id="Sx3.I1.i1.p1.2.m2.1.1" xref="Sx3.I1.i1.p1.2.m2.1.1.cmml">r</mi><annotation-xml encoding="MathML-Content" id="Sx3.I1.i1.p1.2.m2.1b"><ci id="Sx3.I1.i1.p1.2.m2.1.1.cmml" xref="Sx3.I1.i1.p1.2.m2.1.1">𝑟</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.I1.i1.p1.2.m2.1c">r</annotation></semantics></math> interesting and she would like to
+bookmark it</p>
+</div>
+</li>
+<li id="Sx3.I1.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx3.I1.i2.p1" class="ltx_para">
+<p id="Sx3.I1.i2.p1.3" class="ltx_p">User <math id="Sx3.I1.i2.p1.1.m1.1" class="ltx_Math" alttext="u" display="inline"><semantics id="Sx3.I1.i2.p1.1.m1.1a"><mi id="Sx3.I1.i2.p1.1.m1.1.1" xref="Sx3.I1.i2.p1.1.m1.1.1.cmml">u</mi><annotation-xml encoding="MathML-Content" id="Sx3.I1.i2.p1.1.m1.1b"><ci id="Sx3.I1.i2.p1.1.m1.1.1.cmml" xref="Sx3.I1.i2.p1.1.m1.1.1">𝑢</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.I1.i2.p1.1.m1.1c">u</annotation></semantics></math> has her own interest profile <math id="Sx3.I1.i2.p1.2.m2.1" class="ltx_Math" alttext="{i}" display="inline"><semantics id="Sx3.I1.i2.p1.2.m2.1a"><mi id="Sx3.I1.i2.p1.2.m2.1.1" xref="Sx3.I1.i2.p1.2.m2.1.1.cmml">i</mi><annotation-xml encoding="MathML-Content" id="Sx3.I1.i2.p1.2.m2.1b"><ci id="Sx3.I1.i2.p1.2.m2.1.1.cmml" xref="Sx3.I1.i2.p1.2.m2.1.1">𝑖</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.I1.i2.p1.2.m2.1c">{i}</annotation></semantics></math>; meanwhile the resource has a set of topics <math id="Sx3.I1.i2.p1.3.m3.1" class="ltx_Math" alttext="{z}" display="inline"><semantics id="Sx3.I1.i2.p1.3.m3.1a"><mi id="Sx3.I1.i2.p1.3.m3.1.1" xref="Sx3.I1.i2.p1.3.m3.1.1.cmml">z</mi><annotation-xml encoding="MathML-Content" id="Sx3.I1.i2.p1.3.m3.1b"><ci id="Sx3.I1.i2.p1.3.m3.1.1.cmml" xref="Sx3.I1.i2.p1.3.m3.1.1">𝑧</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.I1.i2.p1.3.m3.1c">{z}</annotation></semantics></math>.</p>
+</div>
+</li>
+<li id="Sx3.I1.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx3.I1.i3.p1" class="ltx_para">
+<p id="Sx3.I1.i3.p1.1" class="ltx_p">Tag <math id="Sx3.I1.i3.p1.1.m1.1" class="ltx_Math" alttext="t" display="inline"><semantics id="Sx3.I1.i3.p1.1.m1.1a"><mi id="Sx3.I1.i3.p1.1.m1.1.1" xref="Sx3.I1.i3.p1.1.m1.1.1.cmml">t</mi><annotation-xml encoding="MathML-Content" id="Sx3.I1.i3.p1.1.m1.1b"><ci id="Sx3.I1.i3.p1.1.m1.1.1.cmml" xref="Sx3.I1.i3.p1.1.m1.1.1">𝑡</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.I1.i3.p1.1.m1.1c">t</annotation></semantics></math> is then chosen based on users’s interest and resource’s
+topic</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="Sx3.SSx3.p3" class="ltx_para">
+<p id="Sx3.SSx3.p3.1" class="ltx_p">The process is depicted in a graphical form in Figure <a href="#Sx3.F2" title="Figure 2 ‣ Interest-Topic Model (ITM) ‣ Approach ‣ Exploiting Social Annotation for Automatic Resource Discovery" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>. From
+the process described above, the joint probability of resource, user
+and tag is written as</p>
+</div>
+<div id="Sx3.SSx3.p4" class="ltx_para">
+<table id="Sx3.E4" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E4.m1.12" class="ltx_Math" alttext="P(r,u,t)=\sum_{i,z}p(t|i,z)p(i|u)p(z|r)p(u)p(r)" display="block"><semantics id="Sx3.E4.m1.12a"><mrow id="Sx3.E4.m1.12.12" xref="Sx3.E4.m1.12.12.cmml"><mrow id="Sx3.E4.m1.12.12.5" xref="Sx3.E4.m1.12.12.5.cmml"><mi id="Sx3.E4.m1.12.12.5.2" xref="Sx3.E4.m1.12.12.5.2.cmml">P</mi><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.5.1" xref="Sx3.E4.m1.12.12.5.1.cmml">​</mo><mrow id="Sx3.E4.m1.12.12.5.3.2" xref="Sx3.E4.m1.12.12.5.3.1.cmml"><mo stretchy="false" id="Sx3.E4.m1.12.12.5.3.2.1" xref="Sx3.E4.m1.12.12.5.3.1.cmml">(</mo><mi id="Sx3.E4.m1.3.3" xref="Sx3.E4.m1.3.3.cmml">r</mi><mo id="Sx3.E4.m1.12.12.5.3.2.2" xref="Sx3.E4.m1.12.12.5.3.1.cmml">,</mo><mi id="Sx3.E4.m1.4.4" xref="Sx3.E4.m1.4.4.cmml">u</mi><mo id="Sx3.E4.m1.12.12.5.3.2.3" xref="Sx3.E4.m1.12.12.5.3.1.cmml">,</mo><mi id="Sx3.E4.m1.5.5" xref="Sx3.E4.m1.5.5.cmml">t</mi><mo stretchy="false" id="Sx3.E4.m1.12.12.5.3.2.4" xref="Sx3.E4.m1.12.12.5.3.1.cmml">)</mo></mrow></mrow><mo rspace="0.111em" id="Sx3.E4.m1.12.12.4" xref="Sx3.E4.m1.12.12.4.cmml">=</mo><mrow id="Sx3.E4.m1.12.12.3" xref="Sx3.E4.m1.12.12.3.cmml"><munder id="Sx3.E4.m1.12.12.3.4" xref="Sx3.E4.m1.12.12.3.4.cmml"><mo movablelimits="false" id="Sx3.E4.m1.12.12.3.4.2" xref="Sx3.E4.m1.12.12.3.4.2.cmml">∑</mo><mrow id="Sx3.E4.m1.2.2.2.4" xref="Sx3.E4.m1.2.2.2.3.cmml"><mi id="Sx3.E4.m1.1.1.1.1" xref="Sx3.E4.m1.1.1.1.1.cmml">i</mi><mo id="Sx3.E4.m1.2.2.2.4.1" xref="Sx3.E4.m1.2.2.2.3.cmml">,</mo><mi id="Sx3.E4.m1.2.2.2.2" xref="Sx3.E4.m1.2.2.2.2.cmml">z</mi></mrow></munder><mrow id="Sx3.E4.m1.12.12.3.3" xref="Sx3.E4.m1.12.12.3.3.cmml"><mi id="Sx3.E4.m1.12.12.3.3.5" xref="Sx3.E4.m1.12.12.3.3.5.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mrow id="Sx3.E4.m1.10.10.1.1.1.1" xref="Sx3.E4.m1.10.10.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E4.m1.10.10.1.1.1.1.2" xref="Sx3.E4.m1.10.10.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.E4.m1.10.10.1.1.1.1.1" xref="Sx3.E4.m1.10.10.1.1.1.1.1.cmml"><mi id="Sx3.E4.m1.10.10.1.1.1.1.1.2" xref="Sx3.E4.m1.10.10.1.1.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.E4.m1.10.10.1.1.1.1.1.1" xref="Sx3.E4.m1.10.10.1.1.1.1.1.1.cmml">|</mo><mrow id="Sx3.E4.m1.10.10.1.1.1.1.1.3.2" xref="Sx3.E4.m1.10.10.1.1.1.1.1.3.1.cmml"><mi id="Sx3.E4.m1.6.6" xref="Sx3.E4.m1.6.6.cmml">i</mi><mo id="Sx3.E4.m1.10.10.1.1.1.1.1.3.2.1" xref="Sx3.E4.m1.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E4.m1.7.7" xref="Sx3.E4.m1.7.7.cmml">z</mi></mrow></mrow><mo stretchy="false" id="Sx3.E4.m1.10.10.1.1.1.1.3" xref="Sx3.E4.m1.10.10.1.1.1.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4a" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mi id="Sx3.E4.m1.12.12.3.3.6" xref="Sx3.E4.m1.12.12.3.3.6.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4b" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mrow id="Sx3.E4.m1.11.11.2.2.2.1" xref="Sx3.E4.m1.11.11.2.2.2.1.1.cmml"><mo stretchy="false" id="Sx3.E4.m1.11.11.2.2.2.1.2" xref="Sx3.E4.m1.11.11.2.2.2.1.1.cmml">(</mo><mrow id="Sx3.E4.m1.11.11.2.2.2.1.1" xref="Sx3.E4.m1.11.11.2.2.2.1.1.cmml"><mi id="Sx3.E4.m1.11.11.2.2.2.1.1.2" xref="Sx3.E4.m1.11.11.2.2.2.1.1.2.cmml">i</mi><mo fence="false" id="Sx3.E4.m1.11.11.2.2.2.1.1.1" xref="Sx3.E4.m1.11.11.2.2.2.1.1.1.cmml">|</mo><mi id="Sx3.E4.m1.11.11.2.2.2.1.1.3" xref="Sx3.E4.m1.11.11.2.2.2.1.1.3.cmml">u</mi></mrow><mo stretchy="false" id="Sx3.E4.m1.11.11.2.2.2.1.3" xref="Sx3.E4.m1.11.11.2.2.2.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4c" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mi id="Sx3.E4.m1.12.12.3.3.7" xref="Sx3.E4.m1.12.12.3.3.7.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4d" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mrow id="Sx3.E4.m1.12.12.3.3.3.1" xref="Sx3.E4.m1.12.12.3.3.3.1.1.cmml"><mo stretchy="false" id="Sx3.E4.m1.12.12.3.3.3.1.2" xref="Sx3.E4.m1.12.12.3.3.3.1.1.cmml">(</mo><mrow id="Sx3.E4.m1.12.12.3.3.3.1.1" xref="Sx3.E4.m1.12.12.3.3.3.1.1.cmml"><mi id="Sx3.E4.m1.12.12.3.3.3.1.1.2" xref="Sx3.E4.m1.12.12.3.3.3.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E4.m1.12.12.3.3.3.1.1.1" xref="Sx3.E4.m1.12.12.3.3.3.1.1.1.cmml">|</mo><mi id="Sx3.E4.m1.12.12.3.3.3.1.1.3" xref="Sx3.E4.m1.12.12.3.3.3.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.E4.m1.12.12.3.3.3.1.3" xref="Sx3.E4.m1.12.12.3.3.3.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4e" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mi id="Sx3.E4.m1.12.12.3.3.8" xref="Sx3.E4.m1.12.12.3.3.8.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4f" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mrow id="Sx3.E4.m1.12.12.3.3.9.2" xref="Sx3.E4.m1.12.12.3.3.cmml"><mo stretchy="false" id="Sx3.E4.m1.12.12.3.3.9.2.1" xref="Sx3.E4.m1.12.12.3.3.cmml">(</mo><mi id="Sx3.E4.m1.8.8" xref="Sx3.E4.m1.8.8.cmml">u</mi><mo stretchy="false" id="Sx3.E4.m1.12.12.3.3.9.2.2" xref="Sx3.E4.m1.12.12.3.3.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4g" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mi id="Sx3.E4.m1.12.12.3.3.10" xref="Sx3.E4.m1.12.12.3.3.10.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E4.m1.12.12.3.3.4h" xref="Sx3.E4.m1.12.12.3.3.4.cmml">​</mo><mrow id="Sx3.E4.m1.12.12.3.3.11.2" xref="Sx3.E4.m1.12.12.3.3.cmml"><mo stretchy="false" id="Sx3.E4.m1.12.12.3.3.11.2.1" xref="Sx3.E4.m1.12.12.3.3.cmml">(</mo><mi id="Sx3.E4.m1.9.9" xref="Sx3.E4.m1.9.9.cmml">r</mi><mo stretchy="false" id="Sx3.E4.m1.12.12.3.3.11.2.2" xref="Sx3.E4.m1.12.12.3.3.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E4.m1.12b"><apply id="Sx3.E4.m1.12.12.cmml" xref="Sx3.E4.m1.12.12"><eq id="Sx3.E4.m1.12.12.4.cmml" xref="Sx3.E4.m1.12.12.4"></eq><apply id="Sx3.E4.m1.12.12.5.cmml" xref="Sx3.E4.m1.12.12.5"><times id="Sx3.E4.m1.12.12.5.1.cmml" xref="Sx3.E4.m1.12.12.5.1"></times><ci id="Sx3.E4.m1.12.12.5.2.cmml" xref="Sx3.E4.m1.12.12.5.2">𝑃</ci><vector id="Sx3.E4.m1.12.12.5.3.1.cmml" xref="Sx3.E4.m1.12.12.5.3.2"><ci id="Sx3.E4.m1.3.3.cmml" xref="Sx3.E4.m1.3.3">𝑟</ci><ci id="Sx3.E4.m1.4.4.cmml" xref="Sx3.E4.m1.4.4">𝑢</ci><ci id="Sx3.E4.m1.5.5.cmml" xref="Sx3.E4.m1.5.5">𝑡</ci></vector></apply><apply id="Sx3.E4.m1.12.12.3.cmml" xref="Sx3.E4.m1.12.12.3"><apply id="Sx3.E4.m1.12.12.3.4.cmml" xref="Sx3.E4.m1.12.12.3.4"><csymbol cd="ambiguous" id="Sx3.E4.m1.12.12.3.4.1.cmml" xref="Sx3.E4.m1.12.12.3.4">subscript</csymbol><sum id="Sx3.E4.m1.12.12.3.4.2.cmml" xref="Sx3.E4.m1.12.12.3.4.2"></sum><list id="Sx3.E4.m1.2.2.2.3.cmml" xref="Sx3.E4.m1.2.2.2.4"><ci id="Sx3.E4.m1.1.1.1.1.cmml" xref="Sx3.E4.m1.1.1.1.1">𝑖</ci><ci id="Sx3.E4.m1.2.2.2.2.cmml" xref="Sx3.E4.m1.2.2.2.2">𝑧</ci></list></apply><apply id="Sx3.E4.m1.12.12.3.3.cmml" xref="Sx3.E4.m1.12.12.3.3"><times id="Sx3.E4.m1.12.12.3.3.4.cmml" xref="Sx3.E4.m1.12.12.3.3.4"></times><ci id="Sx3.E4.m1.12.12.3.3.5.cmml" xref="Sx3.E4.m1.12.12.3.3.5">𝑝</ci><apply id="Sx3.E4.m1.10.10.1.1.1.1.1.cmml" xref="Sx3.E4.m1.10.10.1.1.1.1"><csymbol cd="latexml" id="Sx3.E4.m1.10.10.1.1.1.1.1.1.cmml" xref="Sx3.E4.m1.10.10.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E4.m1.10.10.1.1.1.1.1.2.cmml" xref="Sx3.E4.m1.10.10.1.1.1.1.1.2">𝑡</ci><list id="Sx3.E4.m1.10.10.1.1.1.1.1.3.1.cmml" xref="Sx3.E4.m1.10.10.1.1.1.1.1.3.2"><ci id="Sx3.E4.m1.6.6.cmml" xref="Sx3.E4.m1.6.6">𝑖</ci><ci id="Sx3.E4.m1.7.7.cmml" xref="Sx3.E4.m1.7.7">𝑧</ci></list></apply><ci id="Sx3.E4.m1.12.12.3.3.6.cmml" xref="Sx3.E4.m1.12.12.3.3.6">𝑝</ci><apply id="Sx3.E4.m1.11.11.2.2.2.1.1.cmml" xref="Sx3.E4.m1.11.11.2.2.2.1"><csymbol cd="latexml" id="Sx3.E4.m1.11.11.2.2.2.1.1.1.cmml" xref="Sx3.E4.m1.11.11.2.2.2.1.1.1">conditional</csymbol><ci id="Sx3.E4.m1.11.11.2.2.2.1.1.2.cmml" xref="Sx3.E4.m1.11.11.2.2.2.1.1.2">𝑖</ci><ci id="Sx3.E4.m1.11.11.2.2.2.1.1.3.cmml" xref="Sx3.E4.m1.11.11.2.2.2.1.1.3">𝑢</ci></apply><ci id="Sx3.E4.m1.12.12.3.3.7.cmml" xref="Sx3.E4.m1.12.12.3.3.7">𝑝</ci><apply id="Sx3.E4.m1.12.12.3.3.3.1.1.cmml" xref="Sx3.E4.m1.12.12.3.3.3.1"><csymbol cd="latexml" id="Sx3.E4.m1.12.12.3.3.3.1.1.1.cmml" xref="Sx3.E4.m1.12.12.3.3.3.1.1.1">conditional</csymbol><ci id="Sx3.E4.m1.12.12.3.3.3.1.1.2.cmml" xref="Sx3.E4.m1.12.12.3.3.3.1.1.2">𝑧</ci><ci id="Sx3.E4.m1.12.12.3.3.3.1.1.3.cmml" xref="Sx3.E4.m1.12.12.3.3.3.1.1.3">𝑟</ci></apply><ci id="Sx3.E4.m1.12.12.3.3.8.cmml" xref="Sx3.E4.m1.12.12.3.3.8">𝑝</ci><ci id="Sx3.E4.m1.8.8.cmml" xref="Sx3.E4.m1.8.8">𝑢</ci><ci id="Sx3.E4.m1.12.12.3.3.10.cmml" xref="Sx3.E4.m1.12.12.3.3.10">𝑝</ci><ci id="Sx3.E4.m1.9.9.cmml" xref="Sx3.E4.m1.9.9">𝑟</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E4.m1.12c">P(r,u,t)=\sum_{i,z}p(t|i,z)p(i|u)p(z|r)p(u)p(r)</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(4)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx3.p5" class="ltx_para">
+<p id="Sx3.SSx3.p5.7" class="ltx_p">Log likelihood <math id="Sx3.SSx3.p5.1.m1.1" class="ltx_Math" alttext="L" display="inline"><semantics id="Sx3.SSx3.p5.1.m1.1a"><mi id="Sx3.SSx3.p5.1.m1.1.1" xref="Sx3.SSx3.p5.1.m1.1.1.cmml">L</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.1.m1.1b"><ci id="Sx3.SSx3.p5.1.m1.1.1.cmml" xref="Sx3.SSx3.p5.1.m1.1.1">𝐿</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.1.m1.1c">L</annotation></semantics></math> is used as the objective function to estimate all
+parameters. Note that <math id="Sx3.SSx3.p5.2.m2.1" class="ltx_Math" alttext="p(u)" display="inline"><semantics id="Sx3.SSx3.p5.2.m2.1a"><mrow id="Sx3.SSx3.p5.2.m2.1.2" xref="Sx3.SSx3.p5.2.m2.1.2.cmml"><mi id="Sx3.SSx3.p5.2.m2.1.2.2" xref="Sx3.SSx3.p5.2.m2.1.2.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p5.2.m2.1.2.1" xref="Sx3.SSx3.p5.2.m2.1.2.1.cmml">​</mo><mrow id="Sx3.SSx3.p5.2.m2.1.2.3.2" xref="Sx3.SSx3.p5.2.m2.1.2.cmml"><mo stretchy="false" id="Sx3.SSx3.p5.2.m2.1.2.3.2.1" xref="Sx3.SSx3.p5.2.m2.1.2.cmml">(</mo><mi id="Sx3.SSx3.p5.2.m2.1.1" xref="Sx3.SSx3.p5.2.m2.1.1.cmml">u</mi><mo stretchy="false" id="Sx3.SSx3.p5.2.m2.1.2.3.2.2" xref="Sx3.SSx3.p5.2.m2.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.2.m2.1b"><apply id="Sx3.SSx3.p5.2.m2.1.2.cmml" xref="Sx3.SSx3.p5.2.m2.1.2"><times id="Sx3.SSx3.p5.2.m2.1.2.1.cmml" xref="Sx3.SSx3.p5.2.m2.1.2.1"></times><ci id="Sx3.SSx3.p5.2.m2.1.2.2.cmml" xref="Sx3.SSx3.p5.2.m2.1.2.2">𝑝</ci><ci id="Sx3.SSx3.p5.2.m2.1.1.cmml" xref="Sx3.SSx3.p5.2.m2.1.1">𝑢</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.2.m2.1c">p(u)</annotation></semantics></math> and <math id="Sx3.SSx3.p5.3.m3.1" class="ltx_Math" alttext="p(r)" display="inline"><semantics id="Sx3.SSx3.p5.3.m3.1a"><mrow id="Sx3.SSx3.p5.3.m3.1.2" xref="Sx3.SSx3.p5.3.m3.1.2.cmml"><mi id="Sx3.SSx3.p5.3.m3.1.2.2" xref="Sx3.SSx3.p5.3.m3.1.2.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p5.3.m3.1.2.1" xref="Sx3.SSx3.p5.3.m3.1.2.1.cmml">​</mo><mrow id="Sx3.SSx3.p5.3.m3.1.2.3.2" xref="Sx3.SSx3.p5.3.m3.1.2.cmml"><mo stretchy="false" id="Sx3.SSx3.p5.3.m3.1.2.3.2.1" xref="Sx3.SSx3.p5.3.m3.1.2.cmml">(</mo><mi id="Sx3.SSx3.p5.3.m3.1.1" xref="Sx3.SSx3.p5.3.m3.1.1.cmml">r</mi><mo stretchy="false" id="Sx3.SSx3.p5.3.m3.1.2.3.2.2" xref="Sx3.SSx3.p5.3.m3.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.3.m3.1b"><apply id="Sx3.SSx3.p5.3.m3.1.2.cmml" xref="Sx3.SSx3.p5.3.m3.1.2"><times id="Sx3.SSx3.p5.3.m3.1.2.1.cmml" xref="Sx3.SSx3.p5.3.m3.1.2.1"></times><ci id="Sx3.SSx3.p5.3.m3.1.2.2.cmml" xref="Sx3.SSx3.p5.3.m3.1.2.2">𝑝</ci><ci id="Sx3.SSx3.p5.3.m3.1.1.cmml" xref="Sx3.SSx3.p5.3.m3.1.1">𝑟</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.3.m3.1c">p(r)</annotation></semantics></math> could be obtained directly
+from observed data – the estimation thus involves three parameters
+<math id="Sx3.SSx3.p5.4.m4.3" class="ltx_Math" alttext="p(t|i,z)" display="inline"><semantics id="Sx3.SSx3.p5.4.m4.3a"><mrow id="Sx3.SSx3.p5.4.m4.3.3" xref="Sx3.SSx3.p5.4.m4.3.3.cmml"><mi id="Sx3.SSx3.p5.4.m4.3.3.3" xref="Sx3.SSx3.p5.4.m4.3.3.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p5.4.m4.3.3.2" xref="Sx3.SSx3.p5.4.m4.3.3.2.cmml">​</mo><mrow id="Sx3.SSx3.p5.4.m4.3.3.1.1" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx3.p5.4.m4.3.3.1.1.2" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.cmml">(</mo><mrow id="Sx3.SSx3.p5.4.m4.3.3.1.1.1" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.cmml"><mi id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.2" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.1" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.1.cmml">|</mo><mrow id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.3.2" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.3.1.cmml"><mi id="Sx3.SSx3.p5.4.m4.1.1" xref="Sx3.SSx3.p5.4.m4.1.1.cmml">i</mi><mo id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.3.2.1" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.3.1.cmml">,</mo><mi id="Sx3.SSx3.p5.4.m4.2.2" xref="Sx3.SSx3.p5.4.m4.2.2.cmml">z</mi></mrow></mrow><mo stretchy="false" id="Sx3.SSx3.p5.4.m4.3.3.1.1.3" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.4.m4.3b"><apply id="Sx3.SSx3.p5.4.m4.3.3.cmml" xref="Sx3.SSx3.p5.4.m4.3.3"><times id="Sx3.SSx3.p5.4.m4.3.3.2.cmml" xref="Sx3.SSx3.p5.4.m4.3.3.2"></times><ci id="Sx3.SSx3.p5.4.m4.3.3.3.cmml" xref="Sx3.SSx3.p5.4.m4.3.3.3">𝑝</ci><apply id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.cmml" xref="Sx3.SSx3.p5.4.m4.3.3.1.1"><csymbol cd="latexml" id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.1.cmml" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.2.cmml" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.2">𝑡</ci><list id="Sx3.SSx3.p5.4.m4.3.3.1.1.1.3.1.cmml" xref="Sx3.SSx3.p5.4.m4.3.3.1.1.1.3.2"><ci id="Sx3.SSx3.p5.4.m4.1.1.cmml" xref="Sx3.SSx3.p5.4.m4.1.1">𝑖</ci><ci id="Sx3.SSx3.p5.4.m4.2.2.cmml" xref="Sx3.SSx3.p5.4.m4.2.2">𝑧</ci></list></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.4.m4.3c">p(t|i,z)</annotation></semantics></math>, <math id="Sx3.SSx3.p5.5.m5.1" class="ltx_Math" alttext="p(i|u)" display="inline"><semantics id="Sx3.SSx3.p5.5.m5.1a"><mrow id="Sx3.SSx3.p5.5.m5.1.1" xref="Sx3.SSx3.p5.5.m5.1.1.cmml"><mi id="Sx3.SSx3.p5.5.m5.1.1.3" xref="Sx3.SSx3.p5.5.m5.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p5.5.m5.1.1.2" xref="Sx3.SSx3.p5.5.m5.1.1.2.cmml">​</mo><mrow id="Sx3.SSx3.p5.5.m5.1.1.1.1" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx3.p5.5.m5.1.1.1.1.2" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx3.p5.5.m5.1.1.1.1.1" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.cmml"><mi id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.2" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.2.cmml">i</mi><mo fence="false" id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.1" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.3" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.3.cmml">u</mi></mrow><mo stretchy="false" id="Sx3.SSx3.p5.5.m5.1.1.1.1.3" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.5.m5.1b"><apply id="Sx3.SSx3.p5.5.m5.1.1.cmml" xref="Sx3.SSx3.p5.5.m5.1.1"><times id="Sx3.SSx3.p5.5.m5.1.1.2.cmml" xref="Sx3.SSx3.p5.5.m5.1.1.2"></times><ci id="Sx3.SSx3.p5.5.m5.1.1.3.cmml" xref="Sx3.SSx3.p5.5.m5.1.1.3">𝑝</ci><apply id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.cmml" xref="Sx3.SSx3.p5.5.m5.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.1.cmml" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.2.cmml" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.2">𝑖</ci><ci id="Sx3.SSx3.p5.5.m5.1.1.1.1.1.3.cmml" xref="Sx3.SSx3.p5.5.m5.1.1.1.1.1.3">𝑢</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.5.m5.1c">p(i|u)</annotation></semantics></math> and <math id="Sx3.SSx3.p5.6.m6.1" class="ltx_Math" alttext="p(z|r)" display="inline"><semantics id="Sx3.SSx3.p5.6.m6.1a"><mrow id="Sx3.SSx3.p5.6.m6.1.1" xref="Sx3.SSx3.p5.6.m6.1.1.cmml"><mi id="Sx3.SSx3.p5.6.m6.1.1.3" xref="Sx3.SSx3.p5.6.m6.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p5.6.m6.1.1.2" xref="Sx3.SSx3.p5.6.m6.1.1.2.cmml">​</mo><mrow id="Sx3.SSx3.p5.6.m6.1.1.1.1" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx3.p5.6.m6.1.1.1.1.2" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx3.p5.6.m6.1.1.1.1.1" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.cmml"><mi id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.2" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.1" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.3" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.SSx3.p5.6.m6.1.1.1.1.3" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.6.m6.1b"><apply id="Sx3.SSx3.p5.6.m6.1.1.cmml" xref="Sx3.SSx3.p5.6.m6.1.1"><times id="Sx3.SSx3.p5.6.m6.1.1.2.cmml" xref="Sx3.SSx3.p5.6.m6.1.1.2"></times><ci id="Sx3.SSx3.p5.6.m6.1.1.3.cmml" xref="Sx3.SSx3.p5.6.m6.1.1.3">𝑝</ci><apply id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.cmml" xref="Sx3.SSx3.p5.6.m6.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.1.cmml" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.2.cmml" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.2">𝑧</ci><ci id="Sx3.SSx3.p5.6.m6.1.1.1.1.1.3.cmml" xref="Sx3.SSx3.p5.6.m6.1.1.1.1.1.3">𝑟</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.6.m6.1c">p(z|r)</annotation></semantics></math>. <math id="Sx3.SSx3.p5.7.m7.1" class="ltx_Math" alttext="L" display="inline"><semantics id="Sx3.SSx3.p5.7.m7.1a"><mi id="Sx3.SSx3.p5.7.m7.1.1" xref="Sx3.SSx3.p5.7.m7.1.1.cmml">L</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p5.7.m7.1b"><ci id="Sx3.SSx3.p5.7.m7.1.1.cmml" xref="Sx3.SSx3.p5.7.m7.1.1">𝐿</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p5.7.m7.1c">L</annotation></semantics></math> is defined as</p>
+</div>
+<div id="Sx3.SSx3.p6" class="ltx_para">
+<table id="Sx3.E5" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E5.m1.10" class="ltx_Math" alttext="L=\sum_{r,u,t}n(r,u,t)log(p(r,u,t))" display="block"><semantics id="Sx3.E5.m1.10a"><mrow id="Sx3.E5.m1.10.10" xref="Sx3.E5.m1.10.10.cmml"><mi id="Sx3.E5.m1.10.10.3" xref="Sx3.E5.m1.10.10.3.cmml">L</mi><mo rspace="0.111em" id="Sx3.E5.m1.10.10.2" xref="Sx3.E5.m1.10.10.2.cmml">=</mo><mrow id="Sx3.E5.m1.10.10.1" xref="Sx3.E5.m1.10.10.1.cmml"><munder id="Sx3.E5.m1.10.10.1.2" xref="Sx3.E5.m1.10.10.1.2.cmml"><mo movablelimits="false" id="Sx3.E5.m1.10.10.1.2.2" xref="Sx3.E5.m1.10.10.1.2.2.cmml">∑</mo><mrow id="Sx3.E5.m1.3.3.3.5" xref="Sx3.E5.m1.3.3.3.4.cmml"><mi id="Sx3.E5.m1.1.1.1.1" xref="Sx3.E5.m1.1.1.1.1.cmml">r</mi><mo id="Sx3.E5.m1.3.3.3.5.1" xref="Sx3.E5.m1.3.3.3.4.cmml">,</mo><mi id="Sx3.E5.m1.2.2.2.2" xref="Sx3.E5.m1.2.2.2.2.cmml">u</mi><mo id="Sx3.E5.m1.3.3.3.5.2" xref="Sx3.E5.m1.3.3.3.4.cmml">,</mo><mi id="Sx3.E5.m1.3.3.3.3" xref="Sx3.E5.m1.3.3.3.3.cmml">t</mi></mrow></munder><mrow id="Sx3.E5.m1.10.10.1.1" xref="Sx3.E5.m1.10.10.1.1.cmml"><mi id="Sx3.E5.m1.10.10.1.1.3" xref="Sx3.E5.m1.10.10.1.1.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E5.m1.10.10.1.1.2" xref="Sx3.E5.m1.10.10.1.1.2.cmml">​</mo><mrow id="Sx3.E5.m1.10.10.1.1.4.2" xref="Sx3.E5.m1.10.10.1.1.4.1.cmml"><mo stretchy="false" id="Sx3.E5.m1.10.10.1.1.4.2.1" xref="Sx3.E5.m1.10.10.1.1.4.1.cmml">(</mo><mi id="Sx3.E5.m1.4.4" xref="Sx3.E5.m1.4.4.cmml">r</mi><mo id="Sx3.E5.m1.10.10.1.1.4.2.2" xref="Sx3.E5.m1.10.10.1.1.4.1.cmml">,</mo><mi id="Sx3.E5.m1.5.5" xref="Sx3.E5.m1.5.5.cmml">u</mi><mo id="Sx3.E5.m1.10.10.1.1.4.2.3" xref="Sx3.E5.m1.10.10.1.1.4.1.cmml">,</mo><mi id="Sx3.E5.m1.6.6" xref="Sx3.E5.m1.6.6.cmml">t</mi><mo stretchy="false" id="Sx3.E5.m1.10.10.1.1.4.2.4" xref="Sx3.E5.m1.10.10.1.1.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E5.m1.10.10.1.1.2a" xref="Sx3.E5.m1.10.10.1.1.2.cmml">​</mo><mi id="Sx3.E5.m1.10.10.1.1.5" xref="Sx3.E5.m1.10.10.1.1.5.cmml">l</mi><mo lspace="0em" rspace="0em" id="Sx3.E5.m1.10.10.1.1.2b" xref="Sx3.E5.m1.10.10.1.1.2.cmml">​</mo><mi id="Sx3.E5.m1.10.10.1.1.6" xref="Sx3.E5.m1.10.10.1.1.6.cmml">o</mi><mo lspace="0em" rspace="0em" id="Sx3.E5.m1.10.10.1.1.2c" xref="Sx3.E5.m1.10.10.1.1.2.cmml">​</mo><mi id="Sx3.E5.m1.10.10.1.1.7" xref="Sx3.E5.m1.10.10.1.1.7.cmml">g</mi><mo lspace="0em" rspace="0em" id="Sx3.E5.m1.10.10.1.1.2d" xref="Sx3.E5.m1.10.10.1.1.2.cmml">​</mo><mrow id="Sx3.E5.m1.10.10.1.1.1.1" xref="Sx3.E5.m1.10.10.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E5.m1.10.10.1.1.1.1.2" xref="Sx3.E5.m1.10.10.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.E5.m1.10.10.1.1.1.1.1" xref="Sx3.E5.m1.10.10.1.1.1.1.1.cmml"><mi id="Sx3.E5.m1.10.10.1.1.1.1.1.2" xref="Sx3.E5.m1.10.10.1.1.1.1.1.2.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E5.m1.10.10.1.1.1.1.1.1" xref="Sx3.E5.m1.10.10.1.1.1.1.1.1.cmml">​</mo><mrow id="Sx3.E5.m1.10.10.1.1.1.1.1.3.2" xref="Sx3.E5.m1.10.10.1.1.1.1.1.3.1.cmml"><mo stretchy="false" id="Sx3.E5.m1.10.10.1.1.1.1.1.3.2.1" xref="Sx3.E5.m1.10.10.1.1.1.1.1.3.1.cmml">(</mo><mi id="Sx3.E5.m1.7.7" xref="Sx3.E5.m1.7.7.cmml">r</mi><mo id="Sx3.E5.m1.10.10.1.1.1.1.1.3.2.2" xref="Sx3.E5.m1.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E5.m1.8.8" xref="Sx3.E5.m1.8.8.cmml">u</mi><mo id="Sx3.E5.m1.10.10.1.1.1.1.1.3.2.3" xref="Sx3.E5.m1.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E5.m1.9.9" xref="Sx3.E5.m1.9.9.cmml">t</mi><mo stretchy="false" id="Sx3.E5.m1.10.10.1.1.1.1.1.3.2.4" xref="Sx3.E5.m1.10.10.1.1.1.1.1.3.1.cmml">)</mo></mrow></mrow><mo stretchy="false" id="Sx3.E5.m1.10.10.1.1.1.1.3" xref="Sx3.E5.m1.10.10.1.1.1.1.1.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E5.m1.10b"><apply id="Sx3.E5.m1.10.10.cmml" xref="Sx3.E5.m1.10.10"><eq id="Sx3.E5.m1.10.10.2.cmml" xref="Sx3.E5.m1.10.10.2"></eq><ci id="Sx3.E5.m1.10.10.3.cmml" xref="Sx3.E5.m1.10.10.3">𝐿</ci><apply id="Sx3.E5.m1.10.10.1.cmml" xref="Sx3.E5.m1.10.10.1"><apply id="Sx3.E5.m1.10.10.1.2.cmml" xref="Sx3.E5.m1.10.10.1.2"><csymbol cd="ambiguous" id="Sx3.E5.m1.10.10.1.2.1.cmml" xref="Sx3.E5.m1.10.10.1.2">subscript</csymbol><sum id="Sx3.E5.m1.10.10.1.2.2.cmml" xref="Sx3.E5.m1.10.10.1.2.2"></sum><list id="Sx3.E5.m1.3.3.3.4.cmml" xref="Sx3.E5.m1.3.3.3.5"><ci id="Sx3.E5.m1.1.1.1.1.cmml" xref="Sx3.E5.m1.1.1.1.1">𝑟</ci><ci id="Sx3.E5.m1.2.2.2.2.cmml" xref="Sx3.E5.m1.2.2.2.2">𝑢</ci><ci id="Sx3.E5.m1.3.3.3.3.cmml" xref="Sx3.E5.m1.3.3.3.3">𝑡</ci></list></apply><apply id="Sx3.E5.m1.10.10.1.1.cmml" xref="Sx3.E5.m1.10.10.1.1"><times id="Sx3.E5.m1.10.10.1.1.2.cmml" xref="Sx3.E5.m1.10.10.1.1.2"></times><ci id="Sx3.E5.m1.10.10.1.1.3.cmml" xref="Sx3.E5.m1.10.10.1.1.3">𝑛</ci><vector id="Sx3.E5.m1.10.10.1.1.4.1.cmml" xref="Sx3.E5.m1.10.10.1.1.4.2"><ci id="Sx3.E5.m1.4.4.cmml" xref="Sx3.E5.m1.4.4">𝑟</ci><ci id="Sx3.E5.m1.5.5.cmml" xref="Sx3.E5.m1.5.5">𝑢</ci><ci id="Sx3.E5.m1.6.6.cmml" xref="Sx3.E5.m1.6.6">𝑡</ci></vector><ci id="Sx3.E5.m1.10.10.1.1.5.cmml" xref="Sx3.E5.m1.10.10.1.1.5">𝑙</ci><ci id="Sx3.E5.m1.10.10.1.1.6.cmml" xref="Sx3.E5.m1.10.10.1.1.6">𝑜</ci><ci id="Sx3.E5.m1.10.10.1.1.7.cmml" xref="Sx3.E5.m1.10.10.1.1.7">𝑔</ci><apply id="Sx3.E5.m1.10.10.1.1.1.1.1.cmml" xref="Sx3.E5.m1.10.10.1.1.1.1"><times id="Sx3.E5.m1.10.10.1.1.1.1.1.1.cmml" xref="Sx3.E5.m1.10.10.1.1.1.1.1.1"></times><ci id="Sx3.E5.m1.10.10.1.1.1.1.1.2.cmml" xref="Sx3.E5.m1.10.10.1.1.1.1.1.2">𝑝</ci><vector id="Sx3.E5.m1.10.10.1.1.1.1.1.3.1.cmml" xref="Sx3.E5.m1.10.10.1.1.1.1.1.3.2"><ci id="Sx3.E5.m1.7.7.cmml" xref="Sx3.E5.m1.7.7">𝑟</ci><ci id="Sx3.E5.m1.8.8.cmml" xref="Sx3.E5.m1.8.8">𝑢</ci><ci id="Sx3.E5.m1.9.9.cmml" xref="Sx3.E5.m1.9.9">𝑡</ci></vector></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E5.m1.10c">L=\sum_{r,u,t}n(r,u,t)log(p(r,u,t))</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(5)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx3.p7" class="ltx_para">
+<p id="Sx3.SSx3.p7.2" class="ltx_p">EM algorithm is applied to estimate these parameters. In the
+expectation step, the joint probability of hidden variables <math id="Sx3.SSx3.p7.1.m1.1" class="ltx_Math" alttext="I" display="inline"><semantics id="Sx3.SSx3.p7.1.m1.1a"><mi id="Sx3.SSx3.p7.1.m1.1.1" xref="Sx3.SSx3.p7.1.m1.1.1.cmml">I</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p7.1.m1.1b"><ci id="Sx3.SSx3.p7.1.m1.1.1.cmml" xref="Sx3.SSx3.p7.1.m1.1.1">𝐼</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p7.1.m1.1c">I</annotation></semantics></math> and
+<math id="Sx3.SSx3.p7.2.m2.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx3.SSx3.p7.2.m2.1a"><mi id="Sx3.SSx3.p7.2.m2.1.1" xref="Sx3.SSx3.p7.2.m2.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p7.2.m2.1b"><ci id="Sx3.SSx3.p7.2.m2.1.1.cmml" xref="Sx3.SSx3.p7.2.m2.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p7.2.m2.1c">Z</annotation></semantics></math> given all observations is computed as</p>
+</div>
+<div id="Sx3.SSx3.p8" class="ltx_para">
+<table id="Sx3.E6" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E6.m1.17" class="ltx_Math" alttext="p(i,z|u,r,t)=\frac{p(t|i,z)p(i|u)p(z|r)}{\sum_{i,z}p(t|i,z)p(i|u)p(z|r)}" display="block"><semantics id="Sx3.E6.m1.17a"><mrow id="Sx3.E6.m1.17.17" xref="Sx3.E6.m1.17.17.cmml"><mrow id="Sx3.E6.m1.17.17.1" xref="Sx3.E6.m1.17.17.1.cmml"><mi id="Sx3.E6.m1.17.17.1.3" xref="Sx3.E6.m1.17.17.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.17.17.1.2" xref="Sx3.E6.m1.17.17.1.2.cmml">​</mo><mrow id="Sx3.E6.m1.17.17.1.1.1" xref="Sx3.E6.m1.17.17.1.1.2.cmml"><mo stretchy="false" id="Sx3.E6.m1.17.17.1.1.1.2" xref="Sx3.E6.m1.17.17.1.1.2.cmml">(</mo><mi id="Sx3.E6.m1.16.16" xref="Sx3.E6.m1.16.16.cmml">i</mi><mo id="Sx3.E6.m1.17.17.1.1.1.3" xref="Sx3.E6.m1.17.17.1.1.2.cmml">,</mo><mrow id="Sx3.E6.m1.17.17.1.1.1.1" xref="Sx3.E6.m1.17.17.1.1.1.1.cmml"><mi id="Sx3.E6.m1.17.17.1.1.1.1.2" xref="Sx3.E6.m1.17.17.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E6.m1.17.17.1.1.1.1.1" xref="Sx3.E6.m1.17.17.1.1.1.1.1.cmml">|</mo><mrow id="Sx3.E6.m1.17.17.1.1.1.1.3.2" xref="Sx3.E6.m1.17.17.1.1.1.1.3.1.cmml"><mi id="Sx3.E6.m1.13.13" xref="Sx3.E6.m1.13.13.cmml">u</mi><mo id="Sx3.E6.m1.17.17.1.1.1.1.3.2.1" xref="Sx3.E6.m1.17.17.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E6.m1.14.14" xref="Sx3.E6.m1.14.14.cmml">r</mi><mo id="Sx3.E6.m1.17.17.1.1.1.1.3.2.2" xref="Sx3.E6.m1.17.17.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E6.m1.15.15" xref="Sx3.E6.m1.15.15.cmml">t</mi></mrow></mrow><mo stretchy="false" id="Sx3.E6.m1.17.17.1.1.1.4" xref="Sx3.E6.m1.17.17.1.1.2.cmml">)</mo></mrow></mrow><mo id="Sx3.E6.m1.17.17.2" xref="Sx3.E6.m1.17.17.2.cmml">=</mo><mfrac id="Sx3.E6.m1.12.12" xref="Sx3.E6.m1.12.12.cmml"><mrow id="Sx3.E6.m1.5.5.5" xref="Sx3.E6.m1.5.5.5.cmml"><mi id="Sx3.E6.m1.5.5.5.7" xref="Sx3.E6.m1.5.5.5.7.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.5.5.5.6" xref="Sx3.E6.m1.5.5.5.6.cmml">​</mo><mrow id="Sx3.E6.m1.3.3.3.3.1" xref="Sx3.E6.m1.3.3.3.3.1.1.cmml"><mo stretchy="false" id="Sx3.E6.m1.3.3.3.3.1.2" xref="Sx3.E6.m1.3.3.3.3.1.1.cmml">(</mo><mrow id="Sx3.E6.m1.3.3.3.3.1.1" xref="Sx3.E6.m1.3.3.3.3.1.1.cmml"><mi id="Sx3.E6.m1.3.3.3.3.1.1.2" xref="Sx3.E6.m1.3.3.3.3.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.E6.m1.3.3.3.3.1.1.1" xref="Sx3.E6.m1.3.3.3.3.1.1.1.cmml">|</mo><mrow id="Sx3.E6.m1.3.3.3.3.1.1.3.2" xref="Sx3.E6.m1.3.3.3.3.1.1.3.1.cmml"><mi id="Sx3.E6.m1.1.1.1.1" xref="Sx3.E6.m1.1.1.1.1.cmml">i</mi><mo id="Sx3.E6.m1.3.3.3.3.1.1.3.2.1" xref="Sx3.E6.m1.3.3.3.3.1.1.3.1.cmml">,</mo><mi id="Sx3.E6.m1.2.2.2.2" xref="Sx3.E6.m1.2.2.2.2.cmml">z</mi></mrow></mrow><mo stretchy="false" id="Sx3.E6.m1.3.3.3.3.1.3" xref="Sx3.E6.m1.3.3.3.3.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.5.5.5.6a" xref="Sx3.E6.m1.5.5.5.6.cmml">​</mo><mi id="Sx3.E6.m1.5.5.5.8" xref="Sx3.E6.m1.5.5.5.8.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.5.5.5.6b" xref="Sx3.E6.m1.5.5.5.6.cmml">​</mo><mrow id="Sx3.E6.m1.4.4.4.4.1" xref="Sx3.E6.m1.4.4.4.4.1.1.cmml"><mo stretchy="false" id="Sx3.E6.m1.4.4.4.4.1.2" xref="Sx3.E6.m1.4.4.4.4.1.1.cmml">(</mo><mrow id="Sx3.E6.m1.4.4.4.4.1.1" xref="Sx3.E6.m1.4.4.4.4.1.1.cmml"><mi id="Sx3.E6.m1.4.4.4.4.1.1.2" xref="Sx3.E6.m1.4.4.4.4.1.1.2.cmml">i</mi><mo fence="false" id="Sx3.E6.m1.4.4.4.4.1.1.1" xref="Sx3.E6.m1.4.4.4.4.1.1.1.cmml">|</mo><mi id="Sx3.E6.m1.4.4.4.4.1.1.3" xref="Sx3.E6.m1.4.4.4.4.1.1.3.cmml">u</mi></mrow><mo stretchy="false" id="Sx3.E6.m1.4.4.4.4.1.3" xref="Sx3.E6.m1.4.4.4.4.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.5.5.5.6c" xref="Sx3.E6.m1.5.5.5.6.cmml">​</mo><mi id="Sx3.E6.m1.5.5.5.9" xref="Sx3.E6.m1.5.5.5.9.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.5.5.5.6d" xref="Sx3.E6.m1.5.5.5.6.cmml">​</mo><mrow id="Sx3.E6.m1.5.5.5.5.1" xref="Sx3.E6.m1.5.5.5.5.1.1.cmml"><mo stretchy="false" id="Sx3.E6.m1.5.5.5.5.1.2" xref="Sx3.E6.m1.5.5.5.5.1.1.cmml">(</mo><mrow id="Sx3.E6.m1.5.5.5.5.1.1" xref="Sx3.E6.m1.5.5.5.5.1.1.cmml"><mi id="Sx3.E6.m1.5.5.5.5.1.1.2" xref="Sx3.E6.m1.5.5.5.5.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E6.m1.5.5.5.5.1.1.1" xref="Sx3.E6.m1.5.5.5.5.1.1.1.cmml">|</mo><mi id="Sx3.E6.m1.5.5.5.5.1.1.3" xref="Sx3.E6.m1.5.5.5.5.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.E6.m1.5.5.5.5.1.3" xref="Sx3.E6.m1.5.5.5.5.1.1.cmml">)</mo></mrow></mrow><mrow id="Sx3.E6.m1.12.12.12" xref="Sx3.E6.m1.12.12.12.cmml"><msub id="Sx3.E6.m1.12.12.12.8" xref="Sx3.E6.m1.12.12.12.8.cmml"><mo id="Sx3.E6.m1.12.12.12.8.2" xref="Sx3.E6.m1.12.12.12.8.2.cmml">∑</mo><mrow id="Sx3.E6.m1.7.7.7.2.2.4" xref="Sx3.E6.m1.7.7.7.2.2.3.cmml"><mi id="Sx3.E6.m1.6.6.6.1.1.1" xref="Sx3.E6.m1.6.6.6.1.1.1.cmml">i</mi><mo id="Sx3.E6.m1.7.7.7.2.2.4.1" xref="Sx3.E6.m1.7.7.7.2.2.3.cmml">,</mo><mi id="Sx3.E6.m1.7.7.7.2.2.2" xref="Sx3.E6.m1.7.7.7.2.2.2.cmml">z</mi></mrow></msub><mrow id="Sx3.E6.m1.12.12.12.7" xref="Sx3.E6.m1.12.12.12.7.cmml"><mi id="Sx3.E6.m1.12.12.12.7.5" xref="Sx3.E6.m1.12.12.12.7.5.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.12.12.12.7.4" xref="Sx3.E6.m1.12.12.12.7.4.cmml">​</mo><mrow id="Sx3.E6.m1.10.10.10.5.1.1" xref="Sx3.E6.m1.10.10.10.5.1.1.1.cmml"><mo stretchy="false" id="Sx3.E6.m1.10.10.10.5.1.1.2" xref="Sx3.E6.m1.10.10.10.5.1.1.1.cmml">(</mo><mrow id="Sx3.E6.m1.10.10.10.5.1.1.1" xref="Sx3.E6.m1.10.10.10.5.1.1.1.cmml"><mi id="Sx3.E6.m1.10.10.10.5.1.1.1.2" xref="Sx3.E6.m1.10.10.10.5.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.E6.m1.10.10.10.5.1.1.1.1" xref="Sx3.E6.m1.10.10.10.5.1.1.1.1.cmml">|</mo><mrow id="Sx3.E6.m1.10.10.10.5.1.1.1.3.2" xref="Sx3.E6.m1.10.10.10.5.1.1.1.3.1.cmml"><mi id="Sx3.E6.m1.8.8.8.3" xref="Sx3.E6.m1.8.8.8.3.cmml">i</mi><mo id="Sx3.E6.m1.10.10.10.5.1.1.1.3.2.1" xref="Sx3.E6.m1.10.10.10.5.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E6.m1.9.9.9.4" xref="Sx3.E6.m1.9.9.9.4.cmml">z</mi></mrow></mrow><mo stretchy="false" id="Sx3.E6.m1.10.10.10.5.1.1.3" xref="Sx3.E6.m1.10.10.10.5.1.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.12.12.12.7.4a" xref="Sx3.E6.m1.12.12.12.7.4.cmml">​</mo><mi id="Sx3.E6.m1.12.12.12.7.6" xref="Sx3.E6.m1.12.12.12.7.6.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.12.12.12.7.4b" xref="Sx3.E6.m1.12.12.12.7.4.cmml">​</mo><mrow id="Sx3.E6.m1.11.11.11.6.2.1" xref="Sx3.E6.m1.11.11.11.6.2.1.1.cmml"><mo stretchy="false" id="Sx3.E6.m1.11.11.11.6.2.1.2" xref="Sx3.E6.m1.11.11.11.6.2.1.1.cmml">(</mo><mrow id="Sx3.E6.m1.11.11.11.6.2.1.1" xref="Sx3.E6.m1.11.11.11.6.2.1.1.cmml"><mi id="Sx3.E6.m1.11.11.11.6.2.1.1.2" xref="Sx3.E6.m1.11.11.11.6.2.1.1.2.cmml">i</mi><mo fence="false" id="Sx3.E6.m1.11.11.11.6.2.1.1.1" xref="Sx3.E6.m1.11.11.11.6.2.1.1.1.cmml">|</mo><mi id="Sx3.E6.m1.11.11.11.6.2.1.1.3" xref="Sx3.E6.m1.11.11.11.6.2.1.1.3.cmml">u</mi></mrow><mo stretchy="false" id="Sx3.E6.m1.11.11.11.6.2.1.3" xref="Sx3.E6.m1.11.11.11.6.2.1.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.12.12.12.7.4c" xref="Sx3.E6.m1.12.12.12.7.4.cmml">​</mo><mi id="Sx3.E6.m1.12.12.12.7.7" xref="Sx3.E6.m1.12.12.12.7.7.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E6.m1.12.12.12.7.4d" xref="Sx3.E6.m1.12.12.12.7.4.cmml">​</mo><mrow id="Sx3.E6.m1.12.12.12.7.3.1" xref="Sx3.E6.m1.12.12.12.7.3.1.1.cmml"><mo stretchy="false" id="Sx3.E6.m1.12.12.12.7.3.1.2" xref="Sx3.E6.m1.12.12.12.7.3.1.1.cmml">(</mo><mrow id="Sx3.E6.m1.12.12.12.7.3.1.1" xref="Sx3.E6.m1.12.12.12.7.3.1.1.cmml"><mi id="Sx3.E6.m1.12.12.12.7.3.1.1.2" xref="Sx3.E6.m1.12.12.12.7.3.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E6.m1.12.12.12.7.3.1.1.1" xref="Sx3.E6.m1.12.12.12.7.3.1.1.1.cmml">|</mo><mi id="Sx3.E6.m1.12.12.12.7.3.1.1.3" xref="Sx3.E6.m1.12.12.12.7.3.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.E6.m1.12.12.12.7.3.1.3" xref="Sx3.E6.m1.12.12.12.7.3.1.1.cmml">)</mo></mrow></mrow></mrow></mfrac></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E6.m1.17b"><apply id="Sx3.E6.m1.17.17.cmml" xref="Sx3.E6.m1.17.17"><eq id="Sx3.E6.m1.17.17.2.cmml" xref="Sx3.E6.m1.17.17.2"></eq><apply id="Sx3.E6.m1.17.17.1.cmml" xref="Sx3.E6.m1.17.17.1"><times id="Sx3.E6.m1.17.17.1.2.cmml" xref="Sx3.E6.m1.17.17.1.2"></times><ci id="Sx3.E6.m1.17.17.1.3.cmml" xref="Sx3.E6.m1.17.17.1.3">𝑝</ci><interval closure="open" id="Sx3.E6.m1.17.17.1.1.2.cmml" xref="Sx3.E6.m1.17.17.1.1.1"><ci id="Sx3.E6.m1.16.16.cmml" xref="Sx3.E6.m1.16.16">𝑖</ci><apply id="Sx3.E6.m1.17.17.1.1.1.1.cmml" xref="Sx3.E6.m1.17.17.1.1.1.1"><csymbol cd="latexml" id="Sx3.E6.m1.17.17.1.1.1.1.1.cmml" xref="Sx3.E6.m1.17.17.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.17.17.1.1.1.1.2.cmml" xref="Sx3.E6.m1.17.17.1.1.1.1.2">𝑧</ci><list id="Sx3.E6.m1.17.17.1.1.1.1.3.1.cmml" xref="Sx3.E6.m1.17.17.1.1.1.1.3.2"><ci id="Sx3.E6.m1.13.13.cmml" xref="Sx3.E6.m1.13.13">𝑢</ci><ci id="Sx3.E6.m1.14.14.cmml" xref="Sx3.E6.m1.14.14">𝑟</ci><ci id="Sx3.E6.m1.15.15.cmml" xref="Sx3.E6.m1.15.15">𝑡</ci></list></apply></interval></apply><apply id="Sx3.E6.m1.12.12.cmml" xref="Sx3.E6.m1.12.12"><divide id="Sx3.E6.m1.12.12.13.cmml" xref="Sx3.E6.m1.12.12"></divide><apply id="Sx3.E6.m1.5.5.5.cmml" xref="Sx3.E6.m1.5.5.5"><times id="Sx3.E6.m1.5.5.5.6.cmml" xref="Sx3.E6.m1.5.5.5.6"></times><ci id="Sx3.E6.m1.5.5.5.7.cmml" xref="Sx3.E6.m1.5.5.5.7">𝑝</ci><apply id="Sx3.E6.m1.3.3.3.3.1.1.cmml" xref="Sx3.E6.m1.3.3.3.3.1"><csymbol cd="latexml" id="Sx3.E6.m1.3.3.3.3.1.1.1.cmml" xref="Sx3.E6.m1.3.3.3.3.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.3.3.3.3.1.1.2.cmml" xref="Sx3.E6.m1.3.3.3.3.1.1.2">𝑡</ci><list id="Sx3.E6.m1.3.3.3.3.1.1.3.1.cmml" xref="Sx3.E6.m1.3.3.3.3.1.1.3.2"><ci id="Sx3.E6.m1.1.1.1.1.cmml" xref="Sx3.E6.m1.1.1.1.1">𝑖</ci><ci id="Sx3.E6.m1.2.2.2.2.cmml" xref="Sx3.E6.m1.2.2.2.2">𝑧</ci></list></apply><ci id="Sx3.E6.m1.5.5.5.8.cmml" xref="Sx3.E6.m1.5.5.5.8">𝑝</ci><apply id="Sx3.E6.m1.4.4.4.4.1.1.cmml" xref="Sx3.E6.m1.4.4.4.4.1"><csymbol cd="latexml" id="Sx3.E6.m1.4.4.4.4.1.1.1.cmml" xref="Sx3.E6.m1.4.4.4.4.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.4.4.4.4.1.1.2.cmml" xref="Sx3.E6.m1.4.4.4.4.1.1.2">𝑖</ci><ci id="Sx3.E6.m1.4.4.4.4.1.1.3.cmml" xref="Sx3.E6.m1.4.4.4.4.1.1.3">𝑢</ci></apply><ci id="Sx3.E6.m1.5.5.5.9.cmml" xref="Sx3.E6.m1.5.5.5.9">𝑝</ci><apply id="Sx3.E6.m1.5.5.5.5.1.1.cmml" xref="Sx3.E6.m1.5.5.5.5.1"><csymbol cd="latexml" id="Sx3.E6.m1.5.5.5.5.1.1.1.cmml" xref="Sx3.E6.m1.5.5.5.5.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.5.5.5.5.1.1.2.cmml" xref="Sx3.E6.m1.5.5.5.5.1.1.2">𝑧</ci><ci id="Sx3.E6.m1.5.5.5.5.1.1.3.cmml" xref="Sx3.E6.m1.5.5.5.5.1.1.3">𝑟</ci></apply></apply><apply id="Sx3.E6.m1.12.12.12.cmml" xref="Sx3.E6.m1.12.12.12"><apply id="Sx3.E6.m1.12.12.12.8.cmml" xref="Sx3.E6.m1.12.12.12.8"><csymbol cd="ambiguous" id="Sx3.E6.m1.12.12.12.8.1.cmml" xref="Sx3.E6.m1.12.12.12.8">subscript</csymbol><sum id="Sx3.E6.m1.12.12.12.8.2.cmml" xref="Sx3.E6.m1.12.12.12.8.2"></sum><list id="Sx3.E6.m1.7.7.7.2.2.3.cmml" xref="Sx3.E6.m1.7.7.7.2.2.4"><ci id="Sx3.E6.m1.6.6.6.1.1.1.cmml" xref="Sx3.E6.m1.6.6.6.1.1.1">𝑖</ci><ci id="Sx3.E6.m1.7.7.7.2.2.2.cmml" xref="Sx3.E6.m1.7.7.7.2.2.2">𝑧</ci></list></apply><apply id="Sx3.E6.m1.12.12.12.7.cmml" xref="Sx3.E6.m1.12.12.12.7"><times id="Sx3.E6.m1.12.12.12.7.4.cmml" xref="Sx3.E6.m1.12.12.12.7.4"></times><ci id="Sx3.E6.m1.12.12.12.7.5.cmml" xref="Sx3.E6.m1.12.12.12.7.5">𝑝</ci><apply id="Sx3.E6.m1.10.10.10.5.1.1.1.cmml" xref="Sx3.E6.m1.10.10.10.5.1.1"><csymbol cd="latexml" id="Sx3.E6.m1.10.10.10.5.1.1.1.1.cmml" xref="Sx3.E6.m1.10.10.10.5.1.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.10.10.10.5.1.1.1.2.cmml" xref="Sx3.E6.m1.10.10.10.5.1.1.1.2">𝑡</ci><list id="Sx3.E6.m1.10.10.10.5.1.1.1.3.1.cmml" xref="Sx3.E6.m1.10.10.10.5.1.1.1.3.2"><ci id="Sx3.E6.m1.8.8.8.3.cmml" xref="Sx3.E6.m1.8.8.8.3">𝑖</ci><ci id="Sx3.E6.m1.9.9.9.4.cmml" xref="Sx3.E6.m1.9.9.9.4">𝑧</ci></list></apply><ci id="Sx3.E6.m1.12.12.12.7.6.cmml" xref="Sx3.E6.m1.12.12.12.7.6">𝑝</ci><apply id="Sx3.E6.m1.11.11.11.6.2.1.1.cmml" xref="Sx3.E6.m1.11.11.11.6.2.1"><csymbol cd="latexml" id="Sx3.E6.m1.11.11.11.6.2.1.1.1.cmml" xref="Sx3.E6.m1.11.11.11.6.2.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.11.11.11.6.2.1.1.2.cmml" xref="Sx3.E6.m1.11.11.11.6.2.1.1.2">𝑖</ci><ci id="Sx3.E6.m1.11.11.11.6.2.1.1.3.cmml" xref="Sx3.E6.m1.11.11.11.6.2.1.1.3">𝑢</ci></apply><ci id="Sx3.E6.m1.12.12.12.7.7.cmml" xref="Sx3.E6.m1.12.12.12.7.7">𝑝</ci><apply id="Sx3.E6.m1.12.12.12.7.3.1.1.cmml" xref="Sx3.E6.m1.12.12.12.7.3.1"><csymbol cd="latexml" id="Sx3.E6.m1.12.12.12.7.3.1.1.1.cmml" xref="Sx3.E6.m1.12.12.12.7.3.1.1.1">conditional</csymbol><ci id="Sx3.E6.m1.12.12.12.7.3.1.1.2.cmml" xref="Sx3.E6.m1.12.12.12.7.3.1.1.2">𝑧</ci><ci id="Sx3.E6.m1.12.12.12.7.3.1.1.3.cmml" xref="Sx3.E6.m1.12.12.12.7.3.1.1.3">𝑟</ci></apply></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E6.m1.17c">p(i,z|u,r,t)=\frac{p(t|i,z)p(i|u)p(z|r)}{\sum_{i,z}p(t|i,z)p(i|u)p(z|r)}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(6)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx3.p9" class="ltx_para">
+<p id="Sx3.SSx3.p9.1" class="ltx_p">Subsequently, each parameter is re-estimated using <math id="Sx3.SSx3.p9.1.m1.5" class="ltx_Math" alttext="p(i,z|u,r,t)" display="inline"><semantics id="Sx3.SSx3.p9.1.m1.5a"><mrow id="Sx3.SSx3.p9.1.m1.5.5" xref="Sx3.SSx3.p9.1.m1.5.5.cmml"><mi id="Sx3.SSx3.p9.1.m1.5.5.3" xref="Sx3.SSx3.p9.1.m1.5.5.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p9.1.m1.5.5.2" xref="Sx3.SSx3.p9.1.m1.5.5.2.cmml">​</mo><mrow id="Sx3.SSx3.p9.1.m1.5.5.1.1" xref="Sx3.SSx3.p9.1.m1.5.5.1.2.cmml"><mo stretchy="false" id="Sx3.SSx3.p9.1.m1.5.5.1.1.2" xref="Sx3.SSx3.p9.1.m1.5.5.1.2.cmml">(</mo><mi id="Sx3.SSx3.p9.1.m1.4.4" xref="Sx3.SSx3.p9.1.m1.4.4.cmml">i</mi><mo id="Sx3.SSx3.p9.1.m1.5.5.1.1.3" xref="Sx3.SSx3.p9.1.m1.5.5.1.2.cmml">,</mo><mrow id="Sx3.SSx3.p9.1.m1.5.5.1.1.1" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.cmml"><mi id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.2" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.1" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.1.cmml">|</mo><mrow id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.2" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.1.cmml"><mi id="Sx3.SSx3.p9.1.m1.1.1" xref="Sx3.SSx3.p9.1.m1.1.1.cmml">u</mi><mo id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.2.1" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.1.cmml">,</mo><mi id="Sx3.SSx3.p9.1.m1.2.2" xref="Sx3.SSx3.p9.1.m1.2.2.cmml">r</mi><mo id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.2.2" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.1.cmml">,</mo><mi id="Sx3.SSx3.p9.1.m1.3.3" xref="Sx3.SSx3.p9.1.m1.3.3.cmml">t</mi></mrow></mrow><mo stretchy="false" id="Sx3.SSx3.p9.1.m1.5.5.1.1.4" xref="Sx3.SSx3.p9.1.m1.5.5.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p9.1.m1.5b"><apply id="Sx3.SSx3.p9.1.m1.5.5.cmml" xref="Sx3.SSx3.p9.1.m1.5.5"><times id="Sx3.SSx3.p9.1.m1.5.5.2.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.2"></times><ci id="Sx3.SSx3.p9.1.m1.5.5.3.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.3">𝑝</ci><interval closure="open" id="Sx3.SSx3.p9.1.m1.5.5.1.2.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.1.1"><ci id="Sx3.SSx3.p9.1.m1.4.4.cmml" xref="Sx3.SSx3.p9.1.m1.4.4">𝑖</ci><apply id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1"><csymbol cd="latexml" id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.1.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.2.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.2">𝑧</ci><list id="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.1.cmml" xref="Sx3.SSx3.p9.1.m1.5.5.1.1.1.3.2"><ci id="Sx3.SSx3.p9.1.m1.1.1.cmml" xref="Sx3.SSx3.p9.1.m1.1.1">𝑢</ci><ci id="Sx3.SSx3.p9.1.m1.2.2.cmml" xref="Sx3.SSx3.p9.1.m1.2.2">𝑟</ci><ci id="Sx3.SSx3.p9.1.m1.3.3.cmml" xref="Sx3.SSx3.p9.1.m1.3.3">𝑡</ci></list></apply></interval></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p9.1.m1.5c">p(i,z|u,r,t)</annotation></semantics></math>
+we just computed from the E step</p>
+</div>
+<div id="Sx3.SSx3.p10" class="ltx_para">
+<table id="Sx3.E7" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E7.m1.24" class="ltx_Math" alttext="p(t|i,z)=\frac{\sum_{r,u}n(r,u,t)p(i,z|u,r,t)}{\sum_{r,u,t}n(r,u,t)p(i,z|u,r,t)}" display="block"><semantics id="Sx3.E7.m1.24a"><mrow id="Sx3.E7.m1.24.24" xref="Sx3.E7.m1.24.24.cmml"><mrow id="Sx3.E7.m1.24.24.1" xref="Sx3.E7.m1.24.24.1.cmml"><mi id="Sx3.E7.m1.24.24.1.3" xref="Sx3.E7.m1.24.24.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.24.24.1.2" xref="Sx3.E7.m1.24.24.1.2.cmml">​</mo><mrow id="Sx3.E7.m1.24.24.1.1.1" xref="Sx3.E7.m1.24.24.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E7.m1.24.24.1.1.1.2" xref="Sx3.E7.m1.24.24.1.1.1.1.cmml">(</mo><mrow id="Sx3.E7.m1.24.24.1.1.1.1" xref="Sx3.E7.m1.24.24.1.1.1.1.cmml"><mi id="Sx3.E7.m1.24.24.1.1.1.1.2" xref="Sx3.E7.m1.24.24.1.1.1.1.2.cmml">t</mi><mo fence="false" id="Sx3.E7.m1.24.24.1.1.1.1.1" xref="Sx3.E7.m1.24.24.1.1.1.1.1.cmml">|</mo><mrow id="Sx3.E7.m1.24.24.1.1.1.1.3.2" xref="Sx3.E7.m1.24.24.1.1.1.1.3.1.cmml"><mi id="Sx3.E7.m1.22.22" xref="Sx3.E7.m1.22.22.cmml">i</mi><mo id="Sx3.E7.m1.24.24.1.1.1.1.3.2.1" xref="Sx3.E7.m1.24.24.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E7.m1.23.23" xref="Sx3.E7.m1.23.23.cmml">z</mi></mrow></mrow><mo stretchy="false" id="Sx3.E7.m1.24.24.1.1.1.3" xref="Sx3.E7.m1.24.24.1.1.1.1.cmml">)</mo></mrow></mrow><mo id="Sx3.E7.m1.24.24.2" xref="Sx3.E7.m1.24.24.2.cmml">=</mo><mfrac id="Sx3.E7.m1.21.21" xref="Sx3.E7.m1.21.21.cmml"><mrow id="Sx3.E7.m1.10.10.10" xref="Sx3.E7.m1.10.10.10.cmml"><msub id="Sx3.E7.m1.10.10.10.11" xref="Sx3.E7.m1.10.10.10.11.cmml"><mo id="Sx3.E7.m1.10.10.10.11.2" xref="Sx3.E7.m1.10.10.10.11.2.cmml">∑</mo><mrow id="Sx3.E7.m1.2.2.2.2.2.4" xref="Sx3.E7.m1.2.2.2.2.2.3.cmml"><mi id="Sx3.E7.m1.1.1.1.1.1.1" xref="Sx3.E7.m1.1.1.1.1.1.1.cmml">r</mi><mo id="Sx3.E7.m1.2.2.2.2.2.4.1" xref="Sx3.E7.m1.2.2.2.2.2.3.cmml">,</mo><mi id="Sx3.E7.m1.2.2.2.2.2.2" xref="Sx3.E7.m1.2.2.2.2.2.2.cmml">u</mi></mrow></msub><mrow id="Sx3.E7.m1.10.10.10.10" xref="Sx3.E7.m1.10.10.10.10.cmml"><mi id="Sx3.E7.m1.10.10.10.10.3" xref="Sx3.E7.m1.10.10.10.10.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.10.10.10.10.2" xref="Sx3.E7.m1.10.10.10.10.2.cmml">​</mo><mrow id="Sx3.E7.m1.10.10.10.10.4.2" xref="Sx3.E7.m1.10.10.10.10.4.1.cmml"><mo stretchy="false" id="Sx3.E7.m1.10.10.10.10.4.2.1" xref="Sx3.E7.m1.10.10.10.10.4.1.cmml">(</mo><mi id="Sx3.E7.m1.3.3.3.3" xref="Sx3.E7.m1.3.3.3.3.cmml">r</mi><mo id="Sx3.E7.m1.10.10.10.10.4.2.2" xref="Sx3.E7.m1.10.10.10.10.4.1.cmml">,</mo><mi id="Sx3.E7.m1.4.4.4.4" xref="Sx3.E7.m1.4.4.4.4.cmml">u</mi><mo id="Sx3.E7.m1.10.10.10.10.4.2.3" xref="Sx3.E7.m1.10.10.10.10.4.1.cmml">,</mo><mi id="Sx3.E7.m1.5.5.5.5" xref="Sx3.E7.m1.5.5.5.5.cmml">t</mi><mo stretchy="false" id="Sx3.E7.m1.10.10.10.10.4.2.4" xref="Sx3.E7.m1.10.10.10.10.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.10.10.10.10.2a" xref="Sx3.E7.m1.10.10.10.10.2.cmml">​</mo><mi id="Sx3.E7.m1.10.10.10.10.5" xref="Sx3.E7.m1.10.10.10.10.5.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.10.10.10.10.2b" xref="Sx3.E7.m1.10.10.10.10.2.cmml">​</mo><mrow id="Sx3.E7.m1.10.10.10.10.1.1" xref="Sx3.E7.m1.10.10.10.10.1.2.cmml"><mo stretchy="false" id="Sx3.E7.m1.10.10.10.10.1.1.2" xref="Sx3.E7.m1.10.10.10.10.1.2.cmml">(</mo><mi id="Sx3.E7.m1.9.9.9.9" xref="Sx3.E7.m1.9.9.9.9.cmml">i</mi><mo id="Sx3.E7.m1.10.10.10.10.1.1.3" xref="Sx3.E7.m1.10.10.10.10.1.2.cmml">,</mo><mrow id="Sx3.E7.m1.10.10.10.10.1.1.1" xref="Sx3.E7.m1.10.10.10.10.1.1.1.cmml"><mi id="Sx3.E7.m1.10.10.10.10.1.1.1.2" xref="Sx3.E7.m1.10.10.10.10.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E7.m1.10.10.10.10.1.1.1.1" xref="Sx3.E7.m1.10.10.10.10.1.1.1.1.cmml">|</mo><mrow id="Sx3.E7.m1.10.10.10.10.1.1.1.3.2" xref="Sx3.E7.m1.10.10.10.10.1.1.1.3.1.cmml"><mi id="Sx3.E7.m1.6.6.6.6" xref="Sx3.E7.m1.6.6.6.6.cmml">u</mi><mo id="Sx3.E7.m1.10.10.10.10.1.1.1.3.2.1" xref="Sx3.E7.m1.10.10.10.10.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E7.m1.7.7.7.7" xref="Sx3.E7.m1.7.7.7.7.cmml">r</mi><mo id="Sx3.E7.m1.10.10.10.10.1.1.1.3.2.2" xref="Sx3.E7.m1.10.10.10.10.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E7.m1.8.8.8.8" xref="Sx3.E7.m1.8.8.8.8.cmml">t</mi></mrow></mrow><mo stretchy="false" id="Sx3.E7.m1.10.10.10.10.1.1.4" xref="Sx3.E7.m1.10.10.10.10.1.2.cmml">)</mo></mrow></mrow></mrow><mrow id="Sx3.E7.m1.21.21.21" xref="Sx3.E7.m1.21.21.21.cmml"><msub id="Sx3.E7.m1.21.21.21.12" xref="Sx3.E7.m1.21.21.21.12.cmml"><mo id="Sx3.E7.m1.21.21.21.12.2" xref="Sx3.E7.m1.21.21.21.12.2.cmml">∑</mo><mrow id="Sx3.E7.m1.13.13.13.3.3.5" xref="Sx3.E7.m1.13.13.13.3.3.4.cmml"><mi id="Sx3.E7.m1.11.11.11.1.1.1" xref="Sx3.E7.m1.11.11.11.1.1.1.cmml">r</mi><mo id="Sx3.E7.m1.13.13.13.3.3.5.1" xref="Sx3.E7.m1.13.13.13.3.3.4.cmml">,</mo><mi id="Sx3.E7.m1.12.12.12.2.2.2" xref="Sx3.E7.m1.12.12.12.2.2.2.cmml">u</mi><mo id="Sx3.E7.m1.13.13.13.3.3.5.2" xref="Sx3.E7.m1.13.13.13.3.3.4.cmml">,</mo><mi id="Sx3.E7.m1.13.13.13.3.3.3" xref="Sx3.E7.m1.13.13.13.3.3.3.cmml">t</mi></mrow></msub><mrow id="Sx3.E7.m1.21.21.21.11" xref="Sx3.E7.m1.21.21.21.11.cmml"><mi id="Sx3.E7.m1.21.21.21.11.3" xref="Sx3.E7.m1.21.21.21.11.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.21.21.21.11.2" xref="Sx3.E7.m1.21.21.21.11.2.cmml">​</mo><mrow id="Sx3.E7.m1.21.21.21.11.4.2" xref="Sx3.E7.m1.21.21.21.11.4.1.cmml"><mo stretchy="false" id="Sx3.E7.m1.21.21.21.11.4.2.1" xref="Sx3.E7.m1.21.21.21.11.4.1.cmml">(</mo><mi id="Sx3.E7.m1.14.14.14.4" xref="Sx3.E7.m1.14.14.14.4.cmml">r</mi><mo id="Sx3.E7.m1.21.21.21.11.4.2.2" xref="Sx3.E7.m1.21.21.21.11.4.1.cmml">,</mo><mi id="Sx3.E7.m1.15.15.15.5" xref="Sx3.E7.m1.15.15.15.5.cmml">u</mi><mo id="Sx3.E7.m1.21.21.21.11.4.2.3" xref="Sx3.E7.m1.21.21.21.11.4.1.cmml">,</mo><mi id="Sx3.E7.m1.16.16.16.6" xref="Sx3.E7.m1.16.16.16.6.cmml">t</mi><mo stretchy="false" id="Sx3.E7.m1.21.21.21.11.4.2.4" xref="Sx3.E7.m1.21.21.21.11.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.21.21.21.11.2a" xref="Sx3.E7.m1.21.21.21.11.2.cmml">​</mo><mi id="Sx3.E7.m1.21.21.21.11.5" xref="Sx3.E7.m1.21.21.21.11.5.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E7.m1.21.21.21.11.2b" xref="Sx3.E7.m1.21.21.21.11.2.cmml">​</mo><mrow id="Sx3.E7.m1.21.21.21.11.1.1" xref="Sx3.E7.m1.21.21.21.11.1.2.cmml"><mo stretchy="false" id="Sx3.E7.m1.21.21.21.11.1.1.2" xref="Sx3.E7.m1.21.21.21.11.1.2.cmml">(</mo><mi id="Sx3.E7.m1.20.20.20.10" xref="Sx3.E7.m1.20.20.20.10.cmml">i</mi><mo id="Sx3.E7.m1.21.21.21.11.1.1.3" xref="Sx3.E7.m1.21.21.21.11.1.2.cmml">,</mo><mrow id="Sx3.E7.m1.21.21.21.11.1.1.1" xref="Sx3.E7.m1.21.21.21.11.1.1.1.cmml"><mi id="Sx3.E7.m1.21.21.21.11.1.1.1.2" xref="Sx3.E7.m1.21.21.21.11.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E7.m1.21.21.21.11.1.1.1.1" xref="Sx3.E7.m1.21.21.21.11.1.1.1.1.cmml">|</mo><mrow id="Sx3.E7.m1.21.21.21.11.1.1.1.3.2" xref="Sx3.E7.m1.21.21.21.11.1.1.1.3.1.cmml"><mi id="Sx3.E7.m1.17.17.17.7" xref="Sx3.E7.m1.17.17.17.7.cmml">u</mi><mo id="Sx3.E7.m1.21.21.21.11.1.1.1.3.2.1" xref="Sx3.E7.m1.21.21.21.11.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E7.m1.18.18.18.8" xref="Sx3.E7.m1.18.18.18.8.cmml">r</mi><mo id="Sx3.E7.m1.21.21.21.11.1.1.1.3.2.2" xref="Sx3.E7.m1.21.21.21.11.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E7.m1.19.19.19.9" xref="Sx3.E7.m1.19.19.19.9.cmml">t</mi></mrow></mrow><mo stretchy="false" id="Sx3.E7.m1.21.21.21.11.1.1.4" xref="Sx3.E7.m1.21.21.21.11.1.2.cmml">)</mo></mrow></mrow></mrow></mfrac></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E7.m1.24b"><apply id="Sx3.E7.m1.24.24.cmml" xref="Sx3.E7.m1.24.24"><eq id="Sx3.E7.m1.24.24.2.cmml" xref="Sx3.E7.m1.24.24.2"></eq><apply id="Sx3.E7.m1.24.24.1.cmml" xref="Sx3.E7.m1.24.24.1"><times id="Sx3.E7.m1.24.24.1.2.cmml" xref="Sx3.E7.m1.24.24.1.2"></times><ci id="Sx3.E7.m1.24.24.1.3.cmml" xref="Sx3.E7.m1.24.24.1.3">𝑝</ci><apply id="Sx3.E7.m1.24.24.1.1.1.1.cmml" xref="Sx3.E7.m1.24.24.1.1.1"><csymbol cd="latexml" id="Sx3.E7.m1.24.24.1.1.1.1.1.cmml" xref="Sx3.E7.m1.24.24.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E7.m1.24.24.1.1.1.1.2.cmml" xref="Sx3.E7.m1.24.24.1.1.1.1.2">𝑡</ci><list id="Sx3.E7.m1.24.24.1.1.1.1.3.1.cmml" xref="Sx3.E7.m1.24.24.1.1.1.1.3.2"><ci id="Sx3.E7.m1.22.22.cmml" xref="Sx3.E7.m1.22.22">𝑖</ci><ci id="Sx3.E7.m1.23.23.cmml" xref="Sx3.E7.m1.23.23">𝑧</ci></list></apply></apply><apply id="Sx3.E7.m1.21.21.cmml" xref="Sx3.E7.m1.21.21"><divide id="Sx3.E7.m1.21.21.22.cmml" xref="Sx3.E7.m1.21.21"></divide><apply id="Sx3.E7.m1.10.10.10.cmml" xref="Sx3.E7.m1.10.10.10"><apply id="Sx3.E7.m1.10.10.10.11.cmml" xref="Sx3.E7.m1.10.10.10.11"><csymbol cd="ambiguous" id="Sx3.E7.m1.10.10.10.11.1.cmml" xref="Sx3.E7.m1.10.10.10.11">subscript</csymbol><sum id="Sx3.E7.m1.10.10.10.11.2.cmml" xref="Sx3.E7.m1.10.10.10.11.2"></sum><list id="Sx3.E7.m1.2.2.2.2.2.3.cmml" xref="Sx3.E7.m1.2.2.2.2.2.4"><ci id="Sx3.E7.m1.1.1.1.1.1.1.cmml" xref="Sx3.E7.m1.1.1.1.1.1.1">𝑟</ci><ci id="Sx3.E7.m1.2.2.2.2.2.2.cmml" xref="Sx3.E7.m1.2.2.2.2.2.2">𝑢</ci></list></apply><apply id="Sx3.E7.m1.10.10.10.10.cmml" xref="Sx3.E7.m1.10.10.10.10"><times id="Sx3.E7.m1.10.10.10.10.2.cmml" xref="Sx3.E7.m1.10.10.10.10.2"></times><ci id="Sx3.E7.m1.10.10.10.10.3.cmml" xref="Sx3.E7.m1.10.10.10.10.3">𝑛</ci><vector id="Sx3.E7.m1.10.10.10.10.4.1.cmml" xref="Sx3.E7.m1.10.10.10.10.4.2"><ci id="Sx3.E7.m1.3.3.3.3.cmml" xref="Sx3.E7.m1.3.3.3.3">𝑟</ci><ci id="Sx3.E7.m1.4.4.4.4.cmml" xref="Sx3.E7.m1.4.4.4.4">𝑢</ci><ci id="Sx3.E7.m1.5.5.5.5.cmml" xref="Sx3.E7.m1.5.5.5.5">𝑡</ci></vector><ci id="Sx3.E7.m1.10.10.10.10.5.cmml" xref="Sx3.E7.m1.10.10.10.10.5">𝑝</ci><interval closure="open" id="Sx3.E7.m1.10.10.10.10.1.2.cmml" xref="Sx3.E7.m1.10.10.10.10.1.1"><ci id="Sx3.E7.m1.9.9.9.9.cmml" xref="Sx3.E7.m1.9.9.9.9">𝑖</ci><apply id="Sx3.E7.m1.10.10.10.10.1.1.1.cmml" xref="Sx3.E7.m1.10.10.10.10.1.1.1"><csymbol cd="latexml" id="Sx3.E7.m1.10.10.10.10.1.1.1.1.cmml" xref="Sx3.E7.m1.10.10.10.10.1.1.1.1">conditional</csymbol><ci id="Sx3.E7.m1.10.10.10.10.1.1.1.2.cmml" xref="Sx3.E7.m1.10.10.10.10.1.1.1.2">𝑧</ci><list id="Sx3.E7.m1.10.10.10.10.1.1.1.3.1.cmml" xref="Sx3.E7.m1.10.10.10.10.1.1.1.3.2"><ci id="Sx3.E7.m1.6.6.6.6.cmml" xref="Sx3.E7.m1.6.6.6.6">𝑢</ci><ci id="Sx3.E7.m1.7.7.7.7.cmml" xref="Sx3.E7.m1.7.7.7.7">𝑟</ci><ci id="Sx3.E7.m1.8.8.8.8.cmml" xref="Sx3.E7.m1.8.8.8.8">𝑡</ci></list></apply></interval></apply></apply><apply id="Sx3.E7.m1.21.21.21.cmml" xref="Sx3.E7.m1.21.21.21"><apply id="Sx3.E7.m1.21.21.21.12.cmml" xref="Sx3.E7.m1.21.21.21.12"><csymbol cd="ambiguous" id="Sx3.E7.m1.21.21.21.12.1.cmml" xref="Sx3.E7.m1.21.21.21.12">subscript</csymbol><sum id="Sx3.E7.m1.21.21.21.12.2.cmml" xref="Sx3.E7.m1.21.21.21.12.2"></sum><list id="Sx3.E7.m1.13.13.13.3.3.4.cmml" xref="Sx3.E7.m1.13.13.13.3.3.5"><ci id="Sx3.E7.m1.11.11.11.1.1.1.cmml" xref="Sx3.E7.m1.11.11.11.1.1.1">𝑟</ci><ci id="Sx3.E7.m1.12.12.12.2.2.2.cmml" xref="Sx3.E7.m1.12.12.12.2.2.2">𝑢</ci><ci id="Sx3.E7.m1.13.13.13.3.3.3.cmml" xref="Sx3.E7.m1.13.13.13.3.3.3">𝑡</ci></list></apply><apply id="Sx3.E7.m1.21.21.21.11.cmml" xref="Sx3.E7.m1.21.21.21.11"><times id="Sx3.E7.m1.21.21.21.11.2.cmml" xref="Sx3.E7.m1.21.21.21.11.2"></times><ci id="Sx3.E7.m1.21.21.21.11.3.cmml" xref="Sx3.E7.m1.21.21.21.11.3">𝑛</ci><vector id="Sx3.E7.m1.21.21.21.11.4.1.cmml" xref="Sx3.E7.m1.21.21.21.11.4.2"><ci id="Sx3.E7.m1.14.14.14.4.cmml" xref="Sx3.E7.m1.14.14.14.4">𝑟</ci><ci id="Sx3.E7.m1.15.15.15.5.cmml" xref="Sx3.E7.m1.15.15.15.5">𝑢</ci><ci id="Sx3.E7.m1.16.16.16.6.cmml" xref="Sx3.E7.m1.16.16.16.6">𝑡</ci></vector><ci id="Sx3.E7.m1.21.21.21.11.5.cmml" xref="Sx3.E7.m1.21.21.21.11.5">𝑝</ci><interval closure="open" id="Sx3.E7.m1.21.21.21.11.1.2.cmml" xref="Sx3.E7.m1.21.21.21.11.1.1"><ci id="Sx3.E7.m1.20.20.20.10.cmml" xref="Sx3.E7.m1.20.20.20.10">𝑖</ci><apply id="Sx3.E7.m1.21.21.21.11.1.1.1.cmml" xref="Sx3.E7.m1.21.21.21.11.1.1.1"><csymbol cd="latexml" id="Sx3.E7.m1.21.21.21.11.1.1.1.1.cmml" xref="Sx3.E7.m1.21.21.21.11.1.1.1.1">conditional</csymbol><ci id="Sx3.E7.m1.21.21.21.11.1.1.1.2.cmml" xref="Sx3.E7.m1.21.21.21.11.1.1.1.2">𝑧</ci><list id="Sx3.E7.m1.21.21.21.11.1.1.1.3.1.cmml" xref="Sx3.E7.m1.21.21.21.11.1.1.1.3.2"><ci id="Sx3.E7.m1.17.17.17.7.cmml" xref="Sx3.E7.m1.17.17.17.7">𝑢</ci><ci id="Sx3.E7.m1.18.18.18.8.cmml" xref="Sx3.E7.m1.18.18.18.8">𝑟</ci><ci id="Sx3.E7.m1.19.19.19.9.cmml" xref="Sx3.E7.m1.19.19.19.9">𝑡</ci></list></apply></interval></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E7.m1.24c">p(t|i,z)=\frac{\sum_{r,u}n(r,u,t)p(i,z|u,r,t)}{\sum_{r,u,t}n(r,u,t)p(i,z|u,r,t)}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(7)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx3.p11" class="ltx_para">
+<table id="Sx3.E8" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E8.m1.12" class="ltx_Math" alttext="p(i|u)=\frac{\sum_{r,t}n(r,u,t)\sum_{z}p(i,z|u,r,t)}{n(u)}" display="block"><semantics id="Sx3.E8.m1.12a"><mrow id="Sx3.E8.m1.12.12" xref="Sx3.E8.m1.12.12.cmml"><mrow id="Sx3.E8.m1.12.12.1" xref="Sx3.E8.m1.12.12.1.cmml"><mi id="Sx3.E8.m1.12.12.1.3" xref="Sx3.E8.m1.12.12.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E8.m1.12.12.1.2" xref="Sx3.E8.m1.12.12.1.2.cmml">​</mo><mrow id="Sx3.E8.m1.12.12.1.1.1" xref="Sx3.E8.m1.12.12.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E8.m1.12.12.1.1.1.2" xref="Sx3.E8.m1.12.12.1.1.1.1.cmml">(</mo><mrow id="Sx3.E8.m1.12.12.1.1.1.1" xref="Sx3.E8.m1.12.12.1.1.1.1.cmml"><mi id="Sx3.E8.m1.12.12.1.1.1.1.2" xref="Sx3.E8.m1.12.12.1.1.1.1.2.cmml">i</mi><mo fence="false" id="Sx3.E8.m1.12.12.1.1.1.1.1" xref="Sx3.E8.m1.12.12.1.1.1.1.1.cmml">|</mo><mi id="Sx3.E8.m1.12.12.1.1.1.1.3" xref="Sx3.E8.m1.12.12.1.1.1.1.3.cmml">u</mi></mrow><mo stretchy="false" id="Sx3.E8.m1.12.12.1.1.1.3" xref="Sx3.E8.m1.12.12.1.1.1.1.cmml">)</mo></mrow></mrow><mo id="Sx3.E8.m1.12.12.2" xref="Sx3.E8.m1.12.12.2.cmml">=</mo><mfrac id="Sx3.E8.m1.11.11" xref="Sx3.E8.m1.11.11.cmml"><mrow id="Sx3.E8.m1.10.10.10" xref="Sx3.E8.m1.10.10.10.cmml"><msub id="Sx3.E8.m1.10.10.10.11" xref="Sx3.E8.m1.10.10.10.11.cmml"><mo id="Sx3.E8.m1.10.10.10.11.2" xref="Sx3.E8.m1.10.10.10.11.2.cmml">∑</mo><mrow id="Sx3.E8.m1.2.2.2.2.2.4" xref="Sx3.E8.m1.2.2.2.2.2.3.cmml"><mi id="Sx3.E8.m1.1.1.1.1.1.1" xref="Sx3.E8.m1.1.1.1.1.1.1.cmml">r</mi><mo id="Sx3.E8.m1.2.2.2.2.2.4.1" xref="Sx3.E8.m1.2.2.2.2.2.3.cmml">,</mo><mi id="Sx3.E8.m1.2.2.2.2.2.2" xref="Sx3.E8.m1.2.2.2.2.2.2.cmml">t</mi></mrow></msub><mrow id="Sx3.E8.m1.10.10.10.10" xref="Sx3.E8.m1.10.10.10.10.cmml"><mi id="Sx3.E8.m1.10.10.10.10.3" xref="Sx3.E8.m1.10.10.10.10.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E8.m1.10.10.10.10.2" xref="Sx3.E8.m1.10.10.10.10.2.cmml">​</mo><mrow id="Sx3.E8.m1.10.10.10.10.4.2" xref="Sx3.E8.m1.10.10.10.10.4.1.cmml"><mo stretchy="false" id="Sx3.E8.m1.10.10.10.10.4.2.1" xref="Sx3.E8.m1.10.10.10.10.4.1.cmml">(</mo><mi id="Sx3.E8.m1.3.3.3.3" xref="Sx3.E8.m1.3.3.3.3.cmml">r</mi><mo id="Sx3.E8.m1.10.10.10.10.4.2.2" xref="Sx3.E8.m1.10.10.10.10.4.1.cmml">,</mo><mi id="Sx3.E8.m1.4.4.4.4" xref="Sx3.E8.m1.4.4.4.4.cmml">u</mi><mo id="Sx3.E8.m1.10.10.10.10.4.2.3" xref="Sx3.E8.m1.10.10.10.10.4.1.cmml">,</mo><mi id="Sx3.E8.m1.5.5.5.5" xref="Sx3.E8.m1.5.5.5.5.cmml">t</mi><mo stretchy="false" id="Sx3.E8.m1.10.10.10.10.4.2.4" xref="Sx3.E8.m1.10.10.10.10.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E8.m1.10.10.10.10.2a" xref="Sx3.E8.m1.10.10.10.10.2.cmml">​</mo><mrow id="Sx3.E8.m1.10.10.10.10.1" xref="Sx3.E8.m1.10.10.10.10.1.cmml"><msub id="Sx3.E8.m1.10.10.10.10.1.2" xref="Sx3.E8.m1.10.10.10.10.1.2.cmml"><mo id="Sx3.E8.m1.10.10.10.10.1.2.2" xref="Sx3.E8.m1.10.10.10.10.1.2.2.cmml">∑</mo><mi id="Sx3.E8.m1.10.10.10.10.1.2.3" xref="Sx3.E8.m1.10.10.10.10.1.2.3.cmml">z</mi></msub><mrow id="Sx3.E8.m1.10.10.10.10.1.1" xref="Sx3.E8.m1.10.10.10.10.1.1.cmml"><mi id="Sx3.E8.m1.10.10.10.10.1.1.3" xref="Sx3.E8.m1.10.10.10.10.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E8.m1.10.10.10.10.1.1.2" xref="Sx3.E8.m1.10.10.10.10.1.1.2.cmml">​</mo><mrow id="Sx3.E8.m1.10.10.10.10.1.1.1.1" xref="Sx3.E8.m1.10.10.10.10.1.1.1.2.cmml"><mo stretchy="false" id="Sx3.E8.m1.10.10.10.10.1.1.1.1.2" xref="Sx3.E8.m1.10.10.10.10.1.1.1.2.cmml">(</mo><mi id="Sx3.E8.m1.9.9.9.9" xref="Sx3.E8.m1.9.9.9.9.cmml">i</mi><mo id="Sx3.E8.m1.10.10.10.10.1.1.1.1.3" xref="Sx3.E8.m1.10.10.10.10.1.1.1.2.cmml">,</mo><mrow id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.cmml"><mi id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.2" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.1" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.1.cmml">|</mo><mrow id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.2" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.1.cmml"><mi id="Sx3.E8.m1.6.6.6.6" xref="Sx3.E8.m1.6.6.6.6.cmml">u</mi><mo id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.2.1" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E8.m1.7.7.7.7" xref="Sx3.E8.m1.7.7.7.7.cmml">r</mi><mo id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.2.2" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E8.m1.8.8.8.8" xref="Sx3.E8.m1.8.8.8.8.cmml">t</mi></mrow></mrow><mo stretchy="false" id="Sx3.E8.m1.10.10.10.10.1.1.1.1.4" xref="Sx3.E8.m1.10.10.10.10.1.1.1.2.cmml">)</mo></mrow></mrow></mrow></mrow></mrow><mrow id="Sx3.E8.m1.11.11.11" xref="Sx3.E8.m1.11.11.11.cmml"><mi id="Sx3.E8.m1.11.11.11.3" xref="Sx3.E8.m1.11.11.11.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E8.m1.11.11.11.2" xref="Sx3.E8.m1.11.11.11.2.cmml">​</mo><mrow id="Sx3.E8.m1.11.11.11.4.2" xref="Sx3.E8.m1.11.11.11.cmml"><mo stretchy="false" id="Sx3.E8.m1.11.11.11.4.2.1" xref="Sx3.E8.m1.11.11.11.cmml">(</mo><mi id="Sx3.E8.m1.11.11.11.1" xref="Sx3.E8.m1.11.11.11.1.cmml">u</mi><mo stretchy="false" id="Sx3.E8.m1.11.11.11.4.2.2" xref="Sx3.E8.m1.11.11.11.cmml">)</mo></mrow></mrow></mfrac></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E8.m1.12b"><apply id="Sx3.E8.m1.12.12.cmml" xref="Sx3.E8.m1.12.12"><eq id="Sx3.E8.m1.12.12.2.cmml" xref="Sx3.E8.m1.12.12.2"></eq><apply id="Sx3.E8.m1.12.12.1.cmml" xref="Sx3.E8.m1.12.12.1"><times id="Sx3.E8.m1.12.12.1.2.cmml" xref="Sx3.E8.m1.12.12.1.2"></times><ci id="Sx3.E8.m1.12.12.1.3.cmml" xref="Sx3.E8.m1.12.12.1.3">𝑝</ci><apply id="Sx3.E8.m1.12.12.1.1.1.1.cmml" xref="Sx3.E8.m1.12.12.1.1.1"><csymbol cd="latexml" id="Sx3.E8.m1.12.12.1.1.1.1.1.cmml" xref="Sx3.E8.m1.12.12.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E8.m1.12.12.1.1.1.1.2.cmml" xref="Sx3.E8.m1.12.12.1.1.1.1.2">𝑖</ci><ci id="Sx3.E8.m1.12.12.1.1.1.1.3.cmml" xref="Sx3.E8.m1.12.12.1.1.1.1.3">𝑢</ci></apply></apply><apply id="Sx3.E8.m1.11.11.cmml" xref="Sx3.E8.m1.11.11"><divide id="Sx3.E8.m1.11.11.12.cmml" xref="Sx3.E8.m1.11.11"></divide><apply id="Sx3.E8.m1.10.10.10.cmml" xref="Sx3.E8.m1.10.10.10"><apply id="Sx3.E8.m1.10.10.10.11.cmml" xref="Sx3.E8.m1.10.10.10.11"><csymbol cd="ambiguous" id="Sx3.E8.m1.10.10.10.11.1.cmml" xref="Sx3.E8.m1.10.10.10.11">subscript</csymbol><sum id="Sx3.E8.m1.10.10.10.11.2.cmml" xref="Sx3.E8.m1.10.10.10.11.2"></sum><list id="Sx3.E8.m1.2.2.2.2.2.3.cmml" xref="Sx3.E8.m1.2.2.2.2.2.4"><ci id="Sx3.E8.m1.1.1.1.1.1.1.cmml" xref="Sx3.E8.m1.1.1.1.1.1.1">𝑟</ci><ci id="Sx3.E8.m1.2.2.2.2.2.2.cmml" xref="Sx3.E8.m1.2.2.2.2.2.2">𝑡</ci></list></apply><apply id="Sx3.E8.m1.10.10.10.10.cmml" xref="Sx3.E8.m1.10.10.10.10"><times id="Sx3.E8.m1.10.10.10.10.2.cmml" xref="Sx3.E8.m1.10.10.10.10.2"></times><ci id="Sx3.E8.m1.10.10.10.10.3.cmml" xref="Sx3.E8.m1.10.10.10.10.3">𝑛</ci><vector id="Sx3.E8.m1.10.10.10.10.4.1.cmml" xref="Sx3.E8.m1.10.10.10.10.4.2"><ci id="Sx3.E8.m1.3.3.3.3.cmml" xref="Sx3.E8.m1.3.3.3.3">𝑟</ci><ci id="Sx3.E8.m1.4.4.4.4.cmml" xref="Sx3.E8.m1.4.4.4.4">𝑢</ci><ci id="Sx3.E8.m1.5.5.5.5.cmml" xref="Sx3.E8.m1.5.5.5.5">𝑡</ci></vector><apply id="Sx3.E8.m1.10.10.10.10.1.cmml" xref="Sx3.E8.m1.10.10.10.10.1"><apply id="Sx3.E8.m1.10.10.10.10.1.2.cmml" xref="Sx3.E8.m1.10.10.10.10.1.2"><csymbol cd="ambiguous" id="Sx3.E8.m1.10.10.10.10.1.2.1.cmml" xref="Sx3.E8.m1.10.10.10.10.1.2">subscript</csymbol><sum id="Sx3.E8.m1.10.10.10.10.1.2.2.cmml" xref="Sx3.E8.m1.10.10.10.10.1.2.2"></sum><ci id="Sx3.E8.m1.10.10.10.10.1.2.3.cmml" xref="Sx3.E8.m1.10.10.10.10.1.2.3">𝑧</ci></apply><apply id="Sx3.E8.m1.10.10.10.10.1.1.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1"><times id="Sx3.E8.m1.10.10.10.10.1.1.2.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.2"></times><ci id="Sx3.E8.m1.10.10.10.10.1.1.3.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.3">𝑝</ci><interval closure="open" id="Sx3.E8.m1.10.10.10.10.1.1.1.2.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1"><ci id="Sx3.E8.m1.9.9.9.9.cmml" xref="Sx3.E8.m1.9.9.9.9">𝑖</ci><apply id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1"><csymbol cd="latexml" id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.1.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.2.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.2">𝑧</ci><list id="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.1.cmml" xref="Sx3.E8.m1.10.10.10.10.1.1.1.1.1.3.2"><ci id="Sx3.E8.m1.6.6.6.6.cmml" xref="Sx3.E8.m1.6.6.6.6">𝑢</ci><ci id="Sx3.E8.m1.7.7.7.7.cmml" xref="Sx3.E8.m1.7.7.7.7">𝑟</ci><ci id="Sx3.E8.m1.8.8.8.8.cmml" xref="Sx3.E8.m1.8.8.8.8">𝑡</ci></list></apply></interval></apply></apply></apply></apply><apply id="Sx3.E8.m1.11.11.11.cmml" xref="Sx3.E8.m1.11.11.11"><times id="Sx3.E8.m1.11.11.11.2.cmml" xref="Sx3.E8.m1.11.11.11.2"></times><ci id="Sx3.E8.m1.11.11.11.3.cmml" xref="Sx3.E8.m1.11.11.11.3">𝑛</ci><ci id="Sx3.E8.m1.11.11.11.1.cmml" xref="Sx3.E8.m1.11.11.11.1">𝑢</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E8.m1.12c">p(i|u)=\frac{\sum_{r,t}n(r,u,t)\sum_{z}p(i,z|u,r,t)}{n(u)}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(8)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx3.p12" class="ltx_para">
+<table id="Sx3.E9" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="Sx3.E9.m1.12" class="ltx_Math" alttext="p(z|r)=\frac{\sum_{u,t}n(r,u,t)\sum_{i}p(i,z|u,r,t)}{n(r)}" display="block"><semantics id="Sx3.E9.m1.12a"><mrow id="Sx3.E9.m1.12.12" xref="Sx3.E9.m1.12.12.cmml"><mrow id="Sx3.E9.m1.12.12.1" xref="Sx3.E9.m1.12.12.1.cmml"><mi id="Sx3.E9.m1.12.12.1.3" xref="Sx3.E9.m1.12.12.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E9.m1.12.12.1.2" xref="Sx3.E9.m1.12.12.1.2.cmml">​</mo><mrow id="Sx3.E9.m1.12.12.1.1.1" xref="Sx3.E9.m1.12.12.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.E9.m1.12.12.1.1.1.2" xref="Sx3.E9.m1.12.12.1.1.1.1.cmml">(</mo><mrow id="Sx3.E9.m1.12.12.1.1.1.1" xref="Sx3.E9.m1.12.12.1.1.1.1.cmml"><mi id="Sx3.E9.m1.12.12.1.1.1.1.2" xref="Sx3.E9.m1.12.12.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E9.m1.12.12.1.1.1.1.1" xref="Sx3.E9.m1.12.12.1.1.1.1.1.cmml">|</mo><mi id="Sx3.E9.m1.12.12.1.1.1.1.3" xref="Sx3.E9.m1.12.12.1.1.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.E9.m1.12.12.1.1.1.3" xref="Sx3.E9.m1.12.12.1.1.1.1.cmml">)</mo></mrow></mrow><mo id="Sx3.E9.m1.12.12.2" xref="Sx3.E9.m1.12.12.2.cmml">=</mo><mfrac id="Sx3.E9.m1.11.11" xref="Sx3.E9.m1.11.11.cmml"><mrow id="Sx3.E9.m1.10.10.10" xref="Sx3.E9.m1.10.10.10.cmml"><msub id="Sx3.E9.m1.10.10.10.11" xref="Sx3.E9.m1.10.10.10.11.cmml"><mo id="Sx3.E9.m1.10.10.10.11.2" xref="Sx3.E9.m1.10.10.10.11.2.cmml">∑</mo><mrow id="Sx3.E9.m1.2.2.2.2.2.4" xref="Sx3.E9.m1.2.2.2.2.2.3.cmml"><mi id="Sx3.E9.m1.1.1.1.1.1.1" xref="Sx3.E9.m1.1.1.1.1.1.1.cmml">u</mi><mo id="Sx3.E9.m1.2.2.2.2.2.4.1" xref="Sx3.E9.m1.2.2.2.2.2.3.cmml">,</mo><mi id="Sx3.E9.m1.2.2.2.2.2.2" xref="Sx3.E9.m1.2.2.2.2.2.2.cmml">t</mi></mrow></msub><mrow id="Sx3.E9.m1.10.10.10.10" xref="Sx3.E9.m1.10.10.10.10.cmml"><mi id="Sx3.E9.m1.10.10.10.10.3" xref="Sx3.E9.m1.10.10.10.10.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E9.m1.10.10.10.10.2" xref="Sx3.E9.m1.10.10.10.10.2.cmml">​</mo><mrow id="Sx3.E9.m1.10.10.10.10.4.2" xref="Sx3.E9.m1.10.10.10.10.4.1.cmml"><mo stretchy="false" id="Sx3.E9.m1.10.10.10.10.4.2.1" xref="Sx3.E9.m1.10.10.10.10.4.1.cmml">(</mo><mi id="Sx3.E9.m1.3.3.3.3" xref="Sx3.E9.m1.3.3.3.3.cmml">r</mi><mo id="Sx3.E9.m1.10.10.10.10.4.2.2" xref="Sx3.E9.m1.10.10.10.10.4.1.cmml">,</mo><mi id="Sx3.E9.m1.4.4.4.4" xref="Sx3.E9.m1.4.4.4.4.cmml">u</mi><mo id="Sx3.E9.m1.10.10.10.10.4.2.3" xref="Sx3.E9.m1.10.10.10.10.4.1.cmml">,</mo><mi id="Sx3.E9.m1.5.5.5.5" xref="Sx3.E9.m1.5.5.5.5.cmml">t</mi><mo stretchy="false" id="Sx3.E9.m1.10.10.10.10.4.2.4" xref="Sx3.E9.m1.10.10.10.10.4.1.cmml">)</mo></mrow><mo lspace="0em" rspace="0em" id="Sx3.E9.m1.10.10.10.10.2a" xref="Sx3.E9.m1.10.10.10.10.2.cmml">​</mo><mrow id="Sx3.E9.m1.10.10.10.10.1" xref="Sx3.E9.m1.10.10.10.10.1.cmml"><msub id="Sx3.E9.m1.10.10.10.10.1.2" xref="Sx3.E9.m1.10.10.10.10.1.2.cmml"><mo id="Sx3.E9.m1.10.10.10.10.1.2.2" xref="Sx3.E9.m1.10.10.10.10.1.2.2.cmml">∑</mo><mi id="Sx3.E9.m1.10.10.10.10.1.2.3" xref="Sx3.E9.m1.10.10.10.10.1.2.3.cmml">i</mi></msub><mrow id="Sx3.E9.m1.10.10.10.10.1.1" xref="Sx3.E9.m1.10.10.10.10.1.1.cmml"><mi id="Sx3.E9.m1.10.10.10.10.1.1.3" xref="Sx3.E9.m1.10.10.10.10.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.E9.m1.10.10.10.10.1.1.2" xref="Sx3.E9.m1.10.10.10.10.1.1.2.cmml">​</mo><mrow id="Sx3.E9.m1.10.10.10.10.1.1.1.1" xref="Sx3.E9.m1.10.10.10.10.1.1.1.2.cmml"><mo stretchy="false" id="Sx3.E9.m1.10.10.10.10.1.1.1.1.2" xref="Sx3.E9.m1.10.10.10.10.1.1.1.2.cmml">(</mo><mi id="Sx3.E9.m1.9.9.9.9" xref="Sx3.E9.m1.9.9.9.9.cmml">i</mi><mo id="Sx3.E9.m1.10.10.10.10.1.1.1.1.3" xref="Sx3.E9.m1.10.10.10.10.1.1.1.2.cmml">,</mo><mrow id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.cmml"><mi id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.2" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.1" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.1.cmml">|</mo><mrow id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.2" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.1.cmml"><mi id="Sx3.E9.m1.6.6.6.6" xref="Sx3.E9.m1.6.6.6.6.cmml">u</mi><mo id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.2.1" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E9.m1.7.7.7.7" xref="Sx3.E9.m1.7.7.7.7.cmml">r</mi><mo id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.2.2" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.1.cmml">,</mo><mi id="Sx3.E9.m1.8.8.8.8" xref="Sx3.E9.m1.8.8.8.8.cmml">t</mi></mrow></mrow><mo stretchy="false" id="Sx3.E9.m1.10.10.10.10.1.1.1.1.4" xref="Sx3.E9.m1.10.10.10.10.1.1.1.2.cmml">)</mo></mrow></mrow></mrow></mrow></mrow><mrow id="Sx3.E9.m1.11.11.11" xref="Sx3.E9.m1.11.11.11.cmml"><mi id="Sx3.E9.m1.11.11.11.3" xref="Sx3.E9.m1.11.11.11.3.cmml">n</mi><mo lspace="0em" rspace="0em" id="Sx3.E9.m1.11.11.11.2" xref="Sx3.E9.m1.11.11.11.2.cmml">​</mo><mrow id="Sx3.E9.m1.11.11.11.4.2" xref="Sx3.E9.m1.11.11.11.cmml"><mo stretchy="false" id="Sx3.E9.m1.11.11.11.4.2.1" xref="Sx3.E9.m1.11.11.11.cmml">(</mo><mi id="Sx3.E9.m1.11.11.11.1" xref="Sx3.E9.m1.11.11.11.1.cmml">r</mi><mo stretchy="false" id="Sx3.E9.m1.11.11.11.4.2.2" xref="Sx3.E9.m1.11.11.11.cmml">)</mo></mrow></mrow></mfrac></mrow><annotation-xml encoding="MathML-Content" id="Sx3.E9.m1.12b"><apply id="Sx3.E9.m1.12.12.cmml" xref="Sx3.E9.m1.12.12"><eq id="Sx3.E9.m1.12.12.2.cmml" xref="Sx3.E9.m1.12.12.2"></eq><apply id="Sx3.E9.m1.12.12.1.cmml" xref="Sx3.E9.m1.12.12.1"><times id="Sx3.E9.m1.12.12.1.2.cmml" xref="Sx3.E9.m1.12.12.1.2"></times><ci id="Sx3.E9.m1.12.12.1.3.cmml" xref="Sx3.E9.m1.12.12.1.3">𝑝</ci><apply id="Sx3.E9.m1.12.12.1.1.1.1.cmml" xref="Sx3.E9.m1.12.12.1.1.1"><csymbol cd="latexml" id="Sx3.E9.m1.12.12.1.1.1.1.1.cmml" xref="Sx3.E9.m1.12.12.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E9.m1.12.12.1.1.1.1.2.cmml" xref="Sx3.E9.m1.12.12.1.1.1.1.2">𝑧</ci><ci id="Sx3.E9.m1.12.12.1.1.1.1.3.cmml" xref="Sx3.E9.m1.12.12.1.1.1.1.3">𝑟</ci></apply></apply><apply id="Sx3.E9.m1.11.11.cmml" xref="Sx3.E9.m1.11.11"><divide id="Sx3.E9.m1.11.11.12.cmml" xref="Sx3.E9.m1.11.11"></divide><apply id="Sx3.E9.m1.10.10.10.cmml" xref="Sx3.E9.m1.10.10.10"><apply id="Sx3.E9.m1.10.10.10.11.cmml" xref="Sx3.E9.m1.10.10.10.11"><csymbol cd="ambiguous" id="Sx3.E9.m1.10.10.10.11.1.cmml" xref="Sx3.E9.m1.10.10.10.11">subscript</csymbol><sum id="Sx3.E9.m1.10.10.10.11.2.cmml" xref="Sx3.E9.m1.10.10.10.11.2"></sum><list id="Sx3.E9.m1.2.2.2.2.2.3.cmml" xref="Sx3.E9.m1.2.2.2.2.2.4"><ci id="Sx3.E9.m1.1.1.1.1.1.1.cmml" xref="Sx3.E9.m1.1.1.1.1.1.1">𝑢</ci><ci id="Sx3.E9.m1.2.2.2.2.2.2.cmml" xref="Sx3.E9.m1.2.2.2.2.2.2">𝑡</ci></list></apply><apply id="Sx3.E9.m1.10.10.10.10.cmml" xref="Sx3.E9.m1.10.10.10.10"><times id="Sx3.E9.m1.10.10.10.10.2.cmml" xref="Sx3.E9.m1.10.10.10.10.2"></times><ci id="Sx3.E9.m1.10.10.10.10.3.cmml" xref="Sx3.E9.m1.10.10.10.10.3">𝑛</ci><vector id="Sx3.E9.m1.10.10.10.10.4.1.cmml" xref="Sx3.E9.m1.10.10.10.10.4.2"><ci id="Sx3.E9.m1.3.3.3.3.cmml" xref="Sx3.E9.m1.3.3.3.3">𝑟</ci><ci id="Sx3.E9.m1.4.4.4.4.cmml" xref="Sx3.E9.m1.4.4.4.4">𝑢</ci><ci id="Sx3.E9.m1.5.5.5.5.cmml" xref="Sx3.E9.m1.5.5.5.5">𝑡</ci></vector><apply id="Sx3.E9.m1.10.10.10.10.1.cmml" xref="Sx3.E9.m1.10.10.10.10.1"><apply id="Sx3.E9.m1.10.10.10.10.1.2.cmml" xref="Sx3.E9.m1.10.10.10.10.1.2"><csymbol cd="ambiguous" id="Sx3.E9.m1.10.10.10.10.1.2.1.cmml" xref="Sx3.E9.m1.10.10.10.10.1.2">subscript</csymbol><sum id="Sx3.E9.m1.10.10.10.10.1.2.2.cmml" xref="Sx3.E9.m1.10.10.10.10.1.2.2"></sum><ci id="Sx3.E9.m1.10.10.10.10.1.2.3.cmml" xref="Sx3.E9.m1.10.10.10.10.1.2.3">𝑖</ci></apply><apply id="Sx3.E9.m1.10.10.10.10.1.1.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1"><times id="Sx3.E9.m1.10.10.10.10.1.1.2.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.2"></times><ci id="Sx3.E9.m1.10.10.10.10.1.1.3.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.3">𝑝</ci><interval closure="open" id="Sx3.E9.m1.10.10.10.10.1.1.1.2.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1"><ci id="Sx3.E9.m1.9.9.9.9.cmml" xref="Sx3.E9.m1.9.9.9.9">𝑖</ci><apply id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1"><csymbol cd="latexml" id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.1.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.2.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.2">𝑧</ci><list id="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.1.cmml" xref="Sx3.E9.m1.10.10.10.10.1.1.1.1.1.3.2"><ci id="Sx3.E9.m1.6.6.6.6.cmml" xref="Sx3.E9.m1.6.6.6.6">𝑢</ci><ci id="Sx3.E9.m1.7.7.7.7.cmml" xref="Sx3.E9.m1.7.7.7.7">𝑟</ci><ci id="Sx3.E9.m1.8.8.8.8.cmml" xref="Sx3.E9.m1.8.8.8.8">𝑡</ci></list></apply></interval></apply></apply></apply></apply><apply id="Sx3.E9.m1.11.11.11.cmml" xref="Sx3.E9.m1.11.11.11"><times id="Sx3.E9.m1.11.11.11.2.cmml" xref="Sx3.E9.m1.11.11.11.2"></times><ci id="Sx3.E9.m1.11.11.11.3.cmml" xref="Sx3.E9.m1.11.11.11.3">𝑛</ci><ci id="Sx3.E9.m1.11.11.11.1.cmml" xref="Sx3.E9.m1.11.11.11.1">𝑟</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.E9.m1.12c">p(z|r)=\frac{\sum_{u,t}n(r,u,t)\sum_{i}p(i,z|u,r,t)}{n(r)}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(9)</span></td>
+</tr></tbody>
+</table>
+</div>
+<div id="Sx3.SSx3.p13" class="ltx_para">
+<p id="Sx3.SSx3.p13.1" class="ltx_p">The algorithm iterates between E and M step until the log
+likelihood or all parameter values converges.</p>
+</div>
+<div id="Sx3.SSx3.p14" class="ltx_para">
+<p id="Sx3.SSx3.p14.1" class="ltx_p">Once all the models are learned, we use the distribution of topics
+of a resource <math id="Sx3.SSx3.p14.1.m1.1" class="ltx_Math" alttext="p(z|r)" display="inline"><semantics id="Sx3.SSx3.p14.1.m1.1a"><mrow id="Sx3.SSx3.p14.1.m1.1.1" xref="Sx3.SSx3.p14.1.m1.1.1.cmml"><mi id="Sx3.SSx3.p14.1.m1.1.1.3" xref="Sx3.SSx3.p14.1.m1.1.1.3.cmml">p</mi><mo lspace="0em" rspace="0em" id="Sx3.SSx3.p14.1.m1.1.1.2" xref="Sx3.SSx3.p14.1.m1.1.1.2.cmml">​</mo><mrow id="Sx3.SSx3.p14.1.m1.1.1.1.1" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx3.SSx3.p14.1.m1.1.1.1.1.2" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.cmml">(</mo><mrow id="Sx3.SSx3.p14.1.m1.1.1.1.1.1" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.cmml"><mi id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.2" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.2.cmml">z</mi><mo fence="false" id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.1" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.1.cmml">|</mo><mi id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.3" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.3.cmml">r</mi></mrow><mo stretchy="false" id="Sx3.SSx3.p14.1.m1.1.1.1.1.3" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx3.SSx3.p14.1.m1.1b"><apply id="Sx3.SSx3.p14.1.m1.1.1.cmml" xref="Sx3.SSx3.p14.1.m1.1.1"><times id="Sx3.SSx3.p14.1.m1.1.1.2.cmml" xref="Sx3.SSx3.p14.1.m1.1.1.2"></times><ci id="Sx3.SSx3.p14.1.m1.1.1.3.cmml" xref="Sx3.SSx3.p14.1.m1.1.1.3">𝑝</ci><apply id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.cmml" xref="Sx3.SSx3.p14.1.m1.1.1.1.1"><csymbol cd="latexml" id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.1.cmml" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.1">conditional</csymbol><ci id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.2.cmml" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.2">𝑧</ci><ci id="Sx3.SSx3.p14.1.m1.1.1.1.1.1.3.cmml" xref="Sx3.SSx3.p14.1.m1.1.1.1.1.1.3">𝑟</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.SSx3.p14.1.m1.1c">p(z|r)</annotation></semantics></math> to compute similarity between resources and
+the seed using Jensen-Shannon divergence.</p>
+</div>
+</section>
+</section>
+<section id="Sx4" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Empirical Validation</h2>
+
+<div id="Sx4.p1" class="ltx_para">
+<p id="Sx4.p1.1" class="ltx_p">To evaluate our approach, we collected data
+for three seed resources:
+<em id="Sx4.p1.1.1" class="ltx_emph ltx_font_italic">flytecomm</em><span id="footnote2" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">2</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">2</sup><span class="ltx_tag ltx_tag_note">2</span>http://www.flytecomm.com/cgi-bin/trackflight/</span></span></span>
+<em id="Sx4.p1.1.2" class="ltx_emph ltx_font_italic">geocoder</em><span id="footnote3" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">3</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">3</sup><span class="ltx_tag ltx_tag_note">3</span>http://geocoder.us</span></span></span> and
+<em id="Sx4.p1.1.3" class="ltx_emph ltx_font_italic">wunderground</em><span id="footnote4" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">4</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">4</sup><span class="ltx_tag ltx_tag_note">4</span>http://www.wunderground.com/</span></span></span>. The
+first resource allows users to track flights given the airline and
+flight number or departure and arrival airports; the second
+resource returns coordinates of a given address; while, the third
+resource supplies weather information for a particular location
+(given by zipcode, city and state, or airport). Our goal is to
+find other resources that provide flight tracking, geocoding and
+weather information. Our approach is to crawl <em id="Sx4.p1.1.4" class="ltx_emph ltx_font_italic">del.icio.us</em>
+to gather resources possibly related to the seed; apply the
+probabilistic models to find the topic distribution of the
+resources; then rank all gathered resources based on how similar
+their topic distribution is to the seed’s topic distribution. The
+crawling strategy is defined as follows: for each seed</p>
+<ul id="Sx4.I2" class="ltx_itemize">
+<li id="Sx4.I2.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx4.I2.i1.p1" class="ltx_para">
+<p id="Sx4.I2.i1.p1.1" class="ltx_p">Retrieve the 20 most popular tags that users have applied to
+that resource</p>
+</div>
+</li>
+<li id="Sx4.I2.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx4.I2.i2.p1" class="ltx_para">
+<p id="Sx4.I2.i2.p1.1" class="ltx_p">For each of the tags, retrieve other resources that have been
+annotated with that tag</p>
+</div>
+</li>
+<li id="Sx4.I2.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx4.I2.i3.p1" class="ltx_para">
+<p id="Sx4.I2.i3.p1.1" class="ltx_p">For each resource, collect all bookmarks that have been
+created for it (i.e., resource-user-tag triples)</p>
+</div>
+</li>
+</ul>
+<p id="Sx4.p1.2" class="ltx_p">We wrote special-purpose Web page scrapers to extract this
+information from <em id="Sx4.p1.2.1" class="ltx_emph ltx_font_italic">del.icio.us</em>. In principle, we could continue
+to expand the collection of resources by gathering tags and
+retrieving more resources that have been tagged with those tags, but
+in practice, even after the small traversal we do, we obtain more
+than 10 million triples for the <em id="Sx4.p1.2.2" class="ltx_emph ltx_font_italic">wunderground</em> seed.</p>
+</div>
+<div id="Sx4.p2" class="ltx_para">
+<p id="Sx4.p2.1" class="ltx_p">We obtained the datasets for the seeds <em id="Sx4.p2.1.1" class="ltx_emph ltx_font_italic">flytecomm</em> and
+<em id="Sx4.p2.1.2" class="ltx_emph ltx_font_italic">geocoder</em> in May 2006 and for the seed <em id="Sx4.p2.1.3" class="ltx_emph ltx_font_italic">wunderground</em>
+in January 2007. We reduced the dataset by omitting low (fewer
+than ten) and high (more than ten thousand) frequency tags and all
+the triples associated with those tags. After this reduction, we
+were left with (a) 2,284,308 triples with 3,562 unique resources;
+14,297 unique tags; 34,594 unique users for the <em id="Sx4.p2.1.4" class="ltx_emph ltx_font_italic">flytecomm</em>
+seed; (b) 3,775,832 triples with 5,572 unique resources; 16,887
+unique tags and 46,764 unique users for the <em id="Sx4.p2.1.5" class="ltx_emph ltx_font_italic">geocoder</em> seed;
+(c) 6,327,211 triples with 7,176 unique resources; 77,056 unique
+tags and 45,852 unique users for the <em id="Sx4.p2.1.6" class="ltx_emph ltx_font_italic">wunderground</em> seed.</p>
+</div>
+<div id="Sx4.p3" class="ltx_para">
+<p id="Sx4.p3.1" class="ltx_p">Next, we trained all three models on the data: pLSA, MWA and ITM.
+We then used the learned topic distributions to compute the
+similarity of the resources in each dataset to the seed, and
+ranked the resources by similarity. We evaluated the performance
+of each model by manually checking the top 100 resources produced
+by the model according to the criteria below:</p>
+<ul id="Sx4.I3" class="ltx_itemize">
+<li id="Sx4.I3.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx4.I3.i1.p1" class="ltx_para">
+<p id="Sx4.I3.i1.p1.1" class="ltx_p"><em id="Sx4.I3.i1.p1.1.1" class="ltx_emph ltx_font_italic">same</em>: the resource has the same functionality if it provides an input form that takes the same type of
+data as the seed and returns the same type of output data: e.g., a
+flight tracker takes a flight number and returns flight status</p>
+</div>
+</li>
+<li id="Sx4.I3.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="Sx4.I3.i2.p1" class="ltx_para">
+<p id="Sx4.I3.i2.p1.1" class="ltx_p"><em id="Sx4.I3.i2.p1.1.1" class="ltx_emph ltx_font_italic">link-to</em>: the resource contains a link to a page with
+the same functionality as the seed (see criteria above). We can
+easily automate the step that check the links for the right
+functionality.</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="Sx4.p4" class="ltx_para">
+<p id="Sx4.p4.1" class="ltx_p">Although evaluation is performed manually now, we plan to automate
+this process in the future by using the form’s metadata to predict
+semantic types of inputs (<span id="Sx4.p4.1.1" class="ltx_text ltx_font_bold">?</span>), automatically query the
+source, extract data from it and classify it using the tools
+described in (<span id="Sx4.p4.1.2" class="ltx_text ltx_font_bold">?</span>; <span id="Sx4.p4.1.3" class="ltx_text ltx_font_bold">?</span>). We will then be able
+to validate that the resource has functionality similar to the
+seed by comparing its input and output data with that of the
+seed (<span id="Sx4.p4.1.4" class="ltx_text ltx_font_bold">?</span>). Note that since each step in the automatic
+query and data extraction process has some probability of failure,
+we will need to identify many more relevant resources than
+required in order to guarantee that we will be able to
+automatically verify some of them.</p>
+</div>
+<figure id="Sx4.F3" class="ltx_figure">
+<table id="Sx4.F3.3" class="ltx_tabular ltx_align_middle">
+<tbody class="ltx_tbody">
+<tr id="Sx4.F3.3.3" class="ltx_tr">
+<td id="Sx4.F3.1.1.1" class="ltx_td ltx_align_center"><img src="/html/0704.1675/assets/x3.png" id="Sx4.F3.1.1.1.g1" class="ltx_graphics ltx_img_square" width="153" height="133" alt="Refer to caption"></td>
+<td id="Sx4.F3.2.2.2" class="ltx_td ltx_align_center"><img src="/html/0704.1675/assets/x4.png" id="Sx4.F3.2.2.2.g1" class="ltx_graphics ltx_img_square" width="153" height="133" alt="Refer to caption"></td>
+<td id="Sx4.F3.3.3.3" class="ltx_td ltx_align_center"><img src="/html/0704.1675/assets/x5.png" id="Sx4.F3.3.3.3.g1" class="ltx_graphics ltx_img_square" width="153" height="133" alt="Refer to caption"></td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>Performance of different models on the three datasets.
+Each model was trained with 40 or 100 topics. For ITM, we fix
+interest to 20 interests across all different datasets. The bars
+show the number of resources within the top 100 returned by each
+model that had the same functionality as the seed or contained a
+link to a resource with the same functionality as the seed. </figcaption>
+</figure>
+<div id="Sx4.p5" class="ltx_para">
+<p id="Sx4.p5.1" class="ltx_p">Figure <a href="#Sx4.F3" title="Figure 3 ‣ Empirical Validation ‣ Exploiting Social Annotation for Automatic Resource Discovery" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a> shows the performance of different models
+trained with either 40 or 100 topics (and interests) on the three
+datasets. The figure shows the number of resources within the top
+100 that had the same functionality as the seed or contained a
+link to a resource with the same functionality. The Interest-Topic
+model performed slightly better than pLSA, while both ITM and pLSA
+significantly outperformed the MWA model. Increasing the
+dimensionality of the latent variable <math id="Sx4.p5.1.m1.1" class="ltx_Math" alttext="Z" display="inline"><semantics id="Sx4.p5.1.m1.1a"><mi id="Sx4.p5.1.m1.1.1" xref="Sx4.p5.1.m1.1.1.cmml">Z</mi><annotation-xml encoding="MathML-Content" id="Sx4.p5.1.m1.1b"><ci id="Sx4.p5.1.m1.1.1.cmml" xref="Sx4.p5.1.m1.1.1">𝑍</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p5.1.m1.1c">Z</annotation></semantics></math> from 40 to 100 generally
+improved the results, although sometimes only slightly. Google’s
+find “Similar pages” functionality returned 28, 29 and 15
+resources respectively for the three seeds <em id="Sx4.p5.1.1" class="ltx_emph ltx_font_italic">flytecomm</em>,
+<em id="Sx4.p5.1.2" class="ltx_emph ltx_font_italic">geocoder</em> and <em id="Sx4.p5.1.3" class="ltx_emph ltx_font_italic">wunderground</em>, out of which 5, 6, and 13
+had the same functionality as the seed and 3, 0, 0 had a link to a
+resource with the same functionality. The ITM model, in
+comparison, returned three to five times as many relevant results.</p>
+</div>
+<figure id="Sx4.T1" class="ltx_table">
+<table id="Sx4.T1.2" class="ltx_tabular ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="Sx4.T1.2.3.1" class="ltx_tr">
+<th id="Sx4.T1.2.3.1.1" class="ltx_td ltx_th ltx_th_column ltx_th_row ltx_border_l ltx_border_r ltx_border_t"></th>
+<th id="Sx4.T1.2.3.1.2" class="ltx_td ltx_align_right ltx_th ltx_th_column ltx_border_r ltx_border_t">PLSA</th>
+<th id="Sx4.T1.2.3.1.3" class="ltx_td ltx_align_right ltx_th ltx_th_column ltx_border_r ltx_border_t">MWA</th>
+<th id="Sx4.T1.2.3.1.4" class="ltx_td ltx_align_right ltx_th ltx_th_column ltx_border_r ltx_border_t">ITM</th>
+<th id="Sx4.T1.2.3.1.5" class="ltx_td ltx_align_right ltx_th ltx_th_column ltx_border_r ltx_border_t">GOOGLE*</th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="Sx4.T1.1.1" class="ltx_tr">
+<th id="Sx4.T1.1.1.2" class="ltx_td ltx_align_right ltx_th ltx_th_row ltx_border_l ltx_border_r ltx_border_t">flytecomm</th>
+<td id="Sx4.T1.1.1.3" class="ltx_td ltx_align_right ltx_border_r ltx_border_t">23</td>
+<td id="Sx4.T1.1.1.4" class="ltx_td ltx_align_right ltx_border_r ltx_border_t">65</td>
+<td id="Sx4.T1.1.1.5" class="ltx_td ltx_align_right ltx_border_r ltx_border_t">15</td>
+<td id="Sx4.T1.1.1.1" class="ltx_td ltx_align_right ltx_border_r ltx_border_t"><math id="Sx4.T1.1.1.1.m1.1" class="ltx_Math" alttext="&gt;28" display="inline"><semantics id="Sx4.T1.1.1.1.m1.1a"><mrow id="Sx4.T1.1.1.1.m1.1.1" xref="Sx4.T1.1.1.1.m1.1.1.cmml"><mi id="Sx4.T1.1.1.1.m1.1.1.2" xref="Sx4.T1.1.1.1.m1.1.1.2.cmml"></mi><mo id="Sx4.T1.1.1.1.m1.1.1.1" xref="Sx4.T1.1.1.1.m1.1.1.1.cmml">&gt;</mo><mn id="Sx4.T1.1.1.1.m1.1.1.3" xref="Sx4.T1.1.1.1.m1.1.1.3.cmml">28</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx4.T1.1.1.1.m1.1b"><apply id="Sx4.T1.1.1.1.m1.1.1.cmml" xref="Sx4.T1.1.1.1.m1.1.1"><gt id="Sx4.T1.1.1.1.m1.1.1.1.cmml" xref="Sx4.T1.1.1.1.m1.1.1.1"></gt><csymbol cd="latexml" id="Sx4.T1.1.1.1.m1.1.1.2.cmml" xref="Sx4.T1.1.1.1.m1.1.1.2">absent</csymbol><cn type="integer" id="Sx4.T1.1.1.1.m1.1.1.3.cmml" xref="Sx4.T1.1.1.1.m1.1.1.3">28</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx4.T1.1.1.1.m1.1c">&gt;28</annotation></semantics></math></td>
+</tr>
+<tr id="Sx4.T1.2.2" class="ltx_tr">
+<th id="Sx4.T1.2.2.2" class="ltx_td ltx_align_right ltx_th ltx_th_row ltx_border_l ltx_border_r">geocoder</th>
+<td id="Sx4.T1.2.2.3" class="ltx_td ltx_align_right ltx_border_r">14</td>
+<td id="Sx4.T1.2.2.4" class="ltx_td ltx_align_right ltx_border_r">44</td>
+<td id="Sx4.T1.2.2.5" class="ltx_td ltx_align_right ltx_border_r">16</td>
+<td id="Sx4.T1.2.2.1" class="ltx_td ltx_align_right ltx_border_r"><math id="Sx4.T1.2.2.1.m1.1" class="ltx_Math" alttext="&gt;29" display="inline"><semantics id="Sx4.T1.2.2.1.m1.1a"><mrow id="Sx4.T1.2.2.1.m1.1.1" xref="Sx4.T1.2.2.1.m1.1.1.cmml"><mi id="Sx4.T1.2.2.1.m1.1.1.2" xref="Sx4.T1.2.2.1.m1.1.1.2.cmml"></mi><mo id="Sx4.T1.2.2.1.m1.1.1.1" xref="Sx4.T1.2.2.1.m1.1.1.1.cmml">&gt;</mo><mn id="Sx4.T1.2.2.1.m1.1.1.3" xref="Sx4.T1.2.2.1.m1.1.1.3.cmml">29</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx4.T1.2.2.1.m1.1b"><apply id="Sx4.T1.2.2.1.m1.1.1.cmml" xref="Sx4.T1.2.2.1.m1.1.1"><gt id="Sx4.T1.2.2.1.m1.1.1.1.cmml" xref="Sx4.T1.2.2.1.m1.1.1.1"></gt><csymbol cd="latexml" id="Sx4.T1.2.2.1.m1.1.1.2.cmml" xref="Sx4.T1.2.2.1.m1.1.1.2">absent</csymbol><cn type="integer" id="Sx4.T1.2.2.1.m1.1.1.3.cmml" xref="Sx4.T1.2.2.1.m1.1.1.3">29</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx4.T1.2.2.1.m1.1c">&gt;29</annotation></semantics></math></td>
+</tr>
+<tr id="Sx4.T1.2.4.1" class="ltx_tr">
+<th id="Sx4.T1.2.4.1.1" class="ltx_td ltx_align_right ltx_th ltx_th_row ltx_border_b ltx_border_l ltx_border_r">wunderground</th>
+<td id="Sx4.T1.2.4.1.2" class="ltx_td ltx_align_right ltx_border_b ltx_border_r">10</td>
+<td id="Sx4.T1.2.4.1.3" class="ltx_td ltx_align_right ltx_border_b ltx_border_r">14</td>
+<td id="Sx4.T1.2.4.1.4" class="ltx_td ltx_align_right ltx_border_b ltx_border_r">10</td>
+<td id="Sx4.T1.2.4.1.5" class="ltx_td ltx_align_right ltx_border_b ltx_border_r">10</td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_table">Table 1: </span>The number of top predictions that have to be examined
+before the system finds ten resources with the desired
+functionality (the same or link-to). Each model was trained with
+100 topics. For ITM, we fixed the number of interests at 20. *Note
+that Google returns only 8 and 6 positive resources out of 28 and
+29 retrieved resources for flytecomm and geocoder dataset
+respectively. </figcaption>
+</figure>
+<div id="Sx4.p6" class="ltx_para">
+<p id="Sx4.p6.1" class="ltx_p">Table <a href="#Sx4.T1" title="Table 1 ‣ Empirical Validation ‣ Exploiting Social Annotation for Automatic Resource Discovery" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> provides another view of performance of
+different resource discovery methods. It shows how many of the
+method’s predictions have to be examined before ten resources with
+correct functionality are identified. Since the ITM model ranks
+the relevant resources highest, fewer Web sites have to be
+examined and verified (either manually or automatically); thus,
+ITM is the most efficient model.</p>
+</div>
+<div id="Sx4.p7" class="ltx_para">
+<p id="Sx4.p7.1" class="ltx_p">One possible reason why ITM performs slightly better than pLSA
+might be because in the datasets we collected, there is low
+variance of user interest. The resources were gathered starting
+from a seed and following related tag links; therefore, we did not
+obtain any resources that were annotated with different tags than
+the seed, even if they are tagged by the same user who bookmarks
+the seed. Hence user-resource co-occurrences are incomplete: they
+are limited by a certain tag set. pLSA and ITM would perform
+similarly if all users had the same interests. We believe that ITM
+would perform significantly better than pLSA when variation of
+user interest is high. We plan to gather more complete data to
+weigh ITM behavior in more detail.</p>
+</div>
+<div id="Sx4.p8" class="ltx_para">
+<p id="Sx4.p8.1" class="ltx_p">Although performances pLSA and ITM are only slightly different,
+pLSA is much better than ITM in terms of efficiency since the
+former ignores user information and thus reduces iterations
+required in its training process. However, for some applications,
+such as personalized resource discovery, it may be important to
+retain user information. For such applications the ITM model,
+which retains this information, may be preferred over pLSA.</p>
+</div>
+</section>
+<section id="Sx5" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Previous Research</h2>
+
+<div id="Sx5.p1" class="ltx_para">
+<p id="Sx5.p1.1" class="ltx_p">Popular methods for finding documents relevant to a user query rely
+on analysis of word occurrences (including metadata) in the document
+and across the document collection. Information sources that
+generate their contents dynamically in response to a query cannot be
+adequately indexed by conventional search engines. Since they have
+sparse metadata, the user has to find the correct search terms in
+order to get results.</p>
+</div>
+<div id="Sx5.p2" class="ltx_para">
+<p id="Sx5.p2.1" class="ltx_p">A recent research (<span id="Sx5.p2.1.1" class="ltx_text ltx_font_bold">?</span>) proposed to utilize metadata in the
+Web services’ WSDL and UDDI files in order to find Web services
+offering similar operations in an unsupervised fashion. The work is
+established on a heuristic that similar operations tend to be
+described by similar terms in service description, operation name
+and input and output names. The method uses clustering techniques
+using cohesion and correlation scores (distances) computed from
+co-occurrence of observed terms to cluster Web service operations.
+In this approach, a given operation can only belong to a single
+cluster. Meanwhile, our approach is grounded on a probabilistic
+topic model, allowing a particular resource to be generated by
+several topics, which is more intuitive and robust. In addition, it
+yields a method to determine how the resource similar to others in
+certain aspects.</p>
+</div>
+<div id="Sx5.p3" class="ltx_para">
+<p id="Sx5.p3.1" class="ltx_p">Although our objective is similar, instead of words or metadata
+created by the <em id="Sx5.p3.1.1" class="ltx_emph ltx_font_italic">authors</em> of online resources, our approach
+utilizes the much denser descriptive metadata generated in a social
+bookmarking system by the <em id="Sx5.p3.1.2" class="ltx_emph ltx_font_italic">readers</em> or <em id="Sx5.p3.1.3" class="ltx_emph ltx_font_italic">users</em> of these
+resources. One issue to be considered is the metadata cannot be
+directly used for categorizing resources since they come from
+different user views, interests and writing styles. One needs
+algorithms to detect patterns in these data, find hidden topics
+which, when known, will help to correctly group similar resources
+together. We apply and extend the probabilistic topic model, in particular
+pLSA (<span id="Sx5.p3.1.4" class="ltx_text ltx_font_bold">?</span>) to address such issue.</p>
+</div>
+<div id="Sx5.p4" class="ltx_para">
+<p id="Sx5.p4.1" class="ltx_p">Our model is conceptually motivated by the Author-Topic
+model (<span id="Sx5.p4.1.1" class="ltx_text ltx_font_bold">?</span>), where we can view a user who
+annotate a resource as an author who composes a document. The aim in
+that approach is to learn topic distribution for a particular
+author; while our goal is to learn the topic distribution for a
+certain resource. Gibbs sampling was used in parameter estimation
+for that model; meanwhile, we use the generic EM algorithm to
+estimate parameters, since it is analytically straightforward and
+ready to be implemented.</p>
+</div>
+<div id="Sx5.p5" class="ltx_para">
+<p id="Sx5.p5.1" class="ltx_p">The most relevant work, (<span id="Sx5.p5.1.1" class="ltx_text ltx_font_bold">?</span>), utilizes multi-way
+aspect model on social annotation data in <em id="Sx5.p5.1.2" class="ltx_emph ltx_font_italic">del.icio.us</em>. The model
+doesn’t explicitly separate user interests and resources topics as our
+model does. Moreover, the work focuses on emergence of semantic and personalized
+resource search, and is evaluated by demonstrating that it can alleviate
+a problem of tag sparseness and synonymy in a task of searching for resources
+by a tag. In our work, on the other hand, our model is applied to search
+for resources similar to a given resource.</p>
+</div>
+<div id="Sx5.p6" class="ltx_para">
+<p id="Sx5.p6.1" class="ltx_p">There is another line of researches on resource discovery that
+exploits social network information of the web graph. Google
+(<span id="Sx5.p6.1.1" class="ltx_text ltx_font_bold">?</span>) uses visitation rate obtained from resources’ connectivity
+to measure their popularity. HITS (<span id="Sx5.p6.1.2" class="ltx_text ltx_font_bold">?</span>)
+also use web graph to rate relevant resources by measuring their
+authority and hub values. Meanwhile, ARC (<span id="Sx5.p6.1.3" class="ltx_text ltx_font_bold">?</span>) extends HITS
+by including content information of resource hyperlinks to improve
+system performance. Although the objective is somewhat similar,
+our work instead exploits resource metadata generated by community to
+compute resources’ relevance score.</p>
+</div>
+</section>
+<section id="Sx6" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Conclusion</h2>
+
+<div id="Sx6.p1" class="ltx_para">
+<p id="Sx6.p1.1" class="ltx_p">We have presented a probabilistic model
+that models social annotation process and described an approach to
+utilize the model in the resource discovery task. Although we
+cannot compare to performance to state-of-the-art search engine
+directly, the experimental results show the method to be
+promising.</p>
+</div>
+<div id="Sx6.p2" class="ltx_para">
+<p id="Sx6.p2.1" class="ltx_p">There remain many issues to pursue. First, we would like to study
+the output of the models, in particular, what the user interests
+tell us. We would also like to automate the source modeling process
+by identifying the resource’s HTML form and extracting its metadata.
+We will then use techniques described in (<span id="Sx6.p2.1.1" class="ltx_text ltx_font_bold">?</span>) to predict
+the semantic types of the resource’s input parameters. This will
+enable us to automatically query the resource and classify the
+returned data using tools described in
+(<span id="Sx6.p2.1.2" class="ltx_text ltx_font_bold">?</span>; <span id="Sx6.p2.1.3" class="ltx_text ltx_font_bold">?</span>). We will then be able to validate
+that the resource has the same functionality as the seed by
+comparing its input and output data with that of the
+seed (<span id="Sx6.p2.1.4" class="ltx_text ltx_font_bold">?</span>). This will allow agents to fully exploit our
+system for integrating information across different resources
+without human intervention.</p>
+</div>
+<div id="Sx6.p3" class="ltx_para">
+<p id="Sx6.p3.1" class="ltx_p">Our next goal is to generalize the resource discovery process so
+that instead of starting with a seed, a user can start with a query
+or some description of the information need. We will investigate
+different methods for translating the query into tags that can be
+used to harvest data from <em id="Sx6.p3.1.1" class="ltx_emph ltx_font_italic">del.icio.us</em>. In addition, there is
+other evidence potentially useful for resource categorization such
+as user comments, content and input fields in the resource. We plan
+to extend the present work to unify evidence both from annotation
+and resources’ content to improve the accuracy of resource
+discovery.</p>
+</div>
+<section id="Sx6.SSx3.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Acknowledgements</h4>
+
+<div id="Sx6.SSx3.SSS0.Px1.p1" class="ltx_para">
+<p id="Sx6.SSx3.SSS0.Px1.p1.1" class="ltx_p">This research is based by work supported in part by the
+NSF under Award No. CNS-0615412 and in part by DARPA under Contract No. NBCHD030010.</p>
+</div>
+</section>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul class="ltx_biblist">
+<li id="bib.bibx1" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Brin &amp; Page 1998]</span>
+<span class="ltx_bibblock">
+Brin, S., and Page, L.
+
+</span>
+<span class="ltx_bibblock">1998.
+
+</span>
+<span class="ltx_bibblock">The anatomy of a large-scale hypertextual web search engine.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bibx1.1.1" class="ltx_text ltx_font_italic">Computer Networks and ISDN Systems</span> 30(1–7):107–117.
+
+</span>
+</li>
+<li id="bib.bibx2" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Carman &amp; Knoblock 2007]</span>
+<span class="ltx_bibblock">
+Carman, M. J., and Knoblock, C. A.
+
+</span>
+<span class="ltx_bibblock">2007.
+
+</span>
+<span class="ltx_bibblock">Learning semantic descriptions of web information sources.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx2.1.1" class="ltx_text ltx_font_italic">Proc. of IJCAI</span>.
+
+</span>
+</li>
+<li id="bib.bibx3" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Chakrabarti <span id="bib.bibx3.1.1.1" class="ltx_text ltx_font_italic">et al.</span> 1998]</span>
+<span class="ltx_bibblock">
+Chakrabarti, S.; Dom, B.; Gibson, D.; Kleinberg, J.; Raghavan, P.; and
+Rajagopalan, S.
+
+</span>
+<span class="ltx_bibblock">1998.
+
+</span>
+<span class="ltx_bibblock">Automatic resource list compilation by analyzing hyperlink structure
+and associated text.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx3.3.1" class="ltx_text ltx_font_italic">Proceedings of the 7th International World Wide Web
+Conference</span>.
+
+</span>
+</li>
+<li id="bib.bibx4" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Dempster, Laird, &amp; Rubin 1977]</span>
+<span class="ltx_bibblock">
+Dempster, A. P.; Laird, N. M.; and Rubin, D. B.
+
+</span>
+<span class="ltx_bibblock">1977.
+
+</span>
+<span class="ltx_bibblock">Maximum likelihood from incomplete data via the em algorithm.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bibx4.1.1" class="ltx_text ltx_font_italic">Journal of the Royal Statistical Society. Series B
+(Methodological)</span> 39(1):1–38.
+
+</span>
+</li>
+<li id="bib.bibx5" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Dong <span id="bib.bibx5.1.1.1" class="ltx_text ltx_font_italic">et al.</span> 2004]</span>
+<span class="ltx_bibblock">
+Dong, X.; Halevy, A. Y.; Madhavan, J.; Nemes, E.; and Zhang, J.
+
+</span>
+<span class="ltx_bibblock">2004.
+
+</span>
+<span class="ltx_bibblock">Simlarity search for web services.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx5.3.1" class="ltx_text ltx_font_italic">Proc. of VLDB</span>, 372–383.
+
+</span>
+</li>
+<li id="bib.bibx6" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Gazen &amp; Minton 2005]</span>
+<span class="ltx_bibblock">
+Gazen, B. C., and Minton, S. N.
+
+</span>
+<span class="ltx_bibblock">2005.
+
+</span>
+<span class="ltx_bibblock">Autofeed: an unsupervised learning system for generating webfeeds.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx6.1.1" class="ltx_text ltx_font_italic">Proc. of K-CAP 2005</span>, 3–10.
+
+</span>
+</li>
+<li id="bib.bibx7" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Heß &amp; Kushmerick 2003]</span>
+<span class="ltx_bibblock">
+Heß, A., and Kushmerick, N.
+
+</span>
+<span class="ltx_bibblock">2003.
+
+</span>
+<span class="ltx_bibblock">Learning to attach semantic metadata to web services.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx7.1.1" class="ltx_text ltx_font_italic">International Semantic Web Conference</span>, 258–273.
+
+</span>
+</li>
+<li id="bib.bibx8" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Hofmann 1999]</span>
+<span class="ltx_bibblock">
+Hofmann, T.
+
+</span>
+<span class="ltx_bibblock">1999.
+
+</span>
+<span class="ltx_bibblock">Probabilistic latent semantic analysis.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx8.1.1" class="ltx_text ltx_font_italic">Proc. of UAI</span>, 289–296.
+
+</span>
+</li>
+<li id="bib.bibx9" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Kleinberg 1999]</span>
+<span class="ltx_bibblock">
+Kleinberg, J. M.
+
+</span>
+<span class="ltx_bibblock">1999.
+
+</span>
+<span class="ltx_bibblock">Authoritative sources in a hyperlinked environment.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bibx9.1.1" class="ltx_text ltx_font_italic">Journal of the ACM</span> 46(5):604–632.
+
+</span>
+</li>
+<li id="bib.bibx10" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Lerman, Plangprasopchok, &amp;
+Knoblock 2006]</span>
+<span class="ltx_bibblock">
+Lerman, K.; Plangprasopchok, A.; and Knoblock, C. A.
+
+</span>
+<span class="ltx_bibblock">2006.
+
+</span>
+<span class="ltx_bibblock">Automatically labeling the inputs and outputs of web services.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx10.1.1" class="ltx_text ltx_font_italic">Proc. of AAAI</span>.
+
+</span>
+</li>
+<li id="bib.bibx11" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Lerman, Plangprasopchok, &amp;
+Knoblock 2007]</span>
+<span class="ltx_bibblock">
+Lerman, K.; Plangprasopchok, A.; and Knoblock, C. A.
+
+</span>
+<span class="ltx_bibblock">2007.
+
+</span>
+<span class="ltx_bibblock">Semantic labeling of online information sources.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bibx11.1.1" class="ltx_text ltx_font_italic">International Journal on Semantic Web and Information Systems,
+Special Issue on Ontology Matching</span>.
+
+</span>
+</li>
+<li id="bib.bibx12" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Lin 1991]</span>
+<span class="ltx_bibblock">
+Lin, J.
+
+</span>
+<span class="ltx_bibblock">1991.
+
+</span>
+<span class="ltx_bibblock">Divergence measures based on the shannon entropy.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bibx12.1.1" class="ltx_text ltx_font_italic">IEEE Transactions on Information Theory</span> 37(1):145–151.
+
+</span>
+</li>
+<li id="bib.bibx13" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Mathes 2004]</span>
+<span class="ltx_bibblock">
+Mathes, A.
+
+</span>
+<span class="ltx_bibblock">2004.
+
+</span>
+<span class="ltx_bibblock">Folksonomies: cooperative classification and communication through
+shared metadata.
+
+</span>
+</li>
+<li id="bib.bibx14" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Popescul <span id="bib.bibx14.1.1.1" class="ltx_text ltx_font_italic">et al.</span> 2001]</span>
+<span class="ltx_bibblock">
+Popescul, A.; Ungar, L.; Pennock, D.; and Lawrence, S.
+
+</span>
+<span class="ltx_bibblock">2001.
+
+</span>
+<span class="ltx_bibblock">Probabilistic models for unified collaborative and content-based
+recommendation in sparse-data environments.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx14.3.1" class="ltx_text ltx_font_italic">17th Conference on Uncertainty in Artificial Intelligence</span>,
+437–444.
+
+</span>
+</li>
+<li id="bib.bibx15" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Rosen-Zvi <span id="bib.bibx15.1.1.1" class="ltx_text ltx_font_italic">et al.</span> 2004]</span>
+<span class="ltx_bibblock">
+Rosen-Zvi, M.; Griffiths, T.; Steyvers, M.; and Smyth, P.
+
+</span>
+<span class="ltx_bibblock">2004.
+
+</span>
+<span class="ltx_bibblock">The author-topic model for authors and documents.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx15.3.1" class="ltx_text ltx_font_italic">AUAI ’04: Proceedings of the 20th conference on Uncertainty
+in artificial intelligence</span>, 487–494.
+
+</span>
+<span class="ltx_bibblock">Arlington, Virginia, United States: AUAI Press.
+
+</span>
+</li>
+<li id="bib.bibx16" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Thakkar, Ambite, &amp;
+Knoblock 2005]</span>
+<span class="ltx_bibblock">
+Thakkar, S.; Ambite, J. L.; and Knoblock, C. A.
+
+</span>
+<span class="ltx_bibblock">2005.
+
+</span>
+<span class="ltx_bibblock">Composing, optimizing, and executing plans for bioinformatics web
+services.
+
+</span>
+<span class="ltx_bibblock"><span id="bib.bibx16.1.1" class="ltx_text ltx_font_italic">VLDB Journal</span> 14(3):330–353.
+
+</span>
+</li>
+<li id="bib.bibx17" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[Wu, Zhang, &amp; Yu 2006]</span>
+<span class="ltx_bibblock">
+Wu, X.; Zhang, L.; and Yu, Y.
+
+</span>
+<span class="ltx_bibblock">2006.
+
+</span>
+<span class="ltx_bibblock">Exploring social annotations for the semantic web.
+
+</span>
+<span class="ltx_bibblock">In <span id="bib.bibx17.1.1" class="ltx_text ltx_font_italic">WWW ’06: Proceedings of the 15th international conference on
+World Wide Web</span>, 417–426.
+
+</span>
+<span class="ltx_bibblock">New York, NY, USA: ACM Press.
+
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<div class="ar5iv-footer"><a href="/html/0704.1674" class="ar5iv-nav-button ar5iv-nav-button-prev">◄</a>
+    <a class="ar5iv-home-button" href="/"><img height="40" alt="ar5iv homepage" src="/assets/ar5iv.png"></a>
+    <a href="/feeling_lucky" class="ar5iv-text-button">Feeling<br>lucky?</a>
+    <a href="/log/0704.1675" class="ar5iv-text-button ar5iv-severity-warning">Conversion<br>report</a>
+    <a class="ar5iv-text-button" target="_blank" href="https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+0704.1675">Report<br>an issue</a>
+    <a href="https://arxiv.org/abs/0704.1675" class="ar5iv-text-button arxiv-ui-theme">View&nbsp;original<br>on&nbsp;arXiv</a><a href="/html/0704.1676" class="ar5iv-nav-button ar5iv-nav-button-next">►</a>
+</div><footer class="ltx_page_footer">
+<a class="ar5iv-toggle-color-scheme" href="javascript:toggleColorScheme()" title="Toggle ar5iv color scheme"><span class="color-scheme-icon"></span></a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/license" target="_blank">Copyright</a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/policies/privacy_policy" target="_blank">Privacy Policy</a>
+
+<div class="ltx_page_logo">Generated  on Fri Mar 15 22:26:57 2024 by <a target="_blank" href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+
+    <script>
+      var canMathML = typeof(MathMLElement) == "function";
+      if (!canMathML) {
+        var body = document.querySelector("body");
+        body.firstElementChild.setAttribute('style', 'opacity: 0;');
+        var loading = document.createElement("div");
+        loading.setAttribute("id", "mathjax-loading-spinner");
+        var message = document.createElement("div");
+        message.setAttribute("id", "mathjax-loading-message");
+        message.innerText = "Typesetting Equations...";
+        body.prepend(loading);
+        body.prepend(message);
+
+        var el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.querySelector("head").appendChild(el);
+
+        window.MathJax = {
+          startup: {
+            pageReady: () => {
+              return MathJax.startup.defaultPageReady().then(() => {
+                body.removeChild(loading);
+                body.removeChild(message);
+                body.firstElementChild.removeAttribute('style');
+              }); } } };
+      }
+    </script>
+    <script>
+    // Auxiliary function, building the preview feature when
+    // an inline citation is clicked
+    function clicked_cite(e) {
+      e.preventDefault();
+      let cite = this.closest('.ltx_cite');
+      let next = cite.nextSibling;
+      if (next && next.nodeType == Node.ELEMENT_NODE && next.getAttribute('class') == "ar5iv-bibitem-preview") {
+        next.remove();
+        return; }
+      // Before adding a preview modal,
+      // cleanup older previews, in case they're still open
+      document.querySelectorAll('span.ar5iv-bibitem-preview').forEach(function(node) {
+        node.remove();
+      })
+
+      // Create the preview
+      preview = document.createElement('span');
+      preview.setAttribute('class','ar5iv-bibitem-preview');
+      let target = document.getElementById(this.getAttribute('href').slice(1));
+      target.childNodes.forEach(function (child) {
+        preview.append(child.cloneNode(true));
+      });
+      let close_x = document.createElement('button');
+      close_x.setAttribute("aria-label","Close modal for bibliography item preview");
+      close_x.textContent = "×";
+      close_x.setAttribute('class', 'ar5iv-button-close-preview');
+      close_x.setAttribute('onclick','this.parentNode.remove()');
+      preview.append(close_x);
+      preview.querySelectorAll('.ltx_tag_bibitem').forEach(function(node) {
+        node.remove();
+      });
+      cite.parentNode.insertBefore(preview, cite.nextSibling);
+      return;
+    }
+    // Global Document initialization:
+    // - assign the preview feature to all inline citation links
+    document.querySelectorAll(".ltx_cite .ltx_ref").forEach(function (link) {
+      link.addEventListener("click", clicked_cite);
+    });
+    </script>
+    </body>
+</html>

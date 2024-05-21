@@ -1,0 +1,650 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[0704.0050] Intelligent location of two simultaneously active acoustic emission sources: Part II</title><meta property="og:description" content="Part I describes an intelligent acoustic emission locator, while Part II
+discusses blind source separation, time delay estimation and location of two continuous acoustic
+emission sources.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Intelligent location of two simultaneously active acoustic emission sources: Part II">
+<meta name="twitter:image:src" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta name="twitter:image:alt" content="ar5iv logo">
+<meta property="og:title" content="Intelligent location of two simultaneously active acoustic emission sources: Part II">
+<meta property="og:site_name" content="ar5iv">
+<meta property="og:image" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ar5iv.labs.arxiv.org/html/0704.0050">
+
+<!--Generated on Sun Mar  3 05:56:41 2024 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script>
+  function detectColorScheme(){
+    var theme="light";
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if(current_theme){
+      if(current_theme == "dark"){
+        theme = "dark";
+      } }
+    else if(!window.matchMedia) { return false; }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      theme = "dark"; }
+    if (theme=="dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light"); } }
+
+  detectColorScheme();
+
+  function toggleColorScheme(){
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+      if (current_theme == "light") {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+      else {
+        localStorage.setItem("ar5iv_theme", "light"); } }
+    else {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+    detectColorScheme(); }
+</script>
+<link media="all" rel="stylesheet" href="/assets/ar5iv-fonts.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv.0.7.9.min.css"><link media="all" rel="stylesheet" href="/assets/ar5iv-site.0.2.2.css">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document ltx_authors_1line" lang="en">
+<h1 class="ltx_title ltx_title_document">Intelligent location of two simultaneously active acoustic emission sources: 
+<br class="ltx_break">Part II</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Tadej Kosel and Igor Grabec
+<br class="ltx_break">Faculty of Mechanical Engineering, University of Ljubljana,
+<br class="ltx_break">Aškerčeva 6, POB 394, SI-1001 Ljubljana, Slovenia 
+<br class="ltx_break">e-mail: tadej.kosel@guest.arnes.si; igor.grabec@fs.uni-lj.si
+</span><span class="ltx_author_notes">Manuscript generated: January 31, 2007</span></span>
+</div>
+
+<div class="ltx_abstract">
+<h6 class="ltx_title ltx_title_abstract">Abstract</h6>
+<p id="id1.id1" class="ltx_p"><span id="id1.id1.1" class="ltx_text">Part I describes an intelligent acoustic emission locator, while Part II
+discusses blind source separation, time delay estimation and location of two continuous acoustic
+emission sources.</span></p>
+<p id="id2.id2" class="ltx_p"><span id="id2.id2.1" class="ltx_text">Acoustic emission (AE) analysis is used for characterization and
+location of developing defects in materials. AE sources often generate a
+mixture of various statistically independent signals. A difficult
+problem of AE analysis is separation and characterization of signal
+components when the signals from various sources and the mode of mixing
+are unknown. Recently, blind source separation (BSS) by
+independent component analysis (ICA) has been used to solve these
+problems. The purpose of this paper is to demonstrate the applicability
+of ICA to locate two independent simultaneously active acoustic emission sources
+on an aluminum band specimen. The method is promising for non-destructive testing of aircraft frame
+structures by acoustic emission analysis.</span></p>
+</div>
+<section id="Sx1" class="ltx_section">
+<h2 class="ltx_title ltx_font_smallcaps ltx_title_section">Introduction</h2>
+
+<div id="Sx1.p1" class="ltx_para">
+<p id="Sx1.p1.1" class="ltx_p">A common goal of many non-destructive testing methods is to detect
+defects in materials. Acoustic emission analysis (AE) is a passive
+testing method used to locate and characterize defects which
+emit sound<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="" class="ltx_ref">10</a>]</cite>.</p>
+</div>
+<div id="Sx1.p2" class="ltx_para">
+<p id="Sx1.p2.1" class="ltx_p">There are many ways to deduce the location of an AE source from
+electrical signals detected by a chain of sensors. The corresponding
+problems may be classified by the type of acoustic source mechanism as the
+location of a continuous emission source, such as that generated by a leak,
+or as the location of discrete emission, such as an AE burst caused by a growing crack.
+This paper describes a method for processing continuous AE signals to
+determine the time delay (T-D) between signals and thus to provide information for location of AE
+sources. It should be pointed out that application of AE source characteristics, such as
+count, count rate, amplitude distribution, and conventional time delay
+measurement, becomes meaningless when dealing with continuous acoustic
+sources.</p>
+</div>
+<div id="Sx1.p3" class="ltx_para">
+<p id="Sx1.p3.1" class="ltx_p">The basic information for AE source location consists of T-D between
+stress waves detected at different positions on a specimen. In the case of
+only one active AE source, T-D of continuous acoustic waves can
+be estimated using the cross-correlation function (CCF) of sensor
+signals described in Part I of this article<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="" class="ltx_ref">10</a>, <a href="#bib.bib7" title="" class="ltx_ref">7</a>]</cite>. In the case of two (or more)
+simultaneously active AE sources, this method is not applicable, since
+analysis of the CCF leads only to the T-D
+of the most powerful AE signal. Detection of simultaneously active
+independent AE source signals therefore requires a more sophisticated
+approach.</p>
+</div>
+<div id="Sx1.p4" class="ltx_para">
+<p id="Sx1.p4.1" class="ltx_p">The purpose of our study was to find a suitable method for processing
+a mixture of two simultaneously active continuous AE signals to
+determine the T-D and, related to this, the coordinates of both AE
+sources. We found that the Blind Source Separation (BSS) method solves this
+problem satisfactorily. BSS is a general signal processing method involving
+the recovery of the contributions of different sources from a finite
+set of observations recorded by sensors, independent of the propagation
+medium and without any prior knowledge of the sources. BSS has
+already been successfully applied in medicine, telecommunications, image
+processing etc<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib8" title="" class="ltx_ref">8</a>]</cite>. However, it is also a promising method for AE
+analysis of aircraft structures, because AE signals are
+often hidden in a mixture of signals from various sources. BSS could
+extract the specific signature of each AE source, which can further be used
+for location and characterization purposes, or to isolate AE sources from
+background noise.
+We conducted experiments with BSS on an aluminum beam on which two continuous AE
+sources were generated simultaneously by air flow.</p>
+</div>
+</section>
+<section id="Sx2" class="ltx_section">
+<h2 class="ltx_title ltx_font_smallcaps ltx_title_section">Methods</h2>
+
+<div id="Sx2.p1" class="ltx_para">
+<p id="Sx2.p1.1" class="ltx_p">In this section we explain two different methods for time delay
+estimation of AE sources. The first method is based on analysis of the
+CCF and is convenient for T-D estimation
+of one active continuous AE source as is described in Part I<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="" class="ltx_ref">10</a>, <a href="#bib.bib7" title="" class="ltx_ref">7</a>, <a href="#bib.bib12" title="" class="ltx_ref">12</a>]</cite>.
+The CCF exhibits a peak when the delay parameter
+compensates the T-D between the sensor signals <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="" class="ltx_ref">10</a>]</cite>. The T-D is thus determined by
+the position of the highest peak of the CCF.
+The second method is based on BSS algorithm and is convenient for T-D estimation
+of two (or more) simultaneously active continuous AE sources<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib9" title="" class="ltx_ref">9</a>]</cite>.
+Location of two simultaneously active AE
+sources was performed by an intelligent locator based on a
+general regression neural network<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib5" title="" class="ltx_ref">5</a>]</cite> as is described in Part I.</p>
+</div>
+<div id="Sx2.p2" class="ltx_para">
+<p id="Sx2.p2.1" class="ltx_p">Multichannel Blind Source Separation has recently received increased
+attention due to the importance of its potential
+applications<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="" class="ltx_ref">3</a>]</cite>. It occurs in many fields of engineering and
+applied sciences, including processing of signals from antenna array,
+speech and geophysical data processing, noise reduction,
+biological system analysis, etc. It consists of recovering signals
+emitted by unknown sources and mixed by an unknown medium (material where waves propagate), using only
+several observations of the mixtures. The only assumptions made are the
+linearity of the mixing system and the statistical independence of
+original signals.</p>
+</div>
+<div id="Sx2.p3" class="ltx_para">
+<p id="Sx2.p3.1" class="ltx_p">BSS methods may be classified in several ways. One possible
+classification that can be made depends on whether the mixtures are
+instantaneous or convolutive <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib4" title="" class="ltx_ref">4</a>]</cite>. Convolutive
+mixtures correspond to a mixing system with time dependent memory. They
+represent a more general case than instantaneous mixtures, and they have in
+particular acoustic applications. Recently, the principle
+of independent component analysis (ICA) was applied in BSS, and it was
+found to be a simple and powerful tool<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib6" title="" class="ltx_ref">6</a>]</cite>. This study deals with the
+separation of two convolutively mixed independent continuous AE signals by ICA and
+the intelligent locator was used to locate two independent
+continuous AE sources based on T-D <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib5" title="" class="ltx_ref">5</a>]</cite>.</p>
+</div>
+<div id="Sx2.p4" class="ltx_para">
+<p id="Sx2.p4.14" class="ltx_p">The mixing and filtering processes of unknown input signals <math id="Sx2.p4.1.m1.1" class="ltx_Math" alttext="s_{j}(t)" display="inline"><semantics id="Sx2.p4.1.m1.1a"><mrow id="Sx2.p4.1.m1.1.2" xref="Sx2.p4.1.m1.1.2.cmml"><msub id="Sx2.p4.1.m1.1.2.2" xref="Sx2.p4.1.m1.1.2.2.cmml"><mi id="Sx2.p4.1.m1.1.2.2.2" xref="Sx2.p4.1.m1.1.2.2.2.cmml">s</mi><mi id="Sx2.p4.1.m1.1.2.2.3" xref="Sx2.p4.1.m1.1.2.2.3.cmml">j</mi></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.1.m1.1.2.1" xref="Sx2.p4.1.m1.1.2.1.cmml">​</mo><mrow id="Sx2.p4.1.m1.1.2.3.2" xref="Sx2.p4.1.m1.1.2.cmml"><mo stretchy="false" id="Sx2.p4.1.m1.1.2.3.2.1" xref="Sx2.p4.1.m1.1.2.cmml">(</mo><mi id="Sx2.p4.1.m1.1.1" xref="Sx2.p4.1.m1.1.1.cmml">t</mi><mo stretchy="false" id="Sx2.p4.1.m1.1.2.3.2.2" xref="Sx2.p4.1.m1.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.1.m1.1b"><apply id="Sx2.p4.1.m1.1.2.cmml" xref="Sx2.p4.1.m1.1.2"><times id="Sx2.p4.1.m1.1.2.1.cmml" xref="Sx2.p4.1.m1.1.2.1"></times><apply id="Sx2.p4.1.m1.1.2.2.cmml" xref="Sx2.p4.1.m1.1.2.2"><csymbol cd="ambiguous" id="Sx2.p4.1.m1.1.2.2.1.cmml" xref="Sx2.p4.1.m1.1.2.2">subscript</csymbol><ci id="Sx2.p4.1.m1.1.2.2.2.cmml" xref="Sx2.p4.1.m1.1.2.2.2">𝑠</ci><ci id="Sx2.p4.1.m1.1.2.2.3.cmml" xref="Sx2.p4.1.m1.1.2.2.3">𝑗</ci></apply><ci id="Sx2.p4.1.m1.1.1.cmml" xref="Sx2.p4.1.m1.1.1">𝑡</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.1.m1.1c">s_{j}(t)</annotation></semantics></math>
+may have different mathematical or physical backgrounds, depending on
+specific applications. In this paper, we focus mainly on the simplest cases
+with <math id="Sx2.p4.2.m2.1" class="ltx_Math" alttext="n" display="inline"><semantics id="Sx2.p4.2.m2.1a"><mi id="Sx2.p4.2.m2.1.1" xref="Sx2.p4.2.m2.1.1.cmml">n</mi><annotation-xml encoding="MathML-Content" id="Sx2.p4.2.m2.1b"><ci id="Sx2.p4.2.m2.1.1.cmml" xref="Sx2.p4.2.m2.1.1">𝑛</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.2.m2.1c">n</annotation></semantics></math> signals <math id="Sx2.p4.3.m3.1" class="ltx_Math" alttext="x_{i}(t)" display="inline"><semantics id="Sx2.p4.3.m3.1a"><mrow id="Sx2.p4.3.m3.1.2" xref="Sx2.p4.3.m3.1.2.cmml"><msub id="Sx2.p4.3.m3.1.2.2" xref="Sx2.p4.3.m3.1.2.2.cmml"><mi id="Sx2.p4.3.m3.1.2.2.2" xref="Sx2.p4.3.m3.1.2.2.2.cmml">x</mi><mi id="Sx2.p4.3.m3.1.2.2.3" xref="Sx2.p4.3.m3.1.2.2.3.cmml">i</mi></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.3.m3.1.2.1" xref="Sx2.p4.3.m3.1.2.1.cmml">​</mo><mrow id="Sx2.p4.3.m3.1.2.3.2" xref="Sx2.p4.3.m3.1.2.cmml"><mo stretchy="false" id="Sx2.p4.3.m3.1.2.3.2.1" xref="Sx2.p4.3.m3.1.2.cmml">(</mo><mi id="Sx2.p4.3.m3.1.1" xref="Sx2.p4.3.m3.1.1.cmml">t</mi><mo stretchy="false" id="Sx2.p4.3.m3.1.2.3.2.2" xref="Sx2.p4.3.m3.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.3.m3.1b"><apply id="Sx2.p4.3.m3.1.2.cmml" xref="Sx2.p4.3.m3.1.2"><times id="Sx2.p4.3.m3.1.2.1.cmml" xref="Sx2.p4.3.m3.1.2.1"></times><apply id="Sx2.p4.3.m3.1.2.2.cmml" xref="Sx2.p4.3.m3.1.2.2"><csymbol cd="ambiguous" id="Sx2.p4.3.m3.1.2.2.1.cmml" xref="Sx2.p4.3.m3.1.2.2">subscript</csymbol><ci id="Sx2.p4.3.m3.1.2.2.2.cmml" xref="Sx2.p4.3.m3.1.2.2.2">𝑥</ci><ci id="Sx2.p4.3.m3.1.2.2.3.cmml" xref="Sx2.p4.3.m3.1.2.2.3">𝑖</ci></apply><ci id="Sx2.p4.3.m3.1.1.cmml" xref="Sx2.p4.3.m3.1.1">𝑡</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.3.m3.1c">x_{i}(t)</annotation></semantics></math> linearly mixed in <math id="Sx2.p4.4.m4.1" class="ltx_Math" alttext="n" display="inline"><semantics id="Sx2.p4.4.m4.1a"><mi id="Sx2.p4.4.m4.1.1" xref="Sx2.p4.4.m4.1.1.cmml">n</mi><annotation-xml encoding="MathML-Content" id="Sx2.p4.4.m4.1b"><ci id="Sx2.p4.4.m4.1.1.cmml" xref="Sx2.p4.4.m4.1.1">𝑛</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.4.m4.1c">n</annotation></semantics></math> unknown statistically
+independent, zero mean source signals <math id="Sx2.p4.5.m5.1" class="ltx_Math" alttext="s_{j}(t)" display="inline"><semantics id="Sx2.p4.5.m5.1a"><mrow id="Sx2.p4.5.m5.1.2" xref="Sx2.p4.5.m5.1.2.cmml"><msub id="Sx2.p4.5.m5.1.2.2" xref="Sx2.p4.5.m5.1.2.2.cmml"><mi id="Sx2.p4.5.m5.1.2.2.2" xref="Sx2.p4.5.m5.1.2.2.2.cmml">s</mi><mi id="Sx2.p4.5.m5.1.2.2.3" xref="Sx2.p4.5.m5.1.2.2.3.cmml">j</mi></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.5.m5.1.2.1" xref="Sx2.p4.5.m5.1.2.1.cmml">​</mo><mrow id="Sx2.p4.5.m5.1.2.3.2" xref="Sx2.p4.5.m5.1.2.cmml"><mo stretchy="false" id="Sx2.p4.5.m5.1.2.3.2.1" xref="Sx2.p4.5.m5.1.2.cmml">(</mo><mi id="Sx2.p4.5.m5.1.1" xref="Sx2.p4.5.m5.1.1.cmml">t</mi><mo stretchy="false" id="Sx2.p4.5.m5.1.2.3.2.2" xref="Sx2.p4.5.m5.1.2.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.5.m5.1b"><apply id="Sx2.p4.5.m5.1.2.cmml" xref="Sx2.p4.5.m5.1.2"><times id="Sx2.p4.5.m5.1.2.1.cmml" xref="Sx2.p4.5.m5.1.2.1"></times><apply id="Sx2.p4.5.m5.1.2.2.cmml" xref="Sx2.p4.5.m5.1.2.2"><csymbol cd="ambiguous" id="Sx2.p4.5.m5.1.2.2.1.cmml" xref="Sx2.p4.5.m5.1.2.2">subscript</csymbol><ci id="Sx2.p4.5.m5.1.2.2.2.cmml" xref="Sx2.p4.5.m5.1.2.2.2">𝑠</ci><ci id="Sx2.p4.5.m5.1.2.2.3.cmml" xref="Sx2.p4.5.m5.1.2.2.3">𝑗</ci></apply><ci id="Sx2.p4.5.m5.1.1.cmml" xref="Sx2.p4.5.m5.1.1">𝑡</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.5.m5.1c">s_{j}(t)</annotation></semantics></math>. The composition is
+expressed in matrix notation as <math id="Sx2.p4.6.m6.3" class="ltx_Math" alttext="\hbox{\boldmath{$x$}}=\hbox{\boldmath{$A$}}*\hbox{\boldmath{$s$}}" display="inline"><semantics id="Sx2.p4.6.m6.3a"><mrow id="Sx2.p4.6.m6.3.4" xref="Sx2.p4.6.m6.3.4.cmml"><mi id="Sx2.p4.6.m6.3.4.2" xref="Sx2.p4.6.m6.3.4.2.cmml">𝒙</mi><mo id="Sx2.p4.6.m6.3.4.1" xref="Sx2.p4.6.m6.3.4.1.cmml">=</mo><mrow id="Sx2.p4.6.m6.3.4.3" xref="Sx2.p4.6.m6.3.4.3.cmml"><mi id="Sx2.p4.6.m6.3.4.3.2" xref="Sx2.p4.6.m6.3.4.3.2.cmml">𝑨</mi><mo lspace="0.222em" rspace="0.222em" id="Sx2.p4.6.m6.3.4.3.1" xref="Sx2.p4.6.m6.3.4.3.1.cmml">∗</mo><mi id="Sx2.p4.6.m6.3.4.3.3" xref="Sx2.p4.6.m6.3.4.3.3.cmml">𝒔</mi></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.6.m6.3b"><apply id="Sx2.p4.6.m6.3.4.cmml" xref="Sx2.p4.6.m6.3.4"><eq id="Sx2.p4.6.m6.3.4.1.cmml" xref="Sx2.p4.6.m6.3.4.1"></eq><ci id="Sx2.p4.6.m6.3.4.2.cmml" xref="Sx2.p4.6.m6.3.4.2">𝒙</ci><apply id="Sx2.p4.6.m6.3.4.3.cmml" xref="Sx2.p4.6.m6.3.4.3"><times id="Sx2.p4.6.m6.3.4.3.1.cmml" xref="Sx2.p4.6.m6.3.4.3.1"></times><ci id="Sx2.p4.6.m6.3.4.3.2.cmml" xref="Sx2.p4.6.m6.3.4.3.2">𝑨</ci><ci id="Sx2.p4.6.m6.3.4.3.3.cmml" xref="Sx2.p4.6.m6.3.4.3.3">𝒔</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.6.m6.3c">\hbox{\boldmath{$x$}}=\hbox{\boldmath{$A$}}*\hbox{\boldmath{$s$}}</annotation></semantics></math> <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib8" title="" class="ltx_ref">8</a>]</cite>, where ‘*’ denotes a convolution,
+<math id="Sx2.p4.7.m7.6" class="ltx_Math" alttext="\hbox{\boldmath{$x$}}=[x_{1}(t),\ldots,x_{n}(t)]^{\text{T}}" display="inline"><semantics id="Sx2.p4.7.m7.6a"><mrow id="Sx2.p4.7.m7.6.6" xref="Sx2.p4.7.m7.6.6.cmml"><mi id="Sx2.p4.7.m7.6.6.4" xref="Sx2.p4.7.m7.6.6.4.cmml">𝒙</mi><mo id="Sx2.p4.7.m7.6.6.3" xref="Sx2.p4.7.m7.6.6.3.cmml">=</mo><msup id="Sx2.p4.7.m7.6.6.2" xref="Sx2.p4.7.m7.6.6.2.cmml"><mrow id="Sx2.p4.7.m7.6.6.2.2.2" xref="Sx2.p4.7.m7.6.6.2.2.3.cmml"><mo stretchy="false" id="Sx2.p4.7.m7.6.6.2.2.2.3" xref="Sx2.p4.7.m7.6.6.2.2.3.cmml">[</mo><mrow id="Sx2.p4.7.m7.5.5.1.1.1.1" xref="Sx2.p4.7.m7.5.5.1.1.1.1.cmml"><msub id="Sx2.p4.7.m7.5.5.1.1.1.1.2" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2.cmml"><mi id="Sx2.p4.7.m7.5.5.1.1.1.1.2.2" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2.2.cmml">x</mi><mn id="Sx2.p4.7.m7.5.5.1.1.1.1.2.3" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2.3.cmml">1</mn></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.7.m7.5.5.1.1.1.1.1" xref="Sx2.p4.7.m7.5.5.1.1.1.1.1.cmml">​</mo><mrow id="Sx2.p4.7.m7.5.5.1.1.1.1.3.2" xref="Sx2.p4.7.m7.5.5.1.1.1.1.cmml"><mo stretchy="false" id="Sx2.p4.7.m7.5.5.1.1.1.1.3.2.1" xref="Sx2.p4.7.m7.5.5.1.1.1.1.cmml">(</mo><mi id="Sx2.p4.7.m7.2.2" xref="Sx2.p4.7.m7.2.2.cmml">t</mi><mo stretchy="false" id="Sx2.p4.7.m7.5.5.1.1.1.1.3.2.2" xref="Sx2.p4.7.m7.5.5.1.1.1.1.cmml">)</mo></mrow></mrow><mo id="Sx2.p4.7.m7.6.6.2.2.2.4" xref="Sx2.p4.7.m7.6.6.2.2.3.cmml">,</mo><mi mathvariant="normal" id="Sx2.p4.7.m7.4.4" xref="Sx2.p4.7.m7.4.4.cmml">…</mi><mo id="Sx2.p4.7.m7.6.6.2.2.2.5" xref="Sx2.p4.7.m7.6.6.2.2.3.cmml">,</mo><mrow id="Sx2.p4.7.m7.6.6.2.2.2.2" xref="Sx2.p4.7.m7.6.6.2.2.2.2.cmml"><msub id="Sx2.p4.7.m7.6.6.2.2.2.2.2" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2.cmml"><mi id="Sx2.p4.7.m7.6.6.2.2.2.2.2.2" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2.2.cmml">x</mi><mi id="Sx2.p4.7.m7.6.6.2.2.2.2.2.3" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2.3.cmml">n</mi></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.7.m7.6.6.2.2.2.2.1" xref="Sx2.p4.7.m7.6.6.2.2.2.2.1.cmml">​</mo><mrow id="Sx2.p4.7.m7.6.6.2.2.2.2.3.2" xref="Sx2.p4.7.m7.6.6.2.2.2.2.cmml"><mo stretchy="false" id="Sx2.p4.7.m7.6.6.2.2.2.2.3.2.1" xref="Sx2.p4.7.m7.6.6.2.2.2.2.cmml">(</mo><mi id="Sx2.p4.7.m7.3.3" xref="Sx2.p4.7.m7.3.3.cmml">t</mi><mo stretchy="false" id="Sx2.p4.7.m7.6.6.2.2.2.2.3.2.2" xref="Sx2.p4.7.m7.6.6.2.2.2.2.cmml">)</mo></mrow></mrow><mo stretchy="false" id="Sx2.p4.7.m7.6.6.2.2.2.6" xref="Sx2.p4.7.m7.6.6.2.2.3.cmml">]</mo></mrow><mtext id="Sx2.p4.7.m7.6.6.2.4" xref="Sx2.p4.7.m7.6.6.2.4a.cmml">T</mtext></msup></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.7.m7.6b"><apply id="Sx2.p4.7.m7.6.6.cmml" xref="Sx2.p4.7.m7.6.6"><eq id="Sx2.p4.7.m7.6.6.3.cmml" xref="Sx2.p4.7.m7.6.6.3"></eq><ci id="Sx2.p4.7.m7.6.6.4.cmml" xref="Sx2.p4.7.m7.6.6.4">𝒙</ci><apply id="Sx2.p4.7.m7.6.6.2.cmml" xref="Sx2.p4.7.m7.6.6.2"><csymbol cd="ambiguous" id="Sx2.p4.7.m7.6.6.2.3.cmml" xref="Sx2.p4.7.m7.6.6.2">superscript</csymbol><list id="Sx2.p4.7.m7.6.6.2.2.3.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2"><apply id="Sx2.p4.7.m7.5.5.1.1.1.1.cmml" xref="Sx2.p4.7.m7.5.5.1.1.1.1"><times id="Sx2.p4.7.m7.5.5.1.1.1.1.1.cmml" xref="Sx2.p4.7.m7.5.5.1.1.1.1.1"></times><apply id="Sx2.p4.7.m7.5.5.1.1.1.1.2.cmml" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2"><csymbol cd="ambiguous" id="Sx2.p4.7.m7.5.5.1.1.1.1.2.1.cmml" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2">subscript</csymbol><ci id="Sx2.p4.7.m7.5.5.1.1.1.1.2.2.cmml" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2.2">𝑥</ci><cn type="integer" id="Sx2.p4.7.m7.5.5.1.1.1.1.2.3.cmml" xref="Sx2.p4.7.m7.5.5.1.1.1.1.2.3">1</cn></apply><ci id="Sx2.p4.7.m7.2.2.cmml" xref="Sx2.p4.7.m7.2.2">𝑡</ci></apply><ci id="Sx2.p4.7.m7.4.4.cmml" xref="Sx2.p4.7.m7.4.4">…</ci><apply id="Sx2.p4.7.m7.6.6.2.2.2.2.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2.2"><times id="Sx2.p4.7.m7.6.6.2.2.2.2.1.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2.2.1"></times><apply id="Sx2.p4.7.m7.6.6.2.2.2.2.2.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2"><csymbol cd="ambiguous" id="Sx2.p4.7.m7.6.6.2.2.2.2.2.1.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2">subscript</csymbol><ci id="Sx2.p4.7.m7.6.6.2.2.2.2.2.2.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2.2">𝑥</ci><ci id="Sx2.p4.7.m7.6.6.2.2.2.2.2.3.cmml" xref="Sx2.p4.7.m7.6.6.2.2.2.2.2.3">𝑛</ci></apply><ci id="Sx2.p4.7.m7.3.3.cmml" xref="Sx2.p4.7.m7.3.3">𝑡</ci></apply></list><ci id="Sx2.p4.7.m7.6.6.2.4a.cmml" xref="Sx2.p4.7.m7.6.6.2.4"><mtext mathsize="70%" id="Sx2.p4.7.m7.6.6.2.4.cmml" xref="Sx2.p4.7.m7.6.6.2.4">T</mtext></ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.7.m7.6c">\hbox{\boldmath{$x$}}=[x_{1}(t),\ldots,x_{n}(t)]^{\text{T}}</annotation></semantics></math> is the vector of sensor
+signals, <math id="Sx2.p4.8.m8.6" class="ltx_Math" alttext="\hbox{\boldmath{$s$}}=[s_{1}(t),\ldots,s_{n}(t)]^{\text{T}}" display="inline"><semantics id="Sx2.p4.8.m8.6a"><mrow id="Sx2.p4.8.m8.6.6" xref="Sx2.p4.8.m8.6.6.cmml"><mi id="Sx2.p4.8.m8.6.6.4" xref="Sx2.p4.8.m8.6.6.4.cmml">𝒔</mi><mo id="Sx2.p4.8.m8.6.6.3" xref="Sx2.p4.8.m8.6.6.3.cmml">=</mo><msup id="Sx2.p4.8.m8.6.6.2" xref="Sx2.p4.8.m8.6.6.2.cmml"><mrow id="Sx2.p4.8.m8.6.6.2.2.2" xref="Sx2.p4.8.m8.6.6.2.2.3.cmml"><mo stretchy="false" id="Sx2.p4.8.m8.6.6.2.2.2.3" xref="Sx2.p4.8.m8.6.6.2.2.3.cmml">[</mo><mrow id="Sx2.p4.8.m8.5.5.1.1.1.1" xref="Sx2.p4.8.m8.5.5.1.1.1.1.cmml"><msub id="Sx2.p4.8.m8.5.5.1.1.1.1.2" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2.cmml"><mi id="Sx2.p4.8.m8.5.5.1.1.1.1.2.2" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2.2.cmml">s</mi><mn id="Sx2.p4.8.m8.5.5.1.1.1.1.2.3" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2.3.cmml">1</mn></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.8.m8.5.5.1.1.1.1.1" xref="Sx2.p4.8.m8.5.5.1.1.1.1.1.cmml">​</mo><mrow id="Sx2.p4.8.m8.5.5.1.1.1.1.3.2" xref="Sx2.p4.8.m8.5.5.1.1.1.1.cmml"><mo stretchy="false" id="Sx2.p4.8.m8.5.5.1.1.1.1.3.2.1" xref="Sx2.p4.8.m8.5.5.1.1.1.1.cmml">(</mo><mi id="Sx2.p4.8.m8.2.2" xref="Sx2.p4.8.m8.2.2.cmml">t</mi><mo stretchy="false" id="Sx2.p4.8.m8.5.5.1.1.1.1.3.2.2" xref="Sx2.p4.8.m8.5.5.1.1.1.1.cmml">)</mo></mrow></mrow><mo id="Sx2.p4.8.m8.6.6.2.2.2.4" xref="Sx2.p4.8.m8.6.6.2.2.3.cmml">,</mo><mi mathvariant="normal" id="Sx2.p4.8.m8.4.4" xref="Sx2.p4.8.m8.4.4.cmml">…</mi><mo id="Sx2.p4.8.m8.6.6.2.2.2.5" xref="Sx2.p4.8.m8.6.6.2.2.3.cmml">,</mo><mrow id="Sx2.p4.8.m8.6.6.2.2.2.2" xref="Sx2.p4.8.m8.6.6.2.2.2.2.cmml"><msub id="Sx2.p4.8.m8.6.6.2.2.2.2.2" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2.cmml"><mi id="Sx2.p4.8.m8.6.6.2.2.2.2.2.2" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2.2.cmml">s</mi><mi id="Sx2.p4.8.m8.6.6.2.2.2.2.2.3" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2.3.cmml">n</mi></msub><mo lspace="0em" rspace="0em" id="Sx2.p4.8.m8.6.6.2.2.2.2.1" xref="Sx2.p4.8.m8.6.6.2.2.2.2.1.cmml">​</mo><mrow id="Sx2.p4.8.m8.6.6.2.2.2.2.3.2" xref="Sx2.p4.8.m8.6.6.2.2.2.2.cmml"><mo stretchy="false" id="Sx2.p4.8.m8.6.6.2.2.2.2.3.2.1" xref="Sx2.p4.8.m8.6.6.2.2.2.2.cmml">(</mo><mi id="Sx2.p4.8.m8.3.3" xref="Sx2.p4.8.m8.3.3.cmml">t</mi><mo stretchy="false" id="Sx2.p4.8.m8.6.6.2.2.2.2.3.2.2" xref="Sx2.p4.8.m8.6.6.2.2.2.2.cmml">)</mo></mrow></mrow><mo stretchy="false" id="Sx2.p4.8.m8.6.6.2.2.2.6" xref="Sx2.p4.8.m8.6.6.2.2.3.cmml">]</mo></mrow><mtext id="Sx2.p4.8.m8.6.6.2.4" xref="Sx2.p4.8.m8.6.6.2.4a.cmml">T</mtext></msup></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.8.m8.6b"><apply id="Sx2.p4.8.m8.6.6.cmml" xref="Sx2.p4.8.m8.6.6"><eq id="Sx2.p4.8.m8.6.6.3.cmml" xref="Sx2.p4.8.m8.6.6.3"></eq><ci id="Sx2.p4.8.m8.6.6.4.cmml" xref="Sx2.p4.8.m8.6.6.4">𝒔</ci><apply id="Sx2.p4.8.m8.6.6.2.cmml" xref="Sx2.p4.8.m8.6.6.2"><csymbol cd="ambiguous" id="Sx2.p4.8.m8.6.6.2.3.cmml" xref="Sx2.p4.8.m8.6.6.2">superscript</csymbol><list id="Sx2.p4.8.m8.6.6.2.2.3.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2"><apply id="Sx2.p4.8.m8.5.5.1.1.1.1.cmml" xref="Sx2.p4.8.m8.5.5.1.1.1.1"><times id="Sx2.p4.8.m8.5.5.1.1.1.1.1.cmml" xref="Sx2.p4.8.m8.5.5.1.1.1.1.1"></times><apply id="Sx2.p4.8.m8.5.5.1.1.1.1.2.cmml" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2"><csymbol cd="ambiguous" id="Sx2.p4.8.m8.5.5.1.1.1.1.2.1.cmml" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2">subscript</csymbol><ci id="Sx2.p4.8.m8.5.5.1.1.1.1.2.2.cmml" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2.2">𝑠</ci><cn type="integer" id="Sx2.p4.8.m8.5.5.1.1.1.1.2.3.cmml" xref="Sx2.p4.8.m8.5.5.1.1.1.1.2.3">1</cn></apply><ci id="Sx2.p4.8.m8.2.2.cmml" xref="Sx2.p4.8.m8.2.2">𝑡</ci></apply><ci id="Sx2.p4.8.m8.4.4.cmml" xref="Sx2.p4.8.m8.4.4">…</ci><apply id="Sx2.p4.8.m8.6.6.2.2.2.2.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2.2"><times id="Sx2.p4.8.m8.6.6.2.2.2.2.1.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2.2.1"></times><apply id="Sx2.p4.8.m8.6.6.2.2.2.2.2.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2"><csymbol cd="ambiguous" id="Sx2.p4.8.m8.6.6.2.2.2.2.2.1.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2">subscript</csymbol><ci id="Sx2.p4.8.m8.6.6.2.2.2.2.2.2.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2.2">𝑠</ci><ci id="Sx2.p4.8.m8.6.6.2.2.2.2.2.3.cmml" xref="Sx2.p4.8.m8.6.6.2.2.2.2.2.3">𝑛</ci></apply><ci id="Sx2.p4.8.m8.3.3.cmml" xref="Sx2.p4.8.m8.3.3">𝑡</ci></apply></list><ci id="Sx2.p4.8.m8.6.6.2.4a.cmml" xref="Sx2.p4.8.m8.6.6.2.4"><mtext mathsize="70%" id="Sx2.p4.8.m8.6.6.2.4.cmml" xref="Sx2.p4.8.m8.6.6.2.4">T</mtext></ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.8.m8.6c">\hbox{\boldmath{$s$}}=[s_{1}(t),\ldots,s_{n}(t)]^{\text{T}}</annotation></semantics></math> is the vector of
+source signals and <span id="Sx2.p4.9.m9.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p4.9.m9.1.1.1.m1.1" class="ltx_Math" alttext="A" display="inline"><semantics id="Sx2.p4.9.m9.1.1.1.m1.1a"><mi id="Sx2.p4.9.m9.1.1.1.m1.1.1" xref="Sx2.p4.9.m9.1.1.1.m1.1.1.cmml">𝑨</mi><annotation-xml encoding="MathML-Content" id="Sx2.p4.9.m9.1.1.1.m1.1b"><ci id="Sx2.p4.9.m9.1.1.1.m1.1.1.cmml" xref="Sx2.p4.9.m9.1.1.1.m1.1.1">𝑨</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.9.m9.1.1.1.m1.1c">A</annotation></semantics></math></span> is an unknown full rank <math id="Sx2.p4.10.m10.1" class="ltx_Math" alttext="n\times n" display="inline"><semantics id="Sx2.p4.10.m10.1a"><mrow id="Sx2.p4.10.m10.1.1" xref="Sx2.p4.10.m10.1.1.cmml"><mi id="Sx2.p4.10.m10.1.1.2" xref="Sx2.p4.10.m10.1.1.2.cmml">n</mi><mo lspace="0.222em" rspace="0.222em" id="Sx2.p4.10.m10.1.1.1" xref="Sx2.p4.10.m10.1.1.1.cmml">×</mo><mi id="Sx2.p4.10.m10.1.1.3" xref="Sx2.p4.10.m10.1.1.3.cmml">n</mi></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.10.m10.1b"><apply id="Sx2.p4.10.m10.1.1.cmml" xref="Sx2.p4.10.m10.1.1"><times id="Sx2.p4.10.m10.1.1.1.cmml" xref="Sx2.p4.10.m10.1.1.1"></times><ci id="Sx2.p4.10.m10.1.1.2.cmml" xref="Sx2.p4.10.m10.1.1.2">𝑛</ci><ci id="Sx2.p4.10.m10.1.1.3.cmml" xref="Sx2.p4.10.m10.1.1.3">𝑛</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.10.m10.1c">n\times n</annotation></semantics></math>
+mixing matrix whose elements are finite inpulse response (FIR) filters. We assume that only vector
+<span id="Sx2.p4.11.m11.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p4.11.m11.1.1.1.m1.1" class="ltx_Math" alttext="x" display="inline"><semantics id="Sx2.p4.11.m11.1.1.1.m1.1a"><mi id="Sx2.p4.11.m11.1.1.1.m1.1.1" xref="Sx2.p4.11.m11.1.1.1.m1.1.1.cmml">𝒙</mi><annotation-xml encoding="MathML-Content" id="Sx2.p4.11.m11.1.1.1.m1.1b"><ci id="Sx2.p4.11.m11.1.1.1.m1.1.1.cmml" xref="Sx2.p4.11.m11.1.1.1.m1.1.1">𝒙</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.11.m11.1.1.1.m1.1c">x</annotation></semantics></math></span> is available. The goal of ICA is to find a matrix <span id="Sx2.p4.12.m12.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p4.12.m12.1.1.1.m1.1" class="ltx_Math" alttext="W" display="inline"><semantics id="Sx2.p4.12.m12.1.1.1.m1.1a"><mi id="Sx2.p4.12.m12.1.1.1.m1.1.1" xref="Sx2.p4.12.m12.1.1.1.m1.1.1.cmml">𝑾</mi><annotation-xml encoding="MathML-Content" id="Sx2.p4.12.m12.1.1.1.m1.1b"><ci id="Sx2.p4.12.m12.1.1.1.m1.1.1.cmml" xref="Sx2.p4.12.m12.1.1.1.m1.1.1">𝑾</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.12.m12.1.1.1.m1.1c">W</annotation></semantics></math></span>,
+by which vector <span id="Sx2.p4.13.m13.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p4.13.m13.1.1.1.m1.1" class="ltx_Math" alttext="x" display="inline"><semantics id="Sx2.p4.13.m13.1.1.1.m1.1a"><mi id="Sx2.p4.13.m13.1.1.1.m1.1.1" xref="Sx2.p4.13.m13.1.1.1.m1.1.1.cmml">𝒙</mi><annotation-xml encoding="MathML-Content" id="Sx2.p4.13.m13.1.1.1.m1.1b"><ci id="Sx2.p4.13.m13.1.1.1.m1.1.1.cmml" xref="Sx2.p4.13.m13.1.1.1.m1.1.1">𝒙</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.13.m13.1.1.1.m1.1c">x</annotation></semantics></math></span> can be transformed into source signals
+<math id="Sx2.p4.14.m14.3" class="ltx_Math" alttext="\hbox{\boldmath{$u$}}=\hbox{\boldmath{$W$}}*\hbox{\boldmath{$x$}}" display="inline"><semantics id="Sx2.p4.14.m14.3a"><mrow id="Sx2.p4.14.m14.3.4" xref="Sx2.p4.14.m14.3.4.cmml"><mi id="Sx2.p4.14.m14.3.4.2" xref="Sx2.p4.14.m14.3.4.2.cmml">𝒖</mi><mo id="Sx2.p4.14.m14.3.4.1" xref="Sx2.p4.14.m14.3.4.1.cmml">=</mo><mrow id="Sx2.p4.14.m14.3.4.3" xref="Sx2.p4.14.m14.3.4.3.cmml"><mi id="Sx2.p4.14.m14.3.4.3.2" xref="Sx2.p4.14.m14.3.4.3.2.cmml">𝑾</mi><mo lspace="0.222em" rspace="0.222em" id="Sx2.p4.14.m14.3.4.3.1" xref="Sx2.p4.14.m14.3.4.3.1.cmml">∗</mo><mi id="Sx2.p4.14.m14.3.4.3.3" xref="Sx2.p4.14.m14.3.4.3.3.cmml">𝒙</mi></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p4.14.m14.3b"><apply id="Sx2.p4.14.m14.3.4.cmml" xref="Sx2.p4.14.m14.3.4"><eq id="Sx2.p4.14.m14.3.4.1.cmml" xref="Sx2.p4.14.m14.3.4.1"></eq><ci id="Sx2.p4.14.m14.3.4.2.cmml" xref="Sx2.p4.14.m14.3.4.2">𝒖</ci><apply id="Sx2.p4.14.m14.3.4.3.cmml" xref="Sx2.p4.14.m14.3.4.3"><times id="Sx2.p4.14.m14.3.4.3.1.cmml" xref="Sx2.p4.14.m14.3.4.3.1"></times><ci id="Sx2.p4.14.m14.3.4.3.2.cmml" xref="Sx2.p4.14.m14.3.4.3.2">𝑾</ci><ci id="Sx2.p4.14.m14.3.4.3.3.cmml" xref="Sx2.p4.14.m14.3.4.3.3">𝒙</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p4.14.m14.3c">\hbox{\boldmath{$u$}}=\hbox{\boldmath{$W$}}*\hbox{\boldmath{$x$}}</annotation></semantics></math>.</p>
+</div>
+<div id="Sx2.p5" class="ltx_para">
+<p id="Sx2.p5.11" class="ltx_p">Matrix <span id="Sx2.p5.1.m1.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p5.1.m1.1.1.1.m1.1" class="ltx_Math" alttext="W" display="inline"><semantics id="Sx2.p5.1.m1.1.1.1.m1.1a"><mi id="Sx2.p5.1.m1.1.1.1.m1.1.1" xref="Sx2.p5.1.m1.1.1.1.m1.1.1.cmml">𝑾</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.1.m1.1.1.1.m1.1b"><ci id="Sx2.p5.1.m1.1.1.1.m1.1.1.cmml" xref="Sx2.p5.1.m1.1.1.1.m1.1.1">𝑾</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.1.m1.1.1.1.m1.1c">W</annotation></semantics></math></span> is simply the inverse of <span id="Sx2.p5.2.m2.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p5.2.m2.1.1.1.m1.1" class="ltx_Math" alttext="A" display="inline"><semantics id="Sx2.p5.2.m2.1.1.1.m1.1a"><mi id="Sx2.p5.2.m2.1.1.1.m1.1.1" xref="Sx2.p5.2.m2.1.1.1.m1.1.1.cmml">𝑨</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.2.m2.1.1.1.m1.1b"><ci id="Sx2.p5.2.m2.1.1.1.m1.1.1.cmml" xref="Sx2.p5.2.m2.1.1.1.m1.1.1">𝑨</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.2.m2.1.1.1.m1.1c">A</annotation></semantics></math></span>. However, when noise
+corrupts the signals, matrix <span id="Sx2.p5.3.m3.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p5.3.m3.1.1.1.m1.1" class="ltx_Math" alttext="W" display="inline"><semantics id="Sx2.p5.3.m3.1.1.1.m1.1a"><mi id="Sx2.p5.3.m3.1.1.1.m1.1.1" xref="Sx2.p5.3.m3.1.1.1.m1.1.1.cmml">𝑾</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.3.m3.1.1.1.m1.1b"><ci id="Sx2.p5.3.m3.1.1.1.m1.1.1.cmml" xref="Sx2.p5.3.m3.1.1.1.m1.1.1">𝑾</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.3.m3.1.1.1.m1.1c">W</annotation></semantics></math></span> must be found by an optimal
+statistical treatment of the inverse problem. The optimal matrix
+<span id="Sx2.p5.4.m4.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p5.4.m4.1.1.1.m1.1" class="ltx_Math" alttext="W" display="inline"><semantics id="Sx2.p5.4.m4.1.1.1.m1.1a"><mi id="Sx2.p5.4.m4.1.1.1.m1.1.1" xref="Sx2.p5.4.m4.1.1.1.m1.1.1.cmml">𝑾</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.4.m4.1.1.1.m1.1b"><ci id="Sx2.p5.4.m4.1.1.1.m1.1.1.cmml" xref="Sx2.p5.4.m4.1.1.1.m1.1.1">𝑾</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.4.m4.1.1.1.m1.1c">W</annotation></semantics></math></span> can be estimated by a feed-forward neural network operating
+in the frequency domain. A learning algorithm with Amari’s
+natural gradient can be written as<cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib1" title="" class="ltx_ref">1</a>]</cite>:
+<math id="Sx2.p5.5.m5.3" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$u$}}}=\tilde{\hbox{\boldmath{$W$}}}\cdot\tilde{\hbox{\boldmath{$x$}}}" display="inline"><semantics id="Sx2.p5.5.m5.3a"><mrow id="Sx2.p5.5.m5.3.4" xref="Sx2.p5.5.m5.3.4.cmml"><mover accent="true" id="Sx2.p5.5.m5.1.1" xref="Sx2.p5.5.m5.1.1.cmml"><mi id="Sx2.p5.5.m5.1.1.1" xref="Sx2.p5.5.m5.1.1.1.cmml">𝒖</mi><mo id="Sx2.p5.5.m5.1.1.2" xref="Sx2.p5.5.m5.1.1.2.cmml">~</mo></mover><mo id="Sx2.p5.5.m5.3.4.1" xref="Sx2.p5.5.m5.3.4.1.cmml">=</mo><mrow id="Sx2.p5.5.m5.3.4.2" xref="Sx2.p5.5.m5.3.4.2.cmml"><mover accent="true" id="Sx2.p5.5.m5.2.2" xref="Sx2.p5.5.m5.2.2.cmml"><mi id="Sx2.p5.5.m5.2.2.1" xref="Sx2.p5.5.m5.2.2.1.cmml">𝑾</mi><mo id="Sx2.p5.5.m5.2.2.2" xref="Sx2.p5.5.m5.2.2.2.cmml">~</mo></mover><mo lspace="0.222em" rspace="0.222em" id="Sx2.p5.5.m5.3.4.2.1" xref="Sx2.p5.5.m5.3.4.2.1.cmml">⋅</mo><mover accent="true" id="Sx2.p5.5.m5.3.3" xref="Sx2.p5.5.m5.3.3.cmml"><mi id="Sx2.p5.5.m5.3.3.1" xref="Sx2.p5.5.m5.3.3.1.cmml">𝒙</mi><mo id="Sx2.p5.5.m5.3.3.2" xref="Sx2.p5.5.m5.3.3.2.cmml">~</mo></mover></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p5.5.m5.3b"><apply id="Sx2.p5.5.m5.3.4.cmml" xref="Sx2.p5.5.m5.3.4"><eq id="Sx2.p5.5.m5.3.4.1.cmml" xref="Sx2.p5.5.m5.3.4.1"></eq><apply id="Sx2.p5.5.m5.1.1.cmml" xref="Sx2.p5.5.m5.1.1"><ci id="Sx2.p5.5.m5.1.1.2.cmml" xref="Sx2.p5.5.m5.1.1.2">~</ci><ci id="Sx2.p5.5.m5.1.1.1.cmml" xref="Sx2.p5.5.m5.1.1.1">𝒖</ci></apply><apply id="Sx2.p5.5.m5.3.4.2.cmml" xref="Sx2.p5.5.m5.3.4.2"><ci id="Sx2.p5.5.m5.3.4.2.1.cmml" xref="Sx2.p5.5.m5.3.4.2.1">⋅</ci><apply id="Sx2.p5.5.m5.2.2.cmml" xref="Sx2.p5.5.m5.2.2"><ci id="Sx2.p5.5.m5.2.2.2.cmml" xref="Sx2.p5.5.m5.2.2.2">~</ci><ci id="Sx2.p5.5.m5.2.2.1.cmml" xref="Sx2.p5.5.m5.2.2.1">𝑾</ci></apply><apply id="Sx2.p5.5.m5.3.3.cmml" xref="Sx2.p5.5.m5.3.3"><ci id="Sx2.p5.5.m5.3.3.2.cmml" xref="Sx2.p5.5.m5.3.3.2">~</ci><ci id="Sx2.p5.5.m5.3.3.1.cmml" xref="Sx2.p5.5.m5.3.3.1">𝒙</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.5.m5.3c">\tilde{\hbox{\boldmath{$u$}}}=\tilde{\hbox{\boldmath{$W$}}}\cdot\tilde{\hbox{\boldmath{$x$}}}</annotation></semantics></math>,
+<math id="Sx2.p5.6.m6.8" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$W$}}}(\tau+1)=\tilde{\hbox{\boldmath{$W$}}}(\tau)+\alpha\,\Delta\tilde{\hbox{\boldmath{$W$}}}(\tau)+\eta\,\Delta\tilde{\hbox{\boldmath{$W$}}}(\tau-1)" display="inline"><semantics id="Sx2.p5.6.m6.8a"><mrow id="Sx2.p5.6.m6.8.8" xref="Sx2.p5.6.m6.8.8.cmml"><mrow id="Sx2.p5.6.m6.7.7.1" xref="Sx2.p5.6.m6.7.7.1.cmml"><mover accent="true" id="Sx2.p5.6.m6.1.1" xref="Sx2.p5.6.m6.1.1.cmml"><mi id="Sx2.p5.6.m6.1.1.1" xref="Sx2.p5.6.m6.1.1.1.cmml">𝑾</mi><mo id="Sx2.p5.6.m6.1.1.2" xref="Sx2.p5.6.m6.1.1.2.cmml">~</mo></mover><mo lspace="0em" rspace="0em" id="Sx2.p5.6.m6.7.7.1.2" xref="Sx2.p5.6.m6.7.7.1.2.cmml">​</mo><mrow id="Sx2.p5.6.m6.7.7.1.1.1" xref="Sx2.p5.6.m6.7.7.1.1.1.1.cmml"><mo stretchy="false" id="Sx2.p5.6.m6.7.7.1.1.1.2" xref="Sx2.p5.6.m6.7.7.1.1.1.1.cmml">(</mo><mrow id="Sx2.p5.6.m6.7.7.1.1.1.1" xref="Sx2.p5.6.m6.7.7.1.1.1.1.cmml"><mi id="Sx2.p5.6.m6.7.7.1.1.1.1.2" xref="Sx2.p5.6.m6.7.7.1.1.1.1.2.cmml">τ</mi><mo id="Sx2.p5.6.m6.7.7.1.1.1.1.1" xref="Sx2.p5.6.m6.7.7.1.1.1.1.1.cmml">+</mo><mn id="Sx2.p5.6.m6.7.7.1.1.1.1.3" xref="Sx2.p5.6.m6.7.7.1.1.1.1.3.cmml">1</mn></mrow><mo stretchy="false" id="Sx2.p5.6.m6.7.7.1.1.1.3" xref="Sx2.p5.6.m6.7.7.1.1.1.1.cmml">)</mo></mrow></mrow><mo id="Sx2.p5.6.m6.8.8.3" xref="Sx2.p5.6.m6.8.8.3.cmml">=</mo><mrow id="Sx2.p5.6.m6.8.8.2" xref="Sx2.p5.6.m6.8.8.2.cmml"><mrow id="Sx2.p5.6.m6.8.8.2.3" xref="Sx2.p5.6.m6.8.8.2.3.cmml"><mover accent="true" id="Sx2.p5.6.m6.2.2" xref="Sx2.p5.6.m6.2.2.cmml"><mi id="Sx2.p5.6.m6.2.2.1" xref="Sx2.p5.6.m6.2.2.1.cmml">𝑾</mi><mo id="Sx2.p5.6.m6.2.2.2" xref="Sx2.p5.6.m6.2.2.2.cmml">~</mo></mover><mo lspace="0em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.3.1" xref="Sx2.p5.6.m6.8.8.2.3.1.cmml">​</mo><mrow id="Sx2.p5.6.m6.8.8.2.3.2.2" xref="Sx2.p5.6.m6.8.8.2.3.cmml"><mo stretchy="false" id="Sx2.p5.6.m6.8.8.2.3.2.2.1" xref="Sx2.p5.6.m6.8.8.2.3.cmml">(</mo><mi id="Sx2.p5.6.m6.5.5" xref="Sx2.p5.6.m6.5.5.cmml">τ</mi><mo stretchy="false" id="Sx2.p5.6.m6.8.8.2.3.2.2.2" xref="Sx2.p5.6.m6.8.8.2.3.cmml">)</mo></mrow></mrow><mo id="Sx2.p5.6.m6.8.8.2.2" xref="Sx2.p5.6.m6.8.8.2.2.cmml">+</mo><mrow id="Sx2.p5.6.m6.8.8.2.4" xref="Sx2.p5.6.m6.8.8.2.4.cmml"><mi id="Sx2.p5.6.m6.8.8.2.4.2" xref="Sx2.p5.6.m6.8.8.2.4.2.cmml">α</mi><mo lspace="0.170em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.4.1" xref="Sx2.p5.6.m6.8.8.2.4.1.cmml">​</mo><mi mathvariant="normal" id="Sx2.p5.6.m6.8.8.2.4.3" xref="Sx2.p5.6.m6.8.8.2.4.3.cmml">Δ</mi><mo lspace="0em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.4.1a" xref="Sx2.p5.6.m6.8.8.2.4.1.cmml">​</mo><mover accent="true" id="Sx2.p5.6.m6.3.3" xref="Sx2.p5.6.m6.3.3.cmml"><mi id="Sx2.p5.6.m6.3.3.1" xref="Sx2.p5.6.m6.3.3.1.cmml">𝑾</mi><mo id="Sx2.p5.6.m6.3.3.2" xref="Sx2.p5.6.m6.3.3.2.cmml">~</mo></mover><mo lspace="0em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.4.1b" xref="Sx2.p5.6.m6.8.8.2.4.1.cmml">​</mo><mrow id="Sx2.p5.6.m6.8.8.2.4.4.2" xref="Sx2.p5.6.m6.8.8.2.4.cmml"><mo stretchy="false" id="Sx2.p5.6.m6.8.8.2.4.4.2.1" xref="Sx2.p5.6.m6.8.8.2.4.cmml">(</mo><mi id="Sx2.p5.6.m6.6.6" xref="Sx2.p5.6.m6.6.6.cmml">τ</mi><mo stretchy="false" id="Sx2.p5.6.m6.8.8.2.4.4.2.2" xref="Sx2.p5.6.m6.8.8.2.4.cmml">)</mo></mrow></mrow><mo id="Sx2.p5.6.m6.8.8.2.2a" xref="Sx2.p5.6.m6.8.8.2.2.cmml">+</mo><mrow id="Sx2.p5.6.m6.8.8.2.1" xref="Sx2.p5.6.m6.8.8.2.1.cmml"><mi id="Sx2.p5.6.m6.8.8.2.1.3" xref="Sx2.p5.6.m6.8.8.2.1.3.cmml">η</mi><mo lspace="0.170em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.1.2" xref="Sx2.p5.6.m6.8.8.2.1.2.cmml">​</mo><mi mathvariant="normal" id="Sx2.p5.6.m6.8.8.2.1.4" xref="Sx2.p5.6.m6.8.8.2.1.4.cmml">Δ</mi><mo lspace="0em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.1.2a" xref="Sx2.p5.6.m6.8.8.2.1.2.cmml">​</mo><mover accent="true" id="Sx2.p5.6.m6.4.4" xref="Sx2.p5.6.m6.4.4.cmml"><mi id="Sx2.p5.6.m6.4.4.1" xref="Sx2.p5.6.m6.4.4.1.cmml">𝑾</mi><mo id="Sx2.p5.6.m6.4.4.2" xref="Sx2.p5.6.m6.4.4.2.cmml">~</mo></mover><mo lspace="0em" rspace="0em" id="Sx2.p5.6.m6.8.8.2.1.2b" xref="Sx2.p5.6.m6.8.8.2.1.2.cmml">​</mo><mrow id="Sx2.p5.6.m6.8.8.2.1.1.1" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.cmml"><mo stretchy="false" id="Sx2.p5.6.m6.8.8.2.1.1.1.2" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.cmml">(</mo><mrow id="Sx2.p5.6.m6.8.8.2.1.1.1.1" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.cmml"><mi id="Sx2.p5.6.m6.8.8.2.1.1.1.1.2" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.2.cmml">τ</mi><mo id="Sx2.p5.6.m6.8.8.2.1.1.1.1.1" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.1.cmml">−</mo><mn id="Sx2.p5.6.m6.8.8.2.1.1.1.1.3" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.3.cmml">1</mn></mrow><mo stretchy="false" id="Sx2.p5.6.m6.8.8.2.1.1.1.3" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.cmml">)</mo></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p5.6.m6.8b"><apply id="Sx2.p5.6.m6.8.8.cmml" xref="Sx2.p5.6.m6.8.8"><eq id="Sx2.p5.6.m6.8.8.3.cmml" xref="Sx2.p5.6.m6.8.8.3"></eq><apply id="Sx2.p5.6.m6.7.7.1.cmml" xref="Sx2.p5.6.m6.7.7.1"><times id="Sx2.p5.6.m6.7.7.1.2.cmml" xref="Sx2.p5.6.m6.7.7.1.2"></times><apply id="Sx2.p5.6.m6.1.1.cmml" xref="Sx2.p5.6.m6.1.1"><ci id="Sx2.p5.6.m6.1.1.2.cmml" xref="Sx2.p5.6.m6.1.1.2">~</ci><ci id="Sx2.p5.6.m6.1.1.1.cmml" xref="Sx2.p5.6.m6.1.1.1">𝑾</ci></apply><apply id="Sx2.p5.6.m6.7.7.1.1.1.1.cmml" xref="Sx2.p5.6.m6.7.7.1.1.1"><plus id="Sx2.p5.6.m6.7.7.1.1.1.1.1.cmml" xref="Sx2.p5.6.m6.7.7.1.1.1.1.1"></plus><ci id="Sx2.p5.6.m6.7.7.1.1.1.1.2.cmml" xref="Sx2.p5.6.m6.7.7.1.1.1.1.2">𝜏</ci><cn type="integer" id="Sx2.p5.6.m6.7.7.1.1.1.1.3.cmml" xref="Sx2.p5.6.m6.7.7.1.1.1.1.3">1</cn></apply></apply><apply id="Sx2.p5.6.m6.8.8.2.cmml" xref="Sx2.p5.6.m6.8.8.2"><plus id="Sx2.p5.6.m6.8.8.2.2.cmml" xref="Sx2.p5.6.m6.8.8.2.2"></plus><apply id="Sx2.p5.6.m6.8.8.2.3.cmml" xref="Sx2.p5.6.m6.8.8.2.3"><times id="Sx2.p5.6.m6.8.8.2.3.1.cmml" xref="Sx2.p5.6.m6.8.8.2.3.1"></times><apply id="Sx2.p5.6.m6.2.2.cmml" xref="Sx2.p5.6.m6.2.2"><ci id="Sx2.p5.6.m6.2.2.2.cmml" xref="Sx2.p5.6.m6.2.2.2">~</ci><ci id="Sx2.p5.6.m6.2.2.1.cmml" xref="Sx2.p5.6.m6.2.2.1">𝑾</ci></apply><ci id="Sx2.p5.6.m6.5.5.cmml" xref="Sx2.p5.6.m6.5.5">𝜏</ci></apply><apply id="Sx2.p5.6.m6.8.8.2.4.cmml" xref="Sx2.p5.6.m6.8.8.2.4"><times id="Sx2.p5.6.m6.8.8.2.4.1.cmml" xref="Sx2.p5.6.m6.8.8.2.4.1"></times><ci id="Sx2.p5.6.m6.8.8.2.4.2.cmml" xref="Sx2.p5.6.m6.8.8.2.4.2">𝛼</ci><ci id="Sx2.p5.6.m6.8.8.2.4.3.cmml" xref="Sx2.p5.6.m6.8.8.2.4.3">Δ</ci><apply id="Sx2.p5.6.m6.3.3.cmml" xref="Sx2.p5.6.m6.3.3"><ci id="Sx2.p5.6.m6.3.3.2.cmml" xref="Sx2.p5.6.m6.3.3.2">~</ci><ci id="Sx2.p5.6.m6.3.3.1.cmml" xref="Sx2.p5.6.m6.3.3.1">𝑾</ci></apply><ci id="Sx2.p5.6.m6.6.6.cmml" xref="Sx2.p5.6.m6.6.6">𝜏</ci></apply><apply id="Sx2.p5.6.m6.8.8.2.1.cmml" xref="Sx2.p5.6.m6.8.8.2.1"><times id="Sx2.p5.6.m6.8.8.2.1.2.cmml" xref="Sx2.p5.6.m6.8.8.2.1.2"></times><ci id="Sx2.p5.6.m6.8.8.2.1.3.cmml" xref="Sx2.p5.6.m6.8.8.2.1.3">𝜂</ci><ci id="Sx2.p5.6.m6.8.8.2.1.4.cmml" xref="Sx2.p5.6.m6.8.8.2.1.4">Δ</ci><apply id="Sx2.p5.6.m6.4.4.cmml" xref="Sx2.p5.6.m6.4.4"><ci id="Sx2.p5.6.m6.4.4.2.cmml" xref="Sx2.p5.6.m6.4.4.2">~</ci><ci id="Sx2.p5.6.m6.4.4.1.cmml" xref="Sx2.p5.6.m6.4.4.1">𝑾</ci></apply><apply id="Sx2.p5.6.m6.8.8.2.1.1.1.1.cmml" xref="Sx2.p5.6.m6.8.8.2.1.1.1"><minus id="Sx2.p5.6.m6.8.8.2.1.1.1.1.1.cmml" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.1"></minus><ci id="Sx2.p5.6.m6.8.8.2.1.1.1.1.2.cmml" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.2">𝜏</ci><cn type="integer" id="Sx2.p5.6.m6.8.8.2.1.1.1.1.3.cmml" xref="Sx2.p5.6.m6.8.8.2.1.1.1.1.3">1</cn></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.6.m6.8c">\tilde{\hbox{\boldmath{$W$}}}(\tau+1)=\tilde{\hbox{\boldmath{$W$}}}(\tau)+\alpha\,\Delta\tilde{\hbox{\boldmath{$W$}}}(\tau)+\eta\,\Delta\tilde{\hbox{\boldmath{$W$}}}(\tau-1)</annotation></semantics></math>,
+<math id="Sx2.p5.7.m7.6" class="ltx_Math" alttext="\Delta\tilde{\hbox{\boldmath{$W$}}}=[\hbox{\boldmath{$I$}}-\tilde{\hbox{\boldmath{$y$}}}\cdot\tilde{\hbox{\boldmath{$u$}}}^{\text{H}}]\,\tilde{\hbox{\boldmath{$W$}}}" display="inline"><semantics id="Sx2.p5.7.m7.6a"><mrow id="Sx2.p5.7.m7.6.6" xref="Sx2.p5.7.m7.6.6.cmml"><mrow id="Sx2.p5.7.m7.6.6.3" xref="Sx2.p5.7.m7.6.6.3.cmml"><mi mathvariant="normal" id="Sx2.p5.7.m7.6.6.3.2" xref="Sx2.p5.7.m7.6.6.3.2.cmml">Δ</mi><mo lspace="0em" rspace="0em" id="Sx2.p5.7.m7.6.6.3.1" xref="Sx2.p5.7.m7.6.6.3.1.cmml">​</mo><mover accent="true" id="Sx2.p5.7.m7.1.1" xref="Sx2.p5.7.m7.1.1.cmml"><mi id="Sx2.p5.7.m7.1.1.1" xref="Sx2.p5.7.m7.1.1.1.cmml">𝑾</mi><mo id="Sx2.p5.7.m7.1.1.2" xref="Sx2.p5.7.m7.1.1.2.cmml">~</mo></mover></mrow><mo id="Sx2.p5.7.m7.6.6.2" xref="Sx2.p5.7.m7.6.6.2.cmml">=</mo><mrow id="Sx2.p5.7.m7.6.6.1" xref="Sx2.p5.7.m7.6.6.1.cmml"><mrow id="Sx2.p5.7.m7.6.6.1.1.1" xref="Sx2.p5.7.m7.6.6.1.1.2.cmml"><mo stretchy="false" id="Sx2.p5.7.m7.6.6.1.1.1.2" xref="Sx2.p5.7.m7.6.6.1.1.2.1.cmml">[</mo><mrow id="Sx2.p5.7.m7.6.6.1.1.1.1" xref="Sx2.p5.7.m7.6.6.1.1.1.1.cmml"><mi id="Sx2.p5.7.m7.6.6.1.1.1.1.2" xref="Sx2.p5.7.m7.6.6.1.1.1.1.2.cmml">𝑰</mi><mo id="Sx2.p5.7.m7.6.6.1.1.1.1.1" xref="Sx2.p5.7.m7.6.6.1.1.1.1.1.cmml">−</mo><mrow id="Sx2.p5.7.m7.6.6.1.1.1.1.3" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.cmml"><mover accent="true" id="Sx2.p5.7.m7.3.3" xref="Sx2.p5.7.m7.3.3.cmml"><mi id="Sx2.p5.7.m7.3.3.1" xref="Sx2.p5.7.m7.3.3.1.cmml">𝒚</mi><mo id="Sx2.p5.7.m7.3.3.2" xref="Sx2.p5.7.m7.3.3.2.cmml">~</mo></mover><mo lspace="0.222em" rspace="0.222em" id="Sx2.p5.7.m7.6.6.1.1.1.1.3.1" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.1.cmml">⋅</mo><msup id="Sx2.p5.7.m7.6.6.1.1.1.1.3.2" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.cmml"><mover accent="true" id="Sx2.p5.7.m7.4.4" xref="Sx2.p5.7.m7.4.4.cmml"><mi id="Sx2.p5.7.m7.4.4.1" xref="Sx2.p5.7.m7.4.4.1.cmml">𝒖</mi><mo id="Sx2.p5.7.m7.4.4.2" xref="Sx2.p5.7.m7.4.4.2.cmml">~</mo></mover><mtext id="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.2" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.2a.cmml">H</mtext></msup></mrow></mrow><mo stretchy="false" id="Sx2.p5.7.m7.6.6.1.1.1.3" xref="Sx2.p5.7.m7.6.6.1.1.2.1.cmml">]</mo></mrow><mo lspace="0.170em" rspace="0em" id="Sx2.p5.7.m7.6.6.1.2" xref="Sx2.p5.7.m7.6.6.1.2.cmml">​</mo><mover accent="true" id="Sx2.p5.7.m7.5.5" xref="Sx2.p5.7.m7.5.5.cmml"><mi id="Sx2.p5.7.m7.5.5.1" xref="Sx2.p5.7.m7.5.5.1.cmml">𝑾</mi><mo id="Sx2.p5.7.m7.5.5.2" xref="Sx2.p5.7.m7.5.5.2.cmml">~</mo></mover></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p5.7.m7.6b"><apply id="Sx2.p5.7.m7.6.6.cmml" xref="Sx2.p5.7.m7.6.6"><eq id="Sx2.p5.7.m7.6.6.2.cmml" xref="Sx2.p5.7.m7.6.6.2"></eq><apply id="Sx2.p5.7.m7.6.6.3.cmml" xref="Sx2.p5.7.m7.6.6.3"><times id="Sx2.p5.7.m7.6.6.3.1.cmml" xref="Sx2.p5.7.m7.6.6.3.1"></times><ci id="Sx2.p5.7.m7.6.6.3.2.cmml" xref="Sx2.p5.7.m7.6.6.3.2">Δ</ci><apply id="Sx2.p5.7.m7.1.1.cmml" xref="Sx2.p5.7.m7.1.1"><ci id="Sx2.p5.7.m7.1.1.2.cmml" xref="Sx2.p5.7.m7.1.1.2">~</ci><ci id="Sx2.p5.7.m7.1.1.1.cmml" xref="Sx2.p5.7.m7.1.1.1">𝑾</ci></apply></apply><apply id="Sx2.p5.7.m7.6.6.1.cmml" xref="Sx2.p5.7.m7.6.6.1"><times id="Sx2.p5.7.m7.6.6.1.2.cmml" xref="Sx2.p5.7.m7.6.6.1.2"></times><apply id="Sx2.p5.7.m7.6.6.1.1.2.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1"><csymbol cd="latexml" id="Sx2.p5.7.m7.6.6.1.1.2.1.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.2">delimited-[]</csymbol><apply id="Sx2.p5.7.m7.6.6.1.1.1.1.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1"><minus id="Sx2.p5.7.m7.6.6.1.1.1.1.1.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.1"></minus><ci id="Sx2.p5.7.m7.6.6.1.1.1.1.2.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.2">𝑰</ci><apply id="Sx2.p5.7.m7.6.6.1.1.1.1.3.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3"><ci id="Sx2.p5.7.m7.6.6.1.1.1.1.3.1.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.1">⋅</ci><apply id="Sx2.p5.7.m7.3.3.cmml" xref="Sx2.p5.7.m7.3.3"><ci id="Sx2.p5.7.m7.3.3.2.cmml" xref="Sx2.p5.7.m7.3.3.2">~</ci><ci id="Sx2.p5.7.m7.3.3.1.cmml" xref="Sx2.p5.7.m7.3.3.1">𝒚</ci></apply><apply id="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.2"><csymbol cd="ambiguous" id="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.1.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.2">superscript</csymbol><apply id="Sx2.p5.7.m7.4.4.cmml" xref="Sx2.p5.7.m7.4.4"><ci id="Sx2.p5.7.m7.4.4.2.cmml" xref="Sx2.p5.7.m7.4.4.2">~</ci><ci id="Sx2.p5.7.m7.4.4.1.cmml" xref="Sx2.p5.7.m7.4.4.1">𝒖</ci></apply><ci id="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.2a.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.2"><mtext mathsize="70%" id="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.2.cmml" xref="Sx2.p5.7.m7.6.6.1.1.1.1.3.2.2">H</mtext></ci></apply></apply></apply></apply><apply id="Sx2.p5.7.m7.5.5.cmml" xref="Sx2.p5.7.m7.5.5"><ci id="Sx2.p5.7.m7.5.5.2.cmml" xref="Sx2.p5.7.m7.5.5.2">~</ci><ci id="Sx2.p5.7.m7.5.5.1.cmml" xref="Sx2.p5.7.m7.5.5.1">𝑾</ci></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.7.m7.6c">\Delta\tilde{\hbox{\boldmath{$W$}}}=[\hbox{\boldmath{$I$}}-\tilde{\hbox{\boldmath{$y$}}}\cdot\tilde{\hbox{\boldmath{$u$}}}^{\text{H}}]\,\tilde{\hbox{\boldmath{$W$}}}</annotation></semantics></math>,
+<math id="Sx2.p5.8.m8.9" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$y$}}}=\tanh(\Re[\tilde{\hbox{\boldmath{$u$}}}])+\imath\,\tanh(\Im[\tilde{\hbox{\boldmath{$u$}}}])" display="inline"><semantics id="Sx2.p5.8.m8.9a"><mrow id="Sx2.p5.8.m8.9.9" xref="Sx2.p5.8.m8.9.9.cmml"><mover accent="true" id="Sx2.p5.8.m8.1.1" xref="Sx2.p5.8.m8.1.1.cmml"><mi id="Sx2.p5.8.m8.1.1.1" xref="Sx2.p5.8.m8.1.1.1.cmml">𝒚</mi><mo id="Sx2.p5.8.m8.1.1.2" xref="Sx2.p5.8.m8.1.1.2.cmml">~</mo></mover><mo id="Sx2.p5.8.m8.9.9.3" xref="Sx2.p5.8.m8.9.9.3.cmml">=</mo><mrow id="Sx2.p5.8.m8.9.9.2" xref="Sx2.p5.8.m8.9.9.2.cmml"><mrow id="Sx2.p5.8.m8.8.8.1.1.1" xref="Sx2.p5.8.m8.8.8.1.1.2.cmml"><mi id="Sx2.p5.8.m8.5.5" xref="Sx2.p5.8.m8.5.5.cmml">tanh</mi><mo id="Sx2.p5.8.m8.8.8.1.1.1a" xref="Sx2.p5.8.m8.8.8.1.1.2.cmml">⁡</mo><mrow id="Sx2.p5.8.m8.8.8.1.1.1.1" xref="Sx2.p5.8.m8.8.8.1.1.2.cmml"><mo stretchy="false" id="Sx2.p5.8.m8.8.8.1.1.1.1.2" xref="Sx2.p5.8.m8.8.8.1.1.2.cmml">(</mo><mrow id="Sx2.p5.8.m8.8.8.1.1.1.1.1.2" xref="Sx2.p5.8.m8.8.8.1.1.1.1.1.1.cmml"><mi mathvariant="normal" id="Sx2.p5.8.m8.4.4" xref="Sx2.p5.8.m8.4.4.cmml">ℜ</mi><mo id="Sx2.p5.8.m8.8.8.1.1.1.1.1.2a" xref="Sx2.p5.8.m8.8.8.1.1.1.1.1.1.cmml">⁡</mo><mrow id="Sx2.p5.8.m8.8.8.1.1.1.1.1.2.1" xref="Sx2.p5.8.m8.8.8.1.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx2.p5.8.m8.8.8.1.1.1.1.1.2.1.1" xref="Sx2.p5.8.m8.8.8.1.1.1.1.1.1.cmml">[</mo><mover accent="true" id="Sx2.p5.8.m8.2.2" xref="Sx2.p5.8.m8.2.2.cmml"><mi id="Sx2.p5.8.m8.2.2.1" xref="Sx2.p5.8.m8.2.2.1.cmml">𝒖</mi><mo id="Sx2.p5.8.m8.2.2.2" xref="Sx2.p5.8.m8.2.2.2.cmml">~</mo></mover><mo stretchy="false" id="Sx2.p5.8.m8.8.8.1.1.1.1.1.2.1.2" xref="Sx2.p5.8.m8.8.8.1.1.1.1.1.1.cmml">]</mo></mrow></mrow><mo stretchy="false" id="Sx2.p5.8.m8.8.8.1.1.1.1.3" xref="Sx2.p5.8.m8.8.8.1.1.2.cmml">)</mo></mrow></mrow><mo id="Sx2.p5.8.m8.9.9.2.3" xref="Sx2.p5.8.m8.9.9.2.3.cmml">+</mo><mrow id="Sx2.p5.8.m8.9.9.2.2" xref="Sx2.p5.8.m8.9.9.2.2.cmml"><mi id="Sx2.p5.8.m8.9.9.2.2.3" xref="Sx2.p5.8.m8.9.9.2.2.3.cmml">ı</mi><mo lspace="0.337em" rspace="0em" id="Sx2.p5.8.m8.9.9.2.2.2" xref="Sx2.p5.8.m8.9.9.2.2.2.cmml">​</mo><mrow id="Sx2.p5.8.m8.9.9.2.2.1.1" xref="Sx2.p5.8.m8.9.9.2.2.1.2.cmml"><mi id="Sx2.p5.8.m8.7.7" xref="Sx2.p5.8.m8.7.7.cmml">tanh</mi><mo id="Sx2.p5.8.m8.9.9.2.2.1.1a" xref="Sx2.p5.8.m8.9.9.2.2.1.2.cmml">⁡</mo><mrow id="Sx2.p5.8.m8.9.9.2.2.1.1.1" xref="Sx2.p5.8.m8.9.9.2.2.1.2.cmml"><mo stretchy="false" id="Sx2.p5.8.m8.9.9.2.2.1.1.1.2" xref="Sx2.p5.8.m8.9.9.2.2.1.2.cmml">(</mo><mrow id="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.2" xref="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.1.cmml"><mi mathvariant="normal" id="Sx2.p5.8.m8.6.6" xref="Sx2.p5.8.m8.6.6.cmml">ℑ</mi><mo id="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.2a" xref="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.1.cmml">⁡</mo><mrow id="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.2.1" xref="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.1.cmml"><mo stretchy="false" id="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.2.1.1" xref="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.1.cmml">[</mo><mover accent="true" id="Sx2.p5.8.m8.3.3" xref="Sx2.p5.8.m8.3.3.cmml"><mi id="Sx2.p5.8.m8.3.3.1" xref="Sx2.p5.8.m8.3.3.1.cmml">𝒖</mi><mo id="Sx2.p5.8.m8.3.3.2" xref="Sx2.p5.8.m8.3.3.2.cmml">~</mo></mover><mo stretchy="false" id="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.2.1.2" xref="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.1.cmml">]</mo></mrow></mrow><mo stretchy="false" id="Sx2.p5.8.m8.9.9.2.2.1.1.1.3" xref="Sx2.p5.8.m8.9.9.2.2.1.2.cmml">)</mo></mrow></mrow></mrow></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.p5.8.m8.9b"><apply id="Sx2.p5.8.m8.9.9.cmml" xref="Sx2.p5.8.m8.9.9"><eq id="Sx2.p5.8.m8.9.9.3.cmml" xref="Sx2.p5.8.m8.9.9.3"></eq><apply id="Sx2.p5.8.m8.1.1.cmml" xref="Sx2.p5.8.m8.1.1"><ci id="Sx2.p5.8.m8.1.1.2.cmml" xref="Sx2.p5.8.m8.1.1.2">~</ci><ci id="Sx2.p5.8.m8.1.1.1.cmml" xref="Sx2.p5.8.m8.1.1.1">𝒚</ci></apply><apply id="Sx2.p5.8.m8.9.9.2.cmml" xref="Sx2.p5.8.m8.9.9.2"><plus id="Sx2.p5.8.m8.9.9.2.3.cmml" xref="Sx2.p5.8.m8.9.9.2.3"></plus><apply id="Sx2.p5.8.m8.8.8.1.1.2.cmml" xref="Sx2.p5.8.m8.8.8.1.1.1"><tanh id="Sx2.p5.8.m8.5.5.cmml" xref="Sx2.p5.8.m8.5.5"></tanh><apply id="Sx2.p5.8.m8.8.8.1.1.1.1.1.1.cmml" xref="Sx2.p5.8.m8.8.8.1.1.1.1.1.2"><real id="Sx2.p5.8.m8.4.4.cmml" xref="Sx2.p5.8.m8.4.4"></real><apply id="Sx2.p5.8.m8.2.2.cmml" xref="Sx2.p5.8.m8.2.2"><ci id="Sx2.p5.8.m8.2.2.2.cmml" xref="Sx2.p5.8.m8.2.2.2">~</ci><ci id="Sx2.p5.8.m8.2.2.1.cmml" xref="Sx2.p5.8.m8.2.2.1">𝒖</ci></apply></apply></apply><apply id="Sx2.p5.8.m8.9.9.2.2.cmml" xref="Sx2.p5.8.m8.9.9.2.2"><times id="Sx2.p5.8.m8.9.9.2.2.2.cmml" xref="Sx2.p5.8.m8.9.9.2.2.2"></times><ci id="Sx2.p5.8.m8.9.9.2.2.3.cmml" xref="Sx2.p5.8.m8.9.9.2.2.3">italic-ı</ci><apply id="Sx2.p5.8.m8.9.9.2.2.1.2.cmml" xref="Sx2.p5.8.m8.9.9.2.2.1.1"><tanh id="Sx2.p5.8.m8.7.7.cmml" xref="Sx2.p5.8.m8.7.7"></tanh><apply id="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.1.cmml" xref="Sx2.p5.8.m8.9.9.2.2.1.1.1.1.2"><imaginary id="Sx2.p5.8.m8.6.6.cmml" xref="Sx2.p5.8.m8.6.6"></imaginary><apply id="Sx2.p5.8.m8.3.3.cmml" xref="Sx2.p5.8.m8.3.3"><ci id="Sx2.p5.8.m8.3.3.2.cmml" xref="Sx2.p5.8.m8.3.3.2">~</ci><ci id="Sx2.p5.8.m8.3.3.1.cmml" xref="Sx2.p5.8.m8.3.3.1">𝒖</ci></apply></apply></apply></apply></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.8.m8.9c">\tilde{\hbox{\boldmath{$y$}}}=\tanh(\Re[\tilde{\hbox{\boldmath{$u$}}}])+\imath\,\tanh(\Im[\tilde{\hbox{\boldmath{$u$}}}])</annotation></semantics></math>,
+where <math id="Sx2.p5.9.m9.1" class="ltx_Math" alttext="\alpha" display="inline"><semantics id="Sx2.p5.9.m9.1a"><mi id="Sx2.p5.9.m9.1.1" xref="Sx2.p5.9.m9.1.1.cmml">α</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.9.m9.1b"><ci id="Sx2.p5.9.m9.1.1.cmml" xref="Sx2.p5.9.m9.1.1">𝛼</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.9.m9.1c">\alpha</annotation></semantics></math> is the learning rate, <math id="Sx2.p5.10.m10.1" class="ltx_Math" alttext="\eta" display="inline"><semantics id="Sx2.p5.10.m10.1a"><mi id="Sx2.p5.10.m10.1.1" xref="Sx2.p5.10.m10.1.1.cmml">η</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.10.m10.1b"><ci id="Sx2.p5.10.m10.1.1.cmml" xref="Sx2.p5.10.m10.1.1">𝜂</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.10.m10.1c">\eta</annotation></semantics></math> is the constant of learning,
+<span id="Sx2.p5.11.m11.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.p5.11.m11.1.1.1.m1.1" class="ltx_Math" alttext="I" display="inline"><semantics id="Sx2.p5.11.m11.1.1.1.m1.1a"><mi id="Sx2.p5.11.m11.1.1.1.m1.1.1" xref="Sx2.p5.11.m11.1.1.1.m1.1.1.cmml">𝑰</mi><annotation-xml encoding="MathML-Content" id="Sx2.p5.11.m11.1.1.1.m1.1b"><ci id="Sx2.p5.11.m11.1.1.1.m1.1.1.cmml" xref="Sx2.p5.11.m11.1.1.1.m1.1.1">𝑰</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.p5.11.m11.1.1.1.m1.1c">I</annotation></semantics></math></span> is the identity matrix and the tilde ‘~’represents a
+frequency domain.</p>
+</div>
+<figure id="Sx2.F1" class="ltx_figure"><span id="Sx2.F1.pic1" class="ltx_picture ltx_centering" style="width:442.3pt;height:572.4pt;">\psfrag{pred-procesiranje}{\small pre-process}\psfrag{inicializacija}{\small initialize}\psfrag{locitvenih}{\small unmixing}\psfrag{filtrov}{\small filters}\psfrag{FFT}{\small FFT}\psfrag{filter}{\small filter}\psfrag{tanh}{\small tanh}\psfrag{popravek locitvenih filtrov}{\small update rule}\psfrag{x(t)}{\small$\hbox{\boldmath{$x$}}(t)$}\psfrag{x}{\small$\tilde{\hbox{\boldmath{$x$}}}$}\psfrag{W}{\small$\tilde{\hbox{\boldmath{$W$}}}$}\psfrag{u}{\small$\tilde{\hbox{\boldmath{$u$}}}$}\psfrag{y}{\small$\tilde{\hbox{\boldmath{$y$}}}$}\psfrag{dW}{\small$\Delta\tilde{\hbox{\boldmath{$W$}}}$}\includegraphics{ucno.eps}</span>
+<figcaption class="ltx_caption ltx_centering" style="font-size:90%;"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>Block diagram of ICA algorithm</figcaption>
+</figure>
+<div id="Sx2.p6" class="ltx_para">
+<p id="Sx2.p6.1" class="ltx_p">The ICA algorithm runs off-line and proceeds as follows <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib11" title="" class="ltx_ref">11</a>]</cite> (Fig. <a href="#Sx2.F1" title="Figure 1 ‣ Methods ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>):</p>
+<ol id="Sx2.I1" class="ltx_enumerate">
+<li id="Sx2.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">1.</span> 
+<div id="Sx2.I1.i1.p1" class="ltx_para">
+<p id="Sx2.I1.i1.p1.1" class="ltx_p">Pre-process the time-domain input signals, <math id="Sx2.I1.i1.p1.1.m1.2" class="ltx_Math" alttext="\hbox{\boldmath{$x$}}(t)" display="inline"><semantics id="Sx2.I1.i1.p1.1.m1.2a"><mrow id="Sx2.I1.i1.p1.1.m1.2.3" xref="Sx2.I1.i1.p1.1.m1.2.3.cmml"><mi id="Sx2.I1.i1.p1.1.m1.2.3.2" xref="Sx2.I1.i1.p1.1.m1.2.3.2.cmml">𝒙</mi><mo lspace="0em" rspace="0em" id="Sx2.I1.i1.p1.1.m1.2.3.1" xref="Sx2.I1.i1.p1.1.m1.2.3.1.cmml">​</mo><mrow id="Sx2.I1.i1.p1.1.m1.2.3.3.2" xref="Sx2.I1.i1.p1.1.m1.2.3.cmml"><mo stretchy="false" id="Sx2.I1.i1.p1.1.m1.2.3.3.2.1" xref="Sx2.I1.i1.p1.1.m1.2.3.cmml">(</mo><mi id="Sx2.I1.i1.p1.1.m1.2.2" xref="Sx2.I1.i1.p1.1.m1.2.2.cmml">t</mi><mo stretchy="false" id="Sx2.I1.i1.p1.1.m1.2.3.3.2.2" xref="Sx2.I1.i1.p1.1.m1.2.3.cmml">)</mo></mrow></mrow><annotation-xml encoding="MathML-Content" id="Sx2.I1.i1.p1.1.m1.2b"><apply id="Sx2.I1.i1.p1.1.m1.2.3.cmml" xref="Sx2.I1.i1.p1.1.m1.2.3"><times id="Sx2.I1.i1.p1.1.m1.2.3.1.cmml" xref="Sx2.I1.i1.p1.1.m1.2.3.1"></times><ci id="Sx2.I1.i1.p1.1.m1.2.3.2.cmml" xref="Sx2.I1.i1.p1.1.m1.2.3.2">𝒙</ci><ci id="Sx2.I1.i1.p1.1.m1.2.2.cmml" xref="Sx2.I1.i1.p1.1.m1.2.2">𝑡</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i1.p1.1.m1.2c">\hbox{\boldmath{$x$}}(t)</annotation></semantics></math>: substract the mean from each signal.</p>
+</div>
+</li>
+<li id="Sx2.I1.i2" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">2.</span> 
+<div id="Sx2.I1.i2.p1" class="ltx_para">
+<p id="Sx2.I1.i2.p1.1" class="ltx_p">Initialize the frequency domain unmixing filters, <math id="Sx2.I1.i2.p1.1.m1.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$W$}}}" display="inline"><semantics id="Sx2.I1.i2.p1.1.m1.1a"><mover accent="true" id="Sx2.I1.i2.p1.1.m1.1.1" xref="Sx2.I1.i2.p1.1.m1.1.1.cmml"><mi id="Sx2.I1.i2.p1.1.m1.1.1.1" xref="Sx2.I1.i2.p1.1.m1.1.1.1.cmml">𝑾</mi><mo id="Sx2.I1.i2.p1.1.m1.1.1.2" xref="Sx2.I1.i2.p1.1.m1.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i2.p1.1.m1.1b"><apply id="Sx2.I1.i2.p1.1.m1.1.1.cmml" xref="Sx2.I1.i2.p1.1.m1.1.1"><ci id="Sx2.I1.i2.p1.1.m1.1.1.2.cmml" xref="Sx2.I1.i2.p1.1.m1.1.1.2">~</ci><ci id="Sx2.I1.i2.p1.1.m1.1.1.1.cmml" xref="Sx2.I1.i2.p1.1.m1.1.1.1">𝑾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i2.p1.1.m1.1c">\tilde{\hbox{\boldmath{$W$}}}</annotation></semantics></math>.</p>
+</div>
+</li>
+<li id="Sx2.I1.i3" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">3.</span> 
+<div id="Sx2.I1.i3.p1" class="ltx_para">
+<p id="Sx2.I1.i3.p1.1" class="ltx_p">Take a block of input data and convert it into the frequency domain using the Fast Fourier Transform (FFT).</p>
+</div>
+</li>
+<li id="Sx2.I1.i4" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">4.</span> 
+<div id="Sx2.I1.i4.p1" class="ltx_para">
+<p id="Sx2.I1.i4.p1.3" class="ltx_p">Filter the frequency domain input block, <math id="Sx2.I1.i4.p1.1.m1.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$x$}}}" display="inline"><semantics id="Sx2.I1.i4.p1.1.m1.1a"><mover accent="true" id="Sx2.I1.i4.p1.1.m1.1.1" xref="Sx2.I1.i4.p1.1.m1.1.1.cmml"><mi id="Sx2.I1.i4.p1.1.m1.1.1.1" xref="Sx2.I1.i4.p1.1.m1.1.1.1.cmml">𝒙</mi><mo id="Sx2.I1.i4.p1.1.m1.1.1.2" xref="Sx2.I1.i4.p1.1.m1.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i4.p1.1.m1.1b"><apply id="Sx2.I1.i4.p1.1.m1.1.1.cmml" xref="Sx2.I1.i4.p1.1.m1.1.1"><ci id="Sx2.I1.i4.p1.1.m1.1.1.2.cmml" xref="Sx2.I1.i4.p1.1.m1.1.1.2">~</ci><ci id="Sx2.I1.i4.p1.1.m1.1.1.1.cmml" xref="Sx2.I1.i4.p1.1.m1.1.1.1">𝒙</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i4.p1.1.m1.1c">\tilde{\hbox{\boldmath{$x$}}}</annotation></semantics></math>, through <math id="Sx2.I1.i4.p1.2.m2.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$W$}}}" display="inline"><semantics id="Sx2.I1.i4.p1.2.m2.1a"><mover accent="true" id="Sx2.I1.i4.p1.2.m2.1.1" xref="Sx2.I1.i4.p1.2.m2.1.1.cmml"><mi id="Sx2.I1.i4.p1.2.m2.1.1.1" xref="Sx2.I1.i4.p1.2.m2.1.1.1.cmml">𝑾</mi><mo id="Sx2.I1.i4.p1.2.m2.1.1.2" xref="Sx2.I1.i4.p1.2.m2.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i4.p1.2.m2.1b"><apply id="Sx2.I1.i4.p1.2.m2.1.1.cmml" xref="Sx2.I1.i4.p1.2.m2.1.1"><ci id="Sx2.I1.i4.p1.2.m2.1.1.2.cmml" xref="Sx2.I1.i4.p1.2.m2.1.1.2">~</ci><ci id="Sx2.I1.i4.p1.2.m2.1.1.1.cmml" xref="Sx2.I1.i4.p1.2.m2.1.1.1">𝑾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i4.p1.2.m2.1c">\tilde{\hbox{\boldmath{$W$}}}</annotation></semantics></math>
+to get the estimated source signals, <math id="Sx2.I1.i4.p1.3.m3.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$u$}}}" display="inline"><semantics id="Sx2.I1.i4.p1.3.m3.1a"><mover accent="true" id="Sx2.I1.i4.p1.3.m3.1.1" xref="Sx2.I1.i4.p1.3.m3.1.1.cmml"><mi id="Sx2.I1.i4.p1.3.m3.1.1.1" xref="Sx2.I1.i4.p1.3.m3.1.1.1.cmml">𝒖</mi><mo id="Sx2.I1.i4.p1.3.m3.1.1.2" xref="Sx2.I1.i4.p1.3.m3.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i4.p1.3.m3.1b"><apply id="Sx2.I1.i4.p1.3.m3.1.1.cmml" xref="Sx2.I1.i4.p1.3.m3.1.1"><ci id="Sx2.I1.i4.p1.3.m3.1.1.2.cmml" xref="Sx2.I1.i4.p1.3.m3.1.1.2">~</ci><ci id="Sx2.I1.i4.p1.3.m3.1.1.1.cmml" xref="Sx2.I1.i4.p1.3.m3.1.1.1">𝒖</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i4.p1.3.m3.1c">\tilde{\hbox{\boldmath{$u$}}}</annotation></semantics></math>.</p>
+</div>
+</li>
+<li id="Sx2.I1.i5" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">5.</span> 
+<div id="Sx2.I1.i5.p1" class="ltx_para">
+<p id="Sx2.I1.i5.p1.2" class="ltx_p">Pass <math id="Sx2.I1.i5.p1.1.m1.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$u$}}}" display="inline"><semantics id="Sx2.I1.i5.p1.1.m1.1a"><mover accent="true" id="Sx2.I1.i5.p1.1.m1.1.1" xref="Sx2.I1.i5.p1.1.m1.1.1.cmml"><mi id="Sx2.I1.i5.p1.1.m1.1.1.1" xref="Sx2.I1.i5.p1.1.m1.1.1.1.cmml">𝒖</mi><mo id="Sx2.I1.i5.p1.1.m1.1.1.2" xref="Sx2.I1.i5.p1.1.m1.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i5.p1.1.m1.1b"><apply id="Sx2.I1.i5.p1.1.m1.1.1.cmml" xref="Sx2.I1.i5.p1.1.m1.1.1"><ci id="Sx2.I1.i5.p1.1.m1.1.1.2.cmml" xref="Sx2.I1.i5.p1.1.m1.1.1.2">~</ci><ci id="Sx2.I1.i5.p1.1.m1.1.1.1.cmml" xref="Sx2.I1.i5.p1.1.m1.1.1.1">𝒖</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i5.p1.1.m1.1c">\tilde{\hbox{\boldmath{$u$}}}</annotation></semantics></math> through the frequency domain nonlinearity, <math id="Sx2.I1.i5.p1.2.m2.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$y$}}}" display="inline"><semantics id="Sx2.I1.i5.p1.2.m2.1a"><mover accent="true" id="Sx2.I1.i5.p1.2.m2.1.1" xref="Sx2.I1.i5.p1.2.m2.1.1.cmml"><mi id="Sx2.I1.i5.p1.2.m2.1.1.1" xref="Sx2.I1.i5.p1.2.m2.1.1.1.cmml">𝒚</mi><mo id="Sx2.I1.i5.p1.2.m2.1.1.2" xref="Sx2.I1.i5.p1.2.m2.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i5.p1.2.m2.1b"><apply id="Sx2.I1.i5.p1.2.m2.1.1.cmml" xref="Sx2.I1.i5.p1.2.m2.1.1"><ci id="Sx2.I1.i5.p1.2.m2.1.1.2.cmml" xref="Sx2.I1.i5.p1.2.m2.1.1.2">~</ci><ci id="Sx2.I1.i5.p1.2.m2.1.1.1.cmml" xref="Sx2.I1.i5.p1.2.m2.1.1.1">𝒚</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i5.p1.2.m2.1c">\tilde{\hbox{\boldmath{$y$}}}</annotation></semantics></math>.</p>
+</div>
+</li>
+<li id="Sx2.I1.i6" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">6.</span> 
+<div id="Sx2.I1.i6.p1" class="ltx_para">
+<p id="Sx2.I1.i6.p1.4" class="ltx_p">Use <math id="Sx2.I1.i6.p1.1.m1.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$W$}}}" display="inline"><semantics id="Sx2.I1.i6.p1.1.m1.1a"><mover accent="true" id="Sx2.I1.i6.p1.1.m1.1.1" xref="Sx2.I1.i6.p1.1.m1.1.1.cmml"><mi id="Sx2.I1.i6.p1.1.m1.1.1.1" xref="Sx2.I1.i6.p1.1.m1.1.1.1.cmml">𝑾</mi><mo id="Sx2.I1.i6.p1.1.m1.1.1.2" xref="Sx2.I1.i6.p1.1.m1.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i6.p1.1.m1.1b"><apply id="Sx2.I1.i6.p1.1.m1.1.1.cmml" xref="Sx2.I1.i6.p1.1.m1.1.1"><ci id="Sx2.I1.i6.p1.1.m1.1.1.2.cmml" xref="Sx2.I1.i6.p1.1.m1.1.1.2">~</ci><ci id="Sx2.I1.i6.p1.1.m1.1.1.1.cmml" xref="Sx2.I1.i6.p1.1.m1.1.1.1">𝑾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i6.p1.1.m1.1c">\tilde{\hbox{\boldmath{$W$}}}</annotation></semantics></math>, <math id="Sx2.I1.i6.p1.2.m2.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$u$}}}" display="inline"><semantics id="Sx2.I1.i6.p1.2.m2.1a"><mover accent="true" id="Sx2.I1.i6.p1.2.m2.1.1" xref="Sx2.I1.i6.p1.2.m2.1.1.cmml"><mi id="Sx2.I1.i6.p1.2.m2.1.1.1" xref="Sx2.I1.i6.p1.2.m2.1.1.1.cmml">𝒖</mi><mo id="Sx2.I1.i6.p1.2.m2.1.1.2" xref="Sx2.I1.i6.p1.2.m2.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i6.p1.2.m2.1b"><apply id="Sx2.I1.i6.p1.2.m2.1.1.cmml" xref="Sx2.I1.i6.p1.2.m2.1.1"><ci id="Sx2.I1.i6.p1.2.m2.1.1.2.cmml" xref="Sx2.I1.i6.p1.2.m2.1.1.2">~</ci><ci id="Sx2.I1.i6.p1.2.m2.1.1.1.cmml" xref="Sx2.I1.i6.p1.2.m2.1.1.1">𝒖</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i6.p1.2.m2.1c">\tilde{\hbox{\boldmath{$u$}}}</annotation></semantics></math> and <math id="Sx2.I1.i6.p1.3.m3.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$y$}}}" display="inline"><semantics id="Sx2.I1.i6.p1.3.m3.1a"><mover accent="true" id="Sx2.I1.i6.p1.3.m3.1.1" xref="Sx2.I1.i6.p1.3.m3.1.1.cmml"><mi id="Sx2.I1.i6.p1.3.m3.1.1.1" xref="Sx2.I1.i6.p1.3.m3.1.1.1.cmml">𝒚</mi><mo id="Sx2.I1.i6.p1.3.m3.1.1.2" xref="Sx2.I1.i6.p1.3.m3.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i6.p1.3.m3.1b"><apply id="Sx2.I1.i6.p1.3.m3.1.1.cmml" xref="Sx2.I1.i6.p1.3.m3.1.1"><ci id="Sx2.I1.i6.p1.3.m3.1.1.2.cmml" xref="Sx2.I1.i6.p1.3.m3.1.1.2">~</ci><ci id="Sx2.I1.i6.p1.3.m3.1.1.1.cmml" xref="Sx2.I1.i6.p1.3.m3.1.1.1">𝒚</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i6.p1.3.m3.1c">\tilde{\hbox{\boldmath{$y$}}}</annotation></semantics></math> along with the natural
+gradient extension <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib2" title="" class="ltx_ref">2</a>]</cite> to compute the change in the unmixing filter, <math id="Sx2.I1.i6.p1.4.m4.1" class="ltx_Math" alttext="\Delta\tilde{\hbox{\boldmath{$W$}}}" display="inline"><semantics id="Sx2.I1.i6.p1.4.m4.1a"><mrow id="Sx2.I1.i6.p1.4.m4.1.2" xref="Sx2.I1.i6.p1.4.m4.1.2.cmml"><mi mathvariant="normal" id="Sx2.I1.i6.p1.4.m4.1.2.2" xref="Sx2.I1.i6.p1.4.m4.1.2.2.cmml">Δ</mi><mo lspace="0em" rspace="0em" id="Sx2.I1.i6.p1.4.m4.1.2.1" xref="Sx2.I1.i6.p1.4.m4.1.2.1.cmml">​</mo><mover accent="true" id="Sx2.I1.i6.p1.4.m4.1.1" xref="Sx2.I1.i6.p1.4.m4.1.1.cmml"><mi id="Sx2.I1.i6.p1.4.m4.1.1.1" xref="Sx2.I1.i6.p1.4.m4.1.1.1.cmml">𝑾</mi><mo id="Sx2.I1.i6.p1.4.m4.1.1.2" xref="Sx2.I1.i6.p1.4.m4.1.1.2.cmml">~</mo></mover></mrow><annotation-xml encoding="MathML-Content" id="Sx2.I1.i6.p1.4.m4.1b"><apply id="Sx2.I1.i6.p1.4.m4.1.2.cmml" xref="Sx2.I1.i6.p1.4.m4.1.2"><times id="Sx2.I1.i6.p1.4.m4.1.2.1.cmml" xref="Sx2.I1.i6.p1.4.m4.1.2.1"></times><ci id="Sx2.I1.i6.p1.4.m4.1.2.2.cmml" xref="Sx2.I1.i6.p1.4.m4.1.2.2">Δ</ci><apply id="Sx2.I1.i6.p1.4.m4.1.1.cmml" xref="Sx2.I1.i6.p1.4.m4.1.1"><ci id="Sx2.I1.i6.p1.4.m4.1.1.2.cmml" xref="Sx2.I1.i6.p1.4.m4.1.1.2">~</ci><ci id="Sx2.I1.i6.p1.4.m4.1.1.1.cmml" xref="Sx2.I1.i6.p1.4.m4.1.1.1">𝑾</ci></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i6.p1.4.m4.1c">\Delta\tilde{\hbox{\boldmath{$W$}}}</annotation></semantics></math>.</p>
+</div>
+</li>
+<li id="Sx2.I1.i7" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">7.</span> 
+<div id="Sx2.I1.i7.p1" class="ltx_para">
+<p id="Sx2.I1.i7.p1.1" class="ltx_p">Take the next block of input data, covert it into the frequency domain, and proceed from step 4.
+Repeat this process until the unmixing filters have converged upon a solution, passing several times
+through the data.</p>
+</div>
+</li>
+<li id="Sx2.I1.i8" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">8.</span> 
+<div id="Sx2.I1.i8.p1" class="ltx_para">
+<p id="Sx2.I1.i8.p1.1" class="ltx_p">Normalize <math id="Sx2.I1.i8.p1.1.m1.1" class="ltx_Math" alttext="\tilde{\hbox{\boldmath{$W$}}}" display="inline"><semantics id="Sx2.I1.i8.p1.1.m1.1a"><mover accent="true" id="Sx2.I1.i8.p1.1.m1.1.1" xref="Sx2.I1.i8.p1.1.m1.1.1.cmml"><mi id="Sx2.I1.i8.p1.1.m1.1.1.1" xref="Sx2.I1.i8.p1.1.m1.1.1.1.cmml">𝑾</mi><mo id="Sx2.I1.i8.p1.1.m1.1.1.2" xref="Sx2.I1.i8.p1.1.m1.1.1.2.cmml">~</mo></mover><annotation-xml encoding="MathML-Content" id="Sx2.I1.i8.p1.1.m1.1b"><apply id="Sx2.I1.i8.p1.1.m1.1.1.cmml" xref="Sx2.I1.i8.p1.1.m1.1.1"><ci id="Sx2.I1.i8.p1.1.m1.1.1.2.cmml" xref="Sx2.I1.i8.p1.1.m1.1.1.2">~</ci><ci id="Sx2.I1.i8.p1.1.m1.1.1.1.cmml" xref="Sx2.I1.i8.p1.1.m1.1.1.1">𝑾</ci></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i8.p1.1.m1.1c">\tilde{\hbox{\boldmath{$W$}}}</annotation></semantics></math> and convert it back into the time domain, using the Inverse Fast
+Fourier Transform (IFFT).</p>
+</div>
+</li>
+<li id="Sx2.I1.i9" class="ltx_item" style="list-style-type:none;padding-top:-3.0pt;">
+<span class="ltx_tag ltx_tag_item">9.</span> 
+<div id="Sx2.I1.i9.p1" class="ltx_para">
+<p id="Sx2.I1.i9.p1.2" class="ltx_p">Convolve the time domain unmixing filters, <span id="Sx2.I1.i9.p1.1.m1.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1" class="ltx_Math" alttext="W" display="inline"><semantics id="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1a"><mi id="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1.1" xref="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1.1.cmml">𝑾</mi><annotation-xml encoding="MathML-Content" id="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1b"><ci id="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1.1.cmml" xref="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1.1">𝑾</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i9.p1.1.m1.1.1.1.m1.1c">W</annotation></semantics></math></span>, with <span id="Sx2.I1.i9.p1.2.m2.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1" class="ltx_Math" alttext="x" display="inline"><semantics id="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1a"><mi id="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1.1" xref="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1.1.cmml">𝒙</mi><annotation-xml encoding="MathML-Content" id="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1b"><ci id="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1.1.cmml" xref="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1.1">𝒙</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx2.I1.i9.p1.2.m2.1.1.1.m1.1c">x</annotation></semantics></math></span> to get the estimated sources.</p>
+</div>
+</li>
+</ol>
+</div>
+</section>
+<section id="Sx3" class="ltx_section">
+<h2 class="ltx_title ltx_font_smallcaps ltx_title_section">Experiments</h2>
+
+<div id="Sx3.p1" class="ltx_para">
+<p id="Sx3.p1.1" class="ltx_p">We performed experiments with two independent continuous AE sources
+on an aluminum band of dimensions <math id="Sx3.p1.1.m1.1" class="ltx_Math" alttext="4000\times 40\times 5\,\text{mm}^{3}" display="inline"><semantics id="Sx3.p1.1.m1.1a"><mrow id="Sx3.p1.1.m1.1.1" xref="Sx3.p1.1.m1.1.1.cmml"><mrow id="Sx3.p1.1.m1.1.1.2" xref="Sx3.p1.1.m1.1.1.2.cmml"><mn id="Sx3.p1.1.m1.1.1.2.2" xref="Sx3.p1.1.m1.1.1.2.2.cmml">4000</mn><mo lspace="0.222em" rspace="0.222em" id="Sx3.p1.1.m1.1.1.2.1" xref="Sx3.p1.1.m1.1.1.2.1.cmml">×</mo><mn id="Sx3.p1.1.m1.1.1.2.3" xref="Sx3.p1.1.m1.1.1.2.3.cmml">40</mn><mo lspace="0.222em" rspace="0.222em" id="Sx3.p1.1.m1.1.1.2.1a" xref="Sx3.p1.1.m1.1.1.2.1.cmml">×</mo><mn id="Sx3.p1.1.m1.1.1.2.4" xref="Sx3.p1.1.m1.1.1.2.4.cmml">5</mn></mrow><mo lspace="0.170em" rspace="0em" id="Sx3.p1.1.m1.1.1.1" xref="Sx3.p1.1.m1.1.1.1.cmml">​</mo><msup id="Sx3.p1.1.m1.1.1.3" xref="Sx3.p1.1.m1.1.1.3.cmml"><mtext id="Sx3.p1.1.m1.1.1.3.2" xref="Sx3.p1.1.m1.1.1.3.2a.cmml">mm</mtext><mn id="Sx3.p1.1.m1.1.1.3.3" xref="Sx3.p1.1.m1.1.1.3.3.cmml">3</mn></msup></mrow><annotation-xml encoding="MathML-Content" id="Sx3.p1.1.m1.1b"><apply id="Sx3.p1.1.m1.1.1.cmml" xref="Sx3.p1.1.m1.1.1"><times id="Sx3.p1.1.m1.1.1.1.cmml" xref="Sx3.p1.1.m1.1.1.1"></times><apply id="Sx3.p1.1.m1.1.1.2.cmml" xref="Sx3.p1.1.m1.1.1.2"><times id="Sx3.p1.1.m1.1.1.2.1.cmml" xref="Sx3.p1.1.m1.1.1.2.1"></times><cn type="integer" id="Sx3.p1.1.m1.1.1.2.2.cmml" xref="Sx3.p1.1.m1.1.1.2.2">4000</cn><cn type="integer" id="Sx3.p1.1.m1.1.1.2.3.cmml" xref="Sx3.p1.1.m1.1.1.2.3">40</cn><cn type="integer" id="Sx3.p1.1.m1.1.1.2.4.cmml" xref="Sx3.p1.1.m1.1.1.2.4">5</cn></apply><apply id="Sx3.p1.1.m1.1.1.3.cmml" xref="Sx3.p1.1.m1.1.1.3"><csymbol cd="ambiguous" id="Sx3.p1.1.m1.1.1.3.1.cmml" xref="Sx3.p1.1.m1.1.1.3">superscript</csymbol><ci id="Sx3.p1.1.m1.1.1.3.2a.cmml" xref="Sx3.p1.1.m1.1.1.3.2"><mtext id="Sx3.p1.1.m1.1.1.3.2.cmml" xref="Sx3.p1.1.m1.1.1.3.2">mm</mtext></ci><cn type="integer" id="Sx3.p1.1.m1.1.1.3.3.cmml" xref="Sx3.p1.1.m1.1.1.3.3">3</cn></apply></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p1.1.m1.1c">4000\times 40\times 5\,\text{mm}^{3}</annotation></semantics></math>. Reflections at the end of the band were reduced by
+wrapping the ends in putty. The testing area was on the longitudinal
+axis in the middle of the band, where 23 holes of diameter 2 mm and
+mutual separation 100 mm were prepared as shown in Fig. <a href="#Sx3.F2" title="Figure 2 ‣ Experiments ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>.</p>
+</div>
+<figure id="Sx3.F2" class="ltx_figure"><span id="Sx3.F2.pic1" class="ltx_picture ltx_centering" style="width:255.8pt;height:330.3pt;">\psfrag{fi2mm}{\small$\phi$ 2\,mm}\psfrag{trak}{\small band}\psfrag{x}{\small$l$}\psfrag{zracni curek}{\small air flow}\includegraphics[width=256.0748pt]{trakica3.eps}</span>
+<figcaption class="ltx_caption ltx_centering" style="font-size:90%;"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>AE generation by air flowing through the hole</figcaption>
+</figure>
+<div id="Sx3.p2" class="ltx_para">
+<p id="Sx3.p2.4" class="ltx_p">Two AE sensors were mounted 100 mm away from the terminal holes, that is
+2.4 m from each other. The origin of the coordinate system was in the
+middle of the band and the testing area extended from <math id="Sx3.p2.1.m1.1" class="ltx_Math" alttext="-1.1" display="inline"><semantics id="Sx3.p2.1.m1.1a"><mrow id="Sx3.p2.1.m1.1.1" xref="Sx3.p2.1.m1.1.1.cmml"><mo id="Sx3.p2.1.m1.1.1a" xref="Sx3.p2.1.m1.1.1.cmml">−</mo><mn id="Sx3.p2.1.m1.1.1.2" xref="Sx3.p2.1.m1.1.1.2.cmml">1.1</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx3.p2.1.m1.1b"><apply id="Sx3.p2.1.m1.1.1.cmml" xref="Sx3.p2.1.m1.1.1"><minus id="Sx3.p2.1.m1.1.1.1.cmml" xref="Sx3.p2.1.m1.1.1"></minus><cn type="float" id="Sx3.p2.1.m1.1.1.2.cmml" xref="Sx3.p2.1.m1.1.1.2">1.1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p2.1.m1.1c">-1.1</annotation></semantics></math> m to
+<math id="Sx3.p2.2.m2.1" class="ltx_Math" alttext="+1.1" display="inline"><semantics id="Sx3.p2.2.m2.1a"><mrow id="Sx3.p2.2.m2.1.1" xref="Sx3.p2.2.m2.1.1.cmml"><mo id="Sx3.p2.2.m2.1.1a" xref="Sx3.p2.2.m2.1.1.cmml">+</mo><mn id="Sx3.p2.2.m2.1.1.2" xref="Sx3.p2.2.m2.1.1.2.cmml">1.1</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx3.p2.2.m2.1b"><apply id="Sx3.p2.2.m2.1.1.cmml" xref="Sx3.p2.2.m2.1.1"><plus id="Sx3.p2.2.m2.1.1.1.cmml" xref="Sx3.p2.2.m2.1.1"></plus><cn type="float" id="Sx3.p2.2.m2.1.1.2.cmml" xref="Sx3.p2.2.m2.1.1.2">1.1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p2.2.m2.1c">+1.1</annotation></semantics></math> m. AE signals were excited by two independent air jets flowing
+through the holes. The source position was arbitrarily selected at <math id="Sx3.p2.3.m3.1" class="ltx_Math" alttext="+100" display="inline"><semantics id="Sx3.p2.3.m3.1a"><mrow id="Sx3.p2.3.m3.1.1" xref="Sx3.p2.3.m3.1.1.cmml"><mo id="Sx3.p2.3.m3.1.1a" xref="Sx3.p2.3.m3.1.1.cmml">+</mo><mn id="Sx3.p2.3.m3.1.1.2" xref="Sx3.p2.3.m3.1.1.2.cmml">100</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx3.p2.3.m3.1b"><apply id="Sx3.p2.3.m3.1.1.cmml" xref="Sx3.p2.3.m3.1.1"><plus id="Sx3.p2.3.m3.1.1.1.cmml" xref="Sx3.p2.3.m3.1.1"></plus><cn type="integer" id="Sx3.p2.3.m3.1.1.2.cmml" xref="Sx3.p2.3.m3.1.1.2">100</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p2.3.m3.1c">+100</annotation></semantics></math> mm
+and <math id="Sx3.p2.4.m4.1" class="ltx_Math" alttext="+800" display="inline"><semantics id="Sx3.p2.4.m4.1a"><mrow id="Sx3.p2.4.m4.1.1" xref="Sx3.p2.4.m4.1.1.cmml"><mo id="Sx3.p2.4.m4.1.1a" xref="Sx3.p2.4.m4.1.1.cmml">+</mo><mn id="Sx3.p2.4.m4.1.1.2" xref="Sx3.p2.4.m4.1.1.2.cmml">800</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx3.p2.4.m4.1b"><apply id="Sx3.p2.4.m4.1.1.cmml" xref="Sx3.p2.4.m4.1.1"><plus id="Sx3.p2.4.m4.1.1.1.cmml" xref="Sx3.p2.4.m4.1.1"></plus><cn type="integer" id="Sx3.p2.4.m4.1.1.2.cmml" xref="Sx3.p2.4.m4.1.1.2">800</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p2.4.m4.1c">+800</annotation></semantics></math> mm. Air jets were formed by two nozzles of diameter
+1 mm using pressure 7 bar. The experimental set-up consisted of the
+test specimen (aluminum band), two AE sensors (pinducers), two AE sources (air jets),
+two amplifiers, a digital oscilloscope (A/D converter) and a
+computer (BSS module, locator, plotter) as shown in Fig. <a href="#Sx3.F3" title="Figure 3 ‣ Experiments ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>.
+Three experiments were performed : (1) T-D estimation using a
+CCF of two AE signals that were not
+simultaneously active; (2) T-D estimation using a
+CCF of two AE signals which were simultaneously
+active and (3) T-D estimation of AE signals using ICA. Location
+of sources, based on T-D, by the intelligent locator was
+performed in all three cases.</p>
+</div>
+<figure id="Sx3.F3" class="ltx_figure"><span id="Sx3.F3.pic1" class="ltx_picture ltx_centering" style="width:255.8pt;height:330.3pt;">\psfrag{preskusanec}{\footnotesize specimen}\psfrag{senzor}{\footnotesize sensor}\psfrag{AE sources}{\footnotesize AE source}\psfrag{ojacevalniki}{\footnotesize amplifier}\psfrag{A/D pretvorniki}{\footnotesize A/D converter}\psfrag{lokator}{\footnotesize locator}\psfrag{risalnik}{\footnotesize plotter}\psfrag{slepo locevanje}{\footnotesize blind source}\psfrag{izvorov}{\footnotesize separation}\includegraphics[width=256.0748pt]{lokator1.eps}</span>
+<figcaption class="ltx_caption ltx_centering" style="font-size:80%;"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>Experimental set-up</figcaption>
+</figure>
+<div id="Sx3.p3" class="ltx_para">
+<p id="Sx3.p3.4" class="ltx_p">In the first experiment only one air jet was activated for a particular
+measurement.
+In the second experiment both air jets were activated. Sensor signals
+were linear convolutive mixtures of two independent continuous AE
+sources as shown in Fig. <a href="#Sx3.F4" title="Figure 4 ‣ Experiments ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>. The auto-correlation <math id="Sx3.p3.1.m1.1" class="ltx_Math" alttext="R_{11}" display="inline"><semantics id="Sx3.p3.1.m1.1a"><msub id="Sx3.p3.1.m1.1.1" xref="Sx3.p3.1.m1.1.1.cmml"><mi id="Sx3.p3.1.m1.1.1.2" xref="Sx3.p3.1.m1.1.1.2.cmml">R</mi><mn id="Sx3.p3.1.m1.1.1.3" xref="Sx3.p3.1.m1.1.1.3.cmml">11</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p3.1.m1.1b"><apply id="Sx3.p3.1.m1.1.1.cmml" xref="Sx3.p3.1.m1.1.1"><csymbol cd="ambiguous" id="Sx3.p3.1.m1.1.1.1.cmml" xref="Sx3.p3.1.m1.1.1">subscript</csymbol><ci id="Sx3.p3.1.m1.1.1.2.cmml" xref="Sx3.p3.1.m1.1.1.2">𝑅</ci><cn type="integer" id="Sx3.p3.1.m1.1.1.3.cmml" xref="Sx3.p3.1.m1.1.1.3">11</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p3.1.m1.1c">R_{11}</annotation></semantics></math>, <math id="Sx3.p3.2.m2.1" class="ltx_Math" alttext="R_{22}" display="inline"><semantics id="Sx3.p3.2.m2.1a"><msub id="Sx3.p3.2.m2.1.1" xref="Sx3.p3.2.m2.1.1.cmml"><mi id="Sx3.p3.2.m2.1.1.2" xref="Sx3.p3.2.m2.1.1.2.cmml">R</mi><mn id="Sx3.p3.2.m2.1.1.3" xref="Sx3.p3.2.m2.1.1.3.cmml">22</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p3.2.m2.1b"><apply id="Sx3.p3.2.m2.1.1.cmml" xref="Sx3.p3.2.m2.1.1"><csymbol cd="ambiguous" id="Sx3.p3.2.m2.1.1.1.cmml" xref="Sx3.p3.2.m2.1.1">subscript</csymbol><ci id="Sx3.p3.2.m2.1.1.2.cmml" xref="Sx3.p3.2.m2.1.1.2">𝑅</ci><cn type="integer" id="Sx3.p3.2.m2.1.1.3.cmml" xref="Sx3.p3.2.m2.1.1.3">22</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p3.2.m2.1c">R_{22}</annotation></semantics></math> and cross-correlation functions
+<math id="Sx3.p3.3.m3.1" class="ltx_Math" alttext="R_{12}" display="inline"><semantics id="Sx3.p3.3.m3.1a"><msub id="Sx3.p3.3.m3.1.1" xref="Sx3.p3.3.m3.1.1.cmml"><mi id="Sx3.p3.3.m3.1.1.2" xref="Sx3.p3.3.m3.1.1.2.cmml">R</mi><mn id="Sx3.p3.3.m3.1.1.3" xref="Sx3.p3.3.m3.1.1.3.cmml">12</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p3.3.m3.1b"><apply id="Sx3.p3.3.m3.1.1.cmml" xref="Sx3.p3.3.m3.1.1"><csymbol cd="ambiguous" id="Sx3.p3.3.m3.1.1.1.cmml" xref="Sx3.p3.3.m3.1.1">subscript</csymbol><ci id="Sx3.p3.3.m3.1.1.2.cmml" xref="Sx3.p3.3.m3.1.1.2">𝑅</ci><cn type="integer" id="Sx3.p3.3.m3.1.1.3.cmml" xref="Sx3.p3.3.m3.1.1.3">12</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p3.3.m3.1c">R_{12}</annotation></semantics></math>, <math id="Sx3.p3.4.m4.1" class="ltx_Math" alttext="R_{21}" display="inline"><semantics id="Sx3.p3.4.m4.1a"><msub id="Sx3.p3.4.m4.1.1" xref="Sx3.p3.4.m4.1.1.cmml"><mi id="Sx3.p3.4.m4.1.1.2" xref="Sx3.p3.4.m4.1.1.2.cmml">R</mi><mn id="Sx3.p3.4.m4.1.1.3" xref="Sx3.p3.4.m4.1.1.3.cmml">21</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p3.4.m4.1b"><apply id="Sx3.p3.4.m4.1.1.cmml" xref="Sx3.p3.4.m4.1.1"><csymbol cd="ambiguous" id="Sx3.p3.4.m4.1.1.1.cmml" xref="Sx3.p3.4.m4.1.1">subscript</csymbol><ci id="Sx3.p3.4.m4.1.1.2.cmml" xref="Sx3.p3.4.m4.1.1.2">𝑅</ci><cn type="integer" id="Sx3.p3.4.m4.1.1.3.cmml" xref="Sx3.p3.4.m4.1.1.3">21</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p3.4.m4.1c">R_{21}</annotation></semantics></math> were calculated from sensor signals. Only one T-D of
+two signals can be estimated from the highest peak in both
+CCF, regardless of the number of independent AE
+sources on the test specimen as shown in Fig. <a href="#Sx3.F5" title="Figure 5 ‣ Experiments ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a>. This means that a CCF
+can not be used for automatic T-D estimation of multiple AE
+signals on the test specimen. The CCF exhibits
+various peaks which belong to various independent AE sources, but it is ussually
+impossible to relate these peaks to corresponding coordinates of AE
+sources.</p>
+</div>
+<figure id="Sx3.F4" class="ltx_figure">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_2">
+<figure id="Sx3.F4.sf1" class="ltx_figure ltx_figure_panel ltx_align_center"><span id="Sx3.F4.sf1.pic1" class="ltx_picture" style="width:148.2pt;height:65.0pt;">\psfrag{Y}{\small$x_{1}(t)$}\psfrag{X}{\small$t$ [ms]}\includegraphics{zrakhix1.eps}</span>
+<figcaption class="ltx_caption" style="font-size:90%;"><span class="ltx_tag ltx_tag_figure"><span id="Sx3.F4.sf1.4.1.1" class="ltx_text" style="font-size:89%;">(a)</span> </span><span id="Sx3.F4.sf1.5.2" class="ltx_text" style="font-size:89%;">Sensory signal #1</span></figcaption>
+</figure>
+</div>
+<div class="ltx_flex_cell ltx_flex_size_2">
+<figure id="Sx3.F4.sf2" class="ltx_figure ltx_figure_panel ltx_align_center"><span id="Sx3.F4.sf2.pic1" class="ltx_picture" style="width:148.2pt;height:65.0pt;">\psfrag{Y}{\small$x_{2}(t)$}\psfrag{X}{\small$t$ [ms]}\includegraphics{zrakhix2.eps}</span>
+<figcaption class="ltx_caption" style="font-size:90%;"><span class="ltx_tag ltx_tag_figure"><span id="Sx3.F4.sf2.4.1.1" class="ltx_text" style="font-size:89%;">(b)</span> </span><span id="Sx3.F4.sf2.5.2" class="ltx_text" style="font-size:89%;">Sensory signal #2</span></figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 4: </span>Mixtures of two independent continuous AE sources aquired by two sensors</figcaption>
+</figure>
+<figure id="Sx3.F5" class="ltx_figure">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F5.pic1" class="ltx_picture ltx_centering ltx_figure_panel" style="width:144.5pt;height:65.0pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small$R_{x_{1}x_{1}}$}\includegraphics{locbsshi_r11.eps}</span></div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F5.pic2" class="ltx_picture ltx_centering ltx_figure_panel" style="width:442.3pt;height:572.4pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small$R_{x_{1}x_{1}}$}\psfrag{Y}{\small$R_{x_{1}x_{2}}$}\includegraphics{locbsshi_r12x.eps}</span></div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F5.pic3" class="ltx_picture ltx_centering ltx_figure_panel" style="width:442.3pt;height:572.4pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small$R_{x_{1}x_{1}}$}\psfrag{Y}{\small$R_{x_{1}x_{2}}$}\psfrag{Y}{\small$R_{x_{2}x_{1}}$}\includegraphics{locbsshi_r21x.eps}</span></div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F5.pic4" class="ltx_picture ltx_centering ltx_figure_panel" style="width:144.5pt;height:65.0pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small$R_{x_{1}x_{1}}$}\psfrag{Y}{\small$R_{x_{1}x_{2}}$}\psfrag{Y}{\small$R_{x_{2}x_{1}}$}\psfrag{Y}{\small$R_{x_{2}x_{2}}$}\includegraphics{locbsshi_r22.eps}</span></div>
+</div>
+<figcaption class="ltx_caption ltx_centering" style="font-size:90%;"><span class="ltx_tag ltx_tag_figure">Figure 5: </span>Auto- and cross-correlation functions of sensory signals; down-arrow marks the highest peak</figcaption>
+</figure>
+<div id="Sx3.p4" class="ltx_para">
+<p id="Sx3.p4.9" class="ltx_p">In the third experiment the ICA algorithm was used to solve this problem
+satisfactorily. The ICA algorithm results in demixing FIR filters which
+extract the independent source signals from sensory signals. By
+inverting the demixing filters <span id="Sx3.p4.1.m1.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx3.p4.1.m1.1.1.1.m1.1" class="ltx_Math" alttext="W" display="inline"><semantics id="Sx3.p4.1.m1.1.1.1.m1.1a"><mi id="Sx3.p4.1.m1.1.1.1.m1.1.1" xref="Sx3.p4.1.m1.1.1.1.m1.1.1.cmml">𝑾</mi><annotation-xml encoding="MathML-Content" id="Sx3.p4.1.m1.1.1.1.m1.1b"><ci id="Sx3.p4.1.m1.1.1.1.m1.1.1.cmml" xref="Sx3.p4.1.m1.1.1.1.m1.1.1">𝑾</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.1.m1.1.1.1.m1.1c">W</annotation></semantics></math></span> we obtain mixing filters <span id="Sx3.p4.2.m2.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx3.p4.2.m2.1.1.1.m1.1" class="ltx_Math" alttext="A" display="inline"><semantics id="Sx3.p4.2.m2.1.1.1.m1.1a"><mi id="Sx3.p4.2.m2.1.1.1.m1.1.1" xref="Sx3.p4.2.m2.1.1.1.m1.1.1.cmml">𝑨</mi><annotation-xml encoding="MathML-Content" id="Sx3.p4.2.m2.1.1.1.m1.1b"><ci id="Sx3.p4.2.m2.1.1.1.m1.1.1.cmml" xref="Sx3.p4.2.m2.1.1.1.m1.1.1">𝑨</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.2.m2.1.1.1.m1.1c">A</annotation></semantics></math></span>.
+In the case of two independent AE sources and two sensors, the components
+of <span id="Sx3.p4.3.m3.1.1.1" class="ltx_text ltx_markedasmath"><math id="Sx3.p4.3.m3.1.1.1.m1.1" class="ltx_Math" alttext="A" display="inline"><semantics id="Sx3.p4.3.m3.1.1.1.m1.1a"><mi id="Sx3.p4.3.m3.1.1.1.m1.1.1" xref="Sx3.p4.3.m3.1.1.1.m1.1.1.cmml">𝑨</mi><annotation-xml encoding="MathML-Content" id="Sx3.p4.3.m3.1.1.1.m1.1b"><ci id="Sx3.p4.3.m3.1.1.1.m1.1.1.cmml" xref="Sx3.p4.3.m3.1.1.1.m1.1.1">𝑨</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.3.m3.1.1.1.m1.1c">A</annotation></semantics></math></span> are four FIR mixing filters, as shown in
+Fig. <a href="#Sx3.F6" title="Figure 6 ‣ Experiments ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>. There are two direct <math id="Sx3.p4.4.m4.1" class="ltx_Math" alttext="a_{11}" display="inline"><semantics id="Sx3.p4.4.m4.1a"><msub id="Sx3.p4.4.m4.1.1" xref="Sx3.p4.4.m4.1.1.cmml"><mi id="Sx3.p4.4.m4.1.1.2" xref="Sx3.p4.4.m4.1.1.2.cmml">a</mi><mn id="Sx3.p4.4.m4.1.1.3" xref="Sx3.p4.4.m4.1.1.3.cmml">11</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p4.4.m4.1b"><apply id="Sx3.p4.4.m4.1.1.cmml" xref="Sx3.p4.4.m4.1.1"><csymbol cd="ambiguous" id="Sx3.p4.4.m4.1.1.1.cmml" xref="Sx3.p4.4.m4.1.1">subscript</csymbol><ci id="Sx3.p4.4.m4.1.1.2.cmml" xref="Sx3.p4.4.m4.1.1.2">𝑎</ci><cn type="integer" id="Sx3.p4.4.m4.1.1.3.cmml" xref="Sx3.p4.4.m4.1.1.3">11</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.4.m4.1c">a_{11}</annotation></semantics></math>, <math id="Sx3.p4.5.m5.1" class="ltx_Math" alttext="a_{22}" display="inline"><semantics id="Sx3.p4.5.m5.1a"><msub id="Sx3.p4.5.m5.1.1" xref="Sx3.p4.5.m5.1.1.cmml"><mi id="Sx3.p4.5.m5.1.1.2" xref="Sx3.p4.5.m5.1.1.2.cmml">a</mi><mn id="Sx3.p4.5.m5.1.1.3" xref="Sx3.p4.5.m5.1.1.3.cmml">22</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p4.5.m5.1b"><apply id="Sx3.p4.5.m5.1.1.cmml" xref="Sx3.p4.5.m5.1.1"><csymbol cd="ambiguous" id="Sx3.p4.5.m5.1.1.1.cmml" xref="Sx3.p4.5.m5.1.1">subscript</csymbol><ci id="Sx3.p4.5.m5.1.1.2.cmml" xref="Sx3.p4.5.m5.1.1.2">𝑎</ci><cn type="integer" id="Sx3.p4.5.m5.1.1.3.cmml" xref="Sx3.p4.5.m5.1.1.3">22</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.5.m5.1c">a_{22}</annotation></semantics></math> and two
+cross mixing filters <math id="Sx3.p4.6.m6.1" class="ltx_Math" alttext="a_{12}" display="inline"><semantics id="Sx3.p4.6.m6.1a"><msub id="Sx3.p4.6.m6.1.1" xref="Sx3.p4.6.m6.1.1.cmml"><mi id="Sx3.p4.6.m6.1.1.2" xref="Sx3.p4.6.m6.1.1.2.cmml">a</mi><mn id="Sx3.p4.6.m6.1.1.3" xref="Sx3.p4.6.m6.1.1.3.cmml">12</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p4.6.m6.1b"><apply id="Sx3.p4.6.m6.1.1.cmml" xref="Sx3.p4.6.m6.1.1"><csymbol cd="ambiguous" id="Sx3.p4.6.m6.1.1.1.cmml" xref="Sx3.p4.6.m6.1.1">subscript</csymbol><ci id="Sx3.p4.6.m6.1.1.2.cmml" xref="Sx3.p4.6.m6.1.1.2">𝑎</ci><cn type="integer" id="Sx3.p4.6.m6.1.1.3.cmml" xref="Sx3.p4.6.m6.1.1.3">12</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.6.m6.1c">a_{12}</annotation></semantics></math>, <math id="Sx3.p4.7.m7.1" class="ltx_Math" alttext="a_{21}" display="inline"><semantics id="Sx3.p4.7.m7.1a"><msub id="Sx3.p4.7.m7.1.1" xref="Sx3.p4.7.m7.1.1.cmml"><mi id="Sx3.p4.7.m7.1.1.2" xref="Sx3.p4.7.m7.1.1.2.cmml">a</mi><mn id="Sx3.p4.7.m7.1.1.3" xref="Sx3.p4.7.m7.1.1.3.cmml">21</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p4.7.m7.1b"><apply id="Sx3.p4.7.m7.1.1.cmml" xref="Sx3.p4.7.m7.1.1"><csymbol cd="ambiguous" id="Sx3.p4.7.m7.1.1.1.cmml" xref="Sx3.p4.7.m7.1.1">subscript</csymbol><ci id="Sx3.p4.7.m7.1.1.2.cmml" xref="Sx3.p4.7.m7.1.1.2">𝑎</ci><cn type="integer" id="Sx3.p4.7.m7.1.1.3.cmml" xref="Sx3.p4.7.m7.1.1.3">21</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.7.m7.1c">a_{21}</annotation></semantics></math>. The first index of the filter
+represents the number of the sensor, while the second index represents the number of
+the source. The position of the highest peak of the cross FIR filters
+determines the T-D between two signals from two sensors. If we
+substract the coordinate of the highest peak of a direct mixing FIR filter
+<math id="Sx3.p4.8.m8.1" class="ltx_Math" alttext="a_{11}" display="inline"><semantics id="Sx3.p4.8.m8.1a"><msub id="Sx3.p4.8.m8.1.1" xref="Sx3.p4.8.m8.1.1.cmml"><mi id="Sx3.p4.8.m8.1.1.2" xref="Sx3.p4.8.m8.1.1.2.cmml">a</mi><mn id="Sx3.p4.8.m8.1.1.3" xref="Sx3.p4.8.m8.1.1.3.cmml">11</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p4.8.m8.1b"><apply id="Sx3.p4.8.m8.1.1.cmml" xref="Sx3.p4.8.m8.1.1"><csymbol cd="ambiguous" id="Sx3.p4.8.m8.1.1.1.cmml" xref="Sx3.p4.8.m8.1.1">subscript</csymbol><ci id="Sx3.p4.8.m8.1.1.2.cmml" xref="Sx3.p4.8.m8.1.1.2">𝑎</ci><cn type="integer" id="Sx3.p4.8.m8.1.1.3.cmml" xref="Sx3.p4.8.m8.1.1.3">11</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.8.m8.1c">a_{11}</annotation></semantics></math> from the coordinate of the highest peak of cross filter <math id="Sx3.p4.9.m9.1" class="ltx_Math" alttext="a_{21}" display="inline"><semantics id="Sx3.p4.9.m9.1a"><msub id="Sx3.p4.9.m9.1.1" xref="Sx3.p4.9.m9.1.1.cmml"><mi id="Sx3.p4.9.m9.1.1.2" xref="Sx3.p4.9.m9.1.1.2.cmml">a</mi><mn id="Sx3.p4.9.m9.1.1.3" xref="Sx3.p4.9.m9.1.1.3.cmml">21</mn></msub><annotation-xml encoding="MathML-Content" id="Sx3.p4.9.m9.1b"><apply id="Sx3.p4.9.m9.1.1.cmml" xref="Sx3.p4.9.m9.1.1"><csymbol cd="ambiguous" id="Sx3.p4.9.m9.1.1.1.cmml" xref="Sx3.p4.9.m9.1.1">subscript</csymbol><ci id="Sx3.p4.9.m9.1.1.2.cmml" xref="Sx3.p4.9.m9.1.1.2">𝑎</ci><cn type="integer" id="Sx3.p4.9.m9.1.1.3.cmml" xref="Sx3.p4.9.m9.1.1.3">21</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx3.p4.9.m9.1c">a_{21}</annotation></semantics></math> we
+obtain the T-D of first independent AE source, since each of the
+highest peaks in the FIR filters belongs to different independent AE
+signals.</p>
+</div>
+<figure id="Sx3.F6" class="ltx_figure">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F6.pic1" class="ltx_picture ltx_centering ltx_figure_panel" style="width:146.0pt;height:65.0pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small${a}_{11}$}\includegraphics{locbsshi_a11.eps}</span></div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F6.pic2" class="ltx_picture ltx_centering ltx_figure_panel" style="width:442.3pt;height:572.4pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small${a}_{11}$}\psfrag{Y}{\small${a}_{12}$}\includegraphics{locbsshi_a12x.eps}</span></div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F6.pic3" class="ltx_picture ltx_centering ltx_figure_panel" style="width:442.3pt;height:572.4pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small${a}_{11}$}\psfrag{Y}{\small${a}_{12}$}\psfrag{Y}{\small${a}_{21}$}\includegraphics{locbsshi_a21x.eps}</span></div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1"><span id="Sx3.F6.pic4" class="ltx_picture ltx_centering ltx_figure_panel" style="width:146.0pt;height:65.0pt;">\psfrag{X}{\small$n$}\psfrag{Y}{\small${a}_{11}$}\psfrag{Y}{\small${a}_{12}$}\psfrag{Y}{\small${a}_{21}$}\psfrag{Y}{\small${a}_{22}$}\includegraphics{locbsshi_a22.eps}</span></div>
+</div>
+<figcaption class="ltx_caption ltx_centering" style="font-size:90%;"><span class="ltx_tag ltx_tag_figure">Figure 6: </span>Mixing filters obtained by ICA of sensory signals; down-arrow marks the highest peak</figcaption>
+</figure>
+</section>
+<section id="Sx4" class="ltx_section">
+<h2 class="ltx_title ltx_font_smallcaps ltx_title_section">Results</h2>
+
+<div id="Sx4.p1" class="ltx_para">
+<p id="Sx4.p1.8" class="ltx_p">The results of T-D estimation of two continuous independent AE
+sources are shown in Fig. <a href="#Sx4.F7" title="Figure 7 ‣ Results ‣ Intelligent location of two simultaneously active acoustic emission sources: Part II" class="ltx_ref"><span class="ltx_text ltx_ref_tag">7</span></a>. Three experiments were done.
+In the first experiment, the T-D was estimated by a
+CCF of two AE sources which were not active
+simultaneously as marked by ‘<math id="Sx4.p1.1.m1.1" class="ltx_Math" alttext="\circ" display="inline"><semantics id="Sx4.p1.1.m1.1a"><mo mathsize="144%" id="Sx4.p1.1.m1.1.1" xref="Sx4.p1.1.m1.1.1.cmml">∘</mo><annotation-xml encoding="MathML-Content" id="Sx4.p1.1.m1.1b"><compose id="Sx4.p1.1.m1.1.1.cmml" xref="Sx4.p1.1.m1.1.1"></compose></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.1.m1.1c">\circ</annotation></semantics></math>’. Locations of these two
+sources estimated by the intelligent locator were +181 mm and +784 mm.
+The second experiment was performed with both AE sources active
+simultaneously. T-D were also estimated by a CCF. The highest peak position
+corresponds to the source location marked by ‘<math id="Sx4.p1.2.m2.1" class="ltx_Math" alttext="-" display="inline"><semantics id="Sx4.p1.2.m2.1a"><mo id="Sx4.p1.2.m2.1.1" xref="Sx4.p1.2.m2.1.1.cmml">−</mo><annotation-xml encoding="MathML-Content" id="Sx4.p1.2.m2.1b"><minus id="Sx4.p1.2.m2.1.1.cmml" xref="Sx4.p1.2.m2.1.1"></minus></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.2.m2.1c">-</annotation></semantics></math> <math id="Sx4.p1.3.m3.1" class="ltx_Math" alttext="-" display="inline"><semantics id="Sx4.p1.3.m3.1a"><mo id="Sx4.p1.3.m3.1.1" xref="Sx4.p1.3.m3.1.1.cmml">−</mo><annotation-xml encoding="MathML-Content" id="Sx4.p1.3.m3.1b"><minus id="Sx4.p1.3.m3.1.1.cmml" xref="Sx4.p1.3.m3.1.1"></minus></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.3.m3.1c">-</annotation></semantics></math>’ and was +784 mm.
+The third
+experiment was performed using ICA for T-D estimation and
+location by intelligent locator. The result is marked by ‘<math id="Sx4.p1.4.m4.1" class="ltx_Math" alttext="\Box" display="inline"><semantics id="Sx4.p1.4.m4.1a"><mi mathsize="80%" mathvariant="normal" id="Sx4.p1.4.m4.1.1" xref="Sx4.p1.4.m4.1.1.cmml">□</mi><annotation-xml encoding="MathML-Content" id="Sx4.p1.4.m4.1b"><ci id="Sx4.p1.4.m4.1.1.cmml" xref="Sx4.p1.4.m4.1.1">□</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.4.m4.1c">\Box</annotation></semantics></math>’. Estimated positions of this two sources were +179 mm and
++784 mm respectively. If we compare the coordinates of both independent AE
+sources estimated by the first experiment and by the third experiment, we
+find a good correspondence. If we compare estimated AE source coordinates
+with actual coordinates, which were +100 mm and +800 mm respectively, we
+observe a slight disagreement due to experimental error. Experimental
+error is about 3% regarding the distance between sensors. Absolute error
+in this case is 79 mm and 16 mm respectively. The results also depend
+on the number and distribution of prototype sources marked by ‘<math id="Sx4.p1.5.m5.1" class="ltx_Math" alttext="\bullet" display="inline"><semantics id="Sx4.p1.5.m5.1a"><mo id="Sx4.p1.5.m5.1.1" xref="Sx4.p1.5.m5.1.1.cmml">∙</mo><annotation-xml encoding="MathML-Content" id="Sx4.p1.5.m5.1b"><ci id="Sx4.p1.5.m5.1.1.cmml" xref="Sx4.p1.5.m5.1.1">∙</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.5.m5.1c">\bullet</annotation></semantics></math>’,
+which are essential for operation of the intelligent locator. If the number of
+prototype sources is increased, location error is reduced. In our case the
+prototype sources were distributed along the beam from <math id="Sx4.p1.6.m6.1" class="ltx_Math" alttext="-1.1" display="inline"><semantics id="Sx4.p1.6.m6.1a"><mrow id="Sx4.p1.6.m6.1.1" xref="Sx4.p1.6.m6.1.1.cmml"><mo id="Sx4.p1.6.m6.1.1a" xref="Sx4.p1.6.m6.1.1.cmml">−</mo><mn id="Sx4.p1.6.m6.1.1.2" xref="Sx4.p1.6.m6.1.1.2.cmml">1.1</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx4.p1.6.m6.1b"><apply id="Sx4.p1.6.m6.1.1.cmml" xref="Sx4.p1.6.m6.1.1"><minus id="Sx4.p1.6.m6.1.1.1.cmml" xref="Sx4.p1.6.m6.1.1"></minus><cn type="float" id="Sx4.p1.6.m6.1.1.2.cmml" xref="Sx4.p1.6.m6.1.1.2">1.1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.6.m6.1c">-1.1</annotation></semantics></math> m to
+<math id="Sx4.p1.7.m7.1" class="ltx_Math" alttext="+1.1" display="inline"><semantics id="Sx4.p1.7.m7.1a"><mrow id="Sx4.p1.7.m7.1.1" xref="Sx4.p1.7.m7.1.1.cmml"><mo id="Sx4.p1.7.m7.1.1a" xref="Sx4.p1.7.m7.1.1.cmml">+</mo><mn id="Sx4.p1.7.m7.1.1.2" xref="Sx4.p1.7.m7.1.1.2.cmml">1.1</mn></mrow><annotation-xml encoding="MathML-Content" id="Sx4.p1.7.m7.1b"><apply id="Sx4.p1.7.m7.1.1.cmml" xref="Sx4.p1.7.m7.1.1"><plus id="Sx4.p1.7.m7.1.1.1.cmml" xref="Sx4.p1.7.m7.1.1"></plus><cn type="float" id="Sx4.p1.7.m7.1.1.2.cmml" xref="Sx4.p1.7.m7.1.1.2">1.1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.7.m7.1c">+1.1</annotation></semantics></math> m separated by <math id="Sx4.p1.8.m8.1" class="ltx_Math" alttext="0.1" display="inline"><semantics id="Sx4.p1.8.m8.1a"><mn id="Sx4.p1.8.m8.1.1" xref="Sx4.p1.8.m8.1.1.cmml">0.1</mn><annotation-xml encoding="MathML-Content" id="Sx4.p1.8.m8.1b"><cn type="float" id="Sx4.p1.8.m8.1.1.cmml" xref="Sx4.p1.8.m8.1.1">0.1</cn></annotation-xml><annotation encoding="application/x-tex" id="Sx4.p1.8.m8.1c">0.1</annotation></semantics></math> m, so that systematic error of the locator
+was set to several procents.</p>
+</div>
+<figure id="Sx4.F7" class="ltx_figure"><span id="Sx4.F7.pic1" class="ltx_picture ltx_centering" style="width:198.7pt;height:257.3pt;">\psfrag{X}{\small actual position $l$ [m]}\psfrag{Y}{\small estimated position $\hat{l}$ [m]}\psfrag{ICA}{\footnotesize ICA}\psfrag{orelacijsk}{\footnotesize correlation}\psfrag{a funkcija}{\footnotesize function}\psfrag{k}{}\includegraphics[width=199.16928pt]{locbsshi1x.eps}</span>
+<figcaption class="ltx_caption ltx_centering" style="font-size:80%;"><span class="ltx_tag ltx_tag_figure">Figure 7: </span>Results of location of two continuous independent AE sources.
+Symbols: ‘<math id="Sx4.F7.7.m1.1" class="ltx_Math" alttext="\Box" display="inline"><semantics id="Sx4.F7.7.m1.1b"><mi mathvariant="normal" id="Sx4.F7.7.m1.1.1" xref="Sx4.F7.7.m1.1.1.cmml">□</mi><annotation-xml encoding="MathML-Content" id="Sx4.F7.7.m1.1c"><ci id="Sx4.F7.7.m1.1.1.cmml" xref="Sx4.F7.7.m1.1.1">□</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx4.F7.7.m1.1d">\Box</annotation></semantics></math>’ – AE sources obtained by ICA; ‘<math id="Sx4.F7.8.m2.1" class="ltx_Math" alttext="\circ" display="inline"><semantics id="Sx4.F7.8.m2.1b"><mo mathsize="180%" id="Sx4.F7.8.m2.1.1" xref="Sx4.F7.8.m2.1.1.cmml">∘</mo><annotation-xml encoding="MathML-Content" id="Sx4.F7.8.m2.1c"><compose id="Sx4.F7.8.m2.1.1.cmml" xref="Sx4.F7.8.m2.1.1"></compose></annotation-xml><annotation encoding="application/x-tex" id="Sx4.F7.8.m2.1d">\circ</annotation></semantics></math>’ – estimated AE sources obtained by cross-correlation function
+in two steps, when just one of two AE sources was active at time of
+measurement; ‘<math id="Sx4.F7.9.m3.1" class="ltx_Math" alttext="-" display="inline"><semantics id="Sx4.F7.9.m3.1b"><mo id="Sx4.F7.9.m3.1.1" xref="Sx4.F7.9.m3.1.1.cmml">−</mo><annotation-xml encoding="MathML-Content" id="Sx4.F7.9.m3.1c"><minus id="Sx4.F7.9.m3.1.1.cmml" xref="Sx4.F7.9.m3.1.1"></minus></annotation-xml><annotation encoding="application/x-tex" id="Sx4.F7.9.m3.1d">-</annotation></semantics></math> <math id="Sx4.F7.10.m4.1" class="ltx_Math" alttext="-" display="inline"><semantics id="Sx4.F7.10.m4.1b"><mo id="Sx4.F7.10.m4.1.1" xref="Sx4.F7.10.m4.1.1.cmml">−</mo><annotation-xml encoding="MathML-Content" id="Sx4.F7.10.m4.1c"><minus id="Sx4.F7.10.m4.1.1.cmml" xref="Sx4.F7.10.m4.1.1"></minus></annotation-xml><annotation encoding="application/x-tex" id="Sx4.F7.10.m4.1d">-</annotation></semantics></math>’ – estimated AE sources obtained by cross-correlation
+function when two AE sources were active simultaneously; ‘<math id="Sx4.F7.11.m5.1" class="ltx_Math" alttext="\bullet" display="inline"><semantics id="Sx4.F7.11.m5.1b"><mo mathsize="150%" id="Sx4.F7.11.m5.1.1" xref="Sx4.F7.11.m5.1.1.cmml">∙</mo><annotation-xml encoding="MathML-Content" id="Sx4.F7.11.m5.1c"><ci id="Sx4.F7.11.m5.1.1.cmml" xref="Sx4.F7.11.m5.1.1">∙</ci></annotation-xml><annotation encoding="application/x-tex" id="Sx4.F7.11.m5.1d">\bullet</annotation></semantics></math>’ – prototype AE sources required for location using intelligent
+locator; ‘<math id="Sx4.F7.12.m6.1" class="ltx_Math" alttext="-" display="inline"><semantics id="Sx4.F7.12.m6.1b"><mo id="Sx4.F7.12.m6.1.1" xref="Sx4.F7.12.m6.1.1.cmml">−</mo><annotation-xml encoding="MathML-Content" id="Sx4.F7.12.m6.1c"><minus id="Sx4.F7.12.m6.1.1.cmml" xref="Sx4.F7.12.m6.1.1"></minus></annotation-xml><annotation encoding="application/x-tex" id="Sx4.F7.12.m6.1d">-</annotation></semantics></math>’ – distribution of actual sources.</figcaption>
+</figure>
+</section>
+<section id="Sx5" class="ltx_section">
+<h2 class="ltx_title ltx_font_smallcaps ltx_title_section">Discussion and Conclusion</h2>
+
+<div id="Sx5.p1" class="ltx_para">
+<p id="Sx5.p1.1" class="ltx_p">CCF is applicable to T-D estimation
+only in the case of one active AE source. The goal of our research is to
+develop a new method to estimate T-D between AE signals in
+the case of multiple simultaneously active continuous AE sources. We
+have shown that, for this purpose, ICA is
+an applicable option. ICA finds a linear coordinate system (the unmixing filters)
+such that the resulting signals are statistically independent. This is an advantage of ICA over CCF.
+It represents a new approach to processing of AE data and further
+expands the applicability of AE analysis in the field of non-destructive
+testing.
+In machines or in an industrial environment, multiple sources are usually active
+Simultaneously, often representing environmental disturbances. The
+corresponding complex signals are not directly applicable to
+characterization of particular sources. However, separation of
+contributions by ICA analysis in fact represents a kind of filtering,
+increasing the applicability of filtered signals to characterization of
+sources in complex environments. Future research will be focused on location of multiple AE sources on two-dimensional
+and three-dimensional specimens.</p>
+</div>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul class="ltx_biblist">
+<li id="bib.bib1" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock">
+Amari, S.-I. 1998 , Natural gradient works
+efficiently in learning, <span id="bib.bib1.1.1" class="ltx_text ltx_font_italic">Neural Computation</span> <span id="bib.bib1.2.2" class="ltx_text ltx_font_bold">10</span>, 251–276.
+
+</span>
+</li>
+<li id="bib.bib2" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[2]</span>
+<span class="ltx_bibblock">
+Amari, S.-I., Cichocki, A. Yang, H. H.
+1996 , A new learning algorithm for blind signal separation,
+<span id="bib.bib2.1.1" class="ltx_text ltx_font_italic">in</span> D. Touretzky, M. Mozer M. Hasselmo, eds, ‘Advances in
+Neural Information Processing Systems’, Vol. 8, MIT Press, Cambridge MA,
+pp. 752–763.
+
+</span>
+</li>
+<li id="bib.bib3" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[3]</span>
+<span class="ltx_bibblock">
+Burel, G. 1992 , Blind separation of
+sources: A nonlinear algorithm, <span id="bib.bib3.1.1" class="ltx_text ltx_font_italic">Neural Networks</span> <span id="bib.bib3.2.2" class="ltx_text ltx_font_bold">5</span>, 937–947.
+
+</span>
+</li>
+<li id="bib.bib4" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[4]</span>
+<span class="ltx_bibblock">
+Deville, Y. Charkani, N. 1997 ,
+Analysis of the stability of time-domain source separation algorithms for
+convolutively mixed signals, <span id="bib.bib4.1.1" class="ltx_text ltx_font_italic">in</span> International Comference on Acoustics,
+Speech, and Signal Processing, pp. 1835–1838.
+
+</span>
+</li>
+<li id="bib.bib5" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[5]</span>
+<span class="ltx_bibblock">
+Grabec, I. Sachse, W. 1997 ,
+<span id="bib.bib5.1.1" class="ltx_text ltx_font_italic">Synergetics of Measurement, Prediction and Control</span>, Springer-Verlag,
+Berlin.
+
+</span>
+</li>
+<li id="bib.bib6" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[6]</span>
+<span class="ltx_bibblock">
+Hyvarinen, A. Oja, E. 2000 ,
+Independent component analysis: algorithms and applications, <span id="bib.bib6.1.1" class="ltx_text ltx_font_italic">Neural
+Networks</span> <span id="bib.bib6.2.2" class="ltx_text ltx_font_bold">13</span>, 411–430.
+
+</span>
+</li>
+<li id="bib.bib7" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[7]</span>
+<span class="ltx_bibblock">
+Kosel, T., Grabec, I. Mužič, P.
+2000 , Location of continuous acoustic emission sources
+generated by air flow, <span id="bib.bib7.1.1" class="ltx_text ltx_font_italic">Ultrasonics</span> <span id="bib.bib7.2.2" class="ltx_text ltx_font_bold">38</span>(1–8), 824–826.
+
+</span>
+</li>
+<li id="bib.bib8" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[8]</span>
+<span class="ltx_bibblock">
+Lee, T.-W. 1998 , <span id="bib.bib8.1.1" class="ltx_text ltx_font_italic">Independent Component
+Analysis, Theory and Applications</span>, Kluwer Academic Publishers, Boston etc.
+
+</span>
+</li>
+<li id="bib.bib9" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[9]</span>
+<span class="ltx_bibblock">
+Lee, T.-W., Bell, A. J. Lambert, R.
+1997 , Blind separation of convolved and delayed sources,
+<span id="bib.bib9.1.1" class="ltx_text ltx_font_italic">Advances in Neural Information Processing Systems</span> <span id="bib.bib9.2.2" class="ltx_text ltx_font_bold">9</span>, 758–764.
+
+</span>
+</li>
+<li id="bib.bib10" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[10]</span>
+<span class="ltx_bibblock">
+McIntire, P. Miller, R. K., eds
+1987 , <span id="bib.bib10.1.1" class="ltx_text ltx_font_italic">Acoustic Emission Testing</span>, Vol. 5 of <span id="bib.bib10.2.2" class="ltx_text ltx_font_italic">Nondestructive Testing Handbook</span>, 2 edn, American Society for Nondestructive
+Testing, Philadelphia, USA.
+
+</span>
+</li>
+<li id="bib.bib11" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[11]</span>
+<span class="ltx_bibblock">
+Westner, A. G. 1996 , Object-based audio
+capture: Separating acoustically-mixed sources, MSc Thesis, Massachusetts
+Institute of Technology.
+
+</span>
+</li>
+<li id="bib.bib12" class="ltx_bibitem">
+<span class="ltx_tag ltx_tag_bibitem">[12]</span>
+<span class="ltx_bibblock">
+Ziola, S. M. Gorman, M. R. 1991
+, Source location in thin plates using cross-correlation, <span id="bib.bib12.1.1" class="ltx_text ltx_font_italic">J. Acoust.
+Soc. Am.</span> <span id="bib.bib12.2.2" class="ltx_text ltx_font_bold">90</span>(5), 2551–2556.
+
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<div class="ar5iv-footer"><a href="/html/0704.0049" class="ar5iv-nav-button ar5iv-nav-button-prev">◄</a>
+    <a class="ar5iv-home-button" href="/"><img height="40" alt="ar5iv homepage" src="/assets/ar5iv.png"></a>
+    <a href="/feeling_lucky" class="ar5iv-text-button">Feeling<br>lucky?</a>
+    <a href="/log/0704.0050" class="ar5iv-text-button ar5iv-severity-error">Conversion<br>report</a>
+    <a class="ar5iv-text-button" target="_blank" href="https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+0704.0050">Report<br>an issue</a>
+    <a href="https://arxiv.org/abs/0704.0050" class="ar5iv-text-button arxiv-ui-theme">View&nbsp;original<br>on&nbsp;arXiv</a><a href="/html/0704.0051" class="ar5iv-nav-button ar5iv-nav-button-next">►</a>
+</div><footer class="ltx_page_footer">
+<a class="ar5iv-toggle-color-scheme" href="javascript:toggleColorScheme()" title="Toggle ar5iv color scheme"><span class="color-scheme-icon"></span></a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/license" target="_blank">Copyright</a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/policies/privacy_policy" target="_blank">Privacy Policy</a>
+
+<div class="ltx_page_logo">Generated  on Sun Mar  3 05:56:41 2024 by <a target="_blank" href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+
+    <script>
+      var canMathML = typeof(MathMLElement) == "function";
+      if (!canMathML) {
+        var body = document.querySelector("body");
+        body.firstElementChild.setAttribute('style', 'opacity: 0;');
+        var loading = document.createElement("div");
+        loading.setAttribute("id", "mathjax-loading-spinner");
+        var message = document.createElement("div");
+        message.setAttribute("id", "mathjax-loading-message");
+        message.innerText = "Typesetting Equations...";
+        body.prepend(loading);
+        body.prepend(message);
+
+        var el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.querySelector("head").appendChild(el);
+
+        window.MathJax = {
+          startup: {
+            pageReady: () => {
+              return MathJax.startup.defaultPageReady().then(() => {
+                body.removeChild(loading);
+                body.removeChild(message);
+                body.firstElementChild.removeAttribute('style');
+              }); } } };
+      }
+    </script>
+    <script>
+    // Auxiliary function, building the preview feature when
+    // an inline citation is clicked
+    function clicked_cite(e) {
+      e.preventDefault();
+      let cite = this.closest('.ltx_cite');
+      let next = cite.nextSibling;
+      if (next && next.nodeType == Node.ELEMENT_NODE && next.getAttribute('class') == "ar5iv-bibitem-preview") {
+        next.remove();
+        return; }
+      // Before adding a preview modal,
+      // cleanup older previews, in case they're still open
+      document.querySelectorAll('span.ar5iv-bibitem-preview').forEach(function(node) {
+        node.remove();
+      })
+
+      // Create the preview
+      preview = document.createElement('span');
+      preview.setAttribute('class','ar5iv-bibitem-preview');
+      let target = document.getElementById(this.getAttribute('href').slice(1));
+      target.childNodes.forEach(function (child) {
+        preview.append(child.cloneNode(true));
+      });
+      let close_x = document.createElement('button');
+      close_x.setAttribute("aria-label","Close modal for bibliography item preview");
+      close_x.textContent = "×";
+      close_x.setAttribute('class', 'ar5iv-button-close-preview');
+      close_x.setAttribute('onclick','this.parentNode.remove()');
+      preview.append(close_x);
+      preview.querySelectorAll('.ltx_tag_bibitem').forEach(function(node) {
+        node.remove();
+      });
+      cite.parentNode.insertBefore(preview, cite.nextSibling);
+      return;
+    }
+    // Global Document initialization:
+    // - assign the preview feature to all inline citation links
+    document.querySelectorAll(".ltx_cite .ltx_ref").forEach(function (link) {
+      link.addEventListener("click", clicked_cite);
+    });
+    </script>
+    </body>
+</html>
